@@ -4,6 +4,7 @@ var _           = require('lodash'),
     gulpUtil    = require('gulp-util'),
     ghPages     = require('gulp-gh-pages'),
     browserify  = require('browserify'),
+    envify      = require('envify/custom'),
     source      = require('vinyl-source-stream'),
     buffer      = require('vinyl-buffer'),
     sourcemaps  = require('gulp-sourcemaps'),
@@ -34,10 +35,6 @@ var log = {
   }
 };
 
-gulp.task('deploy', function() {
-  return gulp.src('./dist/**/*')
-    .pipe(ghPages());
-});
 
 gulp.task('browser-sync', ['build'], function() {
   browserSync({
@@ -120,10 +117,12 @@ var js = {
       entries: [config.sourcePath + '/index.js'],
       cache: {},
       packageCache: {}
-  }).transform(babelify, { blacklist: 'regenerator' }),
-  build: function() {
-    log.init('Building js');
-    return js.b.bundle()
+  }),
+  build: function(__, browserified) {
+    var b = browserified || js.b;
+    return b
+      .transform(babelify, { blacklist: 'regenerator' })
+      .bundle()
       .on('error', function(error) {
         log.error(error);
       })
@@ -149,9 +148,17 @@ var js = {
   }
 };
 
-gulp.task('js-build', js.build);
+gulp.task('js-build', function() {
+  js.build(js.b.transform(envify({ NODE_ENV: 'development' })));
+});
 gulp.task('js-reload', js.reload);
 gulp.task('js-watch', ['browser-sync'], js.watch);
+
+gulp.task('deploy', function() {
+  js.build(js.b.transform(envify({ NODE_ENV: 'production' })));
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
+});
 
 gulp.task('setup', [
   'bower',

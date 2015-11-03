@@ -1,7 +1,7 @@
 var React         = require('react');
 var ReactDOM      = require('react-dom');
 var useBasename   = require('history').useBasename;
-var createHistory = require('history').createHistory;
+var createHistory = require('history').createHashHistory;
 var Router        = require('react-router').Router;
 var Route         = require('react-router').Route;
 
@@ -9,7 +9,14 @@ var Route         = require('react-router').Route;
 var IndexView  = require('./js/components/index-view');
 var ResultView = require('./js/components/result-view');
 
-const history = createHistory();
+var history;
+if (process.env.NODE_ENV === "production") {
+  history = useBasename(createHistory)({
+    basename: 'market-intelligence-search-app'
+  });
+} else {
+  history = createHistory();
+}
 
 const routes = [
   { path: "/", component: IndexView },

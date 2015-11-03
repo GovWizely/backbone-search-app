@@ -47,7 +47,9 @@ module.exports = {
           .chain()
           .keys()
           .each(function(key) {
-            _setters[key].call(this, response.data.aggregations);
+            if (_setters.hasOwnProperty(key)) {
+              _setters[key](response.data.aggregations);
+            }
           })
           .value();
       });

@@ -12,7 +12,7 @@ module.exports = React.createClass({
           <Header cssClass="header-condensed" />
         </div>
 
-        <div className="col-md-3">
+        <div className="col-md-5">
           <KeywordInput keyword={ this.props.keyword } onSubmit={ this.props.onSubmit } onChange={ this.props.onKeywordChange } expanded={ false } />
         </div>
 
@@ -22,10 +22,6 @@ module.exports = React.createClass({
 
         <div className="col-md-2">
           <Select type="industries" placeholder="Select Industry" value={ this.props.industries } onChange={ this.props.onIndustryChange } items={ this.props.aggregations.industries }/>
-        </div>
-
-        <div className="col-md-2">
-          <Select type="topics" placeholder="Select Topic" value={ this.props.topics } onChange={ this.props.onTopicChange } items={ this.props.aggregations.topics } />
         </div>
 
       </div>

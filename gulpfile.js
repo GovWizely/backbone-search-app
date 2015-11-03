@@ -23,6 +23,10 @@ var config = {
   bowerDir: './bower_components'
 };
 
+var env = {
+
+};
+
 var log = {
   init: function(message) {
     gulpUtil.colors.yellow('[❗] ' + message);
@@ -121,7 +125,7 @@ var js = {
   build: function(__, browserified) {
     var b = browserified || js.b;
     return b
-      .transform(babelify, { blacklist: 'regenerator' })
+      .transform(babelify, { })
       .bundle()
       .on('error', function(error) {
         log.error(error);

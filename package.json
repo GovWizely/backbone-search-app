@@ -1,18 +1,18 @@
 {
-  "name": "backbone-explorer",
+  "name": "market-intelligence-search-app",
   "version": "0.0.0",
-  "description": "Explorer",
+  "description": "Search Market Intelligence",
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/GovWizely/backbone-search-app.git"
+    "url": "git+ssh://git@github.com/GovWizely/market-intelligence-search-app.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GovWizely/backbone-search-app/issues"
+    "url": "https://github.com/GovWizely/market-intelligence-search-app/issues"
   },
-  "homepage": "https://github.com/GovWizely/backbone-search-app#readme",
+  "homepage": "https://github.com/GovWizely/market-intelligence-search-app#readme",
   "dependencies": {
     "axios": "^0.7.0",
     "backbone": "^1.2.3",

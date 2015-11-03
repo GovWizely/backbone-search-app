@@ -48668,7 +48668,25 @@ module.exports = React.createClass({
   displayName: "exports",
 
   render: function render() {
-    return React.createElement("article", { className: "article" }, React.createElement("h1", { className: "title" }, React.createElement("a", { target: "_blank", href: this.props.article.url, dangerouslySetInnerHTML: { __html: this.props.article.title } })), React.createElement("p", { className: "url" }, React.createElement("a", { target: "_blank", href: this.props.article.url }, this.props.article.url)), React.createElement("p", { className: "snippet", dangerouslySetInnerHTML: { __html: this.props.article.snippet } }));
+    return React.createElement(
+      "article",
+      { className: "article" },
+      React.createElement(
+        "h1",
+        { className: "title" },
+        React.createElement("a", { target: "_blank", href: this.props.article.url, dangerouslySetInnerHTML: { __html: this.props.article.title } })
+      ),
+      React.createElement(
+        "p",
+        { className: "url" },
+        React.createElement(
+          "a",
+          { target: "_blank", href: this.props.article.url },
+          this.props.article.url
+        )
+      ),
+      React.createElement("p", { className: "snippet", dangerouslySetInnerHTML: { __html: this.props.article.snippet } })
+    );
   }
 });
 
@@ -48705,9 +48723,13 @@ module.exports = React.createClass({
     if (this.state.isLoading) {
       return React.createElement(Spinner, null);
     }
-    return React.createElement('section', { className: 'articles' }, _.map(this.state.articles, function (article) {
-      return React.createElement(ArticleListItem, { key: article.id, article: article });
-    }));
+    return React.createElement(
+      'section',
+      { className: 'articles' },
+      _.map(this.state.articles, function (article) {
+        return React.createElement(ArticleListItem, { key: article.id, article: article });
+      })
+    );
   }
 });
 
@@ -48724,7 +48746,35 @@ module.exports = React.createClass({
   displayName: 'exports',
 
   render: function render() {
-    return React.createElement('div', { className: 'row' }, React.createElement('div', { className: 'col-md-3' }, React.createElement(Header, { cssClass: 'header-condensed' })), React.createElement('div', { className: 'col-md-3' }, React.createElement(KeywordInput, { keyword: this.props.keyword, onSubmit: this.props.onSubmit, onChange: this.props.onKeywordChange, expanded: false })), React.createElement('div', { className: 'col-md-2' }, React.createElement(Select, { type: 'countries', placeholder: 'Select Country', value: this.props.countries, onChange: this.props.onCountryChange, items: this.props.aggregations.countries })), React.createElement('div', { className: 'col-md-2' }, React.createElement(Select, { type: 'industries', placeholder: 'Select Industry', value: this.props.industries, onChange: this.props.onIndustryChange, items: this.props.aggregations.industries })), React.createElement('div', { className: 'col-md-2' }, React.createElement(Select, { type: 'topics', placeholder: 'Select Topic', value: this.props.topics, onChange: this.props.onTopicChange, items: this.props.aggregations.topics })));
+    return React.createElement(
+      'div',
+      { className: 'row' },
+      React.createElement(
+        'div',
+        { className: 'col-md-3' },
+        React.createElement(Header, { cssClass: 'header-condensed' })
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-md-3' },
+        React.createElement(KeywordInput, { keyword: this.props.keyword, onSubmit: this.props.onSubmit, onChange: this.props.onKeywordChange, expanded: false })
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-md-2' },
+        React.createElement(Select, { type: 'countries', placeholder: 'Select Country', value: this.props.countries, onChange: this.props.onCountryChange, items: this.props.aggregations.countries })
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-md-2' },
+        React.createElement(Select, { type: 'industries', placeholder: 'Select Industry', value: this.props.industries, onChange: this.props.onIndustryChange, items: this.props.aggregations.industries })
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-md-2' },
+        React.createElement(Select, { type: 'topics', placeholder: 'Select Topic', value: this.props.topics, onChange: this.props.onTopicChange, items: this.props.aggregations.topics })
+      )
+    );
   }
 });
 
@@ -48741,7 +48791,41 @@ module.exports = React.createClass({
   displayName: 'exports',
 
   render: function render() {
-    return React.createElement('div', null, React.createElement('div', { className: 'row page-header' }, React.createElement(Header, { cssClass: 'text-center' })), React.createElement('div', { className: 'row' }, React.createElement('div', { className: 'col-md-8 keyword-input' }, React.createElement('p', { className: 'text-muted' }, 'Search by Keyword'), React.createElement(KeywordInput, { keyword: this.props.keyword, onSubmit: this.props.onSubmit, onChange: this.props.onKeywordChange })), React.createElement('div', { className: 'col-md-4 category-input' }, React.createElement('p', { className: 'text-muted' }, 'Search by Category'), React.createElement(Select, { type: 'countries', onChange: this.props.onCountryChange, placeholder: 'Select Country', items: this.props.aggregations.countries }), React.createElement(Select, { type: 'industries', onChange: this.props.onIndustryChange, placeholder: 'Select Industry', items: this.props.aggregations.industries }), React.createElement(Select, { type: 'topics', onChange: this.props.onTopicChange, placeholder: 'Select Topic', items: this.props.aggregations.topics }))));
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'div',
+        { className: 'row page-header' },
+        React.createElement(Header, { cssClass: 'text-center' })
+      ),
+      React.createElement(
+        'div',
+        { className: 'row' },
+        React.createElement(
+          'div',
+          { className: 'col-md-8 keyword-input' },
+          React.createElement(
+            'p',
+            { className: 'text-muted' },
+            'Search by Keyword'
+          ),
+          React.createElement(KeywordInput, { keyword: this.props.keyword, onSubmit: this.props.onSubmit, onChange: this.props.onKeywordChange })
+        ),
+        React.createElement(
+          'div',
+          { className: 'col-md-4 category-input' },
+          React.createElement(
+            'p',
+            { className: 'text-muted' },
+            'Search by Category'
+          ),
+          React.createElement(Select, { type: 'countries', onChange: this.props.onCountryChange, placeholder: 'Select Country', items: this.props.aggregations.countries }),
+          React.createElement(Select, { type: 'industries', onChange: this.props.onIndustryChange, placeholder: 'Select Industry', items: this.props.aggregations.industries }),
+          React.createElement(Select, { type: 'topics', onChange: this.props.onTopicChange, placeholder: 'Select Topic', items: this.props.aggregations.topics })
+        )
+      )
+    );
   }
 });
 
@@ -48773,14 +48857,37 @@ module.exports = React.createClass({
     ArticleStore.removeListener(this._onChange);
   },
   createNestedFilterOption: function createNestedFilterOption(list, name, item, index) {
-    return React.createElement('li', { className: 'list-group-item checkbox', key: item }, React.createElement('label', null, React.createElement('input', { onChange: this.onFilter, name: name, type: 'checkbox', value: item }), item), this.createFilterList(list[item], name, this.createNestedFilterOption));
+    return React.createElement(
+      'li',
+      { className: 'list-group-item checkbox', key: item },
+      React.createElement(
+        'label',
+        null,
+        React.createElement('input', { onChange: this.onFilter, name: name, type: 'checkbox', value: item }),
+        item
+      ),
+      this.createFilterList(list[item], name, this.createNestedFilterOption)
+    );
   },
   createFilterOption: function createFilterOption(list, name, item, index) {
-    return React.createElement('li', { className: 'list-group-item checkbox', key: item }, React.createElement('label', null, React.createElement('input', { onChange: this.onFilter, name: name, type: 'checkbox', value: item }), item));
+    return React.createElement(
+      'li',
+      { className: 'list-group-item checkbox', key: item },
+      React.createElement(
+        'label',
+        null,
+        React.createElement('input', { onChange: this.onFilter, name: name, type: 'checkbox', value: item }),
+        item
+      )
+    );
   },
   createFilterList: function createFilterList(list, name, callback) {
     if (_.isEmpty(list)) return null;
-    return React.createElement('ul', { className: 'list-group' }, _.keys(list).map(callback.bind(null, list, name)));
+    return React.createElement(
+      'ul',
+      { className: 'list-group' },
+      _.keys(list).map(callback.bind(null, list, name))
+    );
   },
   onFilter: function onFilter(e) {
     var filters = _.reduce($('#filters input:checked'), function (results, checked, __) {
@@ -48804,7 +48911,52 @@ module.exports = React.createClass({
     ArticleActor.filter(filters);
   },
   render: function render() {
-    return React.createElement('div', { id: 'filters' }, React.createElement('section', null, React.createElement('h5', null, 'Country'), React.createElement('div', { className: 'overflow' }, this.createFilterList(this.state.filters.countries, 'country-filter', this.createFilterOption))), React.createElement('section', null, React.createElement('h5', null, 'Industry'), React.createElement('div', { className: 'overflow' }, this.createFilterList(this.state.filters.industries, 'industry-filter', this.createNestedFilterOption))), React.createElement('section', null, React.createElement('h5', null, 'Topic'), React.createElement('div', { className: 'overflow' }, this.createFilterList(this.state.filters.topics, 'topic-filter', this.createNestedFilterOption))));
+    return React.createElement(
+      'div',
+      { id: 'filters' },
+      React.createElement(
+        'section',
+        null,
+        React.createElement(
+          'h5',
+          null,
+          'Country'
+        ),
+        React.createElement(
+          'div',
+          { className: 'overflow' },
+          this.createFilterList(this.state.filters.countries, 'country-filter', this.createFilterOption)
+        )
+      ),
+      React.createElement(
+        'section',
+        null,
+        React.createElement(
+          'h5',
+          null,
+          'Industry'
+        ),
+        React.createElement(
+          'div',
+          { className: 'overflow' },
+          this.createFilterList(this.state.filters.industries, 'industry-filter', this.createNestedFilterOption)
+        )
+      ),
+      React.createElement(
+        'section',
+        null,
+        React.createElement(
+          'h5',
+          null,
+          'Topic'
+        ),
+        React.createElement(
+          'div',
+          { className: 'overflow' },
+          this.createFilterList(this.state.filters.topics, 'topic-filter', this.createNestedFilterOption)
+        )
+      )
+    );
   }
 });
 
@@ -48904,7 +49056,20 @@ module.exports = React.createClass({
   render: function render() {
     var className = "header ";
     className = className.concat(this.props.cssClass);
-    return React.createElement('header', { className: className }, React.createElement('a', { href: '#', onClick: this.props.onClick }, 'Find Market Intelligence ', React.createElement('span', { className: 'phase' }, 'beta')));
+    return React.createElement(
+      'header',
+      { className: className },
+      React.createElement(
+        'a',
+        { href: '#', onClick: this.props.onClick },
+        'Find Market Intelligence ',
+        React.createElement(
+          'span',
+          { className: 'phase' },
+          'beta'
+        )
+      )
+    );
   }
 });
 
@@ -48955,7 +49120,20 @@ module.exports = React.createClass({
       buttonClass = buttonClass.concat(' btn-lg');
       containerClass = containerClass.concat(' col-md-10');
     }
-    return React.createElement('div', { className: containerClass }, React.createElement('input', { type: 'text', className: inputClass, name: 'keyword', value: this.props.keyword, onChange: this.props.onChange, onKeyDown: this.handleEnter, placeholder: 'Keyword' }), React.createElement('span', { className: 'input-group-btn' }, React.createElement('button', { className: buttonClass, type: 'button', onClick: this.props.onSubmit }, React.createElement('i', { className: 'fa fa-search' }))));
+    return React.createElement(
+      'div',
+      { className: containerClass },
+      React.createElement('input', { type: 'text', className: inputClass, name: 'keyword', value: this.props.keyword, onChange: this.props.onChange, onKeyDown: this.handleEnter, placeholder: 'Keyword' }),
+      React.createElement(
+        'span',
+        { className: 'input-group-btn' },
+        React.createElement(
+          'button',
+          { className: buttonClass, type: 'button', onClick: this.props.onSubmit },
+          React.createElement('i', { className: 'fa fa-search' })
+        )
+      )
+    );
   }
 });
 
@@ -49027,7 +49205,15 @@ module.exports = React.createClass({
     return 'search?' + $.param(params);
   },
   createPage: function createPage(i, isActive) {
-    return React.createElement('li', { key: i, className: isActive ? 'active' : '' }, React.createElement('a', { onClick: this.handleClick, href: this.url(i), 'data-offset': this.offset(i) }, i));
+    return React.createElement(
+      'li',
+      { key: i, className: isActive ? 'active' : '' },
+      React.createElement(
+        'a',
+        { onClick: this.handleClick, href: this.url(i), 'data-offset': this.offset(i) },
+        i
+      )
+    );
   },
   createPageRange: function createPageRange() {
     var pages = [];
@@ -49037,7 +49223,35 @@ module.exports = React.createClass({
     return pages;
   },
   render: function render() {
-    return React.createElement('nav', null, React.createElement('ul', { className: 'pagination' }, React.createElement('li', null, React.createElement('a', { href: this.url(1), 'aria-label': 'First', className: 'fa fa-angle-double-left' })), React.createElement('li', null, React.createElement('a', { href: this.url(this.previousPage()), 'aria-label': 'Previous', className: 'fa fa-angle-left' })), this.createPageRange(), React.createElement('li', null, React.createElement('a', { href: this.url(this.nextPage()), 'aria-label': 'Next', className: 'fa fa-angle-right' })), React.createElement('li', null, React.createElement('a', { href: this.url(this.state.total), 'aria-label': 'Last', className: 'fa fa-angle-double-right' }))));
+    return React.createElement(
+      'nav',
+      null,
+      React.createElement(
+        'ul',
+        { className: 'pagination' },
+        React.createElement(
+          'li',
+          null,
+          React.createElement('a', { href: this.url(1), 'aria-label': 'First', className: 'fa fa-angle-double-left' })
+        ),
+        React.createElement(
+          'li',
+          null,
+          React.createElement('a', { href: this.url(this.previousPage()), 'aria-label': 'Previous', className: 'fa fa-angle-left' })
+        ),
+        this.createPageRange(),
+        React.createElement(
+          'li',
+          null,
+          React.createElement('a', { href: this.url(this.nextPage()), 'aria-label': 'Next', className: 'fa fa-angle-right' })
+        ),
+        React.createElement(
+          'li',
+          null,
+          React.createElement('a', { href: this.url(this.state.total), 'aria-label': 'Last', className: 'fa fa-angle-double-right' })
+        )
+      )
+    );
   }
 });
 
@@ -49072,10 +49286,39 @@ module.exports = React.createClass({
     }
   },
   result: function result() {
-    return React.createElement('div', { className: 'row' }, React.createElement('div', { className: 'col-md-3' }, React.createElement('h4', { className: 'text-muted' }, 'Advance Options'), React.createElement(Filters, null)), React.createElement('div', { className: 'col-md-9' }, React.createElement(Messages, null), React.createElement(ArticleList, null), React.createElement(Pagination, { history: this.history })));
+    return React.createElement(
+      'div',
+      { className: 'row' },
+      React.createElement(
+        'div',
+        { className: 'col-md-3' },
+        React.createElement(
+          'h4',
+          { className: 'text-muted' },
+          'Advance Options'
+        ),
+        React.createElement(Filters, null)
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-md-9' },
+        React.createElement(Messages, null),
+        React.createElement(ArticleList, null),
+        React.createElement(Pagination, { history: this.history })
+      )
+    );
   },
   render: function render() {
-    return React.createElement('div', null, React.createElement('div', { className: 'row' }, React.createElement(Form, { expanded: false, history: this.history })), this.result());
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'div',
+        { className: 'row' },
+        React.createElement(Form, { expanded: false, history: this.history })
+      ),
+      this.result()
+    );
   }
 });
 
@@ -49120,14 +49363,31 @@ module.exports = React.createClass({
     return msg;
   },
   count: function count() {
-    return React.createElement('strong', { className: 'text-danger' }, this.state.total);
+    return React.createElement(
+      'strong',
+      { className: 'text-danger' },
+      this.state.total
+    );
   },
   keyword: function keyword() {
     if (!this.state.query.q) return null;
-    return React.createElement('strong', { className: 'text-danger' }, this.state.query.q, '.');
+    return React.createElement(
+      'strong',
+      { className: 'text-danger' },
+      this.state.query.q,
+      '.'
+    );
   },
   render: function render() {
-    return React.createElement('h6', null, this.count(), ' ', this.message(), ' ', this.keyword());
+    return React.createElement(
+      'h6',
+      null,
+      this.count(),
+      ' ',
+      this.message(),
+      ' ',
+      this.keyword()
+    );
   }
 });
 
@@ -49140,7 +49400,14 @@ module.exports = React.createClass({
   displayName: "exports",
 
   render: function render() {
-    return React.createElement("div", { className: "sk-folding-cube" }, React.createElement("div", { className: "sk-cube sk-cube1" }), React.createElement("div", { className: "sk-cube sk-cube2" }), React.createElement("div", { className: "sk-cube sk-cube4" }), React.createElement("div", { className: "sk-cube sk-cube3" }));
+    return React.createElement(
+      "div",
+      { className: "sk-folding-cube" },
+      React.createElement("div", { className: "sk-cube sk-cube1" }),
+      React.createElement("div", { className: "sk-cube sk-cube2" }),
+      React.createElement("div", { className: "sk-cube sk-cube4" }),
+      React.createElement("div", { className: "sk-cube sk-cube3" })
+    );
   }
 });
 

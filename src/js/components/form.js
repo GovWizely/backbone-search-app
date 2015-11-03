@@ -19,7 +19,6 @@ module.exports = React.createClass({
       keyword      : ArticleStore.getQuery().q          || '',
       countries    : ArticleStore.getQuery().countries  || '',
       industries   : ArticleStore.getQuery().industries || '',
-      topics       : ArticleStore.getQuery().topics     || '',
       aggregations : {}
     };
   },
@@ -32,8 +31,7 @@ module.exports = React.createClass({
     var query = _.pick({
       q: this.state.keyword,
       countries: this.state.countries,
-      industries: this.state.industries,
-      topics: this.state.topics
+      industries: this.state.industries
     }, _.identity);
 
     this.props.history.pushState(
@@ -48,15 +46,11 @@ module.exports = React.createClass({
   handleIndustryChange: function(values) {
     this.setState({ industries: values });
   },
-  handleTopicChange: function(values) {
-    this.setState({ topics: values });
-  },
   view: function() {
     var props = {
       keyword          : this.state.keyword,
       countries        : this.state.countries,
       industries       : this.state.industries,
-      topics           : this.state.topics,
       aggregations     : this.state.aggregations,
       onKeywordChange  : this.handleKeywordChange,
       onCountryChange  : this.handleCountryChange,

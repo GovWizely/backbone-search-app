@@ -48568,7 +48568,7 @@ var IndexView = require('./js/components/index-view');
 var ResultView = require('./js/components/result-view');
 
 var history;
-if ("production" === "production") {
+if ("development" === "production") {
   history = useBasename(createHistory)({
     basename: 'market-intelligence-search-app'
   });

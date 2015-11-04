@@ -39,7 +39,6 @@ var log = {
   }
 };
 
-
 gulp.task('browser-sync', ['build'], function() {
   browserSync({
     baseDir: config.distPath,

@@ -118,9 +118,9 @@ gulp.task('html-watch', ['browser-sync'], html.watch);
 
 var js = {
   b: browserify({
-      entries: [config.sourcePath + '/index.js'],
-      cache: {},
-      packageCache: {}
+    entries: [config.sourcePath + '/index.js'],
+    cache: {},
+    packageCache: {}
   }),
   build: function(__, browserified) {
     var b = browserified || js.b;

@@ -15,8 +15,6 @@
   "homepage": "https://github.com/GovWizely/market-intelligence-search-app#readme",
   "dependencies": {
     "axios": "^0.7.0",
-    "backbone": "^1.2.3",
-    "backbone-react-component": "git+ssh://git@github.com/magalhas/backbone-react-component.git",
     "es6-promise": "^3.0.2",
     "flux": "^2.1.1",
     "history": "^1.12.6",
@@ -27,9 +25,7 @@
     "react": "^0.14.2",
     "react-dom": "^0.14.0",
     "react-router": "^1.0.0-rc3",
-    "react-select": "^0.8.0",
-    "superagent": "^1.4.0",
-    "superagent-bluebird-promise": "^2.1.0"
+    "react-select": "^0.8.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.20",

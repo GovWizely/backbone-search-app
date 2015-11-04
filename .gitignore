@@ -5,6 +5,7 @@
 /tmp
 /public/css/style.css
 /public/fonts
+.publish
 
 # dependencies
 /node_modules

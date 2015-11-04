@@ -3,7 +3,7 @@ import TestUtils from 'react-addons-test-utils';
 import { expect } from 'chai';
 import AggregationSelect from '../../src/js/components/aggregation-select';
 
-const { renderIntoDocument, findRenderedDOMComponentWithClass, scryRenderedDOMComponentsWithClass } = TestUtils;
+const { renderIntoDocument, findRenderedDOMComponentWithClass } = TestUtils;
 
 describe('AggregationSelect', () => {
   it('renders a select component', () => {

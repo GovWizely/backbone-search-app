@@ -4,11 +4,11 @@ var React = require('react');
 
 var ExpandedForm     = require('./expanded-form');
 var CondensedForm    = require('./condensed-form');
-var ArticleActor     = require('../actors/article-actor');
 var ArticleStore     = require('../stores/article-store');
 var AggregationStore = require('../stores/aggregation-store');
 
 module.exports = React.createClass({
+  displayName: 'Form',
   getDefaultProps: function() {
     return {
       expanded : true

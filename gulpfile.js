@@ -1,3 +1,5 @@
+require('babel-core/register');
+
 var _           = require('lodash'),
     del         = require('del'),
     gulp        = require('gulp'),
@@ -15,7 +17,8 @@ var _           = require('lodash'),
     babelify    = require('babelify'),
     wiredep     = require('wiredep').stream,
     browserSync = require('browser-sync'),
-    history     = require('connect-history-api-fallback');
+    history     = require('connect-history-api-fallback'),
+    mocha       = require('gulp-mocha');
 
 var config = {
   sourcePath: './src',
@@ -38,6 +41,12 @@ var log = {
     gulpUtil.colors.green('[✔] ' + message);
   }
 };
+
+gulp.task('test', function () {
+  return gulp.src('test/**/*.js', {read: false})
+    .pipe(mocha({reporter: 'nyan'}));
+
+});
 
 gulp.task('browser-sync', ['build'], function() {
   browserSync({

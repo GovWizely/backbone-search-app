@@ -11,6 +11,7 @@ var ArticleActor = require('../actors/article-actor');
 var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
+  displayName: 'ResultView',
   mixins: [ History ],
   _onChange: function() {
     this.setState({ articles  : ArticleStore.getArticles() });

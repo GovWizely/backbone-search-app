@@ -5,6 +5,7 @@ var KeywordInput = require('./keyword-input');
 var Select       = require('./aggregation-select');
 
 module.exports = React.createClass({
+  displayName: 'ExpandedForm',
   render: function() {
     return (
       <div>

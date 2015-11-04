@@ -4,6 +4,7 @@ var React = require('react');
 var ArticleListItem = require('./article-list-item');
 
 module.exports = React.createClass({
+  displayName: 'ArticleList',
   getDefaultProps: function() {
     return {
       articles: []

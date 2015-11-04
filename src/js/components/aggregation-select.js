@@ -5,6 +5,7 @@ var Select = require('react-select');
 var Store = require('../stores/aggregation-store');
 
 module.exports = React.createClass({
+  displayName: 'AggregationSelect',
   getDefaultProps: function() {
     return {
       items: [],

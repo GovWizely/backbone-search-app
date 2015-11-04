@@ -6,6 +6,7 @@ var ArticleActor = require('../actors/article-actor');
 var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
+  displayName: 'Filters',
   _onChange: function() {
     this.setState({ filters: ArticleStore.getAggregations() });
   },

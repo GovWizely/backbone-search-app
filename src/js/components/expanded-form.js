@@ -20,9 +20,9 @@ module.exports = React.createClass({
 
           <div className="col-md-4 category-input">
             <p className="text-muted">Search by Category</p>
-            <Select type="countries"  onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } />
+            <Select onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } />
             <p className="text-muted separator">And</p>
-            <Select type="industries" onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } />
+            <Select onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } />
           </div>
         </div>
       </div>

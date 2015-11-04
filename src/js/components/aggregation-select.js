@@ -8,7 +8,6 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       items: [],
-      type: null,
       placeholder: "Select Options"
     };
   },
@@ -23,7 +22,7 @@ module.exports = React.createClass({
       this.setState({ isLoading: false });
     }
   },
-  onChange: function(values, __) {
+  onChange: function(values) {
     if (values) {
       this.setState({ values: _.compact(values.split(',')) });
     } else {

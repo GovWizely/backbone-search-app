@@ -69,7 +69,7 @@ module.exports = React.createClass({
     return (
       <section>
         <h5>
-        <a role="button" data-toggle="collapse" href={ target } aria-expanded={ true } aria-controls={ id }>{ label }</a>
+          <a role="button" data-toggle="collapse" href={ target } aria-expanded={ true } aria-controls={ id }>{ label }</a>
         </h5>
         <div className="collapse in overflow" id={ id }>
           { this.createFilterList(list, id, generator) }

@@ -17,11 +17,11 @@ module.exports = React.createClass({
         </div>
 
         <div className="col-md-2">
-          <Select type="countries" placeholder="Select Country" value={ this.props.countries } onChange={ this.props.onCountryChange } items={ this.props.aggregations.countries }  />
+          <Select placeholder="Select Country" value={ this.props.countries } onChange={ this.props.onCountryChange } items={ this.props.aggregations.countries }  />
         </div>
 
         <div className="col-md-2">
-          <Select type="industries" placeholder="Select Industry" value={ this.props.industries } onChange={ this.props.onIndustryChange } items={ this.props.aggregations.industries }/>
+          <Select placeholder="Select Industry" value={ this.props.industries } onChange={ this.props.onIndustryChange } items={ this.props.aggregations.industries }/>
         </div>
 
       </div>

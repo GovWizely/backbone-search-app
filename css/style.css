@@ -8263,16 +8263,34 @@ nav.navbar {
   margin-top: 12px;
   margin-bottom: 14px; }
 
+.category-input .separator {
+  margin-top: 18px;
+  margin-bottom: 18px; }
+
 #filters {
+  margin-top: 20px;
   border-right: 1px solid #eee;
   width: 100%; }
   #filters section {
     width: 95%;
-    height: 280px;
     border-bottom: 1px solid #eee; }
     #filters section .overflow {
-      height: 85%;
-      overflow-y: scroll; }
+      max-height: 180px;
+      overflow-y: auto; }
+    #filters section .list-group-item {
+      margin-top: 0;
+      border: 0;
+      padding: 5px 15px; }
+  #filters a {
+    text-decoration: none; }
+    #filters a.collapsed:before {
+      font-family: FontAwesome;
+      content: '\f105';
+      margin-right: 10px; }
+    #filters a:before {
+      font-family: FontAwesome;
+      content: '\f107';
+      margin-right: 10px; }
 
 .articles {
   padding-bottom: 64px; }

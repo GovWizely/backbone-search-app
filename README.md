@@ -12,3 +12,11 @@ Ensure you have node/npm, bower and gulp installed globally on your system, then
   > gulp setup
   > gulp watch
 ```
+
+## Deploying
+
+To deploy to Github pages, do:
+
+```
+  $ gulp deploy
+```

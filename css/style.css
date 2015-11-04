@@ -8263,19 +8263,15 @@ nav.navbar {
   margin-top: 12px;
   margin-bottom: 14px; }
 
-.category-input .separator {
-  margin-top: 18px;
-  margin-bottom: 18px; }
-
 #filters {
   border-right: 1px solid #eee;
   width: 100%; }
   #filters section {
     width: 95%;
-    min-height: 80px;
+    height: 280px;
     border-bottom: 1px solid #eee; }
     #filters section .overflow {
-      max-height: 180px;
+      height: 85%;
       overflow-y: scroll; }
 
 .articles {

@@ -2,23 +2,29 @@ var _           = require('lodash'),
     del         = require('del'),
     gulp        = require('gulp'),
     gulpUtil    = require('gulp-util'),
+    ghPages     = require('gulp-gh-pages'),
     browserify  = require('browserify'),
+    envify      = require('envify/custom'),
     source      = require('vinyl-source-stream'),
     buffer      = require('vinyl-buffer'),
     sourcemaps  = require('gulp-sourcemaps'),
     sass        = require('gulp-sass'),
-    notify      = require('gulp-notify'),
     bower       = require('gulp-bower'),
     watchify    = require('watchify'),
     uglify      = require('gulp-uglify'),
     babelify    = require('babelify'),
     wiredep     = require('wiredep').stream,
-    browserSync = require('browser-sync');
+    browserSync = require('browser-sync'),
+    history     = require('connect-history-api-fallback');
 
 var config = {
   sourcePath: './src',
   distPath: './dist',
   bowerDir: './bower_components'
+};
+
+var env = {
+
 };
 
 var log = {
@@ -33,11 +39,13 @@ var log = {
   }
 };
 
+
 gulp.task('browser-sync', ['build'], function() {
   browserSync({
     baseDir: config.distPath,
     server: {
-      baseDir: config.distPath
+      baseDir: config.distPath,
+      middleware: [history()]
     }
   });
 });
@@ -52,11 +60,15 @@ gulp.task('icon-build', function() {
     .pipe(gulp.dest(config.distPath + '/fonts'));
 });
 
+gulp.task('image-build', function() {
+  return gulp.src(config.sourcePath + '/images/**/*')
+    .pipe(gulp.dest(config.distPath + '/images'));
+});
+
 var scss = {
-  path: config.sourcePath + '/scss',
   build: function() {
     log.init("Building scss");
-    return gulp.src(config.sourcePath + '/scss/*.scss')
+    return gulp.src(config.sourcePath + '/scss/**/*.scss')
       .pipe(
         sass({
           style: 'compressed',
@@ -75,10 +87,7 @@ var scss = {
       .pipe(browserSync.stream());
   },
   watch: function() {
-    return gulp.watch(config.sourcePath + '/scss')
-      .on('change', function(e) {
-        scss.reload();
-      });
+    return gulp.watch(config.sourcePath + '/scss/**/*.scss', scss.build);
   }
 };
 
@@ -112,10 +121,12 @@ var js = {
       entries: [config.sourcePath + '/index.js'],
       cache: {},
       packageCache: {}
-  }).transform(babelify, { blacklist: 'regenerator' }),
-  build: function() {
-    log.init('Building js');
-    return js.b.bundle()
+  }),
+  build: function(__, browserified) {
+    var b = browserified || js.b;
+    return b
+      .transform(babelify, { })
+      .bundle()
       .on('error', function(error) {
         log.error(error);
       })
@@ -141,9 +152,17 @@ var js = {
   }
 };
 
-gulp.task('js-build', js.build);
+gulp.task('js-build', function() {
+  js.build(js.b.transform(envify({ NODE_ENV: 'development' })));
+});
 gulp.task('js-reload', js.reload);
 gulp.task('js-watch', ['browser-sync'], js.watch);
+
+gulp.task('deploy', function() {
+  js.build(js.b.transform(envify({ NODE_ENV: 'production' })));
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
+});
 
 gulp.task('setup', [
   'bower',
@@ -152,13 +171,14 @@ gulp.task('setup', [
 
 gulp.task('build', [
   'icon-build',
+  'image-build',
   'scss-build',
   'html-build',
   'js-build'
 ]);
 
 gulp.task('watch', [
-  'scss-watch',
   'html-watch',
-  'js-watch'
+  'js-watch',
+  'scss-watch'
 ]);

@@ -1,14 +1,28 @@
-var $        = require('jquery');
-var Backbone = require('backbone');
-var React    = require('react');
-var ReactDOM = require('react-dom');
+var React         = require('react');
+var ReactDOM      = require('react-dom');
+var useBasename   = require('history').useBasename;
+var createHistory = require('history').createHashHistory;
+var Router        = require('react-router').Router;
+var Route         = require('react-router').Route;
 
 
-var Router   = require('./js/router');
-var View     = require('./js/components/view');
+var IndexView  = require('./js/components/index-view');
+var ResultView = require('./js/components/result-view');
 
-var router   = new Router();
+var history;
+if (process.env.NODE_ENV === "production") {
+  history = useBasename(createHistory)({
+    basename: 'market-intelligence-search-app'
+  });
+} else {
+  history = createHistory();
+}
 
-ReactDOM.render(<View router={ router } />, $('#main').get(0));
+const routes = [
+  { path: "/", component: IndexView },
+  { path: "/search", component: ResultView }
+];
 
-Backbone.history.start();
+ReactDOM.render((
+  <Router history={ history } routes={ routes } />
+), document.getElementById('main'));

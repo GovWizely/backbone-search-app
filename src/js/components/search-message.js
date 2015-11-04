@@ -1,40 +1,49 @@
-var Backbone      = require('backbone');
-var BackboneReact = require('backbone-react-component');
-var _             = require('lodash');
-var React         = require('react');
+var _     = require('lodash');
+var React = require('react');
+
+var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
-  mixins: [Backbone.React.Component.mixin],
-  keywordString: null,
-  getDefaultProps: function() {
+  _onChange: function() {
+    this.setState({ total: ArticleStore.getMetadata().total });
+    this.setState({ query: ArticleStore.getQuery() });
+  },
+  getInitialState: function() {
     return {
-      count: null,
-      keyword: null
+      total: 0,
+      query: ArticleStore.getQuery()
     };
   },
+  componentDidMount: function() {
+    ArticleStore.addListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    ArticleStore.removeListener(this._onChange);
+  },
   message: function() {
-    if (this.props.count === null) return null;
+    if (this.state.total === null) return null;
 
-    var msg = this.props.count ? 'results' : 'result';
+    var msg = this.state.total ? 'results' : 'result';
     msg = msg.concat(' were found');
 
-    if (this.keywordString && !(this.keywordString === '')) {
+    if (!_.isEmpty(this.state.query.q)) {
       msg = msg.concat(' for the search for');
+    } else {
+      msg = msg.concat('.');
     }
     return msg;
   },
   count: function() {
-    return <strong className="text-danger">{ this.props.count }</strong>;
+    return <strong className="text-danger">{ this.state.total }</strong>;
   },
   keyword: function() {
-    if (!this.keywordString) return null;
-    return <strong className="text-danger">{ this.keywordString }</strong>;
+    if (!this.state.query.q) return null;
+    return <strong className="text-danger">{ this.state.query.q }.</strong>;
   },
   render: function() {
-    this.keywordString = _.clone(this.props.keyword);
     return (
       <h6>
-        { this.count() } { this.message() } { this.keyword() }.
+        { this.count() } { this.message() } { this.keyword() }
       </h6>
     );
   }

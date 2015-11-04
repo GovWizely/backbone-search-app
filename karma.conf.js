@@ -3,19 +3,18 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['browserify', 'mocha', 'chai'],
 
-    browser: ['Chrome'],
+    reporters: ['nyan'],
+
+    browsers: ['Chrome'],
 
     files: [
       'src/js/**/*.js',
       'test/**/*.js'
     ],
 
-    reporters: ['mocha'],
-
     preprocessors: {
       'src/js/**/*.js': ['browserify'],
       'test/**/*.js': ['browserify']
-
     },
 
     browserify: {

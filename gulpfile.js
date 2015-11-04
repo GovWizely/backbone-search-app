@@ -18,7 +18,7 @@ var _           = require('lodash'),
     wiredep     = require('wiredep').stream,
     browserSync = require('browser-sync'),
     history     = require('connect-history-api-fallback'),
-    mocha       = require('gulp-mocha');
+    Karma       = require('karma').Server;
 
 var config = {
   sourcePath: './src',
@@ -42,10 +42,17 @@ var log = {
   }
 };
 
-gulp.task('test', function () {
-  return gulp.src('test/**/*.js', {read: false})
-    .pipe(mocha({reporter: 'nyan'}));
+gulp.task('test', function (done) {
+  new Karma({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
 
+gulp.task('test:watch', function (done) {
+  new Karma({
+    configFile: __dirname + '/karma.conf.js'
+  }, done).start();
 });
 
 gulp.task('browser-sync', ['build'], function() {

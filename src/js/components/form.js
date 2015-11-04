@@ -27,7 +27,7 @@ module.exports = React.createClass({
       this.setState({ aggregations: aggregations });
     }.bind(this));
   },
-  handleSubmit: function(e) {
+  handleSubmit: function() {
     var query = _.pick({
       q: this.state.keyword,
       countries: this.state.countries,

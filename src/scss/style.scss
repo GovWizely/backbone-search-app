@@ -101,13 +101,36 @@ nav.navbar {
   width: 100%;
   section {
     width: 95%;
-    height: 280px;
     border-bottom: 1px solid #eee;
 
     .overflow {
-      height: 85%;
-      overflow-y: scroll;
+      max-height: 180px;
+      overflow-y: auto;
     }
+
+    .list-group-item {
+      margin-top: 0;
+      border: 0;
+      padding: 5px 15px;
+
+    }
+  }
+  a {
+      text-decoration: none;
+
+      &.collapsed:before {
+          font-family: FontAwesome;
+          content: '\f105';
+          margin-right: 10px;
+      }
+
+      &:before {
+          font-family: FontAwesome;
+          content: '\f107';
+          margin-right: 10px;
+
+      }
+
   }
 }
 

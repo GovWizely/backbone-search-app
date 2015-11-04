@@ -20,7 +20,7 @@ module.exports = React.createClass({
   componentWillUnmount: function() {
     ArticleStore.removeListener(this._onChange);
   },
-  createNestedFilterOption: function(list, name, item, index) {
+  createNestedFilterOption: function(list, name, item) {
     return (
       <li className="list-group-item checkbox" key={ item }>
         <label><input onChange={ this.onFilter }name={ name } type="checkbox" value={ item } />{ item }</label>
@@ -28,7 +28,7 @@ module.exports = React.createClass({
       </li>
     );
   },
-  createFilterOption: function(list, name, item, index) {
+  createFilterOption: function(list, name, item) {
     return (
       <li className="list-group-item checkbox" key={ item }>
         <label><input onChange={ this.onFilter } name={ name } type="checkbox" value={ item } />{ item }</label>
@@ -44,7 +44,7 @@ module.exports = React.createClass({
     );
   },
   onFilter: function(e) {
-    var filters = _.reduce($('#filters input:checked'), function(results, checked, __) {
+    var filters = _.reduce($('#filters input:checked'), function(results, checked) {
       switch(checked.name) {
       case 'country-filter':
         results.countries.push(checked.value);
@@ -64,27 +64,25 @@ module.exports = React.createClass({
 
     ArticleActor.filter(filters);
   },
+  renderSection: function(id, label, list, generator) {
+    var target = '#' + id;
+    return (
+      <section>
+        <h5>
+        <a role="button" data-toggle="collapse" href={ target } aria-expanded={ true } aria-controls={ id }>{ label }</a>
+        </h5>
+        <div className="collapse in overflow" id={ id }>
+          { this.createFilterList(list, id, generator) }
+        </div>
+      </section>
+    );
+  },
   render: function() {
     return (
       <div id="filters">
-        <section>
-        <h5>Country</h5>
-        <div className="overflow">
-        { this.createFilterList(this.state.filters.countries, 'country-filter', this.createFilterOption) }
-      </div>
-        </section>
-        <section>
-        <h5>Industry</h5>
-        <div className="overflow">
-        { this.createFilterList(this.state.filters.industries, 'industry-filter', this.createNestedFilterOption) }
-        </div>
-        </section>
-        <section>
-        <h5>Topic</h5>
-        <div className="overflow">
-        { this.createFilterList(this.state.filters.topics, 'topic-filter', this.createNestedFilterOption) }
-        </div>
-        </section>
+        { this.renderSection('country-filter', 'Country', this.state.filters.countries, this.createFilterOption) }
+        { this.renderSection('industry-filter', 'Industry', this.state.filters.industries, this.createNestedFilterOption) }
+        { this.renderSection('topic-filter', 'Topic', this.state.filters.topics, this.createNestedFilterOption) }
       </div>
     );
   }

@@ -73,12 +73,18 @@ module.exports = React.createClass({
     var target = '#' + id;
     return (
       <section>
+        <fieldset>
         <h5>
-          <a role="button" data-toggle="collapse" href={ target } aria-expanded={ true } aria-controls={ id }>{ label }</a>
+          <legend>
+            <a role="button" data-toggle="collapse" href={ target } aria-expanded={ true } aria-controls={ id }>{ label }</a>
+          </legend>
         </h5>
         <div className="collapse in overflow" id={ id }>
-          { this.createFilterList(list, id, generator) }
+
+            { this.createFilterList(list, id, generator) }
+
         </div>
+        </fieldset>
       </section>
     );
   },

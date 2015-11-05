@@ -18,11 +18,11 @@ module.exports = React.createClass({
         </div>
 
         <div className="col-md-2">
-        <Select placeholder="Select Country" value={ this.props.countries } onChange={ this.props.onCountryChange } items={ this.props.aggregations.countries } onSubmit={ this.props.onSubmit } />
+        <Select placeholder="Select Country" values={ this.props.countries } onChange={ this.props.onCountryChange } items={ this.props.aggregations.countries } onSubmit={ this.props.onSubmit } />
         </div>
 
         <div className="col-md-2">
-          <Select placeholder="Select Industry" value={ this.props.industries } onChange={ this.props.onIndustryChange } items={ this.props.aggregations.industries } onSubmit={ this.props.onSubmit } />
+          <Select placeholder="Select Industry" values={ this.props.industries } onChange={ this.props.onIndustryChange } items={ this.props.aggregations.industries } onSubmit={ this.props.onSubmit } />
         </div>
 
       </div>

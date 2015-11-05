@@ -4,6 +4,14 @@ var Select = require('react-select');
 
 module.exports = React.createClass({
   displayName: 'AggregationSelect',
+  propTypes: {
+    items       : React.PropTypes.array.isRequired,
+    values      : React.PropTypes.string.isRequired,
+    onChange    : React.PropTypes.func.isRequired,
+    onSubmit    : React.PropTypes.func,
+    placeholder : React.PropTypes.string
+
+  },
   getDefaultProps: function() {
     return {
       items: [],
@@ -12,7 +20,6 @@ module.exports = React.createClass({
   },
   getInitialState: function() {
     return {
-      values: [],
       isLoading: _.isEmpty(this.props.items)
     };
   },
@@ -21,7 +28,9 @@ module.exports = React.createClass({
       return function(event) {
         handleKeyDown(event);
         if (event.which === 13 && !this.refs.select.state.isOpen) {
-          this.props.onSubmit(event);
+          if (_.isFunction(this.props.onSubmit)) {
+            this.props.onSubmit(event);
+          }
         }
       }.bind(this);
     }).bind(this)(this.refs.select.handleKeyDown);
@@ -31,16 +40,6 @@ module.exports = React.createClass({
       this.setState({ isLoading: false });
     }
   },
-  handleChange: function(values) {
-    if (values) {
-      this.setState({ values: _.compact(values.split(',')) });
-    } else {
-      this.setState({ values: [] });
-    }
-    if (_.isFunction(this.props.onChange)) {
-      this.props.onChange(values);
-    }
-  },
   options: function() {
     return _.map(this.props.items, function(item) {
       return { label: item.key, value: item.key };
@@ -48,7 +47,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-        <Select ref="select" isLoading={ this.state.isLoading } name="countries" multi={ true } placeholder={ this.props.placeholder } options={ this.options() } onClick={this.onEnter } onChange={ this.handleChange } value={ this.state.values } />
+      <Select ref="select" isLoading={ this.state.isLoading } name="countries" multi={ true } placeholder={ this.props.placeholder } options={ this.options() } onChange={ this.props.onChange } value={ this.props.values } />
     );
   }
 });

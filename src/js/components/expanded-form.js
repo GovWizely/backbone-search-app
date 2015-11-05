@@ -21,9 +21,9 @@ module.exports = React.createClass({
 
           <div className="col-md-4 category-input">
             <p className="text-muted">Search by Category</p>
-            <Select onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } />
+            <Select onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ this.props.onSubmit } />
             <p className="text-muted separator">And</p>
-            <Select onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } />
+            <Select onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ this.props.onSubmit } />
           </div>
         </div>
       </div>

@@ -2,8 +2,6 @@ var _      = require('lodash');
 var React  = require('react');
 var Select = require('react-select');
 
-var Store = require('../stores/aggregation-store');
-
 module.exports = React.createClass({
   displayName: 'AggregationSelect',
   getDefaultProps: function() {
@@ -18,18 +16,28 @@ module.exports = React.createClass({
       isLoading: _.isEmpty(this.props.items)
     };
   },
+  componentDidMount: function() {
+    this.refs.select.handleKeyDown = (function(handleKeyDown) {
+      return function(event) {
+        handleKeyDown(event);
+        if (event.which === 13 && !this.refs.select.state.isOpen) {
+          this.props.onSubmit(event);
+        }
+      }.bind(this);
+    }).bind(this)(this.refs.select.handleKeyDown);
+  },
   componentWillReceiveProps: function(nextProps) {
     if (!_.isEmpty(nextProps.items)) {
       this.setState({ isLoading: false });
     }
   },
-  onChange: function(values) {
+  handleChange: function(values) {
     if (values) {
       this.setState({ values: _.compact(values.split(',')) });
     } else {
       this.setState({ values: [] });
     }
-    if ((typeof this.props.onChange) === 'function') {
+    if (_.isFunction(this.props.onChange)) {
       this.props.onChange(values);
     }
   },
@@ -40,7 +48,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <Select isLoading={ this.state.isLoading } name="countries" multi={ true } placeholder={ this.props.placeholder } options={ this.options() } onChange={ this.onChange } value={ this.state.values } />
+        <Select ref="select" isLoading={ this.state.isLoading } name="countries" multi={ true } placeholder={ this.props.placeholder } options={ this.options() } onClick={this.onEnter } onChange={ this.handleChange } value={ this.state.values } />
     );
   }
 });

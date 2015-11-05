@@ -39,7 +39,7 @@ describe('AggregationSelect', () => {
     }.bind(this);
 
     const component = renderIntoDocument(<AggregationSelect onChange={ change } />);
-    component.onChange();
+    component.handleChange();
 
     expect(o.value).to.equal(1);
   });

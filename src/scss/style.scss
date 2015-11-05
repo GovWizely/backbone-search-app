@@ -3,7 +3,7 @@ $font-family-base: 'Lato', sans-serif;
 
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
 @import "bower_components/components-font-awesome/scss/font-awesome";
-@import "node_modules/react-select/dist/default";
+@import "node_modules/react-select/dist/react-select";
 @import "./spinner.scss";
 
 $header-color: #32404e;
@@ -136,8 +136,8 @@ nav.navbar {
 }
 
 .articles {
-  padding-bottom: 64px;
   .article {
+    margin-bottom: 35px;
     .title {
       font: 500 normal 1.375em Lato,sans-serif;
       a {

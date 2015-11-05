@@ -1,9 +1,8 @@
-require('babel-core/register');
-
 var _           = require('lodash'),
     del         = require('del'),
     gulp        = require('gulp'),
     gulpUtil    = require('gulp-util'),
+    notify      = require('gulp-notify'),
     ghPages     = require('gulp-gh-pages'),
     browserify  = require('browserify'),
     envify      = require('envify/custom'),
@@ -34,8 +33,8 @@ var log = {
   init: function(message) {
     gulpUtil.colors.yellow('[❗] ' + message);
   },
-  error: function(message) {
-    gulpUtil.colors.red('[✖] ' + message);
+  error: function(error) {
+    notify.onError(error.toString().split(': ').join(':\n')).apply(this, arguments);
   },
   success: function(message) {
     gulpUtil.colors.green('[✔] ' + message);

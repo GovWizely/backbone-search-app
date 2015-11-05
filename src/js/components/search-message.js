@@ -43,9 +43,9 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <h6>
-        { this.count() } { this.message() } { this.keyword() }
-      </h6>
+      <div className="search-message">
+        <h5>{ this.count() } { this.message() } { this.keyword() }</h5>
+      </div>
     );
   }
 });

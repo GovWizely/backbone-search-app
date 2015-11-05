@@ -59,7 +59,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="row">
+        <div className="searchbar row">
           <Form expanded={ false } history={ this.history } />
         </div>
         { this.result() }

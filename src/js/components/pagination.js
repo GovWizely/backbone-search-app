@@ -34,7 +34,8 @@ module.exports = React.createClass({
   },
   handleClick: function(e) {
     e.preventDefault();
-    this.props.history.pushState(null, '/search', _.assign({}, ArticleStore.getQuery(), { offset: e.target.dataset.offset}));
+    var query = _.assign({}, ArticleStore.getQuery(), { offset: e.target.dataset.offset});
+    this.props.history.pushState(query, '/search', query);
 
   },
   pages: function() {

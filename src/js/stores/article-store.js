@@ -27,8 +27,12 @@ var _setAggregations = function(aggregations) {
     results[country.key] = country.key;
     return results;
   }, {});
-  _aggregations.industries = parser.parseAsTree(aggregations.industries);
+  _aggregations.types  = _.reduce(aggregations.types, function(results, type, key) {
+    results[type.key] = type.key;
+    return results;
+  }, {});
   _aggregations.topics     = parser.parseAsTree(aggregations.topics);
+  _aggregations.industries = parser.parseAsTree(aggregations.industries);
 };
 
 var _setQuery = function(query) {

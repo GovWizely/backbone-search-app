@@ -58,10 +58,14 @@ module.exports = React.createClass({
       case 'topic-filter':
         results.topics.push(checked.value);
         break;
+
+      case 'type-filter':
+        results.types.push(checked.value);
+        break;
       }
 
       return results;
-    }, { countries: [], industries: [], topics: [] });
+    }, { countries: [], industries: [], topics: [], types: [] });
 
     ArticleActor.filter(filters);
   },
@@ -84,6 +88,7 @@ module.exports = React.createClass({
         { this.renderSection('country-filter', 'Country', this.state.filters.countries, this.createFilterOption) }
         { this.renderSection('industry-filter', 'Industry', this.state.filters.industries, this.createNestedFilterOption) }
         { this.renderSection('topic-filter', 'Topic', this.state.filters.topics, this.createNestedFilterOption) }
+        { this.renderSection('type-filter', 'Type', this.state.filters.types, this.createFilterOption) }
       </div>
     );
   }

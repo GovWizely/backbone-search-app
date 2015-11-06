@@ -25,10 +25,6 @@ var config = {
   bowerDir: './bower_components'
 };
 
-var env = {
-
-};
-
 var log = {
   init: function(message) {
     gulpUtil.colors.yellow('[❗] ' + message);

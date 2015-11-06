@@ -22,7 +22,7 @@ module.exports = React.createClass({
           <div className="col-md-4 category-input">
             <p className="text-muted">Search by Category</p>
             <Select onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } values={ this.props.countries } onSubmit={ this.props.onSubmit } />
-            <p className="text-muted separator">And</p>
+            <p className="text-muted separator">And / Or</p>
             <Select onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } values={ this.props.industries } onSubmit={ this.props.onSubmit } />
 
             <button type="button" role="button" className="btn btn-primary submit" onClick={ this.props.onSubmit }>Search</button>

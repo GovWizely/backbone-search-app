@@ -132,10 +132,10 @@ var js = {
     cache: {},
     packageCache: {}
   }),
-  build: function(__, browserified) {
-    var b = browserified || js.b;
-    return b
+  buildProduction: function() {
+    return js.b
       .transform(babelify, { })
+      .transform(envify({ NODE_ENV: 'production' }))
       .bundle()
       .on('error', function(error) {
         log.error(error);
@@ -147,9 +147,21 @@ var js = {
       .pipe(sourcemaps.write())
       .pipe(gulp.dest(config.distPath));
   },
+  buildDevelopment: function() {
+    return js.b
+      .transform(babelify, { })
+      .transform(envify({ NODE_ENV: 'development' }))
+      .bundle()
+      .on('error', function(error) {
+        log.error(error);
+      })
+      .pipe(source('js/bundle.js'))
+      .pipe(buffer())
+      .pipe(gulp.dest(config.distPath));
+  },
   reload: function() {
     return js
-      .build()
+      .buildDevelopment()
       .pipe(browserSync.stream());
   },
   watch: function() {
@@ -162,14 +174,14 @@ var js = {
   }
 };
 
-gulp.task('js-build', function() {
-  js.build(js.b.transform(envify({ NODE_ENV: 'development' })));
-});
+gulp.task('js:build:development', js.buildDevelopment);
+gulp.task('js:build:production', js.buildProduction);
+
 gulp.task('js-reload', js.reload);
 gulp.task('js-watch', ['browser-sync'], js.watch);
 
 gulp.task('deploy', function() {
-  js.build(js.b.transform(envify({ NODE_ENV: 'production' })));
+  js.buildProduction();
   return gulp.src('./dist/**/*')
     .pipe(ghPages());
 });
@@ -184,7 +196,7 @@ gulp.task('build', [
   'image-build',
   'scss-build',
   'html-build',
-  'js-build'
+  'js:build:development'
 ]);
 
 gulp.task('watch', [

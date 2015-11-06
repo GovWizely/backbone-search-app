@@ -46,8 +46,6 @@ module.exports = React.createClass({
       industries: this.state.industries
     }, _.identity);
 
-    if (_.isEmpty(query)) return;
-
     this.props.history.pushState(
       query, '/search', query);
   },

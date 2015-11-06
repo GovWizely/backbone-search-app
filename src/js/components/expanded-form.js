@@ -24,6 +24,8 @@ module.exports = React.createClass({
             <Select onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } values={ this.props.countries } onSubmit={ this.props.onSubmit } />
             <p className="text-muted separator">And</p>
             <Select onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } values={ this.props.industries } onSubmit={ this.props.onSubmit } />
+
+            <button type="button" role="button" className="btn btn-primary" onClick={ this.props.onSubmit }>Search</button>
           </div>
         </div>
       </div>

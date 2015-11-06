@@ -13,7 +13,7 @@ module.exports = React.createClass({
           <Header cssClass="header-condensed" />
         </div>
 
-        <div className="col-md-5">
+        <div className="col-md-4" style={ { borderRight: "1px solid #999" } }>
           <KeywordInput keyword={ this.props.keyword } onSubmit={ this.props.onSubmit } onChange={ this.props.onKeywordChange } expanded={ false } />
         </div>
 
@@ -25,6 +25,9 @@ module.exports = React.createClass({
           <Select placeholder="Select Industry" values={ this.props.industries } onChange={ this.props.onIndustryChange } items={ this.props.aggregations.industries } onSubmit={ this.props.onSubmit } />
         </div>
 
+        <div className="col-md1">
+          <button type="button" role="button" className="btn btn-primary" onClick={ this.props.onSubmit }>Search</button>
+        </div>
       </div>
     );
   }

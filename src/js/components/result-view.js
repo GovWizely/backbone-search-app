@@ -30,17 +30,11 @@ module.exports = React.createClass({
     ArticleStore.removeListener(this._onChange);
   },
   componentWillMount: function() {
-    if (!_.isEmpty(this.props.location.query)) {
-      ArticleActor.search(this.props.location.query);
-    }
+    ArticleActor.search(this.props.location.query);
   },
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.location.query !== this.props.location.query) {
-      if (_.isEmpty(nextProps.location.query)) {
-        this.props.history.pushState(null, '/');
-      } else {
-        ArticleActor.search(nextProps.location.query);
-      }
+      ArticleActor.search(nextProps.location.query);
     }
   },
   result: function() {

@@ -36,7 +36,10 @@ var _setAggregations = function(aggregations) {
 };
 
 var _setQuery = function(query) {
-  _query = query;
+  if (_.isEmpty(query))
+    _query = { q: '' };
+  else
+    _query = query;
 };
 
 var ArticleStore = function(dispatcher) {
@@ -64,8 +67,6 @@ ArticleStore.prototype = assign({}, Store.prototype, {
   __onDispatch: function(action) {
     switch(action.type) {
     case ActionTypes.SEARCH:
-      if (_.isEmpty(action.query)) return null;
-
       _setQuery(action.query);
       return request
         .get(ENDPOINT, {

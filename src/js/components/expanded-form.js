@@ -14,7 +14,7 @@ module.exports = React.createClass({
         </div>
 
         <div className="row">
-          <div className="col-md-8 keyword-input">
+          <div className="col-md-8 keyword-input expanded">
             <p className="text-muted">Search by Keyword</p>
             <KeywordInput keyword={ this.props.keyword } onSubmit={ this.props.onSubmit } onChange={ this.props.onKeywordChange } />
           </div>
@@ -25,7 +25,7 @@ module.exports = React.createClass({
             <p className="text-muted separator">And</p>
             <Select onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } values={ this.props.industries } onSubmit={ this.props.onSubmit } />
 
-            <button type="button" role="button" className="btn btn-primary" onClick={ this.props.onSubmit }>Search</button>
+            <button type="button" role="button" className="btn btn-primary submit" onClick={ this.props.onSubmit }>Search</button>
           </div>
         </div>
       </div>

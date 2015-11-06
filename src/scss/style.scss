@@ -91,8 +91,21 @@ nav.navbar {
 }
 
 .keyword-input {
-  border-right: 1px solid #eee;
-  height: 300px;
+  &.expanded {
+    border-right: 1px solid #eee;
+    height: 300px;
+
+    button {
+      padding-bottom: 11px;
+    }
+  }
+
+  &.condensed {
+    border-right: 1px solid #999;
+    button {
+      padding-bottom: 7px;
+    }
+  }
 }
 
 .category-input {
@@ -103,6 +116,10 @@ nav.navbar {
   .separator {
       margin-top: 18px;
       margin-bottom: 18px;
+  }
+
+  .submit {
+    margin-top: 12px;
   }
 }
 

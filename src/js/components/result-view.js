@@ -41,7 +41,7 @@ module.exports = React.createClass({
     return (
       <div className="row">
         <div className="col-md-3">
-          <h4 className="text-muted">Advance Options</h4>
+          <h4 className="text-muted">Filtered Results</h4>
           <Filters />
         </div>
         <div className="col-md-9">

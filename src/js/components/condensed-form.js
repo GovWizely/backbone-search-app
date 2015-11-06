@@ -13,7 +13,7 @@ module.exports = React.createClass({
           <Header cssClass="header-condensed" />
         </div>
 
-        <div className="col-md-4" style={ { borderRight: "1px solid #999" } }>
+        <div className="col-md-4 keyword-input condensed">
           <KeywordInput keyword={ this.props.keyword } onSubmit={ this.props.onSubmit } onChange={ this.props.onKeywordChange } expanded={ false } />
         </div>
 

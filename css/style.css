@@ -8255,9 +8255,24 @@ nav.navbar {
   .footer p {
     margin: 20px 0; }
 
-.keyword-input {
+.searchbar {
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc; }
+
+.search-message {
+  border-bottom: 1px solid #eee; }
+
+.keyword-input.expanded {
   border-right: 1px solid #eee;
   height: 300px; }
+  .keyword-input.expanded button {
+    padding-bottom: 11px; }
+
+.keyword-input.condensed {
+  border-right: 1px solid #999; }
+  .keyword-input.condensed button {
+    padding-bottom: 7px; }
 
 .category-input .Select {
   margin-top: 12px;
@@ -8267,8 +8282,11 @@ nav.navbar {
   margin-top: 18px;
   margin-bottom: 18px; }
 
+.category-input .submit {
+  margin-top: 12px; }
+
 #filters {
-  margin-top: 20px;
+  margin-top: 10px;
   border-right: 1px solid #eee;
   width: 100%; }
   #filters section {
@@ -8281,6 +8299,10 @@ nav.navbar {
       margin-top: 0;
       border: 0;
       padding: 5px 15px; }
+    #filters section legend {
+      font-size: inherit;
+      border: 0;
+      margin: 0; }
   #filters a {
     text-decoration: none; }
     #filters a.collapsed:before {
@@ -8292,8 +8314,8 @@ nav.navbar {
       content: '\f107';
       margin-right: 10px; }
 
-.articles {
-  padding-bottom: 64px; }
+.articles .article {
+  margin-bottom: 35px; }
   .articles .article .title {
     font: 500 normal 1.375em Lato,sans-serif; }
     .articles .article .title a {

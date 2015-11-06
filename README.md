@@ -2,23 +2,28 @@
 
 This is a React+Flux front-end JS app which provides a search UI to export.gov's Market Intelligence API.
 
-## setting up
+## Getting Started
 
-Ensure you have node/npm, bower and gulp installed globally on your system, then do:
+1. Install `node`. (Follow this [guide](https://nodejs.org/en/download/package-manager/).)
 
+2. Install `bower` & `gulp`:
 ```sh
-  > npm install
-  > bower install
-  > gulp setup
-  > gulp watch
+    > npm install --global bower gulp
+```
+
+3. Prepare the project:
+```sh
+    > npm install
+    > bower install
+    > gulp setup
+    > gulp watch
 ```
 
 ## Deploying
 
 To deploy to Github pages, do:
-
-```
-  $ gulp deploy
+```sh
+    > gulp deploy
 ```
 
 ## Running tests

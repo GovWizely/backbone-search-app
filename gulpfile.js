@@ -13,7 +13,6 @@ var _           = require('lodash'),
     bower       = require('gulp-bower'),
     watchify    = require('watchify'),
     uglify      = require('gulp-uglify'),
-    babelify    = require('babelify'),
     wiredep     = require('wiredep').stream,
     browserSync = require('browser-sync'),
     history     = require('connect-history-api-fallback'),
@@ -21,19 +20,25 @@ var _           = require('lodash'),
 
 var config = {
   sourcePath: './src',
+  bowerDir: './bower_components',
   distPath: './dist',
-  bowerDir: './bower_components'
+  development: {
+    distPath: './tmp'
+  },
+  production: {
+
+  }
 };
 
 var log = {
   init: function(message) {
-    gulpUtil.colors.yellow('[❗] ' + message);
+    return gulpUtil.colors.yellow('[❗] ' + message);
   },
   error: function(error) {
     notify.onError(error.toString().split(': ').join(':\n')).apply(this, arguments);
   },
   success: function(message) {
-    gulpUtil.colors.green('[✔] ' + message);
+    return gulpUtil.colors.green('[✔] ' + message);
   }
 };
 
@@ -134,7 +139,6 @@ var js = {
   }),
   buildProduction: function() {
     return js.b
-      .transform(babelify, { })
       .transform(envify({ NODE_ENV: 'production' }))
       .bundle()
       .on('error', function(error) {
@@ -149,7 +153,6 @@ var js = {
   },
   buildDevelopment: function() {
     return js.b
-      .transform(babelify, { })
       .transform(envify({ NODE_ENV: 'development' }))
       .bundle()
       .on('error', function(error) {

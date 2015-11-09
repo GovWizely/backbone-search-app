@@ -12,7 +12,7 @@ var IndexView  = require('./js/components/index-view');
 var ResultView = require('./js/components/result-view');
 
 var history;
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === 'production') {
   history = useBasename(createHistory)({
     basename: 'market-intelligence-search-app'
   });
@@ -21,9 +21,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const routes = [
-  { path: "/", component: IndexView },
-  { path: "/search", component: ResultView },
-  { path: "*", component: IndexView },
+  { path: '/', component: IndexView },
+  { path: '/search', component: ResultView },
+  { path: '*', component: IndexView },
 ];
 
 ReactDOM.render((

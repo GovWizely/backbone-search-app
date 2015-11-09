@@ -1,44 +1,47 @@
-var js = require('./tasks/js'),
-    gulp = require('gulp'),
+var gulp = require('gulp'),
     path = require('path'),
-    lint = require('./tasks/lint'),
-    sass = require('./tasks/sass'),
-    font = require('./tasks/font'),
-    html = require('./tasks/html'),
-    image = require('./tasks/image'),
-    bower = require('./tasks/bower'),
-    server = require('./tasks/server');
+    assign = require('object-assign'),
+    history = require('connect-history-api-fallback'),
+    watchify = require('watchify'),
+    browserSync = require('browser-sync').create(),
+    runSequence = require('run-sequence');
 
-var paths = {
-  src: path.resolve(__dirname, '/../src'),
-  bower: path.resolve(__dirname, '/../bower_components'),
-  dist: path.resolve(__dirname, '/../tmp')
-};
+var defaultConfig = require('./config.default');
 
-var config = {
-  env: 'development',
-  paths: {
-    sass: paths.src + '/scss/**/*.scss',
-    font: paths.bower + '/components-font-awesome/fonts/**.*',
-    html: paths.src + '/index.html',
-    image: paths.src + '/images/**/*',
-    bower: paths.bower
-  },
-  dist: {
-    root: paths.dist,
-    style: paths.dist + '/css',
-    bundle: 'js/bundle.js'
-  },
-  custom: {
-    sass: {
-      loadPaths: [
-        paths.bower + '/bootstrap-sass/assets',
-        paths.bower + '/components-font-awesome/scss'
-      ]
-    }
-  }
-};
+var dist = path.resolve(__dirname, '../tmp');
 
 module.exports = function() {
+  var config = assign({}, defaultConfig, {
+    default: true, // cmd is `gulp build` instead of gulp build:{env} when default is true
+    env: 'development',
+    dist: {
+      root: dist,
+      font: path.resolve(dist, 'fonts'),
+      image: path.resolve(dist, 'images'),
+      style: path.resolve(dist, 'css'),
+      bundle: 'js/bundle.js'
+    },
+    envify: {
+      NODE_ENV: 'development'
+    },
+    serverStream:  browserSync.stream
+  });
 
+  var lint = require('./tasks/lint')(gulp, config),
+      build = require('./tasks/build')(gulp, config),
+      server = require('./tasks/server')(gulp, config);
+
+  gulp.task('server', function() {
+    browserSync.init({
+      baseDir: config.dist.root,
+      server: {
+        baseDir: config.dist.root,
+        middleware: [history()]
+      }
+    });
+  });
+
+  gulp.task('watch', ['build'], function() {
+    runSequence('server', ['font:watch', 'html:watch', 'sass:watch', 'js:watch', 'image:watch']);
+  });
 };

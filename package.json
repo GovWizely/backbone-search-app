@@ -66,6 +66,8 @@
     "mocha": "^2.3.3",
     "react-addons-test-utils": "^0.14.2",
     "react-proxy": "^1.1.1",
+    "rimraf": "^2.4.3",
+    "run-sequence": "^1.1.4",
     "uglify-js": "^2.5.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

@@ -8,14 +8,13 @@ This is a React+Flux front-end JS app which provides a search UI to export.gov's
 
 2. Install `bower` & `gulp`:
 ```sh
-    > npm install --global bower gulp
+    > npm install --global bower gulp eslint
 ```
 
 3. Prepare the project:
 ```sh
     > npm install
     > bower install
-    > gulp setup
     > gulp watch
 ```
 

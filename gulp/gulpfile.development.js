@@ -24,10 +24,14 @@ module.exports = function() {
     envify: {
       NODE_ENV: 'development'
     },
+    karma: {
+      conf: path.resolve(__dirname, '../karma.conf.js')
+    },
     serverStream:  browserSync.stream
   });
 
   var lint = require('./tasks/lint')(gulp, config),
+      test = require('./tasks/test')(gulp, config),
       build = require('./tasks/build')(gulp, config),
       server = require('./tasks/server')(gulp, config);
 

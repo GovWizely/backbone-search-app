@@ -10,16 +10,16 @@ module.exports = function(gulp, config) {
   var b = browserify({
     entries: [config.paths.entry]
   });
-  if (config.js.envify) {
-    b = b.transform(envify(config.js.envify));
+  if (config.envify) {
+    b = b.transform(envify(config.envify));
   }
   gulp.task('js', function() {
     return b.bundle()
-      .pipe(source(config.dist.js))
+      .pipe(source(config.dist.bundle))
       .pipe(buffer())
-      .pipe(config.env.production ? sourcemaps.init() : util.noop())
-      .pipe(config.env.production ? uglify() : util.noop())
-      .pipe(config.env.production ? sourcemaps.write() : util.noop())
+      .pipe(config.env === 'production' ? sourcemaps.init() : util.noop())
+      .pipe(config.env === 'production' ? uglify() : util.noop())
+      .pipe(config.env === 'production' ? sourcemaps.write() : util.noop())
       .pipe(gulp.dest(config.dist.root));
   });
 };

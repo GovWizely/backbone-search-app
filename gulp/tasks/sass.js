@@ -5,7 +5,7 @@ module.exports = function(gulp, config) {
     return gulp.src(config.paths.sass)
       .pipe(sass({
         style: 'compressed',
-        loadPath: config.customLoadPaths.sass
+        loadPath: config.custom.sass.loadPaths
       }))
       .pipe(gulp.dest(config.dist.style));
   });

@@ -1,3 +1,5 @@
+var path = require('path');
+
 var _           = require('lodash'),
     del         = require('del'),
     gulp        = require('gulp'),
@@ -42,18 +44,7 @@ var log = {
   }
 };
 
-gulp.task('test', function (done) {
-  new Karma({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true
-  }, done).start();
-});
 
-gulp.task('test:watch', function (done) {
-  new Karma({
-    configFile: __dirname + '/karma.conf.js'
-  }, done).start();
-});
 
 gulp.task('browser-sync', ['build'], function() {
   browserSync({
@@ -207,3 +198,64 @@ gulp.task('watch', [
   'js-watch',
   'scss-watch'
 ]);
+
+var assign = require('object-assign');
+
+var paths = {
+  bower: path.resolve(__dirname, 'bower_components'),
+  entry: path.resolve(__dirname, 'src/index.js'),
+  html: path.resolve(__dirname, 'src/index.html'),
+  font: path.resolve(__dirname, 'bower_components/components-font-awesome/fonts/**.*')
+};
+
+var config = {
+  development: {
+    env: 'development',
+
+    paths: assign({}, paths, {
+      js: path.resolve(__dirname, 'src/js/**/*.js')
+    }),
+
+    dist: {
+      root: path.resolve(__dirname, 'tmp'),
+      bundle: 'js/bundle.js'
+    },
+
+    server: {
+      middlewares: [history()]
+    },
+
+    karma: {
+      conf: path.resolve(__dirname, 'karma.conf.js')
+    },
+
+    envify: {
+      NODE_ENV: 'development'
+    }
+  },
+  production: {
+    env: 'production',
+
+    paths: assign({}, paths, {
+
+    }),
+
+    dist: {
+      root: path.resolve(__dirname, 'dist'),
+      bundle: 'js/bundle.js'
+    },
+
+    envify: {
+      NODE_ENV: 'production'
+    }
+  }
+};
+
+
+require('./gulp/tasks/lint')(gulp, config.development);
+require('./gulp/tasks/sass')(gulp, config.development);
+require('./gulp/tasks/font')(gulp, config.development);
+require('./gulp/tasks/html')(gulp, config.development);
+require('./gulp/tasks/test')(gulp, config.development);
+require('./gulp/tasks/image')(gulp, config.development);
+require('./gulp/tasks/js')(gulp, config.development);

@@ -36,10 +36,13 @@ var _setAggregations = function(aggregations) {
 };
 
 var _setQuery = function(query) {
-  if (_.isEmpty(query))
+  if (_.isEmpty(query)) {
     _query = { q: '' };
-  else
+  }
+  else {
     _query = query;
+  }
+
 };
 
 var ArticleStore = function(dispatcher) {

@@ -15,7 +15,7 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       items: [],
-      placeholder: "Select Options"
+      placeholder: 'Select Options'
     };
   },
   getInitialState: function() {

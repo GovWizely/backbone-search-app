@@ -7,6 +7,7 @@ $font-family-base: 'Lato', sans-serif;
 @import "./spinner.scss";
 
 $header-color: #32404e;
+$separator-color: #eee;
 
 html {
   position: relative;
@@ -25,7 +26,7 @@ nav.navbar {
   line-height: 70px;
   height: 75px;
   padding-top: 0;
-  background-color: #32404e;
+  background-color: $header-color;
   border-radius: 0;
   border-bottom: 4px solid #4cae4c;
 
@@ -83,16 +84,15 @@ nav.navbar {
 .searchbar {
   padding-bottom: 16px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
 }
 
 .search-message {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid $separator-color;
 }
 
 .keyword-input {
   &.expanded {
-    border-right: 1px solid #eee;
+    border-right: 1px solid $separator-color;
     height: 300px;
 
     button {
@@ -101,7 +101,7 @@ nav.navbar {
   }
 
   &.condensed {
-    border-right: 1px solid #999;
+    border-right: 1px solid $separator-color;
     button {
       padding-bottom: 7px;
     }
@@ -125,11 +125,11 @@ nav.navbar {
 
 #filters {
   margin-top: 10px;
-  border-right: 1px solid #eee;
+  border-right: 1px solid $separator-color;
   width: 100%;
   section {
     width: 95%;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid $separator-color;
 
     .overflow {
       max-height: 180px;

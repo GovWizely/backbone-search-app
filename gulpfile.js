@@ -2,6 +2,7 @@ var _           = require('lodash'),
     del         = require('del'),
     gulp        = require('gulp'),
     gulpUtil    = require('gulp-util'),
+    notify      = require('gulp-notify'),
     ghPages     = require('gulp-gh-pages'),
     browserify  = require('browserify'),
     envify      = require('envify/custom'),
@@ -15,7 +16,8 @@ var _           = require('lodash'),
     babelify    = require('babelify'),
     wiredep     = require('wiredep').stream,
     browserSync = require('browser-sync'),
-    history     = require('connect-history-api-fallback');
+    history     = require('connect-history-api-fallback'),
+    Karma       = require('karma').Server;
 
 var config = {
   sourcePath: './src',
@@ -23,22 +25,30 @@ var config = {
   bowerDir: './bower_components'
 };
 
-var env = {
-
-};
-
 var log = {
   init: function(message) {
     gulpUtil.colors.yellow('[❗] ' + message);
   },
-  error: function(message) {
-    gulpUtil.colors.red('[✖] ' + message);
+  error: function(error) {
+    notify.onError(error.toString().split(': ').join(':\n')).apply(this, arguments);
   },
   success: function(message) {
     gulpUtil.colors.green('[✔] ' + message);
   }
 };
 
+gulp.task('test', function (done) {
+  new Karma({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('test:watch', function (done) {
+  new Karma({
+    configFile: __dirname + '/karma.conf.js'
+  }, done).start();
+});
 
 gulp.task('browser-sync', ['build'], function() {
   browserSync({
@@ -118,14 +128,14 @@ gulp.task('html-watch', ['browser-sync'], html.watch);
 
 var js = {
   b: browserify({
-      entries: [config.sourcePath + '/index.js'],
-      cache: {},
-      packageCache: {}
+    entries: [config.sourcePath + '/index.js'],
+    cache: {},
+    packageCache: {}
   }),
-  build: function(__, browserified) {
-    var b = browserified || js.b;
-    return b
+  buildProduction: function() {
+    return js.b
       .transform(babelify, { })
+      .transform(envify({ NODE_ENV: 'production' }))
       .bundle()
       .on('error', function(error) {
         log.error(error);
@@ -137,9 +147,21 @@ var js = {
       .pipe(sourcemaps.write())
       .pipe(gulp.dest(config.distPath));
   },
+  buildDevelopment: function() {
+    return js.b
+      .transform(babelify, { })
+      .transform(envify({ NODE_ENV: 'development' }))
+      .bundle()
+      .on('error', function(error) {
+        log.error(error);
+      })
+      .pipe(source('js/bundle.js'))
+      .pipe(buffer())
+      .pipe(gulp.dest(config.distPath));
+  },
   reload: function() {
     return js
-      .build()
+      .buildDevelopment()
       .pipe(browserSync.stream());
   },
   watch: function() {
@@ -152,14 +174,14 @@ var js = {
   }
 };
 
-gulp.task('js-build', function() {
-  js.build(js.b.transform(envify({ NODE_ENV: 'development' })));
-});
+gulp.task('js:build:development', js.buildDevelopment);
+gulp.task('js:build:production', js.buildProduction);
+
 gulp.task('js-reload', js.reload);
 gulp.task('js-watch', ['browser-sync'], js.watch);
 
 gulp.task('deploy', function() {
-  js.build(js.b.transform(envify({ NODE_ENV: 'production' })));
+  js.buildProduction();
   return gulp.src('./dist/**/*')
     .pipe(ghPages());
 });
@@ -174,7 +196,7 @@ gulp.task('build', [
   'image-build',
   'scss-build',
   'html-build',
-  'js-build'
+  'js:build:development'
 ]);
 
 gulp.task('watch', [

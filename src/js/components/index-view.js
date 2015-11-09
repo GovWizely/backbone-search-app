@@ -4,6 +4,7 @@ var History = require('react-router').History;
 var Form  = require('./form');
 
 module.exports = React.createClass({
+  displayName: 'IndexView',
   mixins: [ History ],
   handleSubmit: function(e) {
     e.preventDefault();

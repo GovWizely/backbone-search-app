@@ -1,6 +1,7 @@
 var React = require('react');
 
 module.exports = React.createClass({
+  displayName: 'KeywordInput',
   getDefaultProps: function() {
     return {
       expanded: true

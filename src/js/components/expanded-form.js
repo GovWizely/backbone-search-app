@@ -5,6 +5,7 @@ var KeywordInput = require('./keyword-input');
 var Select       = require('./aggregation-select');
 
 module.exports = React.createClass({
+  displayName: 'ExpandedForm',
   render: function() {
     return (
       <div>
@@ -13,16 +14,18 @@ module.exports = React.createClass({
         </div>
 
         <div className="row">
-          <div className="col-md-8 keyword-input">
+          <div className="col-md-8 keyword-input expanded">
             <p className="text-muted">Search by Keyword</p>
             <KeywordInput keyword={ this.props.keyword } onSubmit={ this.props.onSubmit } onChange={ this.props.onKeywordChange } />
           </div>
 
           <div className="col-md-4 category-input">
             <p className="text-muted">Search by Category</p>
-            <Select type="countries"  onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } />
-            <p className="text-muted separator">And</p>
-            <Select type="industries" onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } />
+            <Select onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } values={ this.props.countries } onSubmit={ this.props.onSubmit } />
+            <p className="text-muted separator">And / Or</p>
+            <Select onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } values={ this.props.industries } onSubmit={ this.props.onSubmit } />
+
+            <button type="button" role="button" className="btn btn-primary submit" onClick={ this.props.onSubmit }>Search</button>
           </div>
         </div>
       </div>

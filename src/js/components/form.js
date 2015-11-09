@@ -1,14 +1,20 @@
 var _     = require('lodash');
-var $     = require('jquery');
 var React = require('react');
 
 var ExpandedForm     = require('./expanded-form');
 var CondensedForm    = require('./condensed-form');
-var ArticleActor     = require('../actors/article-actor');
 var ArticleStore     = require('../stores/article-store');
 var AggregationStore = require('../stores/aggregation-store');
 
 module.exports = React.createClass({
+  displayName: 'Form',
+  _onChange: function() {
+    this.setState({
+      keyword    : ArticleStore.getQuery().q          || '',
+      countries  : ArticleStore.getQuery().countries  || '',
+      industries : ArticleStore.getQuery().industries || ''
+    });
+  },
   getDefaultProps: function() {
     return {
       expanded : true
@@ -22,12 +28,18 @@ module.exports = React.createClass({
       aggregations : {}
     };
   },
+  componentDidMount: function() {
+    ArticleStore.addListener(this._onChange);
+  },
+  componentWillUnmount: function() {
+    ArticleStore.removeListener(this._onChange);
+  },
   componentWillMount: function() {
     AggregationStore.getAll(function(aggregations) {
       this.setState({ aggregations: aggregations });
     }.bind(this));
   },
-  handleSubmit: function(e) {
+  handleSubmit: function() {
     var query = _.pick({
       q: this.state.keyword,
       countries: this.state.countries,

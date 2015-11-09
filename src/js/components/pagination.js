@@ -2,10 +2,10 @@ var $     = require('jquery');
 var _     = require('lodash');
 var React = require('react');
 
-var ArticleActor = require('../actors/article-actor');
 var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
+  displayName: 'Pagination',
   _onChange: function() {
     this.setState(
       { total: Math.ceil(ArticleStore.getMetadata().total / this.props.pageSize) }
@@ -34,7 +34,8 @@ module.exports = React.createClass({
   },
   handleClick: function(e) {
     e.preventDefault();
-    this.props.history.pushState(null, '/search', _.assign({}, ArticleStore.getQuery(), { offset: e.target.dataset.offset}));
+    var query = _.assign({}, ArticleStore.getQuery(), { offset: e.target.dataset.offset});
+    this.props.history.pushState(query, '/search', query);
 
   },
   pages: function() {
@@ -45,7 +46,7 @@ module.exports = React.createClass({
     var head = this.state.current - pivot + 1;
     var tail = this.state.current + this.props.pageRange;
     return _.chain(_.range(head, tail))
-      .filter(function(x) { return x > 0})
+      .filter(function(x) { return x > 0; })
       .take(this.props.pageRange)
       .value();
   },

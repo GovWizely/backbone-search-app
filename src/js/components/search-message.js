@@ -4,6 +4,7 @@ var React = require('react');
 var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
+  displayName: 'SearchMessage',
   _onChange: function() {
     this.setState({ total: ArticleStore.getMetadata().total });
     this.setState({ query: ArticleStore.getQuery() });
@@ -42,9 +43,9 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <h6>
-        { this.count() } { this.message() } { this.keyword() }
-      </h6>
+      <div className="search-message">
+        <h5>{ this.count() } { this.message() } { this.keyword() }</h5>
+      </div>
     );
   }
 });

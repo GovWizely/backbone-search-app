@@ -1,6 +1,7 @@
 var React = require('react');
 
 module.exports = React.createClass({
+  displayName: 'Spinner',
   render: function() {
     return (
       <div className="sk-folding-cube">

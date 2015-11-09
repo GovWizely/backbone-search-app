@@ -3,10 +3,11 @@ $font-family-base: 'Lato', sans-serif;
 
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
 @import "bower_components/components-font-awesome/scss/font-awesome";
-@import "node_modules/react-select/dist/default";
+@import "node_modules/react-select/dist/react-select";
 @import "./spinner.scss";
 
 $header-color: #32404e;
+$separator-color: #eee;
 
 html {
   position: relative;
@@ -25,7 +26,7 @@ nav.navbar {
   line-height: 70px;
   height: 75px;
   padding-top: 0;
-  background-color: #32404e;
+  background-color: $header-color;
   border-radius: 0;
   border-bottom: 4px solid #4cae4c;
 
@@ -80,9 +81,31 @@ nav.navbar {
   }
 }
 
+.searchbar {
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.search-message {
+  border-bottom: 1px solid $separator-color;
+}
+
 .keyword-input {
-  border-right: 1px solid #eee;
-  height: 300px;
+  &.expanded {
+    border-right: 1px solid $separator-color;
+    height: 300px;
+
+    button {
+      padding-bottom: 11px;
+    }
+  }
+
+  &.condensed {
+    border-right: 1px solid $separator-color;
+    button {
+      padding-bottom: 7px;
+    }
+  }
 }
 
 .category-input {
@@ -94,26 +117,60 @@ nav.navbar {
       margin-top: 18px;
       margin-bottom: 18px;
   }
+
+  .submit {
+    margin-top: 12px;
+  }
 }
 
 #filters {
-  border-right: 1px solid #eee;
+  margin-top: 10px;
+  border-right: 1px solid $separator-color;
   width: 100%;
   section {
     width: 95%;
-    height: 280px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid $separator-color;
 
     .overflow {
-      height: 85%;
-      overflow-y: scroll;
+      max-height: 180px;
+      overflow-y: auto;
     }
+
+    .list-group-item {
+      margin-top: 0;
+      border: 0;
+      padding: 5px 15px;
+
+    }
+
+    legend {
+      font-size: inherit;
+      border: 0;
+      margin: 0;
+    }
+  }
+  a {
+      text-decoration: none;
+
+      &.collapsed:before {
+          font-family: FontAwesome;
+          content: '\f105';
+          margin-right: 10px;
+      }
+
+      &:before {
+          font-family: FontAwesome;
+          content: '\f107';
+          margin-right: 10px;
+
+      }
+
   }
 }
 
 .articles {
-  padding-bottom: 64px;
   .article {
+    margin-bottom: 35px;
     .title {
       font: 500 normal 1.375em Lato,sans-serif;
       a {

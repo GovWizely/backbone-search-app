@@ -17,6 +17,11 @@ This is a React+Flux front-end JS app which provides a search UI to export.gov's
 ```sh
   $ npm install
   $ bower install
+```
+
+4. Launching the development server:
+
+```sh
   $ gulp watch
 ```
 
@@ -34,7 +39,7 @@ To run eslint:
 
 ```sh
   $ gulp lint
-  ```
+```
 
 Note that gulp lint merely display the errors, not fixing them.
 

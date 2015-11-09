@@ -6,11 +6,10 @@ module.exports = React.createClass({
   displayName: 'AggregationSelect',
   propTypes: {
     items       : React.PropTypes.array.isRequired,
-    values      : React.PropTypes.string.isRequired,
     onChange    : React.PropTypes.func.isRequired,
     onSubmit    : React.PropTypes.func,
-    placeholder : React.PropTypes.string
-
+    placeholder : React.PropTypes.string,
+    values      : React.PropTypes.string.isRequired
   },
   getDefaultProps: function() {
     return {
@@ -47,7 +46,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <Select ref="select" isLoading={ this.state.isLoading } name="countries" multi={ true } placeholder={ this.props.placeholder } options={ this.options() } onChange={ this.props.onChange } value={ this.props.values } />
+      <Select ref="select" isLoading={ this.state.isLoading } name="countries" multi placeholder={ this.props.placeholder } options={ this.options() } onChange={ this.props.onChange } value={ this.props.values } />
     );
   }
 });

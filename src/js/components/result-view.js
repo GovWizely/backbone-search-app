@@ -12,30 +12,33 @@ var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
   displayName: 'ResultView',
-  mixins: [ History ],
-  _onChange: function() {
-    this.setState({ articles  : ArticleStore.getArticles() });
-    this.setState({ isLoading : false });
+  propTypes: {
+    location: React.PropTypes.object.isRequired
   },
+  mixins: [ History ],
   getInitialState: function() {
     return {
       articles: ArticleStore.getArticles(),
       isLoading: true
     };
   },
-  componentDidMount: function() {
-    ArticleStore.addListener(this._onChange);
-  },
-  componentWillUnmount: function() {
-    ArticleStore.removeListener(this._onChange);
-  },
   componentWillMount: function() {
     ArticleActor.search(this.props.location.query);
+  },
+  componentDidMount: function() {
+    ArticleStore.addListener(this._onChange);
   },
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.location.query !== this.props.location.query) {
       ArticleActor.search(nextProps.location.query);
     }
+  },
+  componentWillUnmount: function() {
+    ArticleStore.removeListener(this._onChange);
+  },
+  _onChange: function() {
+    this.setState({ articles  : ArticleStore.getArticles() });
+    this.setState({ isLoading : false });
   },
   result: function() {
     return (

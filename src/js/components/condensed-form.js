@@ -6,6 +6,16 @@ var Select       = require('./aggregation-select');
 
 module.exports = React.createClass({
   displayName: 'CondensedForm',
+  propTypes: {
+    aggregations: React.PropTypes.object.isRequired,
+    countries: React.PropTypes.string.isRequired,
+    industries: React.PropTypes.string.isRequired,
+    keyword: React.PropTypes.string.isRequired,
+    onCountryChange: React.PropTypes.func.isRequired,
+    onIndustryChange: React.PropTypes.func.isRequired,
+    onKeywordChange: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
+  },
   render: function() {
     return (
       <div className="row">

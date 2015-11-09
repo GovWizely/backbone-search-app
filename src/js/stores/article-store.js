@@ -110,7 +110,7 @@ ArticleStore.prototype = assign({}, Store.prototype, {
 
     case ActionTypes.PAGING:
       return request
-        .get(ENDPOINT, { params: assign({}, _query, { offset: 0 })})
+        .get(ENDPOINT, { params: assign({}, _query, { offset: 0 }) })
         .then(function(response) {
           _setArticles(response.data.results);
 

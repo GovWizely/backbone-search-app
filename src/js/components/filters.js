@@ -7,9 +7,6 @@ var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
   displayName: 'Filters',
-  _onChange: function() {
-    this.setState({ filters: ArticleStore.getAggregations() });
-  },
   getInitialState: function() {
     return {
       filters: ArticleStore.getAggregations()
@@ -20,6 +17,9 @@ module.exports = React.createClass({
   },
   componentWillUnmount: function() {
     ArticleStore.removeListener(this._onChange);
+  },
+  _onChange: function() {
+    this.setState({ filters: ArticleStore.getAggregations() });
   },
   createNestedFilterOption: function(list, name, item) {
     return (
@@ -76,7 +76,7 @@ module.exports = React.createClass({
         <fieldset>
         <h5>
           <legend>
-            <a role="button" data-toggle="collapse" href={ target } aria-expanded={ true } aria-controls={ id }>{ label }</a>
+            <a role="button" data-toggle="collapse" href={ target } aria-expanded aria-controls={ id }>{ label }</a>
           </legend>
         </h5>
         <div className="collapse in overflow" id={ id }>

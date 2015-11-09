@@ -2,6 +2,12 @@ var React = require('react');
 
 module.exports = React.createClass({
   displayName: 'KeywordInput',
+  propTypes: {
+    expanded: React.PropTypes.bool,
+    keyword: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired
+  },
   getDefaultProps: function() {
     return {
       expanded: true

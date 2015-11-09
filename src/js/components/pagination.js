@@ -6,13 +6,10 @@ var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
   displayName: 'Pagination',
-  _onChange: function() {
-    this.setState(
-      { total: Math.ceil(ArticleStore.getMetadata().total / this.props.pageSize) }
-    );
-    this.setState(
-      { current: ArticleStore.getMetadata().offset / this.props.pageSize + 1 }
-    );
+  propTypes: {
+    history: React.PropTypes.object.isRequired,
+    pageRange: React.PropTypes.number,
+    pageSize: React.PropTypes.number
   },
   getDefaultProps: function() {
     return {
@@ -32,9 +29,17 @@ module.exports = React.createClass({
   componentWillUnmount: function() {
     ArticleStore.removeListener(this._onChange);
   },
+  _onChange: function() {
+    this.setState(
+      { total: Math.ceil(ArticleStore.getMetadata().total / this.props.pageSize) }
+    );
+    this.setState(
+      { current: ArticleStore.getMetadata().offset / this.props.pageSize + 1 }
+    );
+  },
   handleClick: function(e) {
     e.preventDefault();
-    var query = _.assign({}, ArticleStore.getQuery(), { offset: e.target.dataset.offset});
+    var query = _.assign({}, ArticleStore.getQuery(), { offset: e.target.dataset.offset });
     this.props.history.pushState(query, '/search', query);
 
   },

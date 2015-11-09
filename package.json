@@ -42,7 +42,6 @@
     "envify": "^3.4.0",
     "eslint-plugin-react": "^3.8.0",
     "gulp": "^3.9.0",
-    "gulp-bower": "0.0.10",
     "gulp-eslint": "^1.0.0",
     "gulp-gh-pages": "^0.5.4",
     "gulp-minify-css": "^1.2.1",

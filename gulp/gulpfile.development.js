@@ -32,8 +32,7 @@ module.exports = function() {
 
   var lint = require('./tasks/lint')(gulp, config),
       test = require('./tasks/test')(gulp, config),
-      build = require('./tasks/build')(gulp, config),
-      server = require('./tasks/server')(gulp, config);
+      build = require('./tasks/build')(gulp, config);
 
   gulp.task('server', function() {
     browserSync.init({

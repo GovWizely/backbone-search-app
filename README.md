@@ -35,4 +35,4 @@ To auto-run tests on file changes:
   $ gulp test:watch
 ```
 
-If you'd like to run only one test file, adjust the `files` attribute in [karma.conf.js](/GovWizely/market-intelligence-search-app/blob/master/karma.conf.js).
+If you'd like to run only one test file, adjust the `files` attribute in karma.conf.js.

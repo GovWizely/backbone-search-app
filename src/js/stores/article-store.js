@@ -7,7 +7,14 @@ var ActionTypes = require('../constants/constants').ActionTypes;
 var Store       = require('./store');
 var parser      = require('../utils/aggregation-parser');
 
-var ENDPOINT = 'https://pluto.kerits.org/v1/articles/search';
+var tradeAPIKey = 'hSLqwdFz1U25N3ZrWpLB-Ld4';
+
+var endpoints = {
+  countryFactSheet: '',
+  salesforceArticle: 'https://pluto.kerits.org/v1/articles/search',
+  tradeEvent: 'https://api.trade.gov/trade_events/search?api_key=' + tradeAPIKey,
+  tradeLead: 'https://api.trade.gov/trade_leads/search?api_key=' + tradeAPIKey
+};
 
 var _articles     = {},
     _aggregations = {},
@@ -20,6 +27,39 @@ var _setMetadata = function(metadata) {
 
 var _setArticles = function(articles) {
   _articles = articles;
+};
+
+var _getArticles = function(params) {
+  var getCountryFactSheets = function() {};
+  var getTradeEvents = function() {
+    return request
+      .get(endpoints.tradeEvent, { params: params });
+  };
+  var getTradeLeads = function() {
+    return request
+      .get(endpoints.tradeLead, { params: params });
+  };
+  var getSalesforceArticles = function() {
+    return request
+      .get(endpoints.salesforceArticle, { params: params });
+  };
+
+  return request.all([getSalesforceArticles(), getTradeEvents(), getTradeLeads()])
+    .then(request.spread(function(sf, te, tl) {
+      _.each(te.data.results, (result) => {
+        result.type = result.source;
+        result.title = result.event_name;
+        result.snippet = result.description;
+      });
+      _.each(tl.data.results, (result) => {
+        result.type = result.source;
+        result.snippet = result.description;
+      });
+      _setArticles(sf.data.results.concat(te.data.results.concat(tl.data.results)));
+      sf.data.metadata.total = sf.data.metadata.total + te.data.total + tl.data.total;
+      _setMetadata(sf.data.metadata);
+      _setAggregations(sf.data.aggregations);
+    }));
 };
 
 var _setAggregations = function(aggregations) {
@@ -71,15 +111,8 @@ ArticleStore.prototype = assign({}, Store.prototype, {
     switch(action.type) {
     case ActionTypes.SEARCH:
       _setQuery(action.query);
-      return request
-        .get(ENDPOINT, {
-          params: _query
-        })
-        .then(function(response) {
-          _setArticles(response.data.results);
-          _setMetadata(response.data.metadata);
-          _setAggregations(response.data.aggregations);
-
+      return _getArticles(_query)
+        .then(function() {
           this.__emitChange();
         }.bind(this))
         .catch(function(response) {

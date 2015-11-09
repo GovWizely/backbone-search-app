@@ -12,15 +12,7 @@ module.exports = function(gulp, config) {
   var buildTaskName = taskName('js:build', config);
   var watchTaskName = taskName('js:watch', config);
 
-  var b = browserify({
-    cache: {},
-    packageCache: {},
-    entries: [config.entry.path]
-  });
-  if (config.envify) {
-    b = b.transform(envify(config.envify));
-  }
-  gulp.task(buildTaskName, function() {
+  var build = function() {
     return b.bundle()
       .pipe(source(config.dist.bundle))
       .pipe(buffer())
@@ -29,9 +21,22 @@ module.exports = function(gulp, config) {
       .pipe(config.env === 'production' ? sourcemaps.write() : util.noop())
       .pipe(gulp.dest(config.dist.root))
       .pipe(config.serverStream ? config.serverStream() : util.noop());
+  };
+
+  var b = browserify({
+    cache: {},
+    packageCache: {},
+    entries: [config.entry.path]
   });
+  if (config.envify) {
+    b = b.transform(envify(config.envify));
+  }
+  gulp.task(buildTaskName, build);
 
   gulp.task(watchTaskName, function() {
-    watchify(b, [buildTaskName]);
+    watchify(b)
+      .on('update', build);
+
+    return build();
   });
 };

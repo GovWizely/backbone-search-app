@@ -6,7 +6,7 @@ This is a React+Flux front-end JS app which provides a search UI to export.gov's
 
 1. Install `node`. (Follow this [guide](https://nodejs.org/en/download/package-manager/).)
 
-2. Install `bower` & `gulp`:
+2. Install `bower`, `gulp` and `eslint`:
 
 ```sh
   $ npm install --global bower gulp eslint
@@ -41,7 +41,7 @@ To run eslint:
   $ gulp lint
 ```
 
-Note that gulp lint merely display the errors, not fixing them.
+Note that gulp lint merely displays errors, it doesn't fix them (that's on you).
 
 ## Running tests
 

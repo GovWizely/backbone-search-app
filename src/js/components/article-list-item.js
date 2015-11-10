@@ -2,6 +2,9 @@ var React = require('react');
 
 module.exports = React.createClass({
   displayName: 'ArticleListItem',
+  propTypes: {
+    article: React.PropTypes.object.isRequired
+  },
   render: function() {
     return (
       <article className="article">

@@ -8,12 +8,9 @@ var AggregationStore = require('../stores/aggregation-store');
 
 module.exports = React.createClass({
   displayName: 'Form',
-  _onChange: function() {
-    this.setState({
-      keyword    : ArticleStore.getQuery().q          || '',
-      countries  : ArticleStore.getQuery().countries  || '',
-      industries : ArticleStore.getQuery().industries || ''
-    });
+  propTypes: {
+    expanded: React.PropTypes.bool,
+    history: React.PropTypes.object.isRequired
   },
   getDefaultProps: function() {
     return {
@@ -28,16 +25,23 @@ module.exports = React.createClass({
       aggregations : {}
     };
   },
+  componentWillMount: function() {
+    AggregationStore.getAll(function(aggregations) {
+      this.setState({ aggregations: aggregations });
+    }.bind(this));
+  },
   componentDidMount: function() {
     ArticleStore.addListener(this._onChange);
   },
   componentWillUnmount: function() {
     ArticleStore.removeListener(this._onChange);
   },
-  componentWillMount: function() {
-    AggregationStore.getAll(function(aggregations) {
-      this.setState({ aggregations: aggregations });
-    }.bind(this));
+  _onChange: function() {
+    this.setState({
+      keyword    : ArticleStore.getQuery().q          || '',
+      countries  : ArticleStore.getQuery().countries  || '',
+      industries : ArticleStore.getQuery().industries || ''
+    });
   },
   handleSubmit: function() {
     var query = _.pick({

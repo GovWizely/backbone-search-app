@@ -36,10 +36,13 @@ var _setAggregations = function(aggregations) {
 };
 
 var _setQuery = function(query) {
-  if (_.isEmpty(query))
+  if (_.isEmpty(query)) {
     _query = { q: '' };
-  else
+  }
+  else {
     _query = query;
+  }
+
 };
 
 var ArticleStore = function(dispatcher) {
@@ -107,7 +110,7 @@ ArticleStore.prototype = assign({}, Store.prototype, {
 
     case ActionTypes.PAGING:
       return request
-        .get(ENDPOINT, { params: assign({}, _query, { offset: 0 })})
+        .get(ENDPOINT, { params: assign({}, _query, { offset: 0 }) })
         .then(function(response) {
           _setArticles(response.data.results);
 

@@ -6,9 +6,19 @@ import AggregationSelect from '../../src/js/components/aggregation-select';
 const { renderIntoDocument, findRenderedDOMComponentWithClass } = TestUtils;
 
 describe('AggregationSelect', () => {
+  var props = {
+    items: [
+      { key: 'Item#1' },
+      { key: 'Item#2' },
+      { key: 'Item#3' }
+    ],
+    values: '',
+    onChange: () => { return true; }
+  };
+
   it('renders a select component', () => {
     const component = renderIntoDocument(
-      <AggregationSelect />
+      <AggregationSelect {...props} />
     );
 
     const selectDOM = findRenderedDOMComponentWithClass(component, 'Select-control');
@@ -16,13 +26,9 @@ describe('AggregationSelect', () => {
   });
 
   it('renders a select component with options', () => {
-    var items = [
-      { key: 'Item#1' },
-      { key: 'Item#2' },
-      { key: 'Item#3' }
-    ];
+    var items = props.items;
     const component = renderIntoDocument(
-      <AggregationSelect items={ items }/>
+      <AggregationSelect {...props} />
     );
 
     expect(component.options()).to.include(
@@ -38,7 +44,9 @@ describe('AggregationSelect', () => {
       o = { value: 1 };
     }.bind(this);
 
-    const component = renderIntoDocument(<AggregationSelect onChange={ change } />);
+    const component = renderIntoDocument(
+      <AggregationSelect {...props} />
+    );
 
     expect(o.value).to.equal(1);
   });

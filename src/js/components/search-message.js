@@ -5,10 +5,6 @@ var ArticleStore = require('../stores/article-store');
 
 module.exports = React.createClass({
   displayName: 'SearchMessage',
-  _onChange: function() {
-    this.setState({ total: ArticleStore.getMetadata().total });
-    this.setState({ query: ArticleStore.getQuery() });
-  },
   getInitialState: function() {
     return {
       total: 0,
@@ -20,6 +16,10 @@ module.exports = React.createClass({
   },
   componentWillUnmount: function() {
     ArticleStore.removeListener(this._onChange);
+  },
+  _onChange: function() {
+    this.setState({ total: ArticleStore.getMetadata().total });
+    this.setState({ query: ArticleStore.getQuery() });
   },
   message: function() {
     if (this.state.total === null) return null;

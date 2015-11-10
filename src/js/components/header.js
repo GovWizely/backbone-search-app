@@ -2,13 +2,17 @@ var React = require('react');
 
 module.exports = React.createClass({
   displayName: 'Header',
+  propTypes: {
+    cssClass: React.PropTypes.string,
+    onClick: React.PropTypes.func
+  },
   getDefaultProps: function() {
     return {
       cssClass: ''
     };
   },
   render: function() {
-    var className = "header ";
+    var className = 'header ';
     className = className.concat(this.props.cssClass);
     return (
       <header className={ className }>

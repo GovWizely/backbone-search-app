@@ -6,6 +6,10 @@ module.exports = React.createClass({
     article: React.PropTypes.object.isRequired
   },
   render: function() {
+    var tokens = this.props.article.snippet.split(' ');
+    if (tokens.length >= 60) {
+      this.props.article.snippet = tokens.slice(0, 60).join(' ').concat(' ...');
+    }
     return (
       <article className="article">
         <h1 className="title">

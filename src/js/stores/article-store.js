@@ -16,7 +16,7 @@ var endpoints = {
   tradeLead: 'https://api.trade.gov/trade_leads/search?api_key=' + tradeAPIKey
 };
 
-var _articles     = {},
+var _articles     = [],
     _aggregations = {},
     _metadata     = {},
     _query        = {};

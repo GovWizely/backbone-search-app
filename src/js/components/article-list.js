@@ -13,15 +13,12 @@ module.exports = React.createClass({
       articles: []
     };
   },
-  renderItem: function(article) {
-    return (
-      <ArticleListItem key={ article.id } article={ article } />
-    );
-  },
   render: function() {
     return (
       <section className="articles">
-        { _.map(this.props.articles, this.renderItem) }
+        { this.props.articles.map(function(article) {
+            return <ArticleListItem key={ article.id || article.title } article={ article } />;
+        }) }
       </section>
     );
   }

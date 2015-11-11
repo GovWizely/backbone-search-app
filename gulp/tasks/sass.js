@@ -19,7 +19,10 @@ module.exports = function(gulp, config) {
 
     if (config.env === 'production') {
       return gulp.src(config.dist.style + '/**/*.css')
+        .pipe(sourcemaps.init())
         .pipe(minify())
+        .on('error', util.log)
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.dist.style));
     }
     return output;

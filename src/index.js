@@ -11,7 +11,6 @@ var Route         = require('react-router').DefaultRoute;
 var IndexView  = require('./js/components/index-view');
 var ResultView = require('./js/components/result-view');
 
-
 const routes = [
   { path: '/', component: IndexView },
   { path: '/search', component: ResultView },

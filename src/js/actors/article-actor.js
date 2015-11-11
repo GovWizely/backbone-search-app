@@ -14,12 +14,5 @@ module.exports = {
       type:    ActionTypes.FILTER,
       filters: filters
     });
-  },
-
-  paging: function(offset) {
-    Dispatcher.dispatch({
-      type:     ActionTypes.PAGING,
-      offset:   offset
-    });
   }
 };

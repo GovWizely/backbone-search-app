@@ -29,6 +29,11 @@ var _setArticles = function(articles) {
   _articles = articles;
 };
 
+var _consolidateArticles = function(articles) {
+  _articles = [];
+
+};
+
 var _getArticles = function(params) {
   var getCountryFactSheets = function() {};
   var getTradeEvents = function() {
@@ -127,28 +132,13 @@ ArticleStore.prototype = assign({}, Store.prototype, {
         return h;
       }, { offset: 0 });
 
-      return request
-        .get(ENDPOINT, {
-          params: assign({}, _query, filterParams)
-        })
-        .then(function(response) {
-          _setArticles(response.data.results);
-          _setMetadata(response.data.metadata);
-
+      return _getArticles(assign({}, _query, filterParams))
+        .then(function() {
           this.__emitChange();
         }.bind(this))
         .catch(function(response) {
           console.log(response);
         });
-
-    case ActionTypes.PAGING:
-      return request
-        .get(ENDPOINT, { params: assign({}, _query, { offset: 0 }) })
-        .then(function(response) {
-          _setArticles(response.data.results);
-
-          this.__emitChange();
-        }.bind(this));
 
     default:
       return null;

@@ -11,14 +11,6 @@ var Route         = require('react-router').DefaultRoute;
 var IndexView  = require('./js/components/index-view');
 var ResultView = require('./js/components/result-view');
 
-var history;
-if (process.env.NODE_ENV === 'production') {
-  history = useBasename(createHistory)({
-    basename: 'market-intelligence-search-app'
-  });
-} else {
-  history = createHistory();
-}
 
 const routes = [
   { path: '/', component: IndexView },
@@ -27,5 +19,5 @@ const routes = [
 ];
 
 ReactDOM.render((
-  <Router history={ history } routes={ routes } />
+  <Router history={ createHistory() } routes={ routes } />
 ), document.getElementById('main'));

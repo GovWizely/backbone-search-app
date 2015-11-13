@@ -4,7 +4,7 @@ import { History } from 'react-router';
 
 import Form         from '../components/form';
 import Filters      from '../components/filters';
-import ArticleList  from '../components/article-list';
+import ResultList  from '../components/result-list';
 import Messages     from '../components/search-message';
 import Pagination   from '../components/pagination';
 import ArticleActor from '../actors/article-actor';
@@ -49,7 +49,7 @@ export default React.createClass({
         </div>
         <div className="col-md-9">
           <Messages />
-          <ArticleList articles={ this.state.articles }/>
+          <ResultList items={ this.state.articles }/>
           <Pagination history={ this.history } />
          </div>
        </div>

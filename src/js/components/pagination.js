@@ -41,16 +41,17 @@ module.exports = React.createClass({
     e.preventDefault();
     var query = _.assign({}, ArticleStore.getQuery(), { offset: e.target.dataset.offset });
     this.props.history.pushState(query, '/search', query);
-
   },
   pages: function() {
     if (this.state.total <= this.props.pageRange) {
       return _.range(1, this.state.total + 1);
     }
+    var leftMarginOffset = 2;
     var pivot = Math.ceil((this.props.pageRange + 1) / 2);
-    var offset = pivot - (this.state.total - this.state.current) - 1;
-    var head = this.state.current - (pivot + (offset < 0 ? 0 : offset)) + 1;
+    var leftMargin = pivot - (this.state.total - this.state.current) - leftMarginOffset;
+    var head = this.state.current - (pivot + (leftMargin < 0 ? 0 : leftMargin)) + 1;
     var tail = this.state.current + this.props.pageRange;
+
     return _(_.range(head, tail))
       .filter(x => x > 0 && x <= this.state.total)
       .take(this.props.pageRange)
@@ -80,9 +81,12 @@ module.exports = React.createClass({
       </li>
     );
   },
-  createArrowAnchor: function(i, className) {
+  createArrowAnchor: function(i, className, disabled = false) {
+    var listCss = disabled ? 'disabled' : '';
     return (
-      <a className={ className } onClick={ this.handleClick } href={ this.url(i) } data-offset={ this.offset(i) }></a>
+      <li className={ listCss }>
+        <a className={ className } onClick={ this.handleClick } href={ this.url(i) } data-offset={ this.offset(i) }></a>
+      </li>
     );
   },
   createPageRange: function() {
@@ -96,19 +100,12 @@ module.exports = React.createClass({
     return (
       <nav>
         <ul className="pagination">
-          <li>
-            { this.createArrowAnchor(1, 'fa fa-angle-double-left') }
-          </li>
-          <li>
-            { this.createArrowAnchor(this.previousPage(), 'fa fa-angle-left') }
-          </li>
+          { this.createArrowAnchor(1, 'fa fa-angle-double-left', (this.state.current === 1)) }
+          { this.createArrowAnchor(this.previousPage(), 'fa fa-angle-left', (this.state.current === 1)) }
           { this.createPageRange() }
-          <li>
-            { this.createArrowAnchor(this.nextPage(), 'fa fa-angle-right') }
-          </li>
-          <li>
-            { this.createArrowAnchor(this.state.total, 'fa fa-angle-double-right') }
-          </li>
+
+          { this.createArrowAnchor(this.nextPage(), 'fa fa-angle-right', (this.state.current === this.state.total)) }
+          { this.createArrowAnchor(this.state.total, 'fa fa-angle-double-right', (this.state.current === this.state.total)) }
         </ul>
       </nav>
     );

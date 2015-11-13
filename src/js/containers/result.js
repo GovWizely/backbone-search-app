@@ -48,9 +48,19 @@ export default React.createClass({
           <Filters />
         </div>
         <div className="col-md-9">
-          <Messages />
-          <ResultList items={ this.state.articles }/>
-          <Pagination history={ this.history } />
+          <div>
+            <h4 className="text-muted">Trade Events</h4>
+            <ResultList items={ this.state.articles } itemLimit={ 5 }/>
+          </div>
+          <div>
+            <h4 className="text-muted">Trade Leads</h4>
+            <ResultList items={ this.state.articles } itemLimit={ 5 }/>
+        </div>
+          <div>
+            <Messages />
+            <ResultList items={ this.state.articles }/>
+            <Pagination history={ this.history } />
+          </div>
          </div>
        </div>
     );

@@ -48,10 +48,11 @@ module.exports = React.createClass({
       return _.range(1, this.state.total + 1);
     }
     var pivot = Math.ceil((this.props.pageRange + 1) / 2);
-    var head = this.state.current - pivot + 1;
+    var offset = pivot - (this.state.total - this.state.current) - 1;
+    var head = this.state.current - (pivot + (offset < 0 ? 0 : offset)) + 1;
     var tail = this.state.current + this.props.pageRange;
-    return _.chain(_.range(head, tail))
-      .filter(function(x) { return x > 0; })
+    return _(_.range(head, tail))
+      .filter(x => x > 0 && x <= this.state.total)
       .take(this.props.pageRange)
       .value();
   },
@@ -79,6 +80,11 @@ module.exports = React.createClass({
       </li>
     );
   },
+  createArrowAnchor: function(i, className) {
+    return (
+      <a className={ className } onClick={ this.handleClick } href={ this.url(i) } data-offset={ this.offset(i) }></a>
+    );
+  },
   createPageRange: function() {
     var pages = [];
     _.forEach(this.pages(), function(i) {
@@ -91,17 +97,17 @@ module.exports = React.createClass({
       <nav>
         <ul className="pagination">
           <li>
-            <a href={ this.url(1) } aria-label="First" className="fa fa-angle-double-left"></a>
+            { this.createArrowAnchor(1, 'fa fa-angle-double-left') }
           </li>
           <li>
-            <a href={ this.url(this.previousPage()) } aria-label="Previous" className="fa fa-angle-left"></a>
+            { this.createArrowAnchor(this.previousPage(), 'fa fa-angle-left') }
           </li>
           { this.createPageRange() }
           <li>
-            <a href={ this.url(this.nextPage()) } aria-label="Next" className="fa fa-angle-right"></a>
+            { this.createArrowAnchor(this.nextPage(), 'fa fa-angle-right') }
           </li>
           <li>
-            <a href={ this.url(this.state.total) } aria-label="Last" className="fa fa-angle-double-right"></a>
+            { this.createArrowAnchor(this.state.total, 'fa fa-angle-double-right') }
           </li>
         </ul>
       </nav>

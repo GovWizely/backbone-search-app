@@ -1,10 +1,10 @@
-var React   = require('react');
-var History = require('react-router').History;
+import React from 'react';
+import { History } from 'react-router';
 
-var Form  = require('./form');
+import Form from '../components/form';
 
-module.exports = React.createClass({
-  displayName: 'IndexView',
+export default React.createClass({
+  displayName: 'Search',
   mixins: [ History ],
   handleSubmit: function(e) {
     e.preventDefault();

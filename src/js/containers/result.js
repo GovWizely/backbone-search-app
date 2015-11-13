@@ -1,17 +1,17 @@
-var _       = require('lodash');
-var React   = require('react');
-var History = require('react-router').History;
+import _ from 'lodash';
+import React from 'react';
+import { History } from 'react-router';
 
-var Form         = require('./form');
-var Filters      = require('./filters');
-var ArticleList  = require('./article-list');
-var Messages     = require('./search-message');
-var Pagination   = require('./pagination');
-var ArticleActor = require('../actors/article-actor');
-var ArticleStore = require('../stores/article-store');
+import Form         from '../components/form';
+import Filters      from '../components/filters';
+import ArticleList  from '../components/article-list';
+import Messages     from '../components/search-message';
+import Pagination   from '../components/pagination';
+import ArticleActor from '../actors/article-actor';
+import ArticleStore from '../stores/article-store';
 
-module.exports = React.createClass({
-  displayName: 'ResultView',
+export default React.createClass({
+  displayName: 'Result',
   propTypes: {
     location: React.PropTypes.object.isRequired
   },

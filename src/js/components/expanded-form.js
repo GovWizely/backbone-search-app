@@ -4,7 +4,7 @@ var Header       = require('./header');
 var KeywordInput = require('./keyword-input');
 var Select       = require('./aggregation-select');
 
-module.exports = React.createClass({
+export default React.createClass({
   displayName: 'ExpandedForm',
   propTypes: {
     aggregations: React.PropTypes.object.isRequired,
@@ -31,7 +31,7 @@ module.exports = React.createClass({
 
           <div className="col-md-4 category-input">
             <p className="text-muted">Search by Category</p>
-            <Select onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } values={ this.props.countries } onSubmit={ this.props.onSubmit } />
+        <Select onChange={ this.props.onCountryChange }  placeholder="Select Country" items={ this.props.aggregations.countries } values={ [] } onSubmit={ this.props.onSubmit } />
             <p className="text-muted separator">And / Or</p>
             <Select onChange={ this.props.onIndustryChange } placeholder="Select Industry" items={ this.props.aggregations.industries } values={ this.props.industries } onSubmit={ this.props.onSubmit } />
 

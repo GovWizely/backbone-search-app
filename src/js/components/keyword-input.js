@@ -27,6 +27,7 @@ module.exports = React.createClass({
       buttonClass    = buttonClass.concat(' btn-lg');
       containerClass = containerClass.concat(' col-md-10');
     }
+
     return (
       <div className={ containerClass }>
         <input type="text" className={ inputClass } name="keyword" value={ this.props.keyword } onChange={ this.props.onChange } onKeyDown={ this.handleEnter } placeholder="Keyword" />

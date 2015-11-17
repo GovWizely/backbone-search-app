@@ -74,7 +74,7 @@ module.exports = React.createClass({
     params.offset = this.offset(i);
     return 'search?' + $.param(params);
   },
-  createPage: function(i, isActive) {
+  createPageAnchor: function(i, isActive) {
     return (
       <li key={ i } className={ isActive ? 'active' : '' }>
         <a onClick={ this.handleClick } href={ this.url(i) } data-offset={ this.offset(i) }>{ i }</a>
@@ -92,7 +92,7 @@ module.exports = React.createClass({
   createPageRange: function() {
     var pages = [];
     _.forEach(this.pages(), function(i) {
-      pages.push(this.createPage(i, this.state.current === i));
+      pages.push(this.createPageAnchor(i, this.state.current === i));
     }.bind(this));
     return pages;
   },

@@ -1,22 +1,25 @@
 import assign from 'object-assign';
+import Url from 'url';
 import { List, Map } from 'immutable';
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
 import {
   REQUEST_AGGREGATIONS, RECEIVE_AGGREGATIONS,
-  REQUEST_ARTICLES, RECEIVE_ARTICLES, SEARCH_ARTICLES,
-  SET_KEYWORD, SET_COUNTRIES, SET_INDUSTRIES, SET_TOPICS, SET_TYPES
+  REQUEST_ARTICLES, RECEIVE_ARTICLES,
+  REQUEST_TRADE_API, RECEIVE_TRADE_API,
+  SET_QUERY, SET_FILTER
 } from './actions';
 
 const initialState = {
   query: {
-    keyword: '',
+    q: '',
     industries: [],
     countries: [],
     topics: [],
-    types: [],
-    offset: 0
+    offset: 0,
+    filters: {}
   },
   aggregations: {
     isFetching: false,
@@ -25,28 +28,30 @@ const initialState = {
   results: {
     article: {
       isFetching: false,
-      items: []
+      items: [],
+      metadata: {},
+      aggregations: {}
     },
     tradeEvent: {
       isFetching: false,
-      items: []
+      items: [],
+      metadata: {}
     },
     tradeLead: {
       isFetching: false,
-      items: []
+      items: [],
+      metadata: {}
     }
   }
 };
 
 function query(state = {}, action) {
   switch(action.type) {
-  case SET_KEYWORD:
+  case SET_QUERY:
+    return assign({}, state, action.query);
+  case SET_FILTER:
     return assign({}, state, {
-      keyword: action.keyword
-    });
-  case SET_INDUSTRIES:
-    return assign({}, state, {
-      industries: action.industries
+      filters: action.filters
     });
   default:
     return state;
@@ -69,7 +74,7 @@ function aggregations(state = initialState.aggregations, action) {
   }
 }
 
-function results(state = { isFetching: false, items: [] }, action) {
+function articles(state, action) {
   switch(action.type) {
   case REQUEST_ARTICLES:
     return assign({}, state, {
@@ -77,19 +82,40 @@ function results(state = { isFetching: false, items: [] }, action) {
     });
   case RECEIVE_ARTICLES:
     return assign({}, state, {
-      isFetching: false, items: action.results
+      isFetching: false,
+      items: action.response.results,
+      metadata: action.response.metadata,
+      aggregations: action.response.aggregations
     });
   default:
     return state;
   }
 }
 
-function update(state = {}, action) {
+function tradeAPIs(state, action) {
   switch(action.type) {
-  case UPDATE_PATH:
+  case REQUEST_TRADE_API:
     return assign({}, state, {
-
+      isFetching: true
     });
+  case RECEIVE_TRADE_API:
+    return assign({}, state, {
+      isFetching: false,
+      items: action.response.results,
+      metadata: action.response.metadata
+    });
+  }
+}
+
+function results(state = initialState.results, action) {
+  switch(action.type) {
+  case REQUEST_ARTICLES:
+  case RECEIVE_ARTICLES:
+    return assign({}, state, { article: articles(state.article, action) });
+  case REQUEST_TRADE_API:
+  case RECEIVE_TRADE_API:
+    return assign({}, state, { [action.resource]: tradeAPIs(state[action.resource], action) });
+    break;
   default:
     return state;
   }
@@ -99,8 +125,8 @@ const reducer = combineReducers({
   aggregations,
   query,
   results,
-  routing: routeReducer,
-  update
+  form: formReducer,
+  routing: routeReducer
 });
 
 export default reducer;

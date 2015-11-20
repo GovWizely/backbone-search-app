@@ -1,33 +1,18 @@
+
 var _     = require('lodash');
-var React = require('react');
+import React, { PropTypes } from 'react';
 
 var ArticleStore = require('../stores/article-store');
 
-module.exports = React.createClass({
+var SearchMessage = React.createClass({
   displayName: 'SearchMessage',
-  getInitialState: function() {
-    return {
-      total: 0,
-      query: ArticleStore.getQuery()
-    };
-  },
-  componentDidMount: function() {
-    ArticleStore.addListener(this._onChange);
-  },
-  componentWillUnmount: function() {
-    ArticleStore.removeListener(this._onChange);
-  },
-  _onChange: function() {
-    this.setState({ total: ArticleStore.getMetadata().total });
-    this.setState({ query: ArticleStore.getQuery() });
-  },
   message: function() {
-    if (this.state.total === null) return null;
+    if (this.props.total === null) return null;
 
-    var msg = this.state.total ? 'results' : 'result';
+    var msg = this.props.total ? 'results' : 'result';
     msg = msg.concat(' were found');
 
-    if (!_.isEmpty(this.state.query.q)) {
+    if (!_.isEmpty(this.props.keyword)) {
       msg = msg.concat(' for the search for');
     } else {
       msg = msg.concat('.');
@@ -35,11 +20,11 @@ module.exports = React.createClass({
     return msg;
   },
   count: function() {
-    return <strong className="text-danger">{ this.state.total }</strong>;
+    return <strong className="text-danger">{ this.props.total }</strong>;
   },
   keyword: function() {
-    if (!this.state.query.q) return null;
-    return <strong className="text-danger">{ this.state.query.q }.</strong>;
+    if (!this.props.keyword) return null;
+    return <strong className="text-danger">{ this.props.keyword }.</strong>;
   },
   render: function() {
     return (
@@ -49,3 +34,10 @@ module.exports = React.createClass({
     );
   }
 });
+
+SearchMessage.propTypes = {
+  keyword: PropTypes.string,
+  total: PropTypes.number
+};
+
+export default SearchMessage;

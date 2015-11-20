@@ -1,8 +1,27 @@
+import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
-import { fetchAggregations, fetchArticles } from '../actions';
-import Form from '../components/expanded-form';
+import { stringify } from 'querystring';
+import {
+  fetchAggregations,
+  setQuery, setFilter
+} from '../actions';
+
+function parseFormData(form) {
+  const { q, countries, industries } = form;
+  let query = {};
+  if (q) query.q = q;
+  if (countries) {
+    let items = _.compact(_.isArray(countries) ? countries : [countries]);
+    query.countries = _.map(items, item => item.value);
+  }
+  if (industries) {
+    let items = _.compact(_.isArray(industries) ? industries : [industries]);
+    query.industries = _.map(items, item => item.value);
+  }
+  return query;
+}
 
 var App = React.createClass({
   displayName: 'App',
@@ -10,18 +29,13 @@ var App = React.createClass({
   componentDidMount: function() {
     this.props.dispatch(fetchAggregations());
   },
-  handleSubmit: function(query) {
-    this.props.dispatch(updatePath('/search'));
-  },
-  handleFilter: function(filters) {
-
+  handleSubmit: function(form) {
+    let query = parseFormData(form);
+    const path = `/search?${stringify(query)}`;
+    this.props.dispatch(updatePath(path));
   },
   render: function() {
-    const { keyword, countries, industries } = this.props.query;
     var props = {
-      keyword,
-      countries,
-      industries,
       aggregations: this.props.aggregations.data,
       onSubmit: this.handleSubmit
     };
@@ -36,16 +50,15 @@ var App = React.createClass({
 App.propTypes = {
   aggregations: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  query: PropTypes.object.isRequired
+  dispatch: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-  const { query, aggregations } = state;
+  const { aggregations, form } = state;
 
   return {
     aggregations,
-    query
+    form
   };
 }
 

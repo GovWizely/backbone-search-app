@@ -1,6 +1,6 @@
-var _ = require('lodash');
+import _ from 'lodash';
 
-module.exports = {
+export default {
   parseAsTree: function(records) {
     var results = {};
     var subdivide = function(array, items) {
@@ -22,5 +22,11 @@ module.exports = {
       var array = record.key.substring(1).split('/');
       return { key: array[array.length - 1], doc_count: record.doc_count };
     });
+  },
+  extract: function(records, key) {
+    return _.reduce(records, function(results, record) {
+      results[record[key]] = record[key];
+      return results;
+    }, {});
   }
 };

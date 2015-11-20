@@ -38,8 +38,7 @@ module.exports = function() {
     browserSync.init({
       baseDir: config.dist.root,
       server: {
-        baseDir: config.dist.root,
-        middleware: [history()]
+        baseDir: config.dist.root
       }
     });
   });

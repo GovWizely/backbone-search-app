@@ -1,78 +1,130 @@
 import _ from 'lodash';
-import React from 'react';
-import { History } from 'react-router';
+import assign from 'object-assign';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { stringify } from 'querystring';
+import { updatePath } from 'redux-simple-router';
 
-import Form         from '../components/form';
-import Filters      from '../components/filters';
-import ResultList  from '../components/result-list';
-import Messages     from '../components/search-message';
-import Pagination   from '../components/pagination';
-import ArticleActor from '../actors/article-actor';
-import ArticleStore from '../stores/article-store';
+import Form from '../components/form';
+import Filter from './filter';
+import CheckboxTree from '../components/checkbox-tree';
+import Cards from './cards';
+import ResultList from '../components/result-list';
+import Messages from '../components/search-message';
+import Pagination from '../components/pagination';
+import Spinner from '../components/spinner';
+import ViewHelper from '../utils/view-helper';
+import resources from '../resources';
 
-export default React.createClass({
+import {
+  fetchArticles, fetchTradeEvents, fetchTradeLeads
+} from '../actions';
+
+const Result = React.createClass({
   displayName: 'Result',
-  propTypes: {
-    location: React.PropTypes.object.isRequired
-  },
-  mixins: [ History ],
-  getInitialState: function() {
-    return {
-      articles: ArticleStore.getArticles(),
-      isLoading: true
-    };
-  },
-  componentWillMount: function() {
-    ArticleActor.search(this.props.location.query);
-  },
   componentDidMount: function() {
-    ArticleStore.addListener(this._onChange);
+    this.fetch(this.props.location.query);
   },
   componentWillReceiveProps: function(nextProps) {
-    if (nextProps.location.query !== this.props.location.query) {
-      ArticleActor.search(nextProps.location.query);
+    if (nextProps.location.search !== this.props.location.search) {
+      this.fetch(nextProps.location.query);
     }
   },
-  componentWillUnmount: function() {
-    ArticleStore.removeListener(this._onChange);
+  fetch: function(query) {
+    const { dispatch, params } = this.props;
+    switch(params.resource) {
+    case undefined:
+      for (let key in resources) {
+        dispatch(resources[key].fetch(query));
+      }
+      break;
+    default:
+      if (resources[params.resource]) {
+        dispatch(resources[params.resource].fetch(query));
+      }
+    }
   },
-  _onChange: function() {
-    this.setState({ articles  : ArticleStore.getArticles() });
-    this.setState({ isLoading : false });
+  handleFilter: function(filters) {
+    const { dispatch, location } = this.props;
+    let query = assign({}, location.query, {
+      [filters.id]: filters.items
+    });
+    dispatch(updatePath(`/search/articles?${stringify(query)}`));
   },
-  result: function() {
+  results: function(result, fields) {
+    if (result.isFetching) return <Spinner />;
     return (
-      <div className="row">
-        <div className="col-md-3">
-          <h4 className="text-muted">Filter Results</h4>
-          <Filters />
-        </div>
-        <div className="col-md-9">
-          <div>
-            <h4 className="text-muted">Trade Events</h4>
-            <ResultList items={ this.state.articles } itemLimit={ 5 }/>
-          </div>
-          <div>
-            <h4 className="text-muted">Trade Leads</h4>
-            <ResultList items={ this.state.articles } itemLimit={ 5 }/>
-        </div>
-          <div>
-            <Messages />
-            <ResultList items={ this.state.articles }/>
-            <Pagination history={ this.history } />
-          </div>
-         </div>
-       </div>
+      <div>
+        <Messages
+           keyword={ this.props.location.query.q }
+           total={ result.metadata.total }
+        />
+        <ResultList items={ result.items } fields={ fields }/>
+        <Pagination metadata={ result.metadata } location={ this.props.location } />
+      </div>
     );
   },
+  view: function() {
+    const { location, params, results } = this.props;
+    switch(params.resource) {
+    case undefined:
+      return [
+        <Cards results={ results } query={ location.query } />,
+        this.results(this.props.results.article, resources.articles.fields)
+      ];
+    default:
+      let stateKey = resources[params.resource].stateKey;
+      if (results[stateKey]) {
+        return this.results(results[stateKey], resources[params.resource].fields);
+      }
+    }
+    return null;
+  },
   render: function() {
+    const { aggregations, location: { query }, onSubmit, params, results } = this.props;
+    var filter;
+    if (_.isUndefined(params.resource)) {
+      filter = results.article.aggregations;
+    } else {
+      filter = results[resources[params.resource].stateKey].aggregations;
+    }
     return (
       <div>
         <div className="searchbar row">
-          <Form expanded={ false } history={ this.history } />
+          <Form
+            expanded={ false }
+            aggregations={ aggregations }
+            onSubmit={ onSubmit }
+            query={ query }/>
         </div>
-        { this.result() }
+        <div className="row">
+          <div className="col-md-3">
+            <Filter aggregations={ filter } onChange={ this.handleFilter } />
+          </div>
+          <div className="col-md-9">
+            { this.view() }
+          </div>
+        </div>
       </div>
     );
   }
 });
+
+Result.propTypes = {
+  aggregations: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func,
+  params: PropTypes.object.isRequired,
+  results: PropTypes.object
+};
+
+function mapStateToProps(state) {
+  const { results } = state;
+
+  return {
+    results
+  };
+}
+
+export default connect(mapStateToProps)(Result);

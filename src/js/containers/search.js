@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../components/expanded-form';
+import Form from '../components/form';
 
 export default React.createClass({
   displayName: 'Search',

@@ -20,6 +20,28 @@ function formatParams(query, whitelist) {
   return params;
 }
 
+function formatFilterParams(query) {
+  let params = assign({}, query);
+  const keys = Object.keys(query).map(k => k);
+  keys.forEach(key => {
+    let keyArray = key.split('-');
+    if (keyArray[0] === 'filter') {
+      let filter = keyArray.slice(1, keyArray.length);
+      params[filter] = params[filter] || [];
+      params[filter] = params[filter].concat(query[key]);
+    }
+  });
+  return params;
+}
+
+function isFiltering(query) {
+  const keys = Object.keys(query).map(k => k);
+  for (let key in keys) {
+    if (keys[key].split('-')[0] === 'filter') return true;
+  }
+  return false;
+}
+
 function requestAggregations() {
   return {
     type: REQUEST_AGGREGATIONS
@@ -65,9 +87,9 @@ function receiveArticles(response) {
 export function fetchArticles(query) {
   return (dispatch, getState) => {
     if (getState().results.article.isFetching) return null;
-    dispatch(requestArticles());
 
-    let params = formatParams(query, [
+    dispatch(requestArticles());
+    let params = formatParams(formatFilterParams(query), [
       'q', 'countries', 'industries', 'topics', 'types', 'offset'
     ]);
     if (_.isEmpty(params)) params = { q: '' };
@@ -75,13 +97,18 @@ export function fetchArticles(query) {
       .then(function(response) {
         let data = {
           metadata: response.data.metadata,
-          aggregations: {
+          results: response.data.results
+        };
+        let aggregations = getState().results.article.aggregations;
+        if (isFiltering(query) && !_.isEmpty(aggregations)) {
+          data.aggregations = assign({}, getState().results.article.aggregations);
+        } else {
+          data.aggregations = {
             countries: Parser.extract(response.data.aggregations.countries, 'key'),
             industries: Parser.parseAsTree(response.data.aggregations.industries),
             topics: Parser.parseAsTree(response.data.aggregations.topics)
-          },
-          results: response.data.results
-        };
+          };
+        }
         dispatch(receiveArticles(data));
       });
   };

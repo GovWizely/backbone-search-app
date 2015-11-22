@@ -52,9 +52,9 @@ const Result = React.createClass({
     dispatch(updatePath(`/search/articles?${stringify(query)}`));
   },
   results: function(result, fields) {
-    if (result.isFetching) return <Spinner />;
+    if (result.isFetching) return <Spinner key="spinner" />;
     return (
-      <div>
+      <div key="result">
         <Messages
            keyword={ this.props.location.query.q }
            total={ result.metadata.total }
@@ -69,7 +69,7 @@ const Result = React.createClass({
     switch(params.resource) {
     case undefined:
       return [
-        <Cards results={ results } query={ location.query } />,
+        <Cards results={ results } query={ location.query } key="cards" />,
         this.results(this.props.results.article, resources.articles.fields)
       ];
     default:

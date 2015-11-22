@@ -14,7 +14,8 @@ export default {
     },
     displayName: 'Article',
     pathName: 'articles',
-    stateKey: 'article'
+    stateKey: 'article',
+    maxOffset: 1000
   },
   trade_events:  {
     fetch: fetchTradeEvents,

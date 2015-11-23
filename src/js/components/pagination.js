@@ -60,7 +60,7 @@ var Pagination = React.createClass({
     };
   },
   render: function() {
-    const { pathname, metadata: { offset, total }, options: { range, size } } = this.props;
+    const { pathname, query, metadata: { offset, total }, options: { range, size } } = this.props;
     const firstPage = 0,
           prevPage = offset - size < 0 ? 0 : offset - size,
           nextPage = offset + size > total ? _.floor(total, -1) : offset + size,
@@ -75,7 +75,7 @@ var Pagination = React.createClass({
             <a className="fa fa-angle-left" href={ href(pathname, prevPage) }></a>
           </li>
 
-          { pageItems(offset, total, { pathname, range, size })}
+          { pageItems(offset, total, { pathname, query, range, size })}
 
           <li>
             <a className="fa fa-angle-right" href={ href(pathname, nextPage) }></a>

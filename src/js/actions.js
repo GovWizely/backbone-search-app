@@ -91,7 +91,7 @@ export function fetchArticles(query) {
       'q', 'countries', 'industries', 'topics', 'types', 'offset'
     ]);
     if (_(Object.keys(params))
-        .intersection('q', 'countries', 'industries', 'topics', 'types')
+        .intersection(['q', 'countries', 'industries', 'topics', 'types'])
         .isEmpty()) {
       params.q = '';
     }

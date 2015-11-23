@@ -69,19 +69,19 @@ var Pagination = React.createClass({
       <nav>
         <ul className="pagination">
           <li>
-            <a className="fa fa-angle-double-left" href={ href(pathname, firstPage) }></a>
+            <a className="fa fa-angle-double-left" href={ href(pathname, query, firstPage) }></a>
           </li>
           <li>
-            <a className="fa fa-angle-left" href={ href(pathname, prevPage) }></a>
+            <a className="fa fa-angle-left" href={ href(pathname, query, prevPage) }></a>
           </li>
 
           { pageItems(offset, total, { pathname, query, range, size })}
 
           <li>
-            <a className="fa fa-angle-right" href={ href(pathname, nextPage) }></a>
+            <a className="fa fa-angle-right" href={ href(pathname, query, nextPage) }></a>
           </li>
           <li>
-            <a className="fa fa-angle-double-right" href={ href(pathname, lastPage) }></a>
+            <a className="fa fa-angle-double-right" href={ href(pathname, query, lastPage) }></a>
           </li>
         </ul>
       </nav>

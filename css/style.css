@@ -8178,7 +8178,7 @@ button.close {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #ddd;
+    background-color: #32404e;
     animation: sk-foldCubeAngle 2.4s infinite linear both;
     transform-origin: 100% 100%; }
   .sk-folding-cube .sk-cube2 {
@@ -8284,31 +8284,49 @@ nav.navbar {
 .category-input .submit {
   margin-top: 12px; }
 
+.card {
+  background-color: #FFF;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  box-sizing: border-box;
+  border-radius: 2px;
+  overflow: hidden;
+  padding-bottom: 6px; }
+  .card > h4, .card > .header, .card > ul, .card > div {
+    padding: 8px 16px; }
+  .card .card-list-item {
+    list-style-type: none;
+    margin-bottom: 14px; }
+  .card .show-more {
+    font-size: 16px; }
+  .card .source {
+    color: #006621; }
+
 #filters {
   margin-top: 10px;
   border-right: 1px solid #eee;
   width: 100%; }
-  #filters section {
-    width: 95%;
-    border-bottom: 1px solid #eee; }
-    #filters section .overflow {
-      max-height: 180px;
-      overflow-y: auto; }
-    #filters section .list-group-item {
-      margin-top: 0;
-      border: 0;
-      padding: 5px 15px; }
-    #filters section legend {
-      font-size: inherit;
-      border: 0;
-      margin: 0; }
-  #filters a {
+
+.filter {
+  width: 95%;
+  border-bottom: 1px solid #eee; }
+  .filter .overflow {
+    max-height: 180px;
+    overflow-y: auto; }
+  .filter .list-group-item {
+    margin-top: 0;
+    border: 0;
+    padding: 5px 15px; }
+  .filter legend {
+    font-size: inherit;
+    border: 0;
+    margin: 0; }
+  .filter a {
     text-decoration: none; }
-    #filters a.collapsed:before {
+    .filter a.collapsed:before {
       font-family: FontAwesome;
       content: '\f105';
       margin-right: 10px; }
-    #filters a:before {
+    .filter a:before {
       font-family: FontAwesome;
       content: '\f107';
       margin-right: 10px; }

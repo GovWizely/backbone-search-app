@@ -8,6 +8,14 @@ const config = {
 
 var Card = React.createClass({
   displayName: 'Card',
+  propTypes: {
+    fields: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
+    items: PropTypes.array.isRequired,
+    label: PropTypes.string,
+    onClick: PropTypes.func,
+    url: PropTypes.string.isRequired
+  },
   getDefaultProps: function() {
     return {
       items: [],
@@ -23,30 +31,26 @@ var Card = React.createClass({
     return (
       <section className="card">
         <h4 className="text-muted">{ label }</h4>
-        <ul className="list-group">
+        <ul className="card-list">
           {
             items.slice(0, config.count).map(function(item) {
               return (
-                  <li className="list-group-item" key={ findFirst(item, fields.key)}>
-                  <a target="_blank" href={ findFirst(item, fields.url ) }>{ findFirst(item, fields.title) }</a>
+                  <li className="card-list-item" key={ findFirst(item, fields.key)}>
+                    <a target="_blank" href={ findFirst(item, fields.url ) }>{ findFirst(item, fields.title) }</a>
+                    <div>
+                      <span className="source">{ findFirst(item, fields.source) }</span>
+                    </div>
                   </li>
               );
             })
           }
         </ul>
-        <a href={ url }>Show More for { label }</a>
+        <div>
+          <a className="show-more" href={ url }>Show More for { label }</a>
+        </div>
       </section>
     );
   }
 });
-
-Card.propTypes = {
-  fields: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
-  items: PropTypes.array.isRequired,
-  label: PropTypes.string,
-  url: PropTypes.string.isRequired
-
-};
 
 export default Card;

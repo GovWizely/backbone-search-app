@@ -4,6 +4,10 @@ import { findFirst } from '../utils/view-helper';
 
 var ResultListItem = React.createClass({
   displayName: 'ResultListItem',
+  propTypes: {
+    fields: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired
+  },
   render: function() {
     const { fields, item } = this.props;
     const url = findFirst(item, fields.url),
@@ -27,9 +31,5 @@ var ResultListItem = React.createClass({
   }
 });
 
-ResultListItem.propTypes = {
-  fields: PropTypes.object.isRequired,
-  item: PropTypes.object.isRequired
-};
 
 export default ResultListItem;

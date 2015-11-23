@@ -21,7 +21,7 @@ var Cards = React.createClass({
             const { items } = results[stateKey];
             const url = `/#/search/${card}?${stringify(query)}`;
             if (!items.length) return null;
-            return (
+            return [
               <Card
                 id={ card }
                 fields={ fields }
@@ -29,8 +29,9 @@ var Cards = React.createClass({
                 key={ card }
                 label={ displayName }
                 url={ url }
-               />
-            );
+              />,
+             <hr />
+            ];
           })
         }
       </div>

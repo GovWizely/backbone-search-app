@@ -30,6 +30,17 @@ function list(items, options) {
 
 var CheckboxTree = React.createClass({
   displayName: 'CheckboxTree',
+  propTypes: {
+    checkedItems: PropTypes.array,
+    cssClass: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    itemCssClass: PropTypes.string,
+    items: PropTypes.object.isRequired,
+    label: PropTypes.string,
+    listCssClass: PropTypes.string,
+    nested: PropTypes.bool,
+    onChange: PropTypes.func
+  },
   getDefaultProps: function() {
     return {
       listCssClass: 'list-group',
@@ -88,17 +99,5 @@ var CheckboxTree = React.createClass({
     );
   }
 });
-
-CheckboxTree.propTypes = {
-  checkedItems: PropTypes.array,
-  cssClass: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  itemCssClass: PropTypes.string,
-  items: PropTypes.object.isRequired,
-  label: PropTypes.string,
-  listCssClass: PropTypes.string,
-  nested: PropTypes.bool,
-  onChange: PropTypes.func
-};
 
 export default CheckboxTree;

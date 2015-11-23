@@ -125,9 +125,36 @@ nav.navbar {
   }
 }
 
+.cards {
+}
+
 .card {
-  .list-group-item {
-    border: 0;
+  background-color: #FFF;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  box-sizing: border-box;
+  border-radius: 2px;
+  overflow: hidden;
+  padding-bottom: 6px;
+
+  >h4, >ul, >div {
+    padding: 8px 16px;
+  }
+
+  .card-list {
+
+  }
+
+  .card-list-item {
+    list-style-type: none;
+    margin-bottom: 14px;
+  }
+
+  .show-more {
+    font-size: 16px;
+  }
+
+  .source {
+    color: #006621;
   }
 }
 

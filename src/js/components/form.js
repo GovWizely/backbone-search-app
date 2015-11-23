@@ -7,6 +7,13 @@ import Select from './aggregation-select';
 
 var Form =  React.createClass({
   displayName: 'ExpandedForm',
+  propTypes: {
+    aggregations: PropTypes.object.isRequired,
+    expanded: PropTypes.bool.isRequired,
+    fields: PropTypes.object.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func
+  },
   getDefaultProps: function() {
     return {
       expanded: true
@@ -21,7 +28,7 @@ var Form =  React.createClass({
 
         <div className="col-md-4 keyword-input condensed">
           <div className="input-group">
-        <input type="text" className="form-control" ref="keyword" placeholder="Keyword" { ...q } />
+            <input type="text" className="form-control" ref="keyword" placeholder="Keyword" { ...q } />
             <span className="input-group-btn">
               <button className="btn btn-success" onClick={ handleSubmit }>
                 <i className="fa fa-search"></i>
@@ -88,13 +95,6 @@ var Form =  React.createClass({
   }
 });
 
-Form.propTypes = {
-  aggregations: PropTypes.object.isRequired,
-  expanded: PropTypes.bool.isRequired,
-  fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func
-};
 
 export default reduxForm({
   form: 'form',

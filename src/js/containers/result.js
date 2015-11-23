@@ -71,7 +71,7 @@ const Result = React.createClass({
         <ResultList items={ result.items } fields={ fields }/>
         <Pagination
           metadata={ result.metadata }
-          pathname={ `/#/search/${pathname}` }
+          pathname={ `#/search/${pathname}` }
           query={ this.props.location.query }
           options={ page } />
       </div>

@@ -19,7 +19,7 @@ var Cards = React.createClass({
           cards.map(function(card) {
             const { displayName, fields, stateKey } = resources[card];
             const { items } = results[stateKey];
-            const url = `/#/search/${card}?${stringify(query)}`;
+            const url = `#/search/${card}?${stringify(query)}`;
             if (!items.length) return null;
             return [
               <Card

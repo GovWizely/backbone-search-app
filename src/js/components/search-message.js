@@ -1,11 +1,12 @@
-
-var _     = require('lodash');
+import _ from 'lodash';
 import React, { PropTypes } from 'react';
-
-var ArticleStore = require('../stores/article-store');
 
 var SearchMessage = React.createClass({
   displayName: 'SearchMessage',
+  propTypes: {
+    keyword: PropTypes.string,
+    total: PropTypes.number
+  },
   message: function() {
     if (this.props.total === null) return null;
 
@@ -34,10 +35,5 @@ var SearchMessage = React.createClass({
     );
   }
 });
-
-SearchMessage.propTypes = {
-  keyword: PropTypes.string,
-  total: PropTypes.number
-};
 
 export default SearchMessage;

@@ -13,7 +13,7 @@ export default {
       url: ['url']
     },
     displayName: 'Article',
-    pathName: 'articles',
+    pathname: 'articles',
     stateKey: 'article',
     maxOffset: 1000
   },
@@ -27,7 +27,7 @@ export default {
       url: ['url', 'registration_link']
     },
     displayName: 'Trade Event',
-    pathName: 'trade_events',
+    pathname: 'trade_events',
     stateKey: 'tradeEvent'
   },
   trade_leads: {
@@ -40,7 +40,7 @@ export default {
       url: ['url']
     },
     displayName: 'Trade Lead',
-    pathName: 'trade_leads',
+    pathname: 'trade_leads',
     stateKey: 'tradeLead'
   }
 };

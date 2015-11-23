@@ -1,13 +1,16 @@
 import React, { PropTypes } from 'react';
 import { stringify } from 'querystring';
 
+import { cards } from '../config';
 import Card from '../components/card';
 import resources from '../resources';
 
-const cards = ['trade_events', 'trade_leads'];
-
 var Cards = React.createClass({
   displayName: 'Cards',
+  propTypes: {
+    query: PropTypes.object.isRequired,
+    results: PropTypes.object.isRequired
+  },
   render: function() {
     const { query, results } = this.props;
     return (
@@ -34,10 +37,5 @@ var Cards = React.createClass({
     );
   }
 });
-
-Cards.propTypes = {
-  query: PropTypes.object.isRequired,
-  results: PropTypes.object.isRequired
-};
 
 export default Cards;

@@ -13,14 +13,6 @@ import {
 } from './actions';
 
 const initialState = {
-  query: {
-    q: '',
-    industries: [],
-    countries: [],
-    topics: [],
-    offset: 0,
-    filters: {}
-  },
   aggregations: {
     isFetching: false,
     data: {}
@@ -44,19 +36,6 @@ const initialState = {
     }
   }
 };
-
-function query(state = {}, action) {
-  switch(action.type) {
-  case SET_QUERY:
-    return assign({}, state, action.query);
-  case SET_FILTER:
-    return assign({}, state, {
-      filters: action.filters
-    });
-  default:
-    return state;
-  }
-}
 
 function aggregations(state = initialState.aggregations, action) {
   switch(action.type) {
@@ -123,7 +102,6 @@ function results(state = initialState.results, action) {
 
 const reducer = combineReducers({
   aggregations,
-  query,
   results,
   form: formReducer,
   routing: routeReducer

@@ -9,8 +9,6 @@ export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 export const REQUEST_TRADE_API = 'REQUEST_TRADE_API';
 export const RECEIVE_TRADE_API = 'RECEIVE_TRADE_API';
-export const SET_FILTER = 'SET_FILTER';
-export const SET_QUERY = 'SET_QUERY';
 
 function formatParams(query, whitelist) {
   let params = _.pick(query, whitelist);
@@ -92,7 +90,11 @@ export function fetchArticles(query) {
     let params = formatParams(formatFilterParams(query), [
       'q', 'countries', 'industries', 'topics', 'types', 'offset'
     ]);
-    if (_.isEmpty(params)) params = { q: '' };
+    if (_(Object.keys(params))
+        .intersection('q', 'countries', 'industries', 'topics', 'types')
+        .isEmpty()) {
+      params.q = '';
+    }
     return axios.get('https://pluto.kerits.org/v1/articles/search', { params })
       .then(function(response) {
         let data = {
@@ -164,18 +166,4 @@ export function fetchTradeLeads(query) {
     'start_date', 'end_date', 'size', 'offset'
   ]);
   return fetchTradeAPI(resource, params);
-}
-
-export function setQuery(query) {
-  return {
-    type: SET_QUERY,
-    query
-  };
-}
-
-export function setFilter(filters) {
-  return {
-    type: SET_FILTER,
-    filters
-  };
 }

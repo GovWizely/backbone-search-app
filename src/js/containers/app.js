@@ -3,10 +3,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
 import { stringify } from 'querystring';
-import {
-  fetchAggregations,
-  setQuery, setFilter
-} from '../actions';
+import { fetchAggregations } from '../actions';
 
 function parseFormData(form) {
   const { q, countries, industries } = form;
@@ -25,7 +22,11 @@ function parseFormData(form) {
 
 var App = React.createClass({
   displayName: 'App',
-
+  propTypes: {
+    aggregations: PropTypes.object.isRequired,
+    children: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired
+  },
   componentDidMount: function() {
     this.props.dispatch(fetchAggregations());
   },
@@ -46,12 +47,6 @@ var App = React.createClass({
     );
   }
 });
-
-App.propTypes = {
-  aggregations: PropTypes.object.isRequired,
-  children: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
-};
 
 function mapStateToProps(state) {
   const { aggregations, form } = state;

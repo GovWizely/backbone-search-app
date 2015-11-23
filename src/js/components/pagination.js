@@ -3,15 +3,15 @@ import assign from 'object-assign';
 import { stringify } from 'querystring';
 import React, { PropTypes } from 'react';
 
-function href(location, offset) {
-  const params = assign({}, location.query, { offset });
-  return `/#${location.pathname}?${stringify(params)}`;
+function href(pathname, query, offset) {
+  const params = assign({}, query, { offset });
+  return `${pathname}?${stringify(params)}`;
 }
 
-function findRange(current, total, size) {
-  if (total <= size) return { head: 1, tail: total };
+function findRange(current, total, range) {
+  if (total <= range) return { head: 1, tail: total };
 
-  const pivot = _.ceil(size / 2);
+  const pivot = _.ceil(range / 2);
   let head = current - pivot + 1,
       tail = current + pivot;
   const headOffset = 1 - head,
@@ -28,15 +28,15 @@ function findRange(current, total, size) {
 }
 
 function pageItems(offset, total, options) {
-  const totalPage = _.ceil(total / options.pageSize),
-        currentPage = _.ceil(offset / options.pageSize);
-  const { head, tail } = findRange(currentPage, totalPage, options.pageSize);
+  const totalPage = _.ceil(total / options.size),
+        currentPage = _.ceil(offset / options.size);
+  const { head, tail } = findRange(currentPage, totalPage, options.range);
   const pages = _.range(head, tail + 1).map(i =>  {
-    let pageOffset = (i - 1)  * options.pageSize;
+    let pageOffset = (i - 1)  * options.size;
     let activeCss = pageOffset == offset ? 'active' : '';
     return (
       <li className={ activeCss } key={ i }>
-        <a href={ href(options.location, pageOffset) }>{ i }</a>
+        <a href={ href(options.pathname, options.query, pageOffset) }>{ i }</a>
       </li>
     );
   });
@@ -45,47 +45,48 @@ function pageItems(offset, total, options) {
 
 var Pagination = React.createClass({
   displayName: 'Pagination',
+  propTypes: {
+    metadata: PropTypes.object.isRequired,
+    options: PropTypes.object,
+    pathname: PropTypes.string.isRequired,
+    query: PropTypes.object.isRequired
+  },
   getDefaultProps: function() {
     return {
-      pageSize: 10,
-      pageRange: 10
+      options: {
+        range: 10,
+        size: 10
+      }
     };
   },
   render: function() {
-    const { location, metadata: { offset, total }, pageRange, pageSize } = this.props;
+    const { pathname, metadata: { offset, total }, options: { range, size } } = this.props;
     const firstPage = 0,
-          prevPage = offset - pageSize < 0 ? 0 : offset - pageSize,
-          nextPage = offset + pageSize > total ? _.floor(total, -1) : offset + pageSize,
+          prevPage = offset - size < 0 ? 0 : offset - size,
+          nextPage = offset + size > total ? _.floor(total, -1) : offset + size,
           lastPage = _.floor(total, -1);
     return (
       <nav>
         <ul className="pagination">
           <li>
-            <a className="fa fa-angle-double-left" href={ href(location, firstPage) }></a>
+            <a className="fa fa-angle-double-left" href={ href(pathname, firstPage) }></a>
           </li>
           <li>
-            <a className="fa fa-angle-left" href={ href(location, prevPage) }></a>
+            <a className="fa fa-angle-left" href={ href(pathname, prevPage) }></a>
           </li>
 
-          { pageItems(offset, total, { location, pageRange, pageSize })}
+          { pageItems(offset, total, { pathname, range, size })}
 
           <li>
-            <a className="fa fa-angle-right" href={ href(location, nextPage) }></a>
+            <a className="fa fa-angle-right" href={ href(pathname, nextPage) }></a>
           </li>
           <li>
-            <a className="fa fa-angle-double-right" href={ href(location, lastPage) }></a>
+            <a className="fa fa-angle-double-right" href={ href(pathname, lastPage) }></a>
           </li>
         </ul>
       </nav>
     );
   }
 });
-
-Pagination.propTypes = {
-  location: PropTypes.object.isRequired,
-  metadata: PropTypes.object.isRequired,
-  pageRange: PropTypes.number,
-  pageSize: PropTypes.number
-};
 
 export default Pagination;

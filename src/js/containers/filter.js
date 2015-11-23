@@ -3,6 +3,10 @@ import CheckboxTree from '../components/checkbox-tree';
 
 var Filter = React.createClass({
   displayName: 'Filter',
+  propTypes: {
+    aggregations: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
+  },
   render: function() {
     const { aggregations, onChange } = this.props;
     if (!aggregations) return null;
@@ -27,10 +31,5 @@ var Filter = React.createClass({
     );
   }
 });
-
-Filter.propTypes = {
-  aggregations: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired
-};
 
 export default Filter;

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
+import { page } from '../config';
 import Form from '../components/form';
 import Filter from './filter';
 import CheckboxTree from '../components/checkbox-tree';
@@ -22,6 +23,14 @@ import {
 
 const Result = React.createClass({
   displayName: 'Result',
+  propTypes: {
+    aggregations: PropTypes.object,
+    dispatch: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
+    onSubmit: PropTypes.func,
+    params: PropTypes.object.isRequired,
+    results: PropTypes.object
+  },
   componentDidMount: function() {
     this.fetch(this.props.location.query);
   },
@@ -51,7 +60,7 @@ const Result = React.createClass({
     });
     dispatch(updatePath(`/search/articles?${stringify(query)}`));
   },
-  results: function(result, fields) {
+  results: function(result, fields, pathname) {
     if (result.isFetching) return <Spinner key="spinner" />;
     return (
       <div key="result">
@@ -60,22 +69,29 @@ const Result = React.createClass({
            total={ result.metadata.total }
         />
         <ResultList items={ result.items } fields={ fields }/>
-        <Pagination metadata={ result.metadata } location={ this.props.location } />
+        <Pagination
+          metadata={ result.metadata }
+          pathname={ `/#/search/${pathname}` }
+          query={ this.props.location.query }
+          options={ page } />
       </div>
     );
   },
   view: function() {
     const { location, params, results } = this.props;
+    let resource = null;
     switch(params.resource) {
     case undefined:
+      resource = resources.articles;
       return [
         <Cards results={ results } query={ location.query } key="cards" />,
-        this.results(this.props.results.article, resources.articles.fields)
+        this.results(
+          this.props.results.article, resource.fields, resource.pathname)
       ];
     default:
-      let stateKey = resources[params.resource].stateKey;
-      if (results[stateKey]) {
-        return this.results(results[stateKey], resources[params.resource].fields);
+      resource = resources[params.resource];
+      if (results[resource.stateKey]) {
+        return this.results(results[resource.stateKey], resource.fields, resource.pathname);
       }
     }
     return null;
@@ -94,8 +110,7 @@ const Result = React.createClass({
           <Form
             expanded={ false }
             aggregations={ aggregations }
-            onSubmit={ onSubmit }
-            query={ query }/>
+            onSubmit={ onSubmit } />
         </div>
         <div className="row">
           <div className="col-md-3">
@@ -109,15 +124,6 @@ const Result = React.createClass({
     );
   }
 });
-
-Result.propTypes = {
-  aggregations: PropTypes.object,
-  dispatch: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func,
-  params: PropTypes.object.isRequired,
-  results: PropTypes.object
-};
 
 function mapStateToProps(state) {
   const { results } = state;

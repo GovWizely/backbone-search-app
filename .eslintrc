@@ -1,8 +1,13 @@
 {
-	"parser": "babel-eslint",
+        "parser": "babel-eslint",
+        "ecmaFeatures": {
+                "jsx": true,
+                "spread": true
+        },
 	"env": {
 		"browser": true,
-		"node": true
+		"node": true,
+                "mocha": true
 	},
 	"plugins": [
 		"react"

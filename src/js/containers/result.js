@@ -17,10 +17,6 @@ import Spinner from '../components/spinner';
 import ViewHelper from '../utils/view-helper';
 import resources from '../resources';
 
-import {
-  fetchArticles, fetchTradeEvents, fetchTradeLeads
-} from '../actions';
-
 const Result = React.createClass({
   displayName: 'Result',
   propTypes: {

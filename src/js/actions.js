@@ -21,7 +21,7 @@ function formatParams(query, whitelist) {
 function formatFilterParams(query) {
   let params = assign({}, query);
   const keys = Object.keys(query).map(k => k);
-  keys.forEach(key => {
+  _(keys).forEach(key => {
     let keyArray = key.split('-');
     if (keyArray[0] === 'filter') {
       let filter = keyArray.slice(1, keyArray.length);

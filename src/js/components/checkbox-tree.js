@@ -87,11 +87,11 @@ var CheckboxTree = React.createClass({
       checkedItems: this.state.checkedItems,
       onClick: this.handleClick
     });
-
     const hrefCSS = visible ? '' : 'collapsed';
     const view = visible ?  (
       <div className="overflow" id={ id }>{ list(items, options) }</div>
     ) : null;
+
     return (
       <section className={ this.props.cssClass } onChange={ this.handleClick }>
         <fieldset>

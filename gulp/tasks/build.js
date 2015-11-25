@@ -11,12 +11,13 @@ module.exports = function(gulp, config) {
   require('./html')(gulp, config);
   require('./sass')(gulp, config);
   require('./image')(gulp, config);
+  require('./vendor')(gulp, config);
 
   gulp.task(cleanTaskName, function() {
     del(config.dist.root);
   });
 
   gulp.task(buildTaskName, function(callback) {
-    runSequence(cleanTaskName, taskName('font:build', config), taskName(['js:build', 'html:build', 'sass:build', 'image:build'], config), callback);
+    runSequence(cleanTaskName, taskName('font:build', config), taskName(['js:build', 'html:build', 'sass:build', 'image:build', 'vendor:build'], config), callback);
   });
 };

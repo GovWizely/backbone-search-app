@@ -21,7 +21,7 @@ function formatParams(query, whitelist) {
 function formatFilterParams(query) {
   let params = assign({}, query);
   const keys = Object.keys(query).map(k => k);
-  _(keys).forEach(key => {
+  keys.forEach(key => {
     let keyArray = key.split('-');
     if (keyArray[0] === 'filter') {
       let filter = keyArray.slice(1, keyArray.length);
@@ -54,17 +54,20 @@ function receiveAggregations(response) {
 }
 
 export function fetchAggregations() {
+
   return (dispatch, getState) => {
     if (getState().aggregations.isFetching) return null;
 
     dispatch(requestAggregations());
-    return axios.get('https://pluto.kerits.org/v1/articles/count?q=')
-      .then(function(response) {
-        let aggregations = {};
-        aggregations.countries = response.data.aggregations.countries;
-        aggregations.industries = Parser.parse(response.data.aggregations.industries);
-        aggregations.topics = Parser.parse(response.data.aggregations.topics);
-        dispatch(receiveAggregations(aggregations));
+
+    return axios.get('https://pluto.kerits.org/v1/articles/count')
+      .then(response => {
+        let json = response.data;
+        dispatch(receiveAggregations({
+          countries: json.aggregations.countries,
+          industries: Parser.parse(json.aggregations.industries),
+          topics: Parser.parse(json.aggregations.topics)
+        }));
       });
   };
 }

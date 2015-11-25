@@ -1,6 +1,5 @@
 // enable bootstrap js component
 require('bootstrap');
-require('es6-promise').polyfill();
 
 import React from 'react';
 import { render } from 'react-dom';

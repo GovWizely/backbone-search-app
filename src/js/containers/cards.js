@@ -29,8 +29,8 @@ var Cards = React.createClass({
                 key={ card }
                 label={ displayName }
                 url={ url }
-              />,
-             <hr />
+                />,
+              <hr />
             ];
           })
         }

@@ -84,8 +84,7 @@ const Result = React.createClass({
     case undefined:
       resource = resources.articles;
       return [
-        this.results(
-          this.props.results.article, resource.fields, resource.pathname),
+        this.results(results.article, resource.fields, resource.pathname),
         <Cards results={ results } query={ location.query } key="cards" />
       ];
     default:
@@ -98,11 +97,15 @@ const Result = React.createClass({
   },
   render: function() {
     const { aggregations, location: { query }, onSubmit, params, results } = this.props;
-    var filter;
+    let filter = null,
+        filterComponent = null;
     if (_.isUndefined(params.resource)) {
       filter = results.article.aggregations;
     } else {
       filter = results[resources[params.resource].stateKey].aggregations;
+    }
+    if (filter) {
+      filterComponent = <Filter aggregations={ filter } onChange={ this.handleFilter } />;
     }
     return (
       <div>
@@ -113,12 +116,8 @@ const Result = React.createClass({
             onSubmit={ onSubmit } />
         </div>
         <div className="row">
-          <div className="col-md-3">
-            <Filter aggregations={ filter } onChange={ this.handleFilter } />
-          </div>
-          <div className="col-md-9">
-            { this.view() }
-          </div>
+          <div className="col-md-3">{ filterComponent }</div>
+          <div className="col-md-9">{ this.view() }</div>
         </div>
       </div>
     );

@@ -18,9 +18,9 @@ var Cards = React.createClass({
         {
           cards.map(function(card) {
             const { displayName, fields, stateKey } = resources[card];
-            const { items } = results[stateKey];
+            const { isFetching, items } = results[stateKey];
             const url = `#/search/${card}?${stringify(query)}`;
-            if (!items.length) return null;
+            if (isFetching || !items.length) return null;
             return [
               <Card
                 id={ card }

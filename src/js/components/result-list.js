@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import ResultListItem from './result-list-item';
 import { findFirst } from '../utils/view-helper';
@@ -6,7 +6,8 @@ import { findFirst } from '../utils/view-helper';
 export default React.createClass({
   displayName: 'ResultList',
   propTypes: {
-    items: React.PropTypes.array.isRequired
+    fields: PropTypes.array.isRequired,
+    items: PropTypes.array.isRequired
   },
   getDefaultProps: function() {
     return {

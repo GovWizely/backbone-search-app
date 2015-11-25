@@ -26,7 +26,7 @@ export default {
       title: ['event_name'],
       url: ['url', 'registration_link']
     },
-    displayName: 'Trade Event',
+    displayName: 'Trade Events',
     pathname: 'trade_events',
     stateKey: 'tradeEvent'
   },
@@ -39,7 +39,7 @@ export default {
       title: ['title', 'description'],
       url: ['url']
     },
-    displayName: 'Trade Lead',
+    displayName: 'Trade Opportunities',
     pathname: 'trade_leads',
     stateKey: 'tradeLead'
   }

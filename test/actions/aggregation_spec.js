@@ -1,11 +1,12 @@
 import { expect } from 'chai';
-import { mockStore } from './test_helper';
+import { mockStore } from '../test_helper';
 
 import nock from 'nock';
-import * as actions from '../src/js/actions/aggregation';
+import * as actions from '../../src/js/actions/aggregation';
 
-describe('actions', () => {
+describe('aggregation', () => {
   afterEach(() => {
+    nock.cleanAll();
   });
 
   const aggregations = {
@@ -14,7 +15,9 @@ describe('actions', () => {
     topics: []
   };
 
-  describe('fetchAggregations', () => {
+  describe('fetchAggregations', function() {
+    this.timeout(10000);
+
     it('create an action to request aggregations', (done) => {
       nock('https://pluto.kerits.org/')
         .get('/v1/articles/count')

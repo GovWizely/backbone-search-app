@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import assign from 'object-assign';
-import axios from 'axios';
+import fetch from 'node-fetch';
+import { stringify } from 'querystring';
 
 import Parser from '../utils/aggregation-parser';
 import { formatFilterParams, formatParams } from '../utils/action-helper';
@@ -8,7 +9,11 @@ import { formatFilterParams, formatParams } from '../utils/action-helper';
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 
+const endpoint = 'https://pluto.kerits.org/v1/articles/search';
+
 function isFiltering(query) {
+  if (!query) return false;
+
   const keys = Object.keys(query).map(k => k);
   for (let key in keys) {
     if (keys[key].split('-')[0] === 'filter') return true;
@@ -34,28 +39,29 @@ export function fetchArticles(query) {
     if (getState().results.article.isFetching) return null;
 
     dispatch(requestArticles());
-    let params = formatParams(formatFilterParams(query), [
-      'q', 'countries', 'industries', 'topics', 'types', 'offset'
-    ]);
+    let params = {};
+    if (query) {
+      params = formatParams(formatFilterParams(query), [
+        'q', 'countries', 'industries', 'topics', 'types', 'offset'
+      ]);
+    }
     if (_(Object.keys(params))
         .intersection(['q', 'countries', 'industries', 'topics', 'types'])
         .isEmpty()) {
       params.q = '';
     }
-    return axios.get('https://pluto.kerits.org/v1/articles/search', { params })
-      .then(function(response) {
-        let data = {
-          metadata: response.data.metadata,
-          results: response.data.results
-        };
+    return fetch(`${endpoint}?${stringify(params)}`)
+      .then(response => response.json())
+      .then(json => {
+        let data = { metadata: json.metadata, results: json.results };
         let aggregations = getState().results.article.aggregations;
         if (isFiltering(query) && !_.isEmpty(aggregations)) {
           data.aggregations = assign({}, getState().results.article.aggregations);
         } else {
           data.aggregations = {
-            countries: Parser.extract(response.data.aggregations.countries, 'key'),
-            industries: Parser.parseAsTree(response.data.aggregations.industries),
-            topics: Parser.parseAsTree(response.data.aggregations.topics)
+            countries: Parser.extract(json.aggregations.countries, 'key'),
+            industries: Parser.parseAsTree(json.aggregations.industries),
+            topics: Parser.parseAsTree(json.aggregations.topics)
           };
         }
         dispatch(receiveArticles(data));

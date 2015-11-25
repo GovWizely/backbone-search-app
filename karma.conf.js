@@ -3,7 +3,7 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['browserify', 'mocha', 'chai'],
 
-    reporters: ['nyan'],
+    reporters: ['mocha'],
 
     browsers: ['Chrome'],
 
@@ -18,6 +18,8 @@ module.exports = function(config) {
     browserify: {
       debug: true,
       transform: [ 'babelify' ]
-    }
+    },
+    browserDisconnectTimeout: 1000,
+    browserNoActivityTimeout: 100000
   });
 };

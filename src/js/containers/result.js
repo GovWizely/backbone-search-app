@@ -84,9 +84,9 @@ const Result = React.createClass({
     case undefined:
       resource = resources.articles;
       return [
-        <Cards results={ results } query={ location.query } key="cards" />,
         this.results(
-          this.props.results.article, resource.fields, resource.pathname)
+          this.props.results.article, resource.fields, resource.pathname),
+        <Cards results={ results } query={ location.query } key="cards" />
       ];
     default:
       resource = resources[params.resource];

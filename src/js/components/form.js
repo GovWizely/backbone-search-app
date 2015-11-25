@@ -1,85 +1,104 @@
-var _     = require('lodash');
-var React = require('react');
+import Url from 'url';
+import React, { PropTypes } from 'react';
+import { reduxForm } from 'redux-form';
 
-var ExpandedForm     = require('./expanded-form');
-var CondensedForm    = require('./condensed-form');
-var ArticleStore     = require('../stores/article-store');
-var AggregationStore = require('../stores/aggregation-store');
+import Header from './header';
+import Select from './aggregation-select';
 
-module.exports = React.createClass({
-  displayName: 'Form',
+var Form =  React.createClass({
+  displayName: 'ExpandedForm',
   propTypes: {
-    expanded: React.PropTypes.bool,
-    history: React.PropTypes.object.isRequired
+    aggregations: PropTypes.object.isRequired,
+    expanded: PropTypes.bool.isRequired,
+    fields: PropTypes.object.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func
   },
   getDefaultProps: function() {
     return {
-      expanded : true
+      expanded: true
     };
   },
-  getInitialState: function() {
-    return {
-      keyword      : ArticleStore.getQuery().q          || '',
-      countries    : ArticleStore.getQuery().countries  || '',
-      industries   : ArticleStore.getQuery().industries || '',
-      aggregations : {}
-    };
-  },
-  componentWillMount: function() {
-    AggregationStore.getAll(function(aggregations) {
-      this.setState({ aggregations: aggregations });
-    }.bind(this));
-  },
-  componentDidMount: function() {
-    ArticleStore.addListener(this._onChange);
-  },
-  componentWillUnmount: function() {
-    ArticleStore.removeListener(this._onChange);
-  },
-  _onChange: function() {
-    this.setState({
-      keyword    : ArticleStore.getQuery().q          || '',
-      countries  : ArticleStore.getQuery().countries  || '',
-      industries : ArticleStore.getQuery().industries || ''
-    });
-  },
-  handleSubmit: function() {
-    var query = _.pick({
-      q: this.state.keyword,
-      countries: this.state.countries,
-      industries: this.state.industries
-    }, _.identity);
+  condensed: function(q, countries, industries, handleSubmit) {
+    return (
+      <form className="row">
+        <div className="col-md-3">
+          <Header cssClass="header-condensed" />
+        </div>
 
-    this.props.history.pushState(
-      query, '/search', query);
+        <div className="col-md-4 keyword-input condensed">
+          <div className="input-group">
+            <input type="text" className="form-control" ref="keyword" placeholder="Keyword" { ...q } />
+            <span className="input-group-btn">
+              <button className="btn btn-success" onClick={ handleSubmit }>
+                <i className="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div className="col-md-2">
+        <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
+        </div>
+
+        <div className="col-md-2">
+        <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
+        </div>
+
+        <div className="col-md1">
+          <button type="button" role="button" className="btn btn-primary" onClick={ handleSubmit }>Search</button>
+        </div>
+      </form>
+    );
   },
-  handleKeywordChange: function(e) {
-    this.setState({ keyword: e.target.value });
-  },
-  handleCountryChange: function(values) {
-    this.setState({ countries: values });
-  },
-  handleIndustryChange: function(values) {
-    this.setState({ industries: values });
-  },
-  view: function() {
-    var props = {
-      keyword          : this.state.keyword,
-      countries        : this.state.countries,
-      industries       : this.state.industries,
-      aggregations     : this.state.aggregations,
-      onKeywordChange  : this.handleKeywordChange,
-      onCountryChange  : this.handleCountryChange,
-      onIndustryChange : this.handleIndustryChange,
-      onSubmit         : this.handleSubmit
-    };
-    if (!this.props.expanded) {
-      return <CondensedForm {...props} />;
-    } else {
-      return <ExpandedForm {...props} />;
-    }
+  expanded: function(q, countries, industries, handleSubmit) {
+    return (
+      <div>
+        <div className="row page-header">
+          <Header cssClass="text-center" />
+        </div>
+
+        <form className="row" onSubmit={ handleSubmit }>
+          <div className="col-md-8 keyword-input expanded">
+            <p className="text-muted">Search by Keyword</p>
+            <div className="input-group col-md-10">
+              <input type="text" className="form-control input-lg" placeholder="Keyword" { ...q }/>
+              <span className="input-group-btn">
+                <button className="btn btn-success btn-lg" onClick={ handleSubmit }>
+                  <i className="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+          </div>
+          <div className="col-md-4 category-input">
+            <p className="text-muted">Search by Category</p>
+            <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
+            <p className="text-muted separator">And / Or</p>
+            <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
+
+            <button type="button" role="button" className="btn btn-primary submit" onClick={ handleSubmit }>Search</button>
+          </div>
+        </form>
+      </div>
+    );
   },
   render: function() {
-    return this.view();
+    const {
+      fields: { q, countries, industries },
+      handleSubmit
+    } = this.props;
+    if (this.props.expanded) {
+      return this.expanded(q, countries, industries, handleSubmit);
+    } else {
+      return this.condensed(q, countries, industries, handleSubmit);
+    }
   }
 });
+
+
+export default reduxForm({
+  form: 'form',
+  fields: ['q', 'countries', 'industries']
+}, (state, props) => ({
+  initialValues: props.query
+}))(Form);

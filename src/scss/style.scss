@@ -116,8 +116,8 @@ nav.navbar {
     margin-bottom: 14px;
   }
   .separator {
-      margin-top: 18px;
-      margin-bottom: 18px;
+    margin-top: 18px;
+    margin-bottom: 18px;
   }
 
   .submit {
@@ -125,47 +125,82 @@ nav.navbar {
   }
 }
 
+.cards {
+}
+
+.card {
+  background-color: #FFF;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  box-sizing: border-box;
+  border-radius: 2px;
+  overflow: hidden;
+  padding-bottom: 6px;
+
+  >h4, >ul, >div {
+    padding: 8px 16px;
+  }
+
+  .card-list {
+
+  }
+
+  .card-list-item {
+    list-style-type: none;
+    margin-bottom: 14px;
+  }
+
+  .show-more {
+    font-size: 16px;
+  }
+
+  .source {
+    color: #006621;
+  }
+}
+
 #filters {
   margin-top: 10px;
   border-right: 1px solid $separator-color;
   width: 100%;
-  section {
-    width: 95%;
-    border-bottom: 1px solid $separator-color;
+}
 
-    .overflow {
-      max-height: 180px;
-      overflow-y: auto;
-    }
+.filter {
+  width: 95%;
+  border-bottom: 1px solid $separator-color;
 
-    .list-group-item {
-      margin-top: 0;
-      border: 0;
-      padding: 5px 15px;
-
-    }
-
-    legend {
-      font-size: inherit;
-      border: 0;
-      margin: 0;
-    }
+  .overflow {
+    max-height: 180px;
+    overflow-y: auto;
   }
+
+  .list-group-item {
+    margin-top: 0;
+    border: 0;
+    padding: 5px 15px;
+
+  }
+
+  legend {
+    font-size: inherit;
+    border: 0;
+    margin: 0;
+  }
+
   a {
-      text-decoration: none;
+    text-decoration: none;
 
-      &.collapsed:before {
-          font-family: FontAwesome;
-          content: '\f105';
-          margin-right: 10px;
-      }
+    &.collapsed:before {
+      font-family: FontAwesome;
+      content: '\f105';
+      margin-right: 10px;
+    }
 
-      &:before {
-          font-family: FontAwesome;
-          content: '\f107';
-          margin-right: 10px;
+    &:before {
+      font-family: FontAwesome;
+      content: '\f107';
+      margin-right: 10px;
 
-      }
+    }
 
   }
 }

@@ -1,23 +1,31 @@
 // enable bootstrap js component
 require('bootstrap');
 
-var React         = require('react');
-var ReactDOM      = require('react-dom');
-var useBasename   = require('history').useBasename;
-var createHistory = require('history').createHashHistory;
-var Router        = require('react-router').Router;
-var Route         = require('react-router').DefaultRoute;
+import React from 'react';
+import { render } from 'react-dom';
+import { createHashHistory as createHistory } from 'history';
+import { IndexRoute, Router, Route } from 'react-router';
+import { Provider } from 'react-redux';
+import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
 
-var IndexView  = require('./js/components/index-view');
-var ResultView = require('./js/components/result-view');
+import App from './js/containers/app';
+import Search from './js/containers/search';
+import Result from './js/containers/result';
+import configureStore from './js/store';
 
+const history = createHistory({ });
+const store = configureStore();
 
-const routes = [
-  { path: '/', component: IndexView },
-  { path: '/search', component: ResultView },
-  { path: '*', component: IndexView },
-];
+syncReduxAndRouter(history, store);
 
-ReactDOM.render((
-  <Router history={ createHistory() } routes={ routes } />
-), document.getElementById('main'));
+render(
+  <Provider store={ store }>
+    <Router history={ history }>
+      <Route component={ App }>
+        <Route path="/" component={ Search } />
+        <Route path="search(/:resource)" component={ Result } />
+      </Route>
+    </Router>
+  </Provider>,
+  document.getElementById('main')
+);

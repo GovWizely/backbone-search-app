@@ -1,113 +1,92 @@
-var $     = require('jquery');
-var _     = require('lodash');
-var React = require('react');
+import _ from 'lodash';
+import assign from 'object-assign';
+import { stringify } from 'querystring';
+import React, { PropTypes } from 'react';
 
-var ArticleStore = require('../stores/article-store');
+function href(pathname, query, offset) {
+  const params = assign({}, query, { offset });
+  return `${pathname}?${stringify(params)}`;
+}
 
-module.exports = React.createClass({
+function findRange(current, total, range) {
+  if (total <= range) return { head: 1, tail: total };
+
+  const pivot = _.ceil(range / 2);
+  let head = current - pivot + 1,
+      tail = current + pivot;
+  const headOffset = 1 - head,
+        tailOffset = tail - total;
+  if (headOffset > 0) {
+    head = 1;
+    tail += headOffset;
+  }
+  if (tailOffset > 0) {
+    tail = total;
+    head -= tailOffset;
+  }
+  return { head, tail };
+}
+
+function pageItems(offset, total, options) {
+  const totalPage = _.ceil(total / options.size),
+        currentPage = _.ceil(offset / options.size);
+  const { head, tail } = findRange(currentPage, totalPage, options.range);
+  const pages = _.range(head, tail + 1).map(i =>  {
+    let pageOffset = (i - 1)  * options.size;
+    let activeCss = pageOffset == offset ? 'active' : '';
+    return (
+      <li className={ activeCss } key={ i }>
+        <a href={ href(options.pathname, options.query, pageOffset) }>{ i }</a>
+      </li>
+    );
+  });
+  return  pages;
+}
+
+var Pagination = React.createClass({
   displayName: 'Pagination',
   propTypes: {
-    history: React.PropTypes.object.isRequired,
-    pageRange: React.PropTypes.number,
-    pageSize: React.PropTypes.number
+    metadata: PropTypes.object.isRequired,
+    options: PropTypes.object,
+    pathname: PropTypes.string.isRequired,
+    query: PropTypes.object.isRequired
   },
   getDefaultProps: function() {
     return {
-      pageSize: 10,
-      pageRange: 10
+      options: {
+        range: 10,
+        size: 10
+      }
     };
-  },
-  getInitialState: function() {
-    return {
-      total: 0,
-      current: 1
-    };
-  },
-  componentDidMount: function() {
-    ArticleStore.addListener(this._onChange);
-  },
-  componentWillUnmount: function() {
-    ArticleStore.removeListener(this._onChange);
-  },
-  _onChange: function() {
-    this.setState(
-      { total: Math.ceil(ArticleStore.getMetadata().total / this.props.pageSize) }
-    );
-    this.setState(
-      { current: ArticleStore.getMetadata().offset / this.props.pageSize + 1 }
-    );
-  },
-  handleClick: function(e) {
-    e.preventDefault();
-    var query = _.assign({}, ArticleStore.getQuery(), { offset: e.target.dataset.offset });
-    this.props.history.pushState(query, '/search', query);
-  },
-  pages: function() {
-    if (this.state.total <= this.props.pageRange) {
-      return _.range(1, this.state.total + 1);
-    }
-    var leftMarginOffset = 2;
-    var pivot = Math.ceil((this.props.pageRange + 1) / 2);
-    var leftMargin = pivot - (this.state.total - this.state.current) - leftMarginOffset;
-    var head = this.state.current - (pivot + (leftMargin < 0 ? 0 : leftMargin)) + 1;
-    var tail = this.state.current + this.props.pageRange;
-
-    return _(_.range(head, tail))
-      .filter(x => x > 0 && x <= this.state.total)
-      .take(this.props.pageRange)
-      .value();
-  },
-  previousPage: function() {
-    return this.state.current - 1 || 1;
-  },
-  nextPage: function() {
-    if (this.state.current === this.state.total) {
-      return this.state.total;
-    }
-    return this.state.current + 1;
-  },
-  offset: function(i) {
-    return (i - 1) * this.props.pageSize;
-  },
-  url: function(i) {
-    var params = ArticleStore.getQuery();
-    params.offset = this.offset(i);
-    return 'search?' + $.param(params);
-  },
-  createPage: function(i, isActive) {
-    return (
-      <li key={ i } className={ isActive ? 'active' : '' }>
-        <a onClick={ this.handleClick } href={ this.url(i) } data-offset={ this.offset(i) }>{ i }</a>
-      </li>
-    );
-  },
-  createArrowAnchor: function(i, className, disabled = false) {
-    var listCss = disabled ? 'disabled' : '';
-    return (
-      <li className={ listCss }>
-        <a className={ className } onClick={ this.handleClick } href={ this.url(i) } data-offset={ this.offset(i) }></a>
-      </li>
-    );
-  },
-  createPageRange: function() {
-    var pages = [];
-    _.forEach(this.pages(), function(i) {
-      pages.push(this.createPage(i, this.state.current === i));
-    }.bind(this));
-    return pages;
   },
   render: function() {
+    const { pathname, query, metadata: { offset, total }, options: { range, size } } = this.props;
+    const firstPage = 0,
+          prevPage = offset - size < 0 ? 0 : offset - size,
+          nextPage = offset + size > total ? _.floor(total, -1) : offset + size,
+          lastPage = _.floor(total, -1);
     return (
       <nav>
         <ul className="pagination">
-          { this.createArrowAnchor(1, 'fa fa-angle-double-left', (this.state.current === 1)) }
-          { this.createArrowAnchor(this.previousPage(), 'fa fa-angle-left', (this.state.current === 1)) }
-          { this.createPageRange() }
+          <li>
+            <a className="fa fa-angle-double-left" href={ href(pathname, query, firstPage) }></a>
+          </li>
+          <li>
+            <a className="fa fa-angle-left" href={ href(pathname, query, prevPage) }></a>
+          </li>
 
-          { this.createArrowAnchor(this.nextPage(), 'fa fa-angle-right', (this.state.current === this.state.total)) }
-          { this.createArrowAnchor(this.state.total, 'fa fa-angle-double-right', (this.state.current === this.state.total)) }
+          { pageItems(offset, total, { pathname, query, range, size })}
+
+          <li>
+            <a className="fa fa-angle-right" href={ href(pathname, query, nextPage) }></a>
+          </li>
+          <li>
+            <a className="fa fa-angle-double-right" href={ href(pathname, query, lastPage) }></a>
+          </li>
         </ul>
       </nav>
     );
   }
 });
+
+export default Pagination;

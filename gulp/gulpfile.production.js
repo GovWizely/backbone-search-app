@@ -16,6 +16,7 @@ module.exports = function() {
       font: path.resolve(dist, 'fonts'),
       image: path.resolve(dist, 'images'),
       style: path.resolve(dist, 'css'),
+      vendor: path.resolve(dist, 'vendors'),
       bundle: 'js/bundle.js'
     },
     envify: {

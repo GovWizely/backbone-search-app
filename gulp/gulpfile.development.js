@@ -19,6 +19,7 @@ module.exports = function() {
       font: path.resolve(dist, 'fonts'),
       image: path.resolve(dist, 'images'),
       style: path.resolve(dist, 'css'),
+      vendor: path.resolve(dist, 'vendors'),
       bundle: 'js/bundle.js'
     },
     envify: {
@@ -38,13 +39,12 @@ module.exports = function() {
     browserSync.init({
       baseDir: config.dist.root,
       server: {
-        baseDir: config.dist.root,
-        middleware: [history()]
+        baseDir: config.dist.root
       }
     });
   });
 
   gulp.task('watch', ['build'], function() {
-    runSequence('server', ['font:watch', 'html:watch', 'sass:watch', 'js:watch', 'image:watch']);
+    runSequence('server', ['font:watch', 'html:watch', 'sass:watch', 'js:watch', 'image:watch', 'vendor:watch']);
   });
 };

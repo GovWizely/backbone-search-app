@@ -31,5 +31,11 @@ module.exports = {
   },
   js: {
     path: path.resolve(src, 'js/**/*.js')
+  },
+  vendor: {
+    files: [
+      'bower_components/html5shiv/dist/html5shiv.min.js',
+      'bower_components/es5-shim/es5-shim.min.js',
+    ]
   }
 };

@@ -2,14 +2,14 @@ var _      = require('lodash');
 var React  = require('react');
 var Select = require('react-select');
 
-module.exports = React.createClass({
+export default React.createClass({
   displayName: 'AggregationSelect',
   propTypes: {
     items       : React.PropTypes.array.isRequired,
     onChange    : React.PropTypes.func.isRequired,
     onSubmit    : React.PropTypes.func,
     placeholder : React.PropTypes.string,
-    values      : React.PropTypes.string.isRequired
+    value       : React.PropTypes.array
   },
   getDefaultProps: function() {
     return {
@@ -22,18 +22,6 @@ module.exports = React.createClass({
       isLoading: _.isEmpty(this.props.items)
     };
   },
-  componentDidMount: function() {
-    this.refs.select.handleKeyDown = (function(handleKeyDown) {
-      return function(event) {
-        handleKeyDown(event);
-        if (event.which === 13 && !this.refs.select.state.isOpen) {
-          if (_.isFunction(this.props.onSubmit)) {
-            this.props.onSubmit(event);
-          }
-        }
-      }.bind(this);
-    }).bind(this)(this.refs.select.handleKeyDown);
-  },
   componentWillReceiveProps: function(nextProps) {
     if (!_.isEmpty(nextProps.items)) {
       this.setState({ isLoading: false });
@@ -45,8 +33,18 @@ module.exports = React.createClass({
     });
   },
   render: function() {
+    const { value, onChange } = this.props;
+    const validValues = _.intersection(
+      _.isArray(value) ? value : [value],
+      _.map(this.props.items, item => item.key));
     return (
-      <Select ref="select" isLoading={ this.state.isLoading } name="countries" multi placeholder={ this.props.placeholder } options={ this.options() } onChange={ this.props.onChange } value={ this.props.values } />
+      <Select
+        isLoading={ this.state.isLoading }
+        multi
+        options={ this.options() }
+        onBlur={ () => {} }
+        onChange={ (val, items) => onChange(items) }
+        value={ value || [] } />
     );
   }
 });

@@ -8284,6 +8284,10 @@ nav.navbar {
 .category-input .submit {
   margin-top: 12px; }
 
+.cards {
+  padding-top: 26px;
+  border-top: 1px solid #eee; }
+
 .card {
   background-color: #FFF;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);

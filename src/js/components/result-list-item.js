@@ -16,7 +16,7 @@ var ResultListItem = React.createClass({
     return (
       <article className="article">
         <h1 className="title">
-          <a target="_blank" href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
+          <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
         </h1>
         <p className="url"><a target="_blank" href={ url }>{ url }</a></p>
         <p className="snippet" dangerouslySetInnerHTML={ { __html: snippet } }></p>

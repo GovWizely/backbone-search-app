@@ -7,7 +7,6 @@ export default {
     fields: {
       key: ['id'],
       snippet: ['snippet'],
-      source: ['type'],
       title: ['title'],
       url: ['url']
     },

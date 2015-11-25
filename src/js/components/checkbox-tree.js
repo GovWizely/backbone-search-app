@@ -54,7 +54,8 @@ var CheckboxTree = React.createClass({
 
   getInitialState: function() {
     return {
-      checkedItems: Map({})
+      checkedItems: Map({}),
+      visible: true
     };
   },
 
@@ -62,6 +63,11 @@ var CheckboxTree = React.createClass({
     this.setState(({ checkedItems }) => ({
       checkedItems: checkedItems.update(e.target.value, () => e.target.checked)
     }), () => this.props.onChange(this.getCheckedItems()));
+  },
+
+  toggleVisibility: function(e) {
+    e.preventDefault();
+    this.setState({ visible: !this.state.visible });
   },
 
   getCheckedItems: function() {
@@ -75,26 +81,27 @@ var CheckboxTree = React.createClass({
   render: function() {
     if (_.isEmpty(this.props.items)) return null;
 
+    const { id, items } = this.props;
+    const { visible } = this.state;
     const options = assign({}, this.props, {
-      items: this.props.items,
       checkedItems: this.state.checkedItems,
       onClick: this.handleClick
     });
 
-    const { id } = this.props;
-    const collapsibleTarget = `#${id}`;
+    const hrefCSS = visible ? '' : 'collapsed';
+    const view = visible ?  (
+      <div className="overflow" id={ id }>{ list(items, options) }</div>
+    ) : null;
     return (
       <section className={ this.props.cssClass } onChange={ this.handleClick }>
         <fieldset>
           <h5>
             <legend>
-              <a role="button" data-toggle="collapse" href={ collapsibleTarget }>{ this.props.label }</a>
+              <a role="button" className={ hrefCSS } onClick={ this.toggleVisibility } href="#">{ this.props.label }</a>
             </legend>
           </h5>
-          <div className="collapse in overflow" id={ id }>
-            { list(this.props.items, options) }
-          </div>
         </fieldset>
+        { view }
       </section>
     );
   }

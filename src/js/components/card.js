@@ -46,7 +46,7 @@ var Card = React.createClass({
           }
         </ul>
         <div>
-          <a className="show-more" href={ url }>Show More for { label }</a>
+          <a className="show-more" href={ url }>Show All { label }s</a>
         </div>
       </section>
     );

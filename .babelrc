@@ -3,6 +3,5 @@
     "react", "es2015"
   ],
   "plugins": [
-    "syntax-flow"
   ]
 }

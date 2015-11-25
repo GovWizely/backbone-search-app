@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import assign from 'object-assign';
-import axios from 'axios';
+import fetch from 'node-fetch';
 import Parser from '../utils/aggregation-parser';
 
 export const REQUEST_AGGREGATIONS = 'REQUEST_AGGREGATIONS';
 export const RECEIVE_AGGREGATIONS = 'RECEIVE_AGGREGATIONS';
 
-const endpoint = 'https://pluto.kerits.org/v1/articles/count?q=';
+const endpoint = 'https://pluto.kerits.org/v1/articles/count';
 
 function isFiltering(query) {
   const keys = Object.keys(query).map(k => k);
@@ -32,15 +32,15 @@ function receiveAggregations(response) {
 export function fetchAggregations() {
   return (dispatch, getState) => {
     if (getState().aggregations.isFetching) return null;
-
     dispatch(requestAggregations());
-    return axios.get(endpoint)
-      .then(function(response) {
-        let aggregations = {};
-        aggregations.countries = response.data.aggregations.countries;
-        aggregations.industries = Parser.parse(response.data.aggregations.industries);
-        aggregations.topics = Parser.parse(response.data.aggregations.topics);
-        dispatch(receiveAggregations(aggregations));
+    return fetch(endpoint)
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveAggregations({
+          countries: json.aggregations.countries,
+          industries: Parser.parse(json.aggregations.industries),
+          topics: Parser.parse(json.aggregations.topics)
+        }));
       });
   };
 }

@@ -8,12 +8,10 @@ module.exports = function(config) {
     browsers: ['Chrome'],
 
     files: [
-      'src/js/**/*.js',
       'test/**/*.js'
     ],
 
     preprocessors: {
-      'src/js/**/*.js': ['browserify'],
       'test/**/*.js': ['browserify']
     },
 

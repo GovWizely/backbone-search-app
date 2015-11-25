@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import nock from 'nock';
 
 const middlewares = [ thunk ];
 
@@ -22,7 +21,7 @@ function mockStore(getState, expectedActions, done) {
       dispatch(action) {
         const expectedAction = expectedActions.shift();
         try {
-          expect(action).to.equal(expectedAction);
+          expect(action).to.deep.equal(expectedAction);
           if (done && !expectedActions.length) {
             done();
           }
@@ -40,26 +39,23 @@ function mockStore(getState, expectedActions, done) {
   return mockStoreWithMiddleware();
 }
 
-import * as actions from '../src/js/actions';
+import nock from 'nock';
+import * as actions from '../src/js/actions/aggregation';
 
 describe('actions', () => {
   afterEach(() => {
-    nock.cleanAll();
   });
 
   const aggregations = {
-    data: {
-      countries: [],
-      industries: [],
-      topics: [],
-      types: []
-    }
+    countries: [],
+    industries: [],
+    topics: []
   };
 
   describe('fetchAggregations', () => {
     it('create an action to request aggregations', (done) => {
-      nock('https://pluto.kerits.org')
-        .get('/v1/articles/count?q=')
+      nock('https://pluto.kerits.org/')
+        .get('/v1/articles/count')
         .reply(200, { aggregations });
 
       const expectedActions = [

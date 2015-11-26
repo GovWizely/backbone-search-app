@@ -21,9 +21,18 @@ render(
   <Provider store={ store }>
     <Router history={ history }>
       <Route component={ App }>
+<<<<<<< b375db0d3fbae09dbed47db0099007759f1498a4
         <Route path="/" component={ Index } />
         <Route path="search(/:resource)" component={ Search } />
         <Route path="adhoc_report(/:resource)" component={ AdhocReport } />
+||||||| merged common ancestors
+        <Route path="/" component={ Search } />
+        <Route path="search(/:resource)" component={ Result } />
+=======
+        <Route path="/" component={ Index } />
+        <Route path="search(/:resource)" component={ Search } />
+        <Route path="adhoc-report(/:resource)" component={ AdhocReport } />
+>>>>>>> add new screen for adhoc report
       </Route>
     </Router>
   </Provider>,

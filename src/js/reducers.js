@@ -1,9 +1,9 @@
 import assign from 'object-assign';
-import Url from 'url';
+import { parse } from 'url';
 import { List, Map } from 'immutable';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { routeReducer } from 'redux-simple-router';
+import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
 import { REQUEST_AGGREGATIONS, RECEIVE_AGGREGATIONS } from './actions/aggregation';
 import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from './actions/article';
@@ -31,7 +31,8 @@ const initialState = {
       items: [],
       metadata: {}
     }
-  }
+  },
+  query: {}
 };
 
 function aggregations(state = initialState.aggregations, action) {
@@ -91,7 +92,15 @@ function results(state = initialState.results, action) {
   case REQUEST_TRADE_API:
   case RECEIVE_TRADE_API:
     return assign({}, state, { [action.resource]: tradeAPIs(state[action.resource], action) });
-    break;
+  default:
+    return state;
+  }
+}
+
+function query(state = {}, action) {
+  switch(action.type) {
+  case UPDATE_PATH:
+    return parse(action.path, true).query;
   default:
     return state;
   }
@@ -101,6 +110,7 @@ const reducer = combineReducers({
   aggregations,
   results,
   form: formReducer,
+  query,
   routing: routeReducer
 });
 

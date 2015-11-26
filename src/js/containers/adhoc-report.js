@@ -39,7 +39,7 @@ var AdhocReport = React.createClass({
           <Form
             aggregations={ aggregations }
             expanded={ false }
-            querey={ location.query }
+            query={ location.query }
             onSubmit={ onSubmit } />
         </div>
         <Result screen="adhoc-report" result={ results[resource.stateKey] } resource={ resource } query={ location.query } />

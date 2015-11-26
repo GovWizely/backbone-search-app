@@ -2,6 +2,12 @@ var _      = require('lodash');
 var React  = require('react');
 var Select = require('react-select');
 
+function validValues(values, items) {
+  if (!values) return [];
+  return _.intersection(
+    values.split(','), _.map(items, v => v.key)
+  );
+}
 export default React.createClass({
   displayName: 'AggregationSelect',
   propTypes: {
@@ -33,18 +39,16 @@ export default React.createClass({
     });
   },
   render: function() {
-    const { value, onChange } = this.props;
-    const validValues = _.intersection(
-      _.isArray(value) ? value : [value],
-      _.map(this.props.items, item => item.key));
+    const { items, value, onChange } = this.props;
+    const values = validValues(value, items);
     return (
       <Select
         isLoading={ this.state.isLoading }
         multi
         options={ this.options() }
         onBlur={ () => {} }
-        onChange={ (val, items) => onChange(items) }
-        value={ value || [] } />
+        onChange={ (val, items) => onChange(val) }
+        value={ values || [] } />
     );
   }
 });

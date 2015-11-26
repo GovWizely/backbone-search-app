@@ -20,6 +20,13 @@ function parseFormData(form) {
   return query;
 }
 
+function screen(query) {
+  if (_.isEmpty(query.q) && !_.isEmpty(query.countries) && !_.isEmpty(query.industries)) {
+    return '/adhoc-report/articles';
+  }
+  return '/search';
+}
+
 var App = React.createClass({
   displayName: 'App',
   propTypes: {
@@ -32,7 +39,7 @@ var App = React.createClass({
   },
   handleSubmit: function(form) {
     let query = parseFormData(form);
-    const path = `/search?${stringify(query)}`;
+    const path = `${screen(query)}?${stringify(query)}`;
     this.props.dispatch(updatePath(path));
   },
   render: function() {

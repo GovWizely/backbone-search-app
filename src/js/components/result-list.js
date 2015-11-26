@@ -6,7 +6,7 @@ import { findFirst } from '../utils/view-helper';
 export default React.createClass({
   displayName: 'ResultList',
   propTypes: {
-    fields: PropTypes.array.isRequired,
+    fields: PropTypes.object.isRequired,
     items: PropTypes.array.isRequired
   },
   getDefaultProps: function() {

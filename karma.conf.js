@@ -3,23 +3,23 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['browserify', 'mocha', 'chai'],
 
-    reporters: ['nyan'],
+    reporters: ['mocha'],
 
     browsers: ['Chrome'],
 
     files: [
-      'src/js/**/*.js',
       'test/**/*.js'
     ],
 
     preprocessors: {
-      'src/js/**/*.js': ['browserify'],
       'test/**/*.js': ['browserify']
     },
 
     browserify: {
       debug: true,
       transform: [ 'babelify' ]
-    }
+    },
+    browserDisconnectTimeout: 1000,
+    browserNoActivityTimeout: 100000
   });
 };

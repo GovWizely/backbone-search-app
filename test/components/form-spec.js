@@ -7,7 +7,7 @@ import Form from '../../src/js/components/form';
 const { renderIntoDocument } = TestUtils;
 
 describe('Form', () => {
-  it('render ExpandedForm by default', () => {
+  it.skip('render ExpandedForm by default', () => {
     const component = renderIntoDocument(
       <Form />
     );
@@ -15,7 +15,7 @@ describe('Form', () => {
     expect(form.type.displayName).to.equal('ExpandedForm');
   });
 
-  it('render CondensedForm when expanded property is false', () => {
+  it.skip('render CondensedForm when expanded property is false', () => {
     const component = renderIntoDocument(
       <Form expanded={ false }/>
     );
@@ -23,7 +23,7 @@ describe('Form', () => {
     expect(form.type.displayName).to.equal('CondensedForm');
   });
 
-  it('route to /search on submit event', () => {
+  it.skip('route to /search on submit event', () => {
     const component = renderIntoDocument(
       <Form expanded={ false } history={ createHistory() }/>
     );
@@ -32,4 +32,4 @@ describe('Form', () => {
     component.handleSubmit();
     expect(window.location.pathname).to.equal('/search');
   });
-})
+});

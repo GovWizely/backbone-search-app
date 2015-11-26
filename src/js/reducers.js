@@ -3,14 +3,11 @@ import Url from 'url';
 import { List, Map } from 'immutable';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
+import { routeReducer } from 'redux-simple-router';
 
-import {
-  REQUEST_AGGREGATIONS, RECEIVE_AGGREGATIONS,
-  REQUEST_ARTICLES, RECEIVE_ARTICLES,
-  REQUEST_TRADE_API, RECEIVE_TRADE_API,
-  SET_QUERY, SET_FILTER
-} from './actions';
+import { REQUEST_AGGREGATIONS, RECEIVE_AGGREGATIONS } from './actions/aggregation';
+import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from './actions/article';
+import { REQUEST_TRADE_API, RECEIVE_TRADE_API } from './actions/trade';
 
 const initialState = {
   aggregations: {

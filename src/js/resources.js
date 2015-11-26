@@ -1,6 +1,5 @@
-import {
-  fetchArticles, fetchTradeEvents, fetchTradeLeads
-} from './actions';
+import { fetchArticles } from './actions/article';
+import { fetchTradeEvents, fetchTradeLeads } from './actions/trade';
 
 export default {
   articles: {

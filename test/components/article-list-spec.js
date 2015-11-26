@@ -6,7 +6,7 @@ import ResultList from '../../src/js/components/result-list';
 const { renderIntoDocument, scryRenderedDOMComponentsWithTag } = TestUtils;
 
 describe('ResultList', () => {
-  it('renders a list of items', () => {
+  it.skip('renders a list of items', () => {
     var items = [
       { id: 1, url: 'http://www.example.com', title: 'article#1', snippet: 'Lorem Ipsum' },
       { id: 2, url: 'http://www.example.com', title: 'article#2', snippet: 'Lorem Ipsum' },

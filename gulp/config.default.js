@@ -2,6 +2,7 @@ var path = require('path');
 
 var bower = path.resolve(__dirname, '../bower_components');
 var src   = path.resolve(__dirname, '../src');
+var test   = path.resolve(__dirname, '../test/**/*.js');
 
 module.exports = {
   bower: {
@@ -9,6 +10,9 @@ module.exports = {
   },
   src: {
     path: src
+  },
+  test: {
+    path: test
   },
   entry: {
     path: path.resolve(src, 'index.js')

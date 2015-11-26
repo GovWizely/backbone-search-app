@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import assign from 'object-assign';
-import axios from 'axios';
+import fetch from 'node-fetch'; fetch.Promise = require('bluebird');
+import { stringify } from 'querystring';
 
 import { formatFilterParams, formatParams } from '../utils/action-helper';
 
@@ -24,13 +25,16 @@ function receiveTradeAPI(resource, response) {
 }
 
 function fetchTradeAPI(resource, params) {
+  const endpoint = `https://api.trade.gov/${resource.apiPath}/search?api_key=${tradeAPIKey}`
+  ;
   return (dispatch, getState) => {
     if (getState().results[resource.stateKey].isFetching) return null;
     dispatch(requestTradeAPI(resource));
 
-    return axios.get(`https://api.trade.gov/${resource.apiPath}/search?api_key=${tradeAPIKey}`, { params })
-      .then(function(response) {
-        const { total, offset, sources_used, results } = response.data;
+    return fetch(`${endpoint}&${stringify(params)}`)
+      .then(response => response.json())
+      .then(json => {
+        const { total, offset, sources_used, results } = json;
         let data = {
           metadata: { total, offset, sources_used },
           results

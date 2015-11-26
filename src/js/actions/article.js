@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import assign from 'object-assign';
-import fetch from 'node-fetch';
+import fetch from 'node-fetch'; fetch.Promise = require('bluebird');
 import { stringify } from 'querystring';
 
 import Parser from '../utils/aggregation-parser';

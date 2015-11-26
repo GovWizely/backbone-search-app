@@ -5,8 +5,6 @@ import nock from 'nock';
 import * as actions from '../../src/js/actions/article';
 
 describe('article', () => {
-
-
   const state = {
     results: {
       article: { isFetching: false, items: [], metadata: {}, aggregations: {} }
@@ -51,7 +49,7 @@ describe('article', () => {
       nock.cleanAll();
     });
 
-    it('create an action to request articles', (done) => {
+    it('create an action to request articles', done => {
       const expectedActions = [
         { type: actions.REQUEST_ARTICLES },
         { type: actions.RECEIVE_ARTICLES, response }

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import assign from 'object-assign';
 
 export function formatParams(query, whitelist) {
   let params = _.pick(query, whitelist);
@@ -9,7 +10,7 @@ export function formatParams(query, whitelist) {
 }
 
 export function formatFilterParams(query) {
-  let params = Object.assign({}, query);
+  let params = assign({}, query);
   const keys = Object.keys(query).map(k => k);
   keys.forEach(key => {
     let keyArray = key.split('-');

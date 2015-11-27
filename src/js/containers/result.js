@@ -15,7 +15,7 @@ var Result = React.createClass({
     screen: PropTypes.string
   },
   render: function() {
-    const { resource, query, result } = this.props;
+    const { resource, query, result, screen } = this.props;
     if (result.isFetching) return <Spinner key="spinner" />;
     return (
       <div key="result">

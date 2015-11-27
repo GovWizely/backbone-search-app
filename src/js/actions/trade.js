@@ -4,32 +4,35 @@ import fetch from 'node-fetch'; fetch.Promise = require('bluebird');
 import { stringify } from 'querystring';
 
 import { formatFilterParams, formatParams } from '../utils/action-helper';
+import * as taxonomy from '../utils/taxonomy';
 
-export const REQUEST_TRADE_API = 'REQUEST_TRADE_API';
-export const RECEIVE_TRADE_API = 'RECEIVE_TRADE_API';
+export const REQUEST_TRADES = 'REQUEST_TRADES';
+export const RECEIVE_TRADES = 'RECEIVE_TRADES';
 const tradeAPIKey = 'hSLqwdFz1U25N3ZrWpLB-Ld4';
 
-function requestTradeAPI(resource) {
+function requestTrades(resource) {
   return {
-    type: REQUEST_TRADE_API,
+    type: REQUEST_TRADES,
     resource: resource.stateKey
   };
 }
 
-function receiveTradeAPI(resource, response) {
+function receiveTrades(resource, response) {
   return {
-    type : RECEIVE_TRADE_API,
+    type : RECEIVE_TRADES,
     resource: resource.stateKey,
     response
   };
 }
 
-function fetchTradeAPI(resource, params) {
+function fetchTrades(resource, params) {
   const endpoint = `https://api.trade.gov/${resource.apiPath}/search?api_key=${tradeAPIKey}`
   ;
   return (dispatch, getState) => {
     if (getState().results[resource.stateKey].isFetching) return null;
-    dispatch(requestTradeAPI(resource));
+    dispatch(requestTrades(resource));
+
+    if (params.countries) params.countries = taxonomy.country(params.countries);
 
     return fetch(`${endpoint}&${stringify(params)}`)
       .then(response => response.json())
@@ -39,7 +42,7 @@ function fetchTradeAPI(resource, params) {
           metadata: { total, offset, sources_used },
           results
         };
-        dispatch(receiveTradeAPI(resource, data));
+        dispatch(receiveTrades(resource, data));
       });
   };
 }
@@ -51,7 +54,7 @@ export function fetchTradeEvents(query) {
     'q', 'countries', 'industries', 'sources',
     'start_date', 'end_date', 'size', 'offset'
   ]);
-  return fetchTradeAPI(resource, params);
+  return fetchTrades(resource, params);
 }
 
 export function fetchTradeLeads(query) {
@@ -60,5 +63,5 @@ export function fetchTradeLeads(query) {
     'q', 'countries', 'industries', 'sources',
     'start_date', 'end_date', 'size', 'offset'
   ]);
-  return fetchTradeAPI(resource, params);
+  return fetchTrades(resource, params);
 }

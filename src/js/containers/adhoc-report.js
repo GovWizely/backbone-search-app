@@ -1,12 +1,20 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
+import { stringify } from 'querystring';
 
 import Form from '../components/form';
-import Result from '../containers/result';
+import TabPane from '../components/tab-pane';
 import Message from '../components/search-message';
 import Pagination from '../components/pagination';
+
+import Result from '../containers/result';
 import resources from '../resources';
+
+function shouldFetch(location, nextLocation) {
+  return (location.pathname !== nextLocation.pathname ||
+          location.search !== nextLocation.search);
+}
 
 var AdhocReport = React.createClass({
   displayName: 'AdhocReport',
@@ -19,30 +27,49 @@ var AdhocReport = React.createClass({
     results: PropTypes.object
   },
   componentDidMount: function() {
-    this.fetch(this.props.location.query);
+    this.fetch(this.props);
   },
   componentWillReceiveProps: function(nextProps) {
-    if (nextProps.location.search !== this.props.location.search) {
-      this.fetch(nextProps.location.query);
+    if (shouldFetch(this.props.location, nextProps.location)) {
+      this.fetch(nextProps);
     }
   },
-  fetch: function(query) {
-    const { dispatch, params } = this.props;
-    dispatch(resources[params.resource].fetch(query));
+  fetch: function(props) {
+    const { dispatch, location, params } = props;
+    dispatch(resources[params.resource].fetch(location.query));
   },
   render: function() {
-    const { aggregations, location, onSubmit, params, results } = this.props;
+    const { aggregations, dispatch, location, onSubmit, params, results } = this.props;
     const resource = resources[params.resource];
+    const querystring = stringify(location.query);
+    const tabs = [
+      {
+        title: 'Latest Market Intelligence',
+        url: `#/adhoc_report/articles?${querystring}`,
+        active: '/adhoc_report/articles' === location.pathname
+      },
+      {
+        title: 'Trade Events',
+        url: `#/adhoc_report/trade_events?${querystring}`,
+        active: '/adhoc_report/trade_events' === location.pathname
+      },
+      {
+        title: 'Trade Leads',
+        url: `#/adhoc_report/trade_leads?${querystring}`,
+        active: '/adhoc_report/trade_leads' === location.pathname
+      }
+    ];
+    const content = <Result screen="adhoc_report" result={ results[resource.stateKey] } resource={ resource } query={ location.query } />;
     return (
       <div>
-        <div className="search bar row">
+        <div className="searchbar row">
           <Form
             aggregations={ aggregations }
             expanded={ false }
             query={ location.query }
             onSubmit={ onSubmit } />
         </div>
-        <Result screen="adhoc-report" result={ results[resource.stateKey] } resource={ resource } query={ location.query } />
+        <TabPane tabs={ tabs } content={ content }/>
       </div>
     );
   }

@@ -16,7 +16,7 @@ function parseFormData(form) {
 
 function screen(query) {
   if (_.isEmpty(query.q) && !_.isEmpty(query.countries) && !_.isEmpty(query.industries)) {
-    return '/adhoc-report/articles';
+    return '/adhoc_report/articles';
   }
   return '/search';
 }

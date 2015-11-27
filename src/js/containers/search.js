@@ -16,6 +16,11 @@ import CheckboxTree from '../components/checkbox-tree';
 import Message from '../components/search-message';
 import Pagination from '../components/pagination';
 
+function shouldFetch(location, nextLocation) {
+  return (location.pathname !== nextLocation.pathname ||
+          location.search !== nextLocation.search);
+}
+
 var Search = React.createClass({
   displayName: 'Search',
   propTypes: {
@@ -27,24 +32,24 @@ var Search = React.createClass({
     results: PropTypes.object
   },
   componentDidMount: function() {
-    this.fetch(this.props.location.query);
+    this.fetch(this.props);
   },
   componentWillReceiveProps: function(nextProps) {
-    if (nextProps.location.search !== this.props.location.search) {
-      this.fetch(nextProps.location.query);
+    if (shouldFetch(this.props.location, nextProps.location)) {
+      this.fetch(nextProps);
     }
   },
-  fetch: function(query) {
-    const { dispatch, params } = this.props;
+  fetch: function(props) {
+    const { dispatch, params, location } = props;
     switch(params.resource) {
     case undefined:
       for (let key in resources) {
-        dispatch(resources[key].fetch(query));
+        dispatch(resources[key].fetch(location.query));
       }
       break;
     default:
       if (resources[params.resource]) {
-        dispatch(resources[params.resource].fetch(query));
+        dispatch(resources[params.resource].fetch(location.query));
       }
     }
   },

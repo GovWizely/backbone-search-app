@@ -23,7 +23,7 @@ render(
       <Route component={ App }>
         <Route path="/" component={ Index } />
         <Route path="search(/:resource)" component={ Search } />
-        <Route path="adhoc-report(/:resource)" component={ AdhocReport } />
+        <Route path="adhoc_report(/:resource)" component={ AdhocReport } />
       </Route>
     </Router>
   </Provider>,

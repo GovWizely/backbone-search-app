@@ -15,7 +15,7 @@ export default React.createClass({
     onChange    : React.PropTypes.func.isRequired,
     onSubmit    : React.PropTypes.func,
     placeholder : React.PropTypes.string,
-    value       : React.PropTypes.array
+    value       : React.PropTypes.string
   },
   getDefaultProps: function() {
     return {

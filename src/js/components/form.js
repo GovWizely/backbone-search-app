@@ -99,6 +99,6 @@ var Form =  React.createClass({
 export default reduxForm({
   form: 'form',
   fields: ['q', 'countries', 'industries']
-}, (state, props) => ({
-  initialValues: props.query
+}, state => ({
+  initialValues: state.query
 }))(Form);

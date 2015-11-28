@@ -7,8 +7,9 @@ import { Provider } from 'react-redux';
 import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
 
 import App from './js/containers/app';
+import Index from './js/containers/index';
 import Search from './js/containers/search';
-import Result from './js/containers/result';
+import AdhocReport from './js/containers/adhoc-report';
 import configureStore from './js/store';
 
 const history = createHistory({ });
@@ -20,8 +21,9 @@ render(
   <Provider store={ store }>
     <Router history={ history }>
       <Route component={ App }>
-        <Route path="/" component={ Search } />
-        <Route path="search(/:resource)" component={ Result } />
+        <Route path="/" component={ Index } />
+        <Route path="search(/:resource)" component={ Search } />
+        <Route path="adhoc_report(/:resource)" component={ AdhocReport } />
       </Route>
     </Router>
   </Provider>,

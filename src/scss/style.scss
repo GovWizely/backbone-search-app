@@ -17,8 +17,9 @@ html {
 body {
   margin-bottom: 100px;
 
-  > .container {
+  >.container {
     padding: 30px 15px 0;
+    min-height: 280px;
   }
 }
 

@@ -9,15 +9,16 @@ function parseFormData(form) {
   const { q, countries, industries } = form;
   let query = {};
   if (q) query.q = q;
-  if (countries) {
-    let items = _.compact(_.isArray(countries) ? countries : [countries]);
-    query.countries = _.map(items, item => item.value);
-  }
-  if (industries) {
-    let items = _.compact(_.isArray(industries) ? industries : [industries]);
-    query.industries = _.map(items, item => item.value);
-  }
+  if (!_.isEmpty(countries)) query.countries = countries;
+  if (!_.isEmpty(industries)) query.industries = industries;
   return query;
+}
+
+function screen(query) {
+  if (_.isEmpty(query.q) && !_.isEmpty(query.countries) && !_.isEmpty(query.industries)) {
+    return '/adhoc_report/articles';
+  }
+  return '/search';
 }
 
 var App = React.createClass({
@@ -32,7 +33,7 @@ var App = React.createClass({
   },
   handleSubmit: function(form) {
     let query = parseFormData(form);
-    const path = `/search?${stringify(query)}`;
+    const path = `${screen(query)}?${stringify(query)}`;
     this.props.dispatch(updatePath(path));
   },
   render: function() {

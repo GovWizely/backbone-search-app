@@ -38,7 +38,6 @@ function fetchTrades(resource, params) {
     dispatch(requestTrades(resource));
 
     params = transform(params);
-
     return fetch(`${endpoint}&${stringify(params)}`)
       .then(response => response.json())
       .then(json => {

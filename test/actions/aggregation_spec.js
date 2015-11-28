@@ -9,7 +9,7 @@ describe('aggregation', () => {
     nock.cleanAll();
   });
 
-  const aggregations = {
+  const response = {
     countries: [],
     industries: [],
     topics: []
@@ -21,11 +21,11 @@ describe('aggregation', () => {
     it('create an action to request aggregations', (done) => {
       nock('https://pluto.kerits.org/')
         .get('/v1/articles/count')
-        .reply(200, { aggregations });
+        .reply(200, { aggregations: response });
 
       const expectedActions = [
         { type: actions.REQUEST_AGGREGATIONS },
-        { type: actions.RECEIVE_AGGREGATIONS, aggregations }
+        { type: actions.RECEIVE_AGGREGATIONS, response }
       ];
       const store = mockStore({
         aggregations: { isFetching: false, data: {} }

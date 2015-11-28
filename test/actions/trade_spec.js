@@ -30,8 +30,8 @@ describe('trade', () => {
 
     it('create an action to request trade events', done => {
       const expectedActions = [
-        { type: actions.REQUEST_TRADE_API, resource: 'tradeEvent' },
-        { type: actions.RECEIVE_TRADE_API,
+        { type: actions.REQUEST_TRADES, resource: 'tradeEvent' },
+        { type: actions.RECEIVE_TRADES,
           resource: 'tradeEvent',
           response: {
             metadata: {
@@ -79,8 +79,8 @@ describe('trade', () => {
 
     it('create an action to request trade leads', done => {
       const expectedActions = [
-        { type: actions.REQUEST_TRADE_API, resource: 'tradeLead' },
-        { type: actions.RECEIVE_TRADE_API,
+        { type: actions.REQUEST_TRADES, resource: 'tradeLead' },
+        { type: actions.RECEIVE_TRADES,
           resource: 'tradeLead',
           response: {
             metadata: {

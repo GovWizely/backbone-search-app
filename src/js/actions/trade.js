@@ -10,6 +10,11 @@ export const REQUEST_TRADES = 'REQUEST_TRADES';
 export const RECEIVE_TRADES = 'RECEIVE_TRADES';
 const tradeAPIKey = 'hSLqwdFz1U25N3ZrWpLB-Ld4';
 
+function transform(params) {
+  if (params.countries) params.countries = taxonomy.country(params.countries);
+  return params;
+}
+
 function requestTrades(resource) {
   return {
     type: REQUEST_TRADES,
@@ -32,7 +37,7 @@ function fetchTrades(resource, params) {
     if (getState().results[resource.stateKey].isFetching) return null;
     dispatch(requestTrades(resource));
 
-    if (params.countries) params.countries = taxonomy.country(params.countries);
+    params = transform(params);
 
     return fetch(`${endpoint}&${stringify(params)}`)
       .then(response => response.json())

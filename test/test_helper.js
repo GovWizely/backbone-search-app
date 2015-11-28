@@ -1,3 +1,5 @@
+require('babel-polyfill');
+
 /* chai configuration */
 import chai, { expect } from 'chai';
 

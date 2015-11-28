@@ -1,4 +1,5 @@
 var browserify = require('browserify'),
+    babelify = require('babelify'),
     watchify = require('watchify'),
     envify = require('envify/custom'),
     source = require('vinyl-source-stream'),
@@ -7,6 +8,7 @@ var browserify = require('browserify'),
     util = require('gulp-util'),
     sourcemaps = require('gulp-sourcemaps'),
     taskName = require('../taskname.js');
+
 
 module.exports = function(gulp, config) {
   var buildTaskName = taskName('js:build', config);
@@ -27,7 +29,8 @@ module.exports = function(gulp, config) {
     cache: {},
     packageCache: {},
     entries: [config.entry.path]
-  });
+  }).transform(babelify, { presets: ['es2015', 'react'] });
+
   if (config.envify) {
     b = b.transform(envify(config.envify));
   }

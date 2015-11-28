@@ -25,7 +25,7 @@ function requestAggregations() {
 function receiveAggregations(response) {
   return {
     type: RECEIVE_AGGREGATIONS,
-    aggregations: response
+    response
   };
 }
 

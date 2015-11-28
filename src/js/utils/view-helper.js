@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 export function findFirst(item, fields) {
+  if (_.isEmpty(fields)) return null;
   if (fields.length === 1) return item[fields[0]];
 
   return _.chain(item)

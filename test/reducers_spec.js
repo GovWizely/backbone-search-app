@@ -33,9 +33,11 @@ describe('reducer', () => {
     query: {}
   };
 
-  it('return current state on unrecognized action type', () => {
-    const action = { type: 'UNKNOWN_ACTION' };
-    expect(reducer({}, action).results).to.eql(initialState.results);
+  describe('when action type is not recognizable', () => {
+    it('should return current state', () => {
+      const action = { type: 'UNKNOWN_ACTION' };
+      expect(reducer({}, action).results).to.eql(initialState.results);
+    });
   });
 
   it('should return the initial aggregations state', () => {

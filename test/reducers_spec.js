@@ -33,7 +33,7 @@ describe('reducer', () => {
     query: {}
   };
 
-  describe('when action type is not recognizable', () => {
+  context('when action type is not recognizable', () => {
     it('should return current state', () => {
       const action = { type: 'UNKNOWN_ACTION' };
       expect(reducer({}, action).results).to.eql(initialState.results);

@@ -18,9 +18,7 @@ module.exports = function(gulp, config) {
     return b.bundle()
       .pipe(source(config.dist.bundle))
       .pipe(buffer())
-      .pipe(config.env === 'production' ? sourcemaps.init() : util.noop())
       .pipe(config.env === 'production' ? uglify() : util.noop())
-      .pipe(config.env === 'production' ? sourcemaps.write() : util.noop())
       .pipe(gulp.dest(config.dist.root))
       .pipe(config.serverStream ? config.serverStream() : util.noop());
   };

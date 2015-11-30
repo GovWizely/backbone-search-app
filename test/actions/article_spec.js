@@ -6,15 +6,19 @@ import { NO_ACTION } from '../../src/js/utils/action-helper';
 import * as actions from '../../src/js/actions/article';
 
 describe('article', () => {
-  const articles = [{ title: 'article #1' }, { title: 'article #2' }, { title: 'article #3' }];
-
   describe('#fetchArticles', () => {
-    let query, response;
+    const articles = [{ title: 'article #1' }, { title: 'article #2' }, { title: 'article #3' }];
+    const response = {
+      metadata: {}, results: articles, aggregations: {
+        countries: {}, industries: {}, topics: {}
+      }
+    };
+    let query = { q: 'test' };
 
     beforeEach(() => {
       nock('https://pluto.kerits.org')
         .get('/v1/articles/search')
-        .query(query)
+        .query(true)
         .reply(200, response);
     });
 
@@ -23,12 +27,6 @@ describe('article', () => {
     });
 
     context('when articles.isFetching is false', () => {
-      query = { q: 'test' };
-      response = {
-        metadata: {}, results: articles, aggregations: {
-          countries: {}, industries: {}, topics: {}
-        }
-      };
 
       it('create an action to request articles', done => {
         const expectedActions = [
@@ -36,7 +34,7 @@ describe('article', () => {
           { type: actions.RECEIVE_ARTICLES, response }
         ];
         const state = {
-          results: { article: { isFetching: false, items: [], metadata: {}, aggregations: {} } }
+          results: { article: { isFetching: false } }
         };
         const store = mockStore(state, expectedActions, done);
         store.dispatch(actions.fetchArticles(query));
@@ -48,6 +46,34 @@ describe('article', () => {
         const expectedActions = [{ type: NO_ACTION }];
         const state = {
           results: { article: { isFetching: true } }
+        };
+        const store = mockStore(state, expectedActions, done);
+        store.dispatch(actions.fetchArticles(query));
+      });
+    });
+
+    context('when params contain filter-*', () => {
+      query = { q: 'test', 'filter-countries': 'Australia' };
+
+      it('does not update article.aggregations', done => {
+        const aggregations = {
+          countries: { 'Algeria': 'Algeria' },
+          industries: { 'Healthcare': 'Healthcare' }
+        };
+        const expectedActions = [
+          { type: actions.REQUEST_ARTICLES },
+          {
+            type: actions.RECEIVE_ARTICLES,
+            response: Object.assign({}, response, { aggregations })
+          }
+        ];
+        const state = {
+          results: {
+            article: {
+              isFetching: false, items: [], metadata: {},
+              aggregations
+            }
+          }
         };
         const store = mockStore(state, expectedActions, done);
         store.dispatch(actions.fetchArticles(query));

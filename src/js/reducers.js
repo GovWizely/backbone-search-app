@@ -64,6 +64,10 @@ function articles(state, action) {
       metadata: action.response.metadata,
       aggregations: action.response.aggregations
     });
+
+    /* istanbul ignore next */
+  default:
+    return state;
   }
 }
 
@@ -79,6 +83,9 @@ function trades(state, action) {
       items: action.response.results,
       metadata: action.response.metadata
     });
+    /* istanbul ignore next */
+  default:
+    return state;
   }
 }
 

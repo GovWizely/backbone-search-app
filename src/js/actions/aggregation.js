@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import assign from 'object-assign';
 import fetch from 'node-fetch'; fetch.Promise = require('bluebird');
-import Parser from '../utils/aggregation-parser';
+import { parse } from '../utils/aggregation-parser';
 import { noAction } from '../utils/action-helper';
 
 export const REQUEST_AGGREGATIONS = 'REQUEST_AGGREGATIONS';
@@ -34,8 +34,8 @@ export function fetchAggregations() {
       .then(json => {
         dispatch(receiveAggregations({
           countries: json.aggregations.countries,
-          industries: Parser.parse(json.aggregations.industries),
-          topics: Parser.parse(json.aggregations.topics)
+          industries: parse(json.aggregations.industries),
+          topics: parse(json.aggregations.topics)
         }));
       });
   };

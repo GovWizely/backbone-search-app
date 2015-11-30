@@ -3,13 +3,12 @@ import { mockStore } from '../test_helper';
 
 import nock from 'nock';
 import * as actions from '../../src/js/actions/trade';
+import { NO_ACTION } from '../../src/js/utils/action-helper';
 
 describe('trade', () => {
-  const query = { q: 'test' };
+  const query = { q: 'test', countries: 'Albania,Algeria' };
 
   describe('fetchTradeEvents', function() {
-    this.timeout(10000);
-
     const state = {
       results: {
         tradeEvent: { isFetching: false, items: [], metadata: {} }
@@ -46,20 +45,22 @@ describe('trade', () => {
       const store = mockStore(state, expectedActions, done);
       store.dispatch(actions.fetchTradeEvents(query));
     });
+
+    context('when tradeEvent.isFetching is true', () => {
+      it('prevent new request from being made', done => {
+        const expectedActions = [{ type: NO_ACTION }];
+        const state = {
+          results: { tradeEvent: { isFetching: true } }
+        };
+        const store = mockStore(state, expectedActions, done);
+        store.dispatch(actions.fetchTradeEvents(query));
+      });
+    });
   });
 
   describe('fetchTradeLeads', function() {
     this.timeout(10000);
 
-    const state = {
-      results: {
-        tradeLead: {
-          isFetching: false,
-          items: [],
-          metadata: {}
-        }
-      }
-    };
 
     const response = {
       total: 3,
@@ -77,23 +78,50 @@ describe('trade', () => {
         .reply(200, response);
     });
 
-    it('create an action to request trade leads', done => {
-      const expectedActions = [
-        { type: actions.REQUEST_TRADES, resource: 'tradeLead' },
-        { type: actions.RECEIVE_TRADES,
-          resource: 'tradeLead',
-          response: {
-            metadata: {
-              total: response.total,
-              offset: response.offset,
-              sources_used: response.sources_used
-            },
-            results: response.results
+    context('when tradeLead.isFetching is false', () => {
+      const state = {
+        results: {
+          tradeLead: {
+            isFetching: false,
+            items: [],
+            metadata: {}
           }
         }
-      ];
-      const store = mockStore(state, expectedActions, done);
-      store.dispatch(actions.fetchTradeLeads(query));
+      };
+
+      it('create an action to request trade leads', done => {
+
+        const expectedActions = [
+          { type: actions.REQUEST_TRADES, resource: 'tradeLead' },
+          { type: actions.RECEIVE_TRADES,
+            resource: 'tradeLead',
+            response: {
+              metadata: {
+                total: response.total,
+                offset: response.offset,
+                sources_used: response.sources_used
+              },
+              results: response.results
+            }
+          }
+        ];
+        const store = mockStore(state, expectedActions, done);
+        store.dispatch(actions.fetchTradeLeads(query));
+      });
+
+    });
+
+
+    context('when tradeLead.isFetching is true', () => {
+      const state = {
+        results: { tradeLead: { isFetching: true } }
+      };
+
+      it('prevent new request from being made', done => {
+        const expectedActions = [{ type: NO_ACTION }];
+        const store = mockStore(state, expectedActions, done);
+        store.dispatch(actions.fetchTradeLeads(query));
+      });
     });
   });
 

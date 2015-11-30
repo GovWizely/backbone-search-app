@@ -92,8 +92,6 @@
     "wiredep": "^2.2.2"
   },
   "scripts": {
-    "test": "gulp test",
-    "test:watch": "gulp test:watch",
-    "coverage": "babel-node node_modules/isparta/bin/isparta cover --report text --report html node_modules/mocha/bin/_mocha -- --reporter spec"
+    "test": "babel-node node_modules/isparta/bin/isparta cover --report text --report html node_modules/mocha/bin/_mocha -- --reporter spec './test/**/*_spec.js'"
   }
 }

@@ -3,7 +3,7 @@ import assign from 'object-assign';
 import fetch from 'node-fetch'; fetch.Promise = require('bluebird');
 import { stringify } from 'querystring';
 
-import { formatFilterParams, formatParams } from '../utils/action-helper';
+import { formatFilterParams, formatParams, noAction } from '../utils/action-helper';
 import * as taxonomy from '../utils/taxonomy';
 
 export const REQUEST_TRADES = 'REQUEST_TRADES';
@@ -34,7 +34,10 @@ function fetchTrades(resource, params) {
   const endpoint = `https://api.trade.gov/${resource.apiPath}/search?api_key=${tradeAPIKey}`
   ;
   return (dispatch, getState) => {
-    if (getState().results[resource.stateKey].isFetching) return null;
+    if (getState().results[resource.stateKey].isFetching) {
+      dispatch(noAction());
+      return null;
+    }
     dispatch(requestTrades(resource));
 
     params = transform(params);

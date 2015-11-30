@@ -57,4 +57,14 @@ To auto-run tests on file changes:
   $ gulp test:watch
 ```
 
-If you'd like to run only one test file, adjust the `files` attribute in karma.conf.js.
+To run tests on specific files:
+
+```sh
+  $ gulp test:single --file "test/example.js" --file "test/example2.js"
+```
+
+To run code coverage:
+
+```sh
+  $ npm test
+```

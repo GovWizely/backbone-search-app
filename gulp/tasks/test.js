@@ -1,5 +1,13 @@
+require('babel-core/register');
+
+var _ = require('lodash');
+var mocha = require('gulp-mocha');
 var mochify = require('mochify');
 var babelify = require('babelify');
+var path = require('path');
+var argv = require('yargs').argv;
+
+
 
 var options = {
   reporter: 'spec'
@@ -18,5 +26,20 @@ module.exports = function(gulp, config) {
 
   gulp.task('test:watch', function(done) {
     test(config.test.path, Object.assign({}, options, { watch: config.js.path }));
+  });
+
+  gulp.task('test:single', function(done) {
+    var files = config.test.path;
+    if (argv.file) {
+      files = _.isArray(argv.file) ? argv.file : [argv.file];
+    }
+    gulp.src(files, { read: false })
+      .pipe(mocha({ reporter: 'spec' }))
+      .once('error', function() {
+        process.exit();
+      })
+      .once('end', function() {
+        process.exit();
+      });
   });
 };

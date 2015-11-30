@@ -8,14 +8,6 @@ export const RECEIVE_AGGREGATIONS = 'RECEIVE_AGGREGATIONS';
 
 const endpoint = 'https://pluto.kerits.org/v1/articles/count';
 
-function isFiltering(query) {
-  const keys = Object.keys(query).map(k => k);
-  for (let key in keys) {
-    if (keys[key].split('-')[0] === 'filter') return true;
-  }
-  return false;
-}
-
 function requestAggregations() {
   return {
     type: REQUEST_AGGREGATIONS

@@ -64,8 +64,6 @@ function articles(state, action) {
       metadata: action.response.metadata,
       aggregations: action.response.aggregations
     });
-  default:
-    return state;
   }
 }
 

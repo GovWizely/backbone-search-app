@@ -4,7 +4,7 @@ import fetch from 'node-fetch'; fetch.Promise = require('bluebird');
 import { stringify } from 'querystring';
 
 import Parser from '../utils/aggregation-parser';
-import { formatFilterParams, formatParams } from '../utils/action-helper';
+import { formatFilterParams, formatParams, noAction } from '../utils/action-helper';
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
@@ -36,7 +36,10 @@ function receiveArticles(response) {
 
 export function fetchArticles(query) {
   return (dispatch, getState) => {
-    if (getState().results.article.isFetching) return null;
+    if (getState().results.article.isFetching) {
+      dispatch(noAction());
+      return null;
+    };
 
     dispatch(requestArticles());
     let params = {};

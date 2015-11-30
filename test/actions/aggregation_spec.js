@@ -1,8 +1,9 @@
 import { expect } from 'chai';
-import { mockStore } from '../test_helper';
-
 import nock from 'nock';
+
+import { mockStore } from '../test_helper';
 import * as actions from '../../src/js/actions/aggregation';
+import { NO_ACTION } from '../../src/js/utils/action-helper';
 
 describe('aggregation', () => {
   afterEach(() => {
@@ -15,7 +16,7 @@ describe('aggregation', () => {
     topics: []
   };
 
-  describe('fetchAggregations', () => {
+  describe('#fetchAggregations', () => {
     it('create an action to request aggregations', done => {
       nock('https://pluto.kerits.org/')
         .get('/v1/articles/count')
@@ -33,11 +34,11 @@ describe('aggregation', () => {
 
     context('when isFetching is already true', () => {
       it('exits to prevent new request from being made', done => {
+        const expectedActions = [{ type: NO_ACTION }];
         const store = mockStore({
           aggregations: { isFetching: true, data: {} }
-        }, [], done);
+        }, expectedActions, done);
         store.dispatch(actions.fetchAggregations());
-        done();
       });
     });
   });

@@ -25,9 +25,6 @@ module.exports = function() {
     envify: {
       NODE_ENV: 'development'
     },
-    karma: {
-      conf: path.resolve(__dirname, '../karma.conf.js')
-    },
     serverStream:  browserSync.stream
   });
 

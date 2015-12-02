@@ -6,9 +6,9 @@ import * as actions from '../../src/js/actions/trade';
 import { NO_ACTION } from '../../src/js/utils/action-helper';
 
 describe('trade', () => {
-  const query = { q: 'test', countries: 'Albania,Algeria' };
-
   describe('fetchTradeEvents', function() {
+    const query = { q: 'test', countries: 'Albania,Algeria' };
+
     const state = {
       results: {
         tradeEvent: { isFetching: false, items: [], metadata: {} }
@@ -59,8 +59,7 @@ describe('trade', () => {
   });
 
   describe('fetchTradeLeads', function() {
-    this.timeout(10000);
-
+    const query = { q: 'test' };
 
     const response = {
       total: 3,

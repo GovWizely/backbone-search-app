@@ -7,8 +7,6 @@ var babelify = require('babelify');
 var path = require('path');
 var argv = require('yargs').argv;
 
-
-
 var options = {
   reporter: 'spec'
 };

@@ -114,5 +114,4 @@ describe('reducer', () => {
     const action = { type: UPDATE_PATH, path: '/?test=1' };
     expect(reducer({}, action).query).to.eql({ test: '1' });
   });
-
 });

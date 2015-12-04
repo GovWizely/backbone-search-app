@@ -21,12 +21,12 @@ var Form =  React.createClass({
   },
   condensed: function(q, countries, industries, handleSubmit) {
     return (
-      <form className="mi-row">
-        <div className="col-md-3">
+      <form className="pure-g">
+        <div className="pure-u-3-12">
           <Header cssClass="condensed" />
         </div>
 
-        <div className="col-md-4 keyword-input condensed">
+        <div className="pure-u-4-12 keyword-input condensed">
           <div className="input-group">
             <input type="text" className="form-control" ref="keyword" placeholder="Keyword" { ...q } />
             <span className="input-group-btn">
@@ -37,15 +37,15 @@ var Form =  React.createClass({
           </div>
         </div>
 
-        <div className="col-md-2">
+        <div className="pure-u-2-12">
         <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
         </div>
 
-        <div className="col-md-2">
+        <div className="pure-u-2-12">
         <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
         </div>
 
-        <div className="col-md1">
+        <div className="pure-u-1-12">
           <button type="button" role="button" className="btn btn-primary" onClick={ handleSubmit }>Search</button>
         </div>
       </form>
@@ -54,29 +54,29 @@ var Form =  React.createClass({
   expanded: function(q, countries, industries, handleSubmit) {
     return (
       <div>
-        <div className="mi-row page-header">
-          <Header cssClass="text-center" />
+        <div className="">
+          <Header cssClass="mi-text-center" />
         </div>
 
-        <form className="mi-row" onSubmit={ handleSubmit }>
-          <div className="col-md-8 keyword-input expanded">
+        <form className="pure-g" onSubmit={ handleSubmit }>
+          <div className="pure-u-2-3 keyword-input expanded">
             <p className="text-muted">Search by Keyword</p>
-            <div className="input-group col-md-10">
-              <input type="text" className="form-control input-lg" placeholder="Keyword" { ...q }/>
-              <span className="input-group-btn">
-                <button className="btn btn-success btn-lg" onClick={ handleSubmit }>
+            <div className="pure-u-10-12">
+              <input type="text" className="" placeholder="Keyword" { ...q }/>
+              <span className="">
+                <button className="pure-button mi-button-success mi-button-large" onClick={ handleSubmit }>
                   <i className="fa fa-search"></i>
                 </button>
               </span>
             </div>
           </div>
-          <div className="col-md-4 category-input">
+          <div className="pure-u-1-3 category-input">
             <p className="text-muted">Search by Category</p>
             <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
             <p className="text-muted separator">And / Or</p>
             <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
 
-            <button type="button" role="button" className="btn btn-primary submit" onClick={ handleSubmit }>Search</button>
+            <button type="button" role="button" className="pure-button pure-button-primary submit" onClick={ handleSubmit }>Search</button>
           </div>
         </form>
       </div>

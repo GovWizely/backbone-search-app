@@ -1,32 +1,36 @@
 @import url("http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext");
-$font-family-base: 'Lato', sans-serif;
 
-@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+@import "bower_components/pure/pure-min";
 @import "bower_components/components-font-awesome/scss/font-awesome";
 @import "node_modules/react-select/dist/react-select";
-@import "./spinner.scss";
-@import "./_variables";
-@import "./components/_grid";
+@import "./spinner";
+@import "./_variable";
+@import "./components/_typography";
 @import "./components/_navbar";
 @import "./components/_header";
 @import "./components/_footer";
 @import "./components/_card";
 @import "./components/_list";
-@import "./components/_controls";
+@import "./components/_control";
+@import "./components/_button";
 @import "./components/_checkbox-tree";
+@import "./components/_pagination";
+@import "./components/_result-list";
+@import "./components/_result-list-item";
 
 html {
+  font-family: $font-family-base;
   position: relative;
   min-height: 100%;
 }
 
 body {
   margin-bottom: 100px;
+}
 
-  >.mi-container {
-    padding: 30px 15px 0;
-    min-height: 280px;
-  }
+#main {
+  padding: 30px 15px 0;
+  min-height: 280px;
 }
 
 .searchbar {
@@ -81,66 +85,4 @@ body {
   margin-top: 10px;
   border-right: 1px solid $border-color;
   width: 100%;
-}
-
-.filter {
-  width: 95%;
-  border-bottom: 1px solid $border-color;
-
-  .overflow {
-    max-height: 180px;
-    overflow-y: auto;
-  }
-
-  .list-group-item {
-    margin-top: 0;
-    border: 0;
-    padding: 5px 15px;
-
-  }
-
-  legend {
-    font-size: inherit;
-    border: 0;
-    margin: 0;
-  }
-
-  a {
-    text-decoration: none;
-
-    &.collapsed:before {
-      font-family: FontAwesome;
-      content: '\f105';
-      margin-right: 10px;
-    }
-
-    &:before {
-      font-family: FontAwesome;
-      content: '\f107';
-      margin-right: 10px;
-
-    }
-
-  }
-}
-
-.articles {
-  .article {
-    margin-bottom: 35px;
-    .title {
-      font: 500 normal 1.375em Lato,sans-serif;
-      a {
-        color: #248dc1;
-      }
-    }
-    .url {
-      font: 300 normal 1em Lato,sans-serif;
-      a {
-        color: #4cae4c;
-      }
-    }
-    .snippet {
-      font: normal normal 1.125em 'Lato', sans-serif;
-    }
-  }
 }

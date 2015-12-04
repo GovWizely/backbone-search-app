@@ -5,14 +5,14 @@ import assign from 'object-assign';
 
 function checkbox(item, options) {
   return (
-    <li className={ options.itemCssClass } key={ item }>
+    <li className="list-item" key={ item }>
       <label>
         <input
           type="checkbox"
           value={ item }
           checked={ options.checkedItems.get(item) }
         />
-        { item }
+        <span> { item }</span>
       </label>
       { options.nested ? list(options.items[item], options) : null }
     </li>
@@ -22,7 +22,7 @@ function checkbox(item, options) {
 function list(items, options) {
   if (_.isEmpty(items)) return null;
   return (
-    <ul className={ options.listCssClass }>
+    <ul className="list">
       { _.keys(items).map(item => checkbox(item, options)) }
     </ul>
   );
@@ -96,11 +96,11 @@ var CheckboxTree = React.createClass({
     return (
       <section className="mi-checkbox-tree" onChange={ this.handleClick }>
         <fieldset>
-          <h5>
+
             <legend>
               <a role="button" className={ hrefCSS } onClick={ this.toggleVisibility } href="#">{ this.props.label }</a>
             </legend>
-          </h5>
+
         </fieldset>
         { view }
       </section>

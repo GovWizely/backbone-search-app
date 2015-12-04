@@ -1,0 +1,30 @@
+.#{$module}result-list-item {
+  margin-botton: 35px;
+
+  .title {
+    font: 500 normal 1.375em Lato,sans-serif;
+
+    a {
+      color: #248dc1;
+    }
+  }
+
+  .url {
+    font: 300 normal 1em Lato,sans-serif;
+    a {
+      color: #4cae4c;
+    }
+  }
+
+  .snippet {
+    font: normal normal 1.125em 'Lato', sans-serif;
+  }
+
+  .meta {
+    font-size: $small;
+    color: $warning-color;
+    li {
+      display: inline-block;
+    }
+  }
+}

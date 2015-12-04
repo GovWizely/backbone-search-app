@@ -67,7 +67,7 @@ var Pagination = React.createClass({
           lastPage = _.floor(total, -1);
     return (
       <nav>
-        <ul className="pagination">
+        <ul className="mi-pagination">
           <li>
             <a className="fa fa-angle-double-left" href={ href(pathname, query, firstPage) }></a>
           </li>

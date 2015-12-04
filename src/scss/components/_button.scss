@@ -1,0 +1,24 @@
+@mixin button($background-color) {
+  color: white;
+  background: $background-color;
+}
+
+.#{$module}button-success {
+  @include button($success-color);
+}
+
+.#{$module}button-error {
+  @include button($error-color);
+}
+
+.#{$module}button-warning {
+  @include button($warning-color);
+}
+
+.#{$module}button-secondary {
+  @include button($secondary-color);
+}
+
+.#{$module}button-large {
+  font-size: 110%;
+}

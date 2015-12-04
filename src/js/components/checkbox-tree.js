@@ -32,23 +32,23 @@ var CheckboxTree = React.createClass({
   displayName: 'CheckboxTree',
   propTypes: {
     checkedItems: PropTypes.array,
-    cssClass: PropTypes.string,
     id: PropTypes.string.isRequired,
     itemCssClass: PropTypes.string,
     items: PropTypes.object.isRequired,
     label: PropTypes.string,
     listCssClass: PropTypes.string,
+    maxHeight: PropTypes.number,
     nested: PropTypes.bool,
     onChange: PropTypes.func
   },
   getDefaultProps: function() {
     return {
       listCssClass: 'list-group',
-      itemCssClass: 'list-group-item checkbox',
+      itemCssClass: 'list-group-item mi-checkbox',
       items: {},
       label: 'Untitled',
-      nested: false,
-      cssClass: ''
+      maxHeight: 180,
+      nested: false
     };
   },
 
@@ -88,12 +88,13 @@ var CheckboxTree = React.createClass({
       onClick: this.handleClick
     });
     const hrefCSS = visible ? '' : 'collapsed';
+    const viewStyle = { maxHeight: this.props.maxHeight, overflowY: 'auto' };
     const view = visible ?  (
-      <div className="overflow" id={ id }>{ list(items, options) }</div>
+      <div style={ viewStyle } id={ id }>{ list(items, options) }</div>
     ) : null;
 
     return (
-      <section className={ this.props.cssClass } onChange={ this.handleClick }>
+      <section className="mi-checkbox-tree" onChange={ this.handleClick }>
         <fieldset>
           <h5>
             <legend>

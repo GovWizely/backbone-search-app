@@ -29,13 +29,13 @@ var Card = React.createClass({
   render: function() {
     const { fields, items, label, url } = this.props;
     return (
-      <section className="card">
+      <section className="mi-card">
         <h4 className="text-muted">{ label }</h4>
-        <ul className="card-list">
+        <ul className="mi-list">
           {
             items.slice(0, config.count).map(function(item) {
               return (
-                  <li className="card-list-item" key={ findFirst(item, fields.key)}>
+                  <li className="mi-list-item" key={ findFirst(item, fields.key)}>
                     <a target="_blank" href={ findFirst(item, fields.url ) }>{ findFirst(item, fields.title) }</a>
                     <div>
                       <span className="source">{ findFirst(item, fields.source) }</span>

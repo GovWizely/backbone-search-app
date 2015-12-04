@@ -1,27 +1,28 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import { expect } from 'chai';
-import Header from '../../src/js/components/header';
+import CheckboxTree from '../../src/js/components/checkbox-tree';
 
 function setup() {
   let props = {
-    cssClass: 'css',
-    onClick: (e) => e
+    items: {},
+    onChange: (e) => e
   };
 
   let renderer = TestUtils.createRenderer();
-  renderer.render(<Header { ...props } />);
+  renderer.render(<CheckboxTree { ...props } />);
   let output = renderer.getRenderOutput();
 
   return { props, output, renderer };
 }
 
 describe('components', () => {
-  describe('Header', () => {
+  describe('CheckboxTree', () => {
 
     it('should render correctly', () => {
       const { output } = setup();
-      expect(output.type).to.equal('header');
+
+      expect(output.type).to.equal('section');
     });
   });
 });

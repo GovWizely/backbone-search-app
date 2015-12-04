@@ -1,0 +1,12 @@
+.#{$module}navbar {
+  line-height: 70px;
+  height: 75px;
+  padding-top: 0;
+  background-color: $header-color;
+  border-radius: 0;
+  border-bottom: 4px solid #4cae4c;
+
+  .#{$module}container {
+    width: 98%;
+  }
+}

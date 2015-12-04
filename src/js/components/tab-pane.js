@@ -10,7 +10,7 @@ export default React.createClass({
   render: function() {
     const { content, tabs } = this.props;
     return (
-      <div className="row">
+      <div className="mi-row">
         <ul className="col-md-3 nav nav-pills nav-stacked">
           { tabs.map(function(tab) {
             const active = tab.active ? 'active' : '';

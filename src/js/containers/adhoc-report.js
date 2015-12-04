@@ -62,7 +62,7 @@ var AdhocReport = React.createClass({
     const content = <Result screen="adhoc_report" result={ results[resource.stateKey] } resource={ resource } query={ location.query } />;
     return (
       <div>
-        <div className="searchbar row">
+        <div className="mi-row searchbar">
           <Form
             aggregations={ aggregations }
             expanded={ false }

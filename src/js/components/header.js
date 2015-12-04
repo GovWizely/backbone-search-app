@@ -12,7 +12,7 @@ module.exports = React.createClass({
     };
   },
   render: function() {
-    var className = 'header ';
+    var className = 'mi-header ';
     className = className.concat(this.props.cssClass);
     return (
       <header className={ className }>

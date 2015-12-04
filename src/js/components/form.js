@@ -21,9 +21,9 @@ var Form =  React.createClass({
   },
   condensed: function(q, countries, industries, handleSubmit) {
     return (
-      <form className="row">
+      <form className="mi-row">
         <div className="col-md-3">
-          <Header cssClass="header-condensed" />
+          <Header cssClass="condensed" />
         </div>
 
         <div className="col-md-4 keyword-input condensed">
@@ -54,11 +54,11 @@ var Form =  React.createClass({
   expanded: function(q, countries, industries, handleSubmit) {
     return (
       <div>
-        <div className="row page-header">
+        <div className="mi-row page-header">
           <Header cssClass="text-center" />
         </div>
 
-        <form className="row" onSubmit={ handleSubmit }>
+        <form className="mi-row" onSubmit={ handleSubmit }>
           <div className="col-md-8 keyword-input expanded">
             <p className="text-muted">Search by Keyword</p>
             <div className="input-group col-md-10">

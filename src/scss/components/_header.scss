@@ -1,28 +1,42 @@
 .#{$module}header {
-  @extend h4;
-  font-size: 45px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 500;
 
   a {
     color: $header-color;
     text-decoration: none;
-    &:hover {
-      color: $header-color;
-    }
   }
 
-  .#{$module}phase {
+  .#{$module}header-version {
     color: #4cae4c;
-    font-size: 20px;
+    font-size: 13px;
+    font-weight: 700;
   }
+}
 
-  &.condensed {
-    font-size: 18px;
-    font-weight: 500;
+.#{$module}form-expanded {
+  .#{$module}header {
+    text-align: center;
+    font-weight: 700;
+    line-height: 50px;
+    vertical-align:middle;
+  }
+}
 
-    .#{$module}phase {
-      font-size: 13px;
-      font-weight: 700;
+.#{$module}form-condensed {
+  .#{$module}header {
+    text-align: left;
+  }
+}
+
+@media screen and (min-width: 48em) {
+  .#{$module}form-expanded {
+    .#{$module}header {
+      font-size: 45px;
+    }
+
+    .#{$module}header-version {
+      font-size: 20px;
     }
   }
 }

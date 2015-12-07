@@ -1,0 +1,46 @@
+.#{$module}form {
+  hr {
+    border-style: none none solid none; // reset border
+    border-color: $border-color;
+  }
+}
+
+.#{$module}form-expanded {
+
+  .#{$module}keyword-input {
+    width: 80%;
+    font-size: 20px;
+    float: left;
+    padding: 10px 16px;
+  }
+
+  .#{$module}keyword-button {
+    padding: 10px 16px;
+    line-height: 1.333;
+  }
+}
+
+.#{$module}form-condensed {
+  .#{$module}keyword-input {
+    width: 80%;
+  }
+}
+
+.#{$module}keyword {
+  display: table;
+  font-size: 20px;
+
+  // tag required to override purecss styling
+  input.#{$module}keyword-input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.#{$module}keyword-button {
+  background-color: $success-color;
+  margin-left: -1px;
+  z-index: 2;
+  color: #FFF;
+  display: table-cell;
+}

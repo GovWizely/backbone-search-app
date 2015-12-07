@@ -93,15 +93,15 @@ var Search = React.createClass({
       filter = results[resources[params.resource].stateKey].aggregations;
     }
     return (
-      <div>
-        <div className="mi-row searchbar">
+      <div className="pure-g">
+        <div className="pure-u-1 searchbar">
           <Form
             aggregations={ aggregations }
             expanded={ false }
             query={ location.query }
             onSubmit={ onSubmit } />
         </div>
-        <div className="mi-row">
+        <div className="">
           <div className="col-md-3">
             <Filter aggregations={ filter } onChange={ this.handleFilter } />
           </div>

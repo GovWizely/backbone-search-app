@@ -21,14 +21,14 @@ var Form =  React.createClass({
   },
   condensed: function(q, countries, industries, handleSubmit) {
     return (
-      <form className="pure-g">
+      <form className="pure-g mi-form mi-form-condensed">
         <div className="pure-u-3-12">
-          <Header cssClass="condensed" />
+          <Header />
         </div>
 
-        <div className="pure-u-4-12 keyword-input condensed">
+        <div className="pure-u-4-12 mi-keyword">
           <div className="input-group">
-            <input type="text" className="form-control" ref="keyword" placeholder="Keyword" { ...q } />
+            <input type="text" className="" ref="keyword" placeholder="Keyword" { ...q } />
             <span className="input-group-btn">
               <button className="btn btn-success" onClick={ handleSubmit }>
                 <i className="fa fa-search"></i>
@@ -53,27 +53,28 @@ var Form =  React.createClass({
   },
   expanded: function(q, countries, industries, handleSubmit) {
     return (
-      <div>
-        <div className="">
-          <Header cssClass="mi-text-center" />
-        </div>
+      <div className="mi-form mi-form-expanded">
 
-        <form className="pure-g" onSubmit={ handleSubmit }>
-          <div className="pure-u-2-3 keyword-input expanded">
-            <p className="text-muted">Search by Keyword</p>
-            <div className="pure-u-10-12">
-              <input type="text" className="" placeholder="Keyword" { ...q }/>
-              <span className="">
-                <button className="pure-button mi-button-success mi-button-large" onClick={ handleSubmit }>
+        <Header />
+
+        <hr />
+
+        <form className="pure-form pure-g" onSubmit={ handleSubmit }>
+          <div className="pure-u-1 pure-u-md-2-3">
+            <p className="mi-text-muted">Search by Keyword</p>
+            <div className="mi-keyword pure-u-1">
+              <input type="text" className="mi-keyword-input" placeholder="Keyword" { ...q }/>
+              <span>
+                <button className="pure-button mi-keyword-button" onClick={ handleSubmit }>
                   <i className="fa fa-search"></i>
                 </button>
               </span>
             </div>
           </div>
-          <div className="pure-u-1-3 category-input">
-            <p className="text-muted">Search by Category</p>
+          <div className="pure-u-1 pure-u-md-1-3 category-input">
+            <p className="mi-text-muted">Search by Category</p>
             <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
-            <p className="text-muted separator">And / Or</p>
+            <p className="mi-text-muted separator">And / Or</p>
             <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
 
             <button type="button" role="button" className="pure-button pure-button-primary submit" onClick={ handleSubmit }>Search</button>

@@ -22,3 +22,10 @@ export function formatFilterParams(query) {
   });
   return params;
 }
+
+export const NO_ACTION = 'NO_ACTION';
+export function noAction() {
+  return {
+    type: NO_ACTION
+  };
+}

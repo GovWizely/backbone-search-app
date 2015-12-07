@@ -23,16 +23,6 @@ export default React.createClass({
       placeholder: 'Select Options'
     };
   },
-  getInitialState: function() {
-    return {
-      isLoading: _.isEmpty(this.props.items)
-    };
-  },
-  componentWillReceiveProps: function(nextProps) {
-    if (!_.isEmpty(nextProps.items)) {
-      this.setState({ isLoading: false });
-    }
-  },
   options: function() {
     return _.map(this.props.items, function(item) {
       return { label: item.key, value: item.key };
@@ -41,14 +31,15 @@ export default React.createClass({
   render: function() {
     const { items, value, onChange } = this.props;
     const values = validValues(value, items);
+    const isLoading = _.isEmpty(items);
     return (
       <Select
-        isLoading={ this.state.isLoading }
+        isLoading={ isLoading }
         multi
         options={ this.options() }
         onBlur={ () => {} }
         onChange={ (val, items) => onChange(val) }
-        value={ values || [] } />
+        value={ values } />
     );
   }
 });

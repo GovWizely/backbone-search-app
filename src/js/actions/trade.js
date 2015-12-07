@@ -3,12 +3,17 @@ import assign from 'object-assign';
 import fetch from 'node-fetch'; fetch.Promise = require('bluebird');
 import { stringify } from 'querystring';
 
-import { formatFilterParams, formatParams } from '../utils/action-helper';
+import { formatFilterParams, formatParams, noAction } from '../utils/action-helper';
 import * as taxonomy from '../utils/taxonomy';
 
 export const REQUEST_TRADES = 'REQUEST_TRADES';
 export const RECEIVE_TRADES = 'RECEIVE_TRADES';
 const tradeAPIKey = 'hSLqwdFz1U25N3ZrWpLB-Ld4';
+
+function transform(params) {
+  if (params.countries) params.countries = taxonomy.country(params.countries);
+  return params;
+}
 
 function requestTrades(resource) {
   return {
@@ -29,11 +34,13 @@ function fetchTrades(resource, params) {
   const endpoint = `https://api.trade.gov/${resource.apiPath}/search?api_key=${tradeAPIKey}`
   ;
   return (dispatch, getState) => {
-    if (getState().results[resource.stateKey].isFetching) return null;
+    if (getState().results[resource.stateKey].isFetching) {
+      dispatch(noAction());
+      return null;
+    }
     dispatch(requestTrades(resource));
 
-    if (params.countries) params.countries = taxonomy.country(params.countries);
-
+    params = transform(params);
     return fetch(`${endpoint}&${stringify(params)}`)
       .then(response => response.json())
       .then(json => {

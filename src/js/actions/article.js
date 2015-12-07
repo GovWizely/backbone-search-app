@@ -3,8 +3,8 @@ import assign from 'object-assign';
 import fetch from 'node-fetch'; fetch.Promise = require('bluebird');
 import { stringify } from 'querystring';
 
-import Parser from '../utils/aggregation-parser';
-import { formatFilterParams, formatParams } from '../utils/action-helper';
+import { extract, parseAsTree } from '../utils/aggregation-parser';
+import { formatFilterParams, formatParams, noAction } from '../utils/action-helper';
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES';
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
@@ -36,7 +36,10 @@ function receiveArticles(response) {
 
 export function fetchArticles(query) {
   return (dispatch, getState) => {
-    if (getState().results.article.isFetching) return null;
+    if (getState().results.article.isFetching) {
+      dispatch(noAction());
+      return null;
+    };
 
     dispatch(requestArticles());
     let params = {};
@@ -59,9 +62,12 @@ export function fetchArticles(query) {
           data.aggregations = assign({}, getState().results.article.aggregations);
         } else {
           data.aggregations = {
-            countries: Parser.extract(json.aggregations.countries, 'key'),
-            industries: Parser.parseAsTree(json.aggregations.industries),
-            topics: Parser.parseAsTree(json.aggregations.topics)
+            countries: _.reduce(json.aggregations.countries, (results, record) => {
+              results[record.key] = record.key;
+              return results;
+            }, {}),
+            industries:parseAsTree(json.aggregations.industries),
+            topics: parseAsTree(json.aggregations.topics)
           };
         }
         dispatch(receiveArticles(data));

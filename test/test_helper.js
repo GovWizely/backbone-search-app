@@ -1,3 +1,5 @@
+require('babel-polyfill');
+
 /* chai configuration */
 import chai, { expect } from 'chai';
 
@@ -25,6 +27,7 @@ export function mockStore(getState, expectedActions, done) {
 
       dispatch(action) {
         const expectedAction = expectedActions.shift();
+
         try {
           expect(action).to.eql(expectedAction);
           if (done && !expectedActions.length) {

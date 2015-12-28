@@ -21,11 +21,11 @@ var SearchMessage = React.createClass({
     return msg;
   },
   count: function() {
-    return <strong className="text-danger">{ this.props.total }</strong>;
+    return <strong className="uk-text-danger">{ this.props.total }</strong>;
   },
   keyword: function() {
     if (!this.props.keyword) return null;
-    return <strong className="text-danger">{ this.props.keyword }.</strong>;
+    return <strong className="uk-text-danger">{ this.props.keyword }.</strong>;
   },
   render: function() {
     return (

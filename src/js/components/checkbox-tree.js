@@ -97,12 +97,12 @@ var CheckboxTree = React.createClass({
       <section className="mi-checkbox-tree" onChange={ this.handleClick }>
         <fieldset>
 
-            <legend>
-              <a role="button" className={ hrefCSS } onClick={ this.toggleVisibility } href="#">{ this.props.label }</a>
-            </legend>
-
+          <legend>
+            <a role="button" className={ hrefCSS } onClick={ this.toggleVisibility } href="#">{ this.props.label }</a>
+          </legend>
+          { view }
         </fieldset>
-        { view }
+
       </section>
     );
   }

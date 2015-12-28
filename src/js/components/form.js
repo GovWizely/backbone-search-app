@@ -5,6 +5,19 @@ import { reduxForm } from 'redux-form';
 import Header from './header';
 import Select from './aggregation-select';
 
+function keywordInput(q, handleSubmit) {
+  return (
+    <div className="uk-width-1-1 mi-keyword">
+      <input type="text" className="uk-width-1-1" placeholder="Keyword" { ...q } />
+      <span>
+        <button className="uk-button uk-button-success" onClick={ handleSubmit }>
+          <i className="mi-icon mi-icon-search"></i>
+        </button>
+      </span>
+    </div>
+  );
+}
+
 var Form =  React.createClass({
   displayName: 'ExpandedForm',
   propTypes: {
@@ -21,32 +34,25 @@ var Form =  React.createClass({
   },
   condensed: function(q, countries, industries, handleSubmit) {
     return (
-      <form className="pure-g mi-form mi-form-condensed">
-        <div className="pure-u-3-12">
+      <form className="uk-grid uk-form mi-form mi-form-condensed">
+        <div className="uk-width-1-1 uk-width-medium-3-12">
           <Header />
         </div>
 
-        <div className="pure-u-4-12 mi-keyword">
-          <div className="input-group">
-            <input type="text" className="" ref="keyword" placeholder="Keyword" { ...q } />
-            <span className="input-group-btn">
-              <button className="btn btn-success" onClick={ handleSubmit }>
-                <i className="fa fa-search"></i>
-              </button>
-            </span>
-          </div>
+        <div className="uk-width-1-1 uk-width-medium-4-12">
+          { keywordInput(q, handleSubmit) }
         </div>
 
-        <div className="pure-u-2-12">
-        <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
+        <div className="uk-width-medium-2-12">
+          <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
         </div>
 
-        <div className="pure-u-2-12">
+        <div className="uk-width-medium-2-12">
         <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
         </div>
 
-        <div className="pure-u-1-12">
-          <button type="button" role="button" className="btn btn-primary" onClick={ handleSubmit }>Search</button>
+        <div className="uk-width-medium-1-12">
+          <button type="button" role="button" className="uk-button uk-button-primary" onClick={ handleSubmit }>Search</button>
         </div>
       </form>
     );
@@ -54,30 +60,24 @@ var Form =  React.createClass({
   expanded: function(q, countries, industries, handleSubmit) {
     return (
       <div className="mi-form mi-form-expanded">
-
         <Header />
 
         <hr />
 
-        <form className="pure-form pure-g" onSubmit={ handleSubmit }>
-          <div className="pure-u-1 pure-u-md-2-3">
+        <form className="uk-grid uk-grid-small uk-grid-divider" onSubmit={ handleSubmit }>
+          <div className="uk-width-1-1 uk-width-medium-2-3">
             <p className="mi-text-muted">Search by Keyword</p>
-            <div className="mi-keyword pure-u-1">
-              <input type="text" className="mi-keyword-input" placeholder="Keyword" { ...q }/>
-              <span>
-                <button className="pure-button mi-keyword-button" onClick={ handleSubmit }>
-                  <i className="fa fa-search"></i>
-                </button>
-              </span>
+            <div className="uk-width-1-1">
+              { keywordInput(q, handleSubmit) }
             </div>
           </div>
-          <div className="pure-u-1 pure-u-md-1-3 category-input">
+          <div className="uk-width-1-1 uk-width-medium-1-3 category-input">
             <p className="mi-text-muted">Search by Category</p>
             <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
             <p className="mi-text-muted separator">And / Or</p>
             <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
 
-            <button type="button" role="button" className="pure-button pure-button-primary submit" onClick={ handleSubmit }>Search</button>
+            <button type="button" role="button" className="uk-button uk-button-primary submit" onClick={ handleSubmit }>Search</button>
           </div>
         </form>
       </div>

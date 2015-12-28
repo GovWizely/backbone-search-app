@@ -1,25 +1,24 @@
 @import url("http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext");
-
-@import "bower_components/pure/pure-min";
-@import "bower_components/pure/grids-responsive-min";
-@import "bower_components/components-font-awesome/scss/font-awesome";
 @import "node_modules/react-select/dist/react-select";
+@import "./uikit";
 @import "./spinner";
-@import "./_variable";
-@import "./_pure-custom";
-@import "./components/_typography";
-@import "./components/_navbar";
-@import "./components/_header";
-@import "./components/_footer";
-@import "./components/_form";
-@import "./components/_card";
-@import "./components/_list";
-@import "./components/_control";
-@import "./components/_button";
-@import "./components/_checkbox-tree";
-@import "./components/_pagination";
-@import "./components/_result-list";
-@import "./components/_result-list-item";
+@import "./variable";
+@import "./font";
+
+// @import "./components/_typography";
+@import "./components/navbar";
+@import "./components/header";
+@import "./components/footer";
+@import "./components/form";
+@import "./components/card";
+@import "./components/list";
+@import "./components/control";
+@import "./components/button";
+@import "./components/checkbox-tree";
+@import "./components/pagination";
+@import "./components/result-list";
+@import "./components/result-list-item";
+
 
 html {
   position: relative;
@@ -29,7 +28,12 @@ html {
 body {
   margin-bottom: 100px;
   font-size: 14px;
-  line-height: 1.42857;
+  font-family: $font-family-base;
+}
+
+input[type=text] {
+  border: 1px solid #ccc;
+  border-radius: $border-radius;
 }
 
 @media screen and (min-width: 48em) {
@@ -47,6 +51,7 @@ body {
 
 .search-message {
   border-bottom: 1px solid $border-color;
+  margin-bottom: 15px;
 }
 
 .keyword-input {

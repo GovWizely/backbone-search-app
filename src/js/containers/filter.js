@@ -10,6 +10,7 @@ var Filter = React.createClass({
   render: function() {
     const { aggregations, onChange } = this.props;
     if (!aggregations) return null;
+
     return (
       <div>
         <h4 className="text-muted">Filter Results</h4>
@@ -28,7 +29,6 @@ var Filter = React.createClass({
             id="filter-topics" label="Topic"
             items={ aggregations.topics } nested
             onChange={ onChange } />
-          <hr />
         </div>
       </div>
     );

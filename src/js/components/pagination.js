@@ -33,7 +33,7 @@ function pageItems(offset, total, options) {
   const { head, tail } = findRange(currentPage, totalPage, options.range);
   const pages = _.range(head, tail + 1).map(i =>  {
     let pageOffset = (i - 1)  * options.size;
-    let activeCss = pageOffset == offset ? 'active' : '';
+    let activeCss = pageOffset == offset ? 'mi-active' : '';
     return (
       <li className={ activeCss } key={ i }>
         <a href={ href(options.pathname, options.query, pageOffset) }>{ i }</a>
@@ -69,19 +69,19 @@ var Pagination = React.createClass({
       <nav>
         <ul className="mi-pagination">
           <li>
-            <a className="fa fa-angle-double-left" href={ href(pathname, query, firstPage) }></a>
+            <a className="mi-icon mi-icon-angle-double-left" href={ href(pathname, query, firstPage) }></a>
           </li>
           <li>
-            <a className="fa fa-angle-left" href={ href(pathname, query, prevPage) }></a>
+            <a className="mi-icon mi-icon-angle-left" href={ href(pathname, query, prevPage) }></a>
           </li>
 
           { pageItems(offset, total, { pathname, query, range, size })}
 
           <li>
-            <a className="fa fa-angle-right" href={ href(pathname, query, nextPage) }></a>
+            <a className="mi-icon mi-icon-angle-right" href={ href(pathname, query, nextPage) }></a>
           </li>
           <li>
-            <a className="fa fa-angle-double-right" href={ href(pathname, query, lastPage) }></a>
+            <a className="mi-icon mi-icon-angle-double-right" href={ href(pathname, query, lastPage) }></a>
           </li>
         </ul>
       </nav>

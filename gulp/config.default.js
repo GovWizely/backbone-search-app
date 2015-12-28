@@ -21,14 +21,10 @@ module.exports = {
     path: path.resolve(src, 'index.html')
   },
   sass: {
-    path: path.resolve(src, 'scss/**/*.scss'),
-    loadPaths: [
-      path.resolve(bower, 'bootstrap-sass/assets'),
-      path.resolve(bower, 'components-font-awesome/scss')
-    ]
+    path: path.resolve(src, 'scss/**/*.scss')
   },
   font: {
-    path: path.resolve(bower, 'components-font-awesome/fonts/**.*')
+    path: path.resolve(src, 'fonts/**/*')
   },
   image: {
     path: path.resolve(src, 'images/**/*')

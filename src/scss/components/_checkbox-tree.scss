@@ -42,18 +42,17 @@
   a {
     text-decoration: none;
 
-    &.collapsed:before {
-      font-family: FontAwesome;
-      content: '\f105';
+    &:before, &.collapsed:before {
+      @extend .mi-icon;
       margin-right: 10px;
+    }
+
+    &.collapsed:before {
+      @extend .mi-icon-angle-up;
     }
 
     &:before {
-      font-family: FontAwesome;
-      content: '\f107';
-      margin-right: 10px;
-
+      @extend .mi-icon-angle-down;
     }
-
   }
 }

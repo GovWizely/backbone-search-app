@@ -5,42 +5,79 @@
   }
 }
 
-.#{$module}form-expanded {
+.#{$module}keyword {
+  @extend .uk-button-group;
+  display: table;
+  border-collapse: collapse;
 
-  .#{$module}keyword-input {
-    width: 80%;
-    font-size: 20px;
-    float: left;
-    padding: 10px 16px;
+  >input[type=text] {
+    vertical-align: top;
+    display: table-cell;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
-  .#{$module}keyword-button {
-    padding: 10px 16px;
-    line-height: 1.333;
+  >span {
+    vertical-align: top;
+    margin: 0;
+    display: table-cell;
+
+    >button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-left: -1px;
+    }
+  }
+}
+
+
+.#{$module}form-expanded {
+
+  .#{$module}keyword {
+    font-size: 20px;
+    width: 100%;
+
+    >input {
+      @extend .uk-form-large;
+    }
+
+    >span>button {
+      @extend .uk-button-large;
+    }
   }
 }
 
 .#{$module}form-condensed {
-  .#{$module}keyword-input {
-    width: 80%;
+  .#{$module}keyword {
+    font-size: 14px;
   }
 }
 
 .#{$module}keyword {
   display: table;
-  font-size: 20px;
+  float: none;
+  display: table;
 
-  // tag required to override purecss styling
   input.#{$module}keyword-input {
+    display: table-cell;
+    float: left;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    width: 100%;
   }
-}
 
-.#{$module}keyword-button {
-  background-color: $success-color;
-  margin-left: -1px;
-  z-index: 2;
-  color: #FFF;
-  display: table-cell;
+  >span {
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .#{$module}keyword-button {
+    background-color: $success-color;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: #FFF;
+    margin-left: -1px;
+    z-index: 2;
+  }
 }

@@ -118,6 +118,7 @@ var CheckboxTree = React.createClass({
       <div id={ id }>{ list(items, options) }</div>
     ) : null;
     const showAllText = showAll ? 'Less' : 'More';
+    const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a onClick={ this.toggleShowAll } className="uk-text-small">+ See { showAllText }</a> : null;
 
     return (
       <section className="mi-checkbox-tree" onChange={ this.handleClick }>
@@ -127,7 +128,7 @@ var CheckboxTree = React.createClass({
             <a role="button" className={ hrefCSS } onClick={ this.toggleVisibility } href="#">{ this.props.label }</a>
           </legend>
             { view }
-            <a onClick={ this.toggleShowAll } className="uk-text-small">+ See { showAllText }</a>
+            { showAllLink }
         </fieldset>
 
       </section>

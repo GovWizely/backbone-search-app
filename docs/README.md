@@ -19,4 +19,4 @@
   * [Filter](/docs/containers/filter.md)
   * [Result](/docs/containers/result.md)
   * [Search](/docs/containers/search.md)
-* [Styles](/docs/styles.md)
+* [Styles](/docs/Styles.md)

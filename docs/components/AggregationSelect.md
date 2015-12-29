@@ -2,12 +2,12 @@
 
 AggregationSelect takes an array of items, an onChange handler and generates a multi-select box.
 
-Properties | Description
+Properties |  Type  | Description
 -----------|------------
-items      | Required. Select options. An array of aggregation object. Use the same format as Elasticsearch aggregation buckets.
-onChange   | Required. A function that takes a string as argument. (i.e. `"value1,value2"`)
-placeholder| Optional. Placeholder. Displayed when no value is selected.
-value      | Optional. Selected values. A string of comma separated values. (i.e. `"value1,value2"`)
+items      |  array | Required. Select options. An array of aggregation object. Use the same format as Elasticsearch aggregation buckets.
+onChange   |function| Required. A function that takes a string as argument. (i.e. `"value1,value2"`)
+placeholder| string | Optional. Placeholder. Displayed when no value is selected.
+value      | string | Optional. Selected values. A string of comma separated values. (i.e. `"value1,value2"`)
 
 ## Using AggregationSelect
 

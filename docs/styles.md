@@ -1,5 +1,15 @@
 # Styles
 
+## [uikit](http://getuikit.com/)
+
+uikit is used as the base for styling, customization of uikit can be done by editing `src/scss/_uikit.scss`.
+
+## React Components
+
+Every React component has its own stylesheet of the same name in `src/scss/components`, and its own CSS class, to reduce the possibility of being overridden.
+
+To include a new React component CSS class into the build, edit `src/scss/style.scss`.
+
 ## Icon Fonts
 
 Icon Fonts are generated using [IcoMoon](https://icomoon.io/) to reduce fonts filesize. The downside of this approach is all existing icons need to be selected when generating a new set of icon fonts.

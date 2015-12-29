@@ -3,7 +3,7 @@
 * [Read Me](/README.md)
 * Resources <!-- [Resources](/docs/resources.md) --?
 * [Components](/docs/components/README.md)
-  * [AggregationSelect](/docs/components/AggregationsSelect.md)
+  * [AggregationSelect](/docs/components/AggregationSelect.md)
   * Card <!-- [Card](/docs/components/card.md) -->
   * CheckboxTree <!-- [CheckboxTree](/docs/components/checkbox-tree.md) -->
   * Form <!-- [Form](/docs/components/form.md) -->

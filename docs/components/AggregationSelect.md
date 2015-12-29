@@ -4,12 +4,13 @@ AggregationSelect takes an array of items, an onChange handler and generates a m
 
 Properties | Description
 -----------|------------
-items      | Required. An array of aggregation object. Use the same format as Elasticsearch aggregation buckets.
+items      | Required. Select options. An array of aggregation object. Use the same format as Elasticsearch aggregation buckets.
 onChange   | Required. A function that takes a string as argument. (i.e. `"value1,value2"`)
 placeholder| Optional. Placeholder. Displayed when no value is selected.
 value      | Optional. Selected values. A string of comma separated values. (i.e. `"value1,value2"`)
 
 ## Using AggregationSelect
+
 ```js
 import AggregationSelect from 'src/js/components/aggregations-select';
 

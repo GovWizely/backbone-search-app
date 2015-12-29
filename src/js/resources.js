@@ -1,6 +1,5 @@
-import {
-  fetchArticles, fetchTradeEvents, fetchTradeLeads
-} from './actions';
+import { fetchArticles } from './actions/article';
+import { fetchTradeEvents, fetchTradeLeads } from './actions/trade';
 
 export default {
   articles: {
@@ -8,7 +7,6 @@ export default {
     fields: {
       key: ['id'],
       snippet: ['snippet'],
-      source: ['type'],
       title: ['title'],
       url: ['url']
     },

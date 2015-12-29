@@ -2,6 +2,7 @@ var sass = require('gulp-sass'),
     minify = require('gulp-minify-css'),
     sourcemaps = require('gulp-sourcemaps'),
     util = require('gulp-util'),
+    plumber = require('gulp-plumber'),
     taskName = require('../taskname.js');
 
 module.exports = function(gulp, config) {
@@ -10,6 +11,7 @@ module.exports = function(gulp, config) {
 
   gulp.task(buildTaskName, function() {
     var output = gulp.src(config.sass.path)
+      .pipe(plumber())
       .pipe(sass({
         style: 'compressed',
         loadPath: config.sass.loadPaths

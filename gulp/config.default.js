@@ -2,6 +2,7 @@ var path = require('path');
 
 var bower = path.resolve(__dirname, '../bower_components');
 var src   = path.resolve(__dirname, '../src');
+var test   = path.resolve(__dirname, '../test/**/*.js');
 
 module.exports = {
   bower: {
@@ -10,6 +11,9 @@ module.exports = {
   src: {
     path: src
   },
+  test: {
+    path: test
+  },
   entry: {
     path: path.resolve(src, 'index.js')
   },
@@ -17,14 +21,10 @@ module.exports = {
     path: path.resolve(src, 'index.html')
   },
   sass: {
-    path: path.resolve(src, 'scss/**/*.scss'),
-    loadPaths: [
-      path.resolve(bower, 'bootstrap-sass/assets'),
-      path.resolve(bower, 'components-font-awesome/scss')
-    ]
+    path: path.resolve(src, 'scss/**/*.scss')
   },
   font: {
-    path: path.resolve(bower, 'components-font-awesome/fonts/**.*')
+    path: path.resolve(src, 'fonts/**/*')
   },
   image: {
     path: path.resolve(src, 'images/**/*')

@@ -1,0 +1,44 @@
+.#{$module}header {
+  font-size: 18px;
+  font-weight: 500;
+
+  a {
+    color: $header-color;
+    text-decoration: none;
+  }
+
+  .#{$module}header-version {
+    color: #4cae4c;
+    font-size: 13px;
+    font-weight: 700;
+  }
+}
+
+.#{$module}form-expanded {
+  .#{$module}header {
+    text-align: center;
+    font-weight: 700;
+    line-height: 50px;
+    vertical-align:middle;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 16px;
+  }
+}
+
+.#{$module}form-condensed {
+  .#{$module}header {
+    text-align: left;
+  }
+}
+
+@media screen and (min-width: 48em) {
+  .#{$module}form-expanded {
+    .#{$module}header {
+      font-size: 45px;
+    }
+
+    .#{$module}header-version {
+      font-size: 20px;
+    }
+  }
+}

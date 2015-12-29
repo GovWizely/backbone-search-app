@@ -1,0 +1,40 @@
+.#{$module}pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+
+  li {
+    display: inline;
+
+    &.mi-active {
+      a {
+        background-color: #337ab7;
+        color: #FFF;
+      }
+    }
+
+    a {
+      position: relative;
+      float: left;
+      padding: 6px 12px;
+      color: #337ab7;
+      background-color: #FFF;
+      border: 1px solid #DDD;
+      text-decoration: none;
+      line-height: 1.428571429;
+      margin-left: -1px;
+    }
+
+    &:first-child>a {
+      margin-left: 0;
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+    }
+
+    &:last-child>a {
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+
+  }
+}

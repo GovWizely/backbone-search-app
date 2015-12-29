@@ -12,12 +12,10 @@ module.exports = React.createClass({
     };
   },
   render: function() {
-    var className = 'header ';
-    className = className.concat(this.props.cssClass);
     return (
-      <header className={ className }>
+      <header className="mi-header">
         <a href="#" onClick={ this.props.onClick }>
-          Find Market Intelligence <span className="phase">beta</span>
+          Find Market Intelligence <span className="mi-header-version">beta</span>
         </a>
       </header>
     );

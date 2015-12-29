@@ -7,7 +7,7 @@ Properties | Description
 items      | Required. An array of aggregation object. Use the same format as Elasticsearch aggregation buckets.
 onChange   | Required. A function that takes a string as argument. (i.e. `"value1,value2"`)
 placeholder| Optional. Placeholder. Displayed when no value is selected.
-value      | Optional. Selected values. A string consists of comma separated values. (i.e. `"value1,value2"`)
+value      | Optional. Selected values. A string of comma separated values. (i.e. `"value1,value2"`)
 
 ## Using AggregationSelect
 ```js
@@ -20,7 +20,7 @@ const items = [
 ];
 
 const handleChange = function(val) {
-    console.log("Values changed: " + val");
+    console.log("Values changed: " + val);
 };
 
 const values = 'Item #1,Item #2';

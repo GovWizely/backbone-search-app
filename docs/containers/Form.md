@@ -20,7 +20,7 @@ const aggregations = {
     industries: ["Industry #1", "Industry #2", "Industry #3"]
 };
 
-const onSubmit = function(form) {
+const handleSubmit = function(form) {
     // form = { q: "query", countries: "Country #1,Country #2", industries: undefined }
     console.log(form);
 };
@@ -28,5 +28,5 @@ const onSubmit = function(form) {
 // set value to true for full screen view, false for embedded view.
 const expanded = true;
 
-<Form aggregations={ aggregations } onSubmit={ onSubmit } expanded={ expanded } />
+<Form aggregations={ aggregations } onSubmit={ handleSubmit } expanded={ expanded } />
 ```

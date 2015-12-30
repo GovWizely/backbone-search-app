@@ -17,7 +17,7 @@ onChange    |function| Required. A function that takes an object as argument.)
 ## Using CheckboxTree
 
 ```js
-import CheckboxTree from 'src/js/components/checkbox-tree;
+import CheckboxTree from 'src/js/components/checkbox-tree';
 
 const id = "demo-tree";
 

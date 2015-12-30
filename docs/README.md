@@ -8,8 +8,8 @@
   * [CheckboxTree](/docs/components/CheckboxTree.md)
   * [Header](/docs/components/Header.md)
   * Pagination
+  * [ResultList](/docs/components/ResultList.md)
   * ResultListItem
-  * ResultList
   * SearchMessage
   * Spinner
 * Container

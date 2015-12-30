@@ -3,7 +3,7 @@
 A multi-select control that render Elasticsearch aggregation bucket as select options.
 
 Properties |  Type  | Description
------------|------------
+-----------|--------|------------
 items      |  array | Required. Select options. An array of aggregation object. Use the same format as Elasticsearch aggregation buckets.
 onChange   |function| Required. A function that takes a string as argument. (i.e. `"value1,value2"`)
 placeholder| string | Optional. Placeholder. Displayed when no value is selected.

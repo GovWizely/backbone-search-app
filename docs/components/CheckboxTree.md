@@ -3,7 +3,7 @@
 A checkbox list control that renders multi-level checkboxes.
 
 Properties  |  Type  | Description
-------------|------------
+------------|--------|------------
 checkedItems|  array | To be implemented.
 id          | string | Required. Used to identify the checkbox tree when onChange function is shared among multiple controls.
 itemCssClass| string | Optional. CSS class for checkboxes styling.

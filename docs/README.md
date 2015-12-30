@@ -6,8 +6,7 @@
   * [AggregationSelect](/docs/components/AggregationSelect.md)
   * [Card](/docs/components/card.md)
   * [CheckboxTree](/docs/components/CheckboxTree.md)
-
-  * Header
+  * [Header](/docs/components/Header.md)
   * Pagination
   * ResultListItem
   * ResultList

@@ -1,6 +1,6 @@
 # AggregationSelect
 
-AggregationSelect takes an array of items, an onChange handler and generates a multi-select box.
+A multi-select control that render Elasticsearch aggregation bucket as select options.
 
 Properties |  Type  | Description
 -----------|------------

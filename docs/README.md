@@ -5,8 +5,8 @@
 * [Components](/docs/components/README.md)
   * [AggregationSelect](/docs/components/AggregationSelect.md)
   * [Card](/docs/components/card.md)
-  * [CheckboxTree](/docs/components/checkbox-tree.md)
-  * Form
+  * [CheckboxTree](/docs/components/CheckboxTree.md)
+
   * Header
   * Pagination
   * ResultListItem
@@ -17,6 +17,7 @@
   * App
   * Cards
   * Filter
+  * [Form](/docs/containers/Form.md)
   * Result
   * Search
 * [Styles](/docs/Styles.md)

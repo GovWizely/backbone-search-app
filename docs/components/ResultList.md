@@ -10,7 +10,7 @@ items      |  array | Required. Items to be listed.
 ## Using ResultList
 
 ```js
-import ResultList from 'src/js/components/result-list;
+import ResultList from 'src/js/components/result-list';
 
 const fields = {
     key: ['id'],

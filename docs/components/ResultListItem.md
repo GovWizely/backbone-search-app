@@ -10,7 +10,7 @@ item       | object | Required. Item to be displayed.
 ## Using ResultListItem
 
 ```js
-import ResultListItem from 'src/js/components/result-list-item;
+import ResultListItem from 'src/js/components/result-list-item';
 
 const fields = {
     key: ['id'],

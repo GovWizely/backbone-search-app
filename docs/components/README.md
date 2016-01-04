@@ -8,6 +8,6 @@ Components are reusable UI components written in React. They can be invoked with
 * [Header](/docs/components/Header.md)
 * Pagination
 * [ResultList](/docs/components/ResultList.md)
-* ResultListItem
-* SearchMessage
+* [ResultListItem](/docs/components/ResultListItem.md)
+* [SearchMessage](/docs/components/SearchMessage.md)
 * Spinner

@@ -5,7 +5,7 @@ A list item for `ResultList`.
 Properties |  Type  | Description
 -----------|--------|------------
 fields     | object | Required. Fields to be displayed from item.
-items      |  array | Required. Items to be listed.
+item       | object | Required. Item to be displayed.
 
 ## Using ResultListItem
 
@@ -26,7 +26,7 @@ const item = {
     source: "item",
     title: "Item One",
     url: "http://www.example.com"
-}
+};
 
 # key is required when element is generated in a loop, so that react to correctly identify the element.
 <ResultListItem key={ item.id } item={ item } fields={ fields } />

@@ -1,0 +1,7 @@
+.#{$module}container {
+  @extend .container;
+}
+
+.#{$module}row {
+  @include make-row;
+}

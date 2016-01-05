@@ -7,9 +7,9 @@ function renderMeta(meta) {
   const items = _.pick(meta, _.identity);
   if (_.isEmpty(items)) return null;
   return (
-    <ul className="list-inline small text-info">
+    <ul className="meta">
       { _(items).map(item => {
-        return <li className="text-info" key={ item }>{ item }</li>;
+        return <li key={ item }>{ item }</li>;
       }).value() }
     </ul>
   );
@@ -28,7 +28,7 @@ var ResultListItem = React.createClass({
           snippet = findFirst(item, fields.snippet),
           source = findFirst(item, fields.source);
     return (
-      <article className="article">
+      <article className="mi-result-list-item">
         <h1 className="title">
           <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
         </h1>

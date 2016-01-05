@@ -1,0 +1,70 @@
+.#{$module}checkbox-tree {
+  .list-group-item {
+    margin-top: 0;
+    border: 0;
+    padding: 5px 15px;
+  }
+
+  fieldset {
+    border: 0;
+    margin: 0px;
+  }
+
+  +hr {
+    margin-top: 0px;
+  }
+
+  legend {
+    font-size: 14px;
+    border: 0;
+    margin: 0;
+  }
+
+  .list {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .list-item {
+    margin-top: 0;
+    border: 0;
+    padding: 5px 15px;
+    position: relative;
+    display: block;
+
+    input[type="checkbox"] {
+      margin-left: -20px;
+    }
+
+    > label {
+      cursor: pointer;
+      font-weight: normal;
+      padding-left: 20px;
+      min-height: 20px;
+    }
+  }
+
+  a.uk-text-small {
+    text-decoration: none;
+    margin-left: 10px;
+    user-select: none;
+  }
+
+  a[role=button] {
+    text-decoration: none;
+    user-select: none;
+
+    &:before, &.collapsed:before {
+      @extend .mi-icon;
+      margin-right: 10px;
+    }
+
+    &.collapsed:before {
+      @extend .mi-icon-angle-right;
+    }
+
+    &:before {
+      @extend .mi-icon-angle-down;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+.#{$module}form {
+  hr {
+    border-style: none none solid none; // reset border
+    border-color: $border-color;
+  }
+}
+
+.#{$module}keyword {
+  @extend .uk-button-group;
+  display: table;
+  border-collapse: collapse;
+
+  >input[type=text] {
+    vertical-align: top;
+    display: table-cell;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  >span {
+    vertical-align: top;
+    margin: 0;
+    display: table-cell;
+
+    >button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-left: -1px;
+    }
+  }
+}
+
+
+.#{$module}form-expanded {
+
+  .#{$module}keyword {
+    font-size: 20px;
+    width: 100%;
+
+    >input {
+      @extend .uk-form-large;
+    }
+
+    >span>button {
+      @extend .uk-button-large;
+    }
+  }
+}
+
+.#{$module}form-condensed {
+  .#{$module}keyword {
+    font-size: 14px;
+  }
+}
+
+.#{$module}keyword {
+  display: table;
+  float: none;
+  display: table;
+
+  input.#{$module}keyword-input {
+    display: table-cell;
+    float: left;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+  }
+
+  >span {
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .#{$module}keyword-button {
+    background-color: $success-color;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: #FFF;
+    margin-left: -1px;
+    z-index: 2;
+  }
+}

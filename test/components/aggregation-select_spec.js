@@ -2,9 +2,6 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import { expect } from 'chai';
 import AggregationSelect from '../../src/js/components/aggregation-select';
-import Select from 'react-select';
-
-const { renderIntoDocument, findRenderedDOMComponentWithClass } = TestUtils;
 
 function setup(value) {
   let props = {

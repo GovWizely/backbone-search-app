@@ -1,4 +1,5 @@
-// enable bootstrap js component
+require('es6-promise').polyfill();
+
 import React from 'react';
 import { render } from 'react-dom';
 import { createHashHistory as createHistory } from 'history';

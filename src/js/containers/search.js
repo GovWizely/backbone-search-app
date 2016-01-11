@@ -75,8 +75,6 @@ var Search = React.createClass({
     return null;
   },
   render: function() {
-    console.log('SEARCH');
-    console.log(this.props);
     const { aggregations, filters, location, onSubmit, params, results } = this.props;
     var filter;
     if (_.isUndefined(params.resource)) {

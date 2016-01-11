@@ -5,15 +5,15 @@ import CheckboxTree from '../components/checkbox-tree';
 var Filter = React.createClass({
   displayName: 'Filter',
   propTypes: {
-    aggregations: PropTypes.object.isRequired,
+    filters: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired
   },
   render: function() {
-    const { aggregations, onChange } = this.props;
-    if (!aggregations) return null;
+    const { filters, onChange } = this.props;
+    if (!filters) return null;
 
-    const countrySeparator = _.isEmpty(aggregations.countries) ? null : <hr />;
-    const industrySeparator = _.isEmpty(aggregations.industries) ? null : <hr />;
+    const countrySeparator = _.isEmpty(filters.countries) ? null : <hr />;
+    const industrySeparator = _.isEmpty(filters.industries) ? null : <hr />;
 
     return (
       <div>
@@ -21,18 +21,18 @@ var Filter = React.createClass({
         <div id="filters">
           <CheckboxTree
             id="filter-countries" label="Country"
-            items={ aggregations.countries }
+            items={ filters.countries }
             itemLimit={ 5 }
             onChange={ onChange } />
           { countrySeparator }
           <CheckboxTree
             id="filter-industries" label="Industry"
-            items={ aggregations.industries } nested
+            items={ filters.industries } nested
             onChange={ onChange } />
           { industrySeparator }
           <CheckboxTree
             id="filter-topics" label="Topic"
-            items={ aggregations.topics } nested
+            items={ filters.topics } nested
             onChange={ onChange } />
         </div>
       </div>

@@ -32,7 +32,11 @@ var Form =  React.createClass({
       expanded: true
     };
   },
-  condensed: function(q, countries, industries, handleSubmit) {
+  condensed: function(aggregations, q, countries, industries, handleSubmit) {
+    const { isLoading,  data: {
+      countries: countryItems,
+      industries: industryItems
+    } } = aggregations;
     return (
       <form className="uk-grid uk-form mi-form mi-form-condensed">
         <div className="uk-width-1-1 uk-width-medium-3-12">
@@ -44,11 +48,11 @@ var Form =  React.createClass({
         </div>
 
         <div className="uk-width-medium-2-12">
-          <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
+        <Select placeholder="Select Country" isLoading={ isLoading } items={ countryItems } onSubmit={ handleSubmit } { ...countries } />
         </div>
 
         <div className="uk-width-medium-2-12">
-        <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
+        <Select placeholder="Select Industry" isLoading={ isLoading }items={ industryItems } onSubmit={ handleSubmit } { ...industries } />
         </div>
 
         <div className="uk-width-medium-1-12">
@@ -57,7 +61,11 @@ var Form =  React.createClass({
       </form>
     );
   },
-  expanded: function(q, countries, industries, handleSubmit) {
+  expanded: function(aggregations, q, countries, industries, handleSubmit) {
+    const { isLoading,  data: {
+      countries: countryItems,
+      industries: industryItems
+    } } = aggregations;
     return (
       <div className="mi-form mi-form-expanded">
         <Header />
@@ -73,9 +81,10 @@ var Form =  React.createClass({
           </div>
           <div className="uk-width-1-1 uk-width-medium-1-3 category-input">
             <p className="mi-text-muted">Search by Category</p>
-            <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
+            <Select placeholder="Select Country" isLoading={ isLoading } items={ countryItems } onSubmit={ handleSubmit } { ...countries } />
+
             <p className="mi-text-muted separator">And / Or</p>
-            <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
+            <Select placeholder="Select Industry" isLoading={ isLoading }items={ industryItems } onSubmit={ handleSubmit } { ...industries } />
 
             <button type="button" role="button" className="uk-button uk-button-primary submit" onClick={ handleSubmit }>Search</button>
           </div>
@@ -86,12 +95,13 @@ var Form =  React.createClass({
   render: function() {
     const {
       fields: { q, countries, industries },
-      handleSubmit
+      handleSubmit,
+      aggregations
     } = this.props;
     if (this.props.expanded) {
-      return this.expanded(q, countries, industries, handleSubmit);
+      return this.expanded(aggregations, q, countries, industries, handleSubmit);
     } else {
-      return this.condensed(q, countries, industries, handleSubmit);
+      return this.condensed(aggregations, q, countries, industries, handleSubmit);
     }
   }
 });

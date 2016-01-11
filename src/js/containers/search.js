@@ -6,6 +6,7 @@ import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
 import { page } from '../config';
+import { fetchConsolidatedResults } from '../actions/consolidatedResult';
 import resources from '../resources';
 import Filter from './filter';
 import Cards from './cards';
@@ -41,17 +42,7 @@ var Search = React.createClass({
   },
   fetch: function(props) {
     const { dispatch, params, location } = props;
-    switch(params.resource) {
-    case undefined:
-      for (let key in resources) {
-        dispatch(resources[key].fetch(location.query));
-      }
-      break;
-    default:
-      if (resources[params.resource]) {
-        dispatch(resources[params.resource].fetch(location.query));
-      }
-    }
+    dispatch(fetchConsolidatedResults(location.query));
   },
   handleFilter: function(filters) {
     const { dispatch, location } = this.props;
@@ -64,28 +55,29 @@ var Search = React.createClass({
     const { location, params, results } = this.props;
     let resource = null;
     switch(params.resource) {
-    case undefined:
+    default:
       resource = resources.articles;
       return [
-        <Result
+        // Article Results
+        resources.articles ? <Result key="article"
           result={ results.article } resource={ resource }
-          query={ location.query } screen="search" key="result" />,
-        <Cards results={ results } query={ location.query } key="cards" />
+        query={ location.query } screen="search" /> : null,
+
+        // TradeLead Results
+        resources.trade_leads ? <Result key="tradeLead"
+          result={ results.tradeLead } resource={ resources.trade_leads } query={ location.query } screen="search" /> : null,
+
+        // TradeEvent Results
+        resources.trade_events ? <Result key="tradeEvent"
+        result={ results.tradeEvent } resource={ resources.trade_events } query={ location.query } screen="search" /> : null
       ];
-    default:
-      resource = resources[params.resource];
-      if (results[resource.stateKey]) {
-        return (
-          <Result
-            result={ results[resource.stateKey] } resource={ resource }
-            query={ location.query } screen="search" key="result" />
-        );
-      }
     }
     return null;
   },
   render: function() {
-    const { aggregations, location, onSubmit, params, results } = this.props;
+    console.log('SEARCH');
+    console.log(this.props);
+    const { aggregations, filters, location, onSubmit, params, results } = this.props;
     var filter;
     if (_.isUndefined(params.resource)) {
       filter = results.article.aggregations;
@@ -105,7 +97,7 @@ var Search = React.createClass({
         </div>
         <div className="uk-grid">
           <div className="uk-width-1-4">
-            <Filter aggregations={ filter } onChange={ this.handleFilter } />
+            <Filter filters={ filters } onChange={ this.handleFilter } />
           </div>
           <div className="uk-width-3-4">
             { this.view() }
@@ -117,9 +109,11 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { results } = state;
+  const { aggregations, filters, results } = state;
 
   return {
+    aggregations,
+    filters,
     results
   };
 }

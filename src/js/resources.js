@@ -1,9 +1,9 @@
-import { fetchArticles } from './actions/article';
 import { fetchTradeEvents, fetchTradeLeads } from './actions/trade';
+import { fetchConsolidatedResults } from './actions/consolidatedResult';
 
-export default {
+const resources = {
   articles: {
-    fetch: fetchArticles,
+    fetch: fetchConsolidatedResults,
     fields: {
       key: ['id'],
       snippet: ['snippet'],
@@ -42,3 +42,5 @@ export default {
     stateKey: 'tradeLead'
   }
 };
+
+export default resources;

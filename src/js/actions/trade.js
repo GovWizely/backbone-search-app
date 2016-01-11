@@ -30,45 +30,49 @@ function receiveTrades(resource, response) {
   };
 }
 
-function fetchTrades(resource, params) {
-  const endpoint = `https://api.trade.gov/${resource.apiPath}/search?api_key=${tradeAPIKey}`
-  ;
-  return (dispatch, getState) => {
-    if (getState().results[resource.stateKey].isFetching) {
-      dispatch(noAction());
-      return null;
-    }
-    dispatch(requestTrades(resource));
+function fetchTrades(dispatch, getState, resource, params) {
+  const endpoint = `https://api.trade.gov/${resource.apiPath}/search?api_key=${tradeAPIKey}`;
+  if (getState().results[resource.stateKey].isFetching) {
+    dispatch(noAction());
+    return null;
+  }
+  dispatch(requestTrades(resource));
 
-    params = transform(params);
-    return fetch(`${endpoint}&${stringify(params)}`)
-      .then(response => response.json())
-      .then(json => {
-        const { total, offset, sources_used, results } = json;
-        let data = {
-          metadata: { total, offset, sources_used },
-          results
-        };
-        dispatch(receiveTrades(resource, data));
-      });
-  };
+  params = transform(params);
+  return fetch(`${endpoint}&${stringify(params)}`)
+    .then(response => response.json())
+    .then(json => {
+      const { total, offset, sources_used, results } = json;
+      let data = {
+        aggregations: {
+          countries: _.reduce(json.aggregations.countries, (results, record) => {
+            results[record.key] = record.key;
+            return results;
+          }, {})
+        },
+        metadata: { total, offset, sources_used },
+        results
+      };
+      dispatch(receiveTrades(resource, data));
+      return data;
+    });
 }
 
-export function fetchTradeEvents(query) {
+export function fetchTradeEvents(dispatch, getState, query) {
   const resource = { stateKey: 'tradeEvent', apiPath: 'trade_events' };
 
   const params = formatParams(query, [
     'q', 'countries', 'industries', 'sources',
     'start_date', 'end_date', 'size', 'offset'
   ]);
-  return fetchTrades(resource, params);
+  return fetchTrades(dispatch, getState, resource, params);
 }
 
-export function fetchTradeLeads(query) {
+export function fetchTradeLeads(dispatch, getState, query) {
   const resource = { stateKey: 'tradeLead', apiPath: 'trade_leads' };
   const params = formatParams(query, [
     'q', 'countries', 'industries', 'sources',
     'start_date', 'end_date', 'size', 'offset'
   ]);
-  return fetchTrades(resource, params);
+  return fetchTrades(dispatch, getState, resource, params);
 }

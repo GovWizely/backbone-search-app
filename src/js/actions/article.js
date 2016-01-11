@@ -34,43 +34,40 @@ function receiveArticles(response) {
   };
 }
 
-export function fetchArticles(query) {
-  return (dispatch, getState) => {
-    if (getState().results.article.isFetching) {
-      dispatch(noAction());
-      return null;
-    };
-
-    dispatch(requestArticles());
-    let params = {};
-    if (query) {
-      params = formatParams(formatFilterParams(query), [
-        'q', 'countries', 'industries', 'topics', 'types', 'offset'
-      ]);
-    }
-    if (_(Object.keys(params))
-        .intersection(['q', 'countries', 'industries', 'topics', 'types'])
-        .isEmpty()) {
-      params.q = '';
-    }
-    return fetch(`${endpoint}?${stringify(params)}`)
-      .then(response => response.json())
-      .then(json => {
-        let data = { metadata: json.metadata, results: json.results };
-        let aggregations = getState().results.article.aggregations;
-        if (isFiltering(query) && !_.isEmpty(aggregations)) {
-          data.aggregations = assign({}, getState().results.article.aggregations);
-        } else {
-          data.aggregations = {
-            countries: _.reduce(json.aggregations.countries, (results, record) => {
-              results[record.key] = record.key;
-              return results;
-            }, {}),
-            industries:parseAsTree(json.aggregations.industries),
-            topics: parseAsTree(json.aggregations.topics)
-          };
-        }
-        dispatch(receiveArticles(data));
-      });
+export function fetchArticles(dispatch, getState, query) {
+  if (getState().results.article.isFetching) {
+    dispatch(noAction());
+    return null;
   };
+
+  dispatch(requestArticles());
+  let params = {};
+  if (query) {
+    params = formatParams(formatFilterParams(query), [
+      'q', 'countries', 'industries', 'topics', 'types', 'offset'
+    ]);
+  }
+  if (_(Object.keys(params))
+      .intersection(['q', 'countries', 'industries', 'topics', 'types'])
+      .isEmpty()) {
+    params.q = '';
+  }
+  return fetch(`${endpoint}?${stringify(params)}`)
+    .then(response => response.json())
+    .then(json => {
+      const data = {
+        metadata: json.metadata,
+        results: json.results,
+        aggregations: {
+          countries: _.reduce(json.aggregations.countries, (results, record) => {
+            results[record.key] = record.key;
+            return results;
+          }, {}),
+          industries:parseAsTree(json.aggregations.industries),
+          topics: parseAsTree(json.aggregations.topics)
+        }
+      };
+      dispatch(receiveArticles(data));
+      return data;
+    });
 }

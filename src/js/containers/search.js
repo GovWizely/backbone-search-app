@@ -27,6 +27,7 @@ var Search = React.createClass({
   propTypes: {
     aggregations: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
+    filters: PropTypes.object,
     location: PropTypes.object.isRequired,
     onSubmit: PropTypes.func,
     params: PropTypes.object.isRequired,
@@ -59,17 +60,19 @@ var Search = React.createClass({
       resource = resources.articles;
       return [
         // Article Results
-        resources.articles ? <Result key="article"
+        <Result key="article"
           result={ results.article } resource={ resource }
-        query={ location.query } screen="search" /> : null,
+          query={ location.query } screen="search" />,
 
         // TradeLead Results
-        resources.trade_leads ? <Result key="tradeLead"
-          result={ results.tradeLead } resource={ resources.trade_leads } query={ location.query } screen="search" /> : null,
+        <Result key="tradeLead"
+          result={ results.tradeLead } resource={ resources.trade_leads }
+          query={ location.query } screen="search" />,
 
         // TradeEvent Results
-        resources.trade_events ? <Result key="tradeEvent"
-        result={ results.tradeEvent } resource={ resources.trade_events } query={ location.query } screen="search" /> : null
+        <Result key="tradeEvent"
+          result={ results.tradeEvent } resource={ resources.trade_events }
+          query={ location.query } screen="search" />
       ];
     }
     return null;

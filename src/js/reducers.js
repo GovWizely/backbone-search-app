@@ -8,6 +8,7 @@ import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 import { REQUEST_AGGREGATIONS, RECEIVE_AGGREGATIONS } from './actions/aggregation';
 import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from './actions/article';
 import { REQUEST_TRADES, RECEIVE_TRADES } from './actions/trade';
+import { UPDATE_FILTERS } from './actions/filter';
 
 const initialState = {
   aggregations: {
@@ -102,6 +103,15 @@ function results(state = initialState.results, action) {
   }
 }
 
+function filters(state = {}, action) {
+  switch(action.type) {
+  case UPDATE_FILTERS:
+    return action.filters;
+  default:
+    return state;
+  }
+}
+
 function query(state = {}, action) {
   switch(action.type) {
   case UPDATE_PATH:
@@ -114,6 +124,7 @@ function query(state = {}, action) {
 const reducer = combineReducers({
   aggregations,
   results,
+  filters,
   form: formReducer,
   query,
   routing: routeReducer

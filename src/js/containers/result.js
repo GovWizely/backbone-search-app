@@ -17,6 +17,7 @@ var Result = React.createClass({
   render: function() {
     const { resource, query, result, screen } = this.props;
     if (result.isFetching) return <Spinner key="spinner" />;
+    if (result.metadata.total === 0) return null;
     return (
       <div key="result">
         <Message

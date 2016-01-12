@@ -15,7 +15,7 @@ module.exports = React.createClass({
     return (
       <header className="mi-header">
         <a href="#" onClick={ this.props.onClick }>
-          Find Market Intelligence <span className="mi-header-version">beta</span>
+          Market Intelligence Search <span className="mi-header-version">beta</span>
         </a>
       </header>
     );

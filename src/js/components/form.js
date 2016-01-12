@@ -21,7 +21,6 @@ function keywordInput(q, handleSubmit) {
 var Form =  React.createClass({
   displayName: 'ExpandedForm',
   propTypes: {
-    aggregations: PropTypes.object.isRequired,
     expanded: PropTypes.bool.isRequired,
     fields: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
@@ -32,40 +31,19 @@ var Form =  React.createClass({
       expanded: true
     };
   },
-  condensed: function(aggregations, q, countries, industries, handleSubmit) {
-    const { isLoading,  data: {
-      countries: countryItems,
-      industries: industryItems
-    } } = aggregations;
+  condensed: function(q, handleSubmit) {
     return (
       <form className="uk-grid uk-form mi-form mi-form-condensed">
         <div className="uk-width-1-1 uk-width-medium-3-12">
           <Header />
         </div>
-
         <div className="uk-width-1-1 uk-width-medium-4-12">
           { keywordInput(q, handleSubmit) }
-        </div>
-
-        <div className="uk-width-medium-2-12">
-        <Select placeholder="Select Country" isLoading={ isLoading } items={ countryItems } onSubmit={ handleSubmit } { ...countries } />
-        </div>
-
-        <div className="uk-width-medium-2-12">
-        <Select placeholder="Select Industry" isLoading={ isLoading }items={ industryItems } onSubmit={ handleSubmit } { ...industries } />
-        </div>
-
-        <div className="uk-width-medium-1-12">
-          <button type="button" role="button" className="uk-button uk-button-primary" onClick={ handleSubmit }>Search</button>
         </div>
       </form>
     );
   },
-  expanded: function(aggregations, q, countries, industries, handleSubmit) {
-    const { isLoading,  data: {
-      countries: countryItems,
-      industries: industryItems
-    } } = aggregations;
+  expanded: function(q, handleSubmit) {
     return (
       <div className="mi-form mi-form-expanded">
         <Header />
@@ -73,35 +51,22 @@ var Form =  React.createClass({
         <hr />
 
         <form className="uk-grid uk-grid-small uk-grid-divider" onSubmit={ handleSubmit }>
-          <div className="uk-width-1-1 uk-width-medium-2-3">
+          <div className="uk-width-1-1">
             <p className="mi-text-muted">Search by Keyword</p>
             <div className="uk-width-1-1">
               { keywordInput(q, handleSubmit) }
             </div>
-          </div>
-          <div className="uk-width-1-1 uk-width-medium-1-3 category-input">
-            <p className="mi-text-muted">Search by Category</p>
-            <Select placeholder="Select Country" isLoading={ isLoading } items={ countryItems } onSubmit={ handleSubmit } { ...countries } />
-
-            <p className="mi-text-muted separator">And / Or</p>
-            <Select placeholder="Select Industry" isLoading={ isLoading }items={ industryItems } onSubmit={ handleSubmit } { ...industries } />
-
-            <button type="button" role="button" className="uk-button uk-button-primary submit" onClick={ handleSubmit }>Search</button>
           </div>
         </form>
       </div>
     );
   },
   render: function() {
-    const {
-      fields: { q, countries, industries },
-      handleSubmit,
-      aggregations
-    } = this.props;
+    const { fields: { q }, handleSubmit } = this.props;
     if (this.props.expanded) {
-      return this.expanded(aggregations, q, countries, industries, handleSubmit);
+      return this.expanded(q, handleSubmit);
     } else {
-      return this.condensed(aggregations, q, countries, industries, handleSubmit);
+      return this.condensed(q, handleSubmit);
     }
   }
 });
@@ -109,7 +74,7 @@ var Form =  React.createClass({
 
 export default reduxForm({
   form: 'form',
-  fields: ['q', 'countries', 'industries']
+  fields: ['q']
 }, state => ({
   initialValues: state.query
 }))(Form);

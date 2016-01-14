@@ -57,7 +57,8 @@ var Search = React.createClass({
     const { dispatch, location } = this.props;
     let query = assign({}, location.query, {
       [filters.name]: filters.items,
-      filter: true
+      filter: true,
+      offset: 0
     });
     dispatch(updatePath(`/search?${stringify(query)}`));
   },

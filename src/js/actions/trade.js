@@ -11,7 +11,7 @@ export const RECEIVE_TRADES = 'RECEIVE_TRADES';
 const tradeAPIKey = 'hSLqwdFz1U25N3ZrWpLB-Ld4';
 
 function transform(params) {
-  if (params.countries) params.countries = taxonomy.country(params.countries);
+  if (params.countries) params.countries = taxonomy.countryToAbbr(params.countries);
   return params;
 }
 

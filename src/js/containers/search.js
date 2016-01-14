@@ -38,7 +38,6 @@ function noMatch(results) {
 var Search = React.createClass({
   displayName: 'Search',
   propTypes: {
-    aggregations: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
     filters: PropTypes.object,
     location: PropTypes.object.isRequired,
@@ -88,11 +87,10 @@ var Search = React.createClass({
     ];
   },
   render: function() {
-    const { aggregations, filters, location, onSubmit, params, results } = this.props;
+    const { filters, location, onSubmit, params, results } = this.props;
     return (
       <div id="search">
         <Form
-          aggregations={ aggregations }
           expanded={ false }
           query={ location.query }
           onSubmit={ onSubmit } />
@@ -110,10 +108,9 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { aggregations, filters, results } = state;
+  const { filters, results } = state;
 
   return {
-    aggregations,
     filters,
     results
   };

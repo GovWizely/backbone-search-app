@@ -5,15 +5,12 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
-import { REQUEST_AGGREGATIONS, RECEIVE_AGGREGATIONS } from './actions/aggregation';
 import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from './actions/article';
 import { REQUEST_TRADES, RECEIVE_TRADES } from './actions/trade';
 import { UPDATE_FILTERS } from './actions/filter';
 
 const initialState = {
-  aggregations: {
-    isFetching: false,
-    data: {}
+  filters: {
   },
   results: {
     article: {
@@ -35,22 +32,6 @@ const initialState = {
   },
   query: {}
 };
-
-function aggregations(state = initialState.aggregations, action) {
-  switch(action.type) {
-  case REQUEST_AGGREGATIONS:
-    return assign({}, state, {
-      isFetching: true
-    });
-  case RECEIVE_AGGREGATIONS:
-    return assign({}, state, {
-      isFetching: false,
-      data: action.response
-    });
-  default:
-    return state;
-  }
-}
 
 function articles(state, action) {
   switch(action.type) {
@@ -122,7 +103,6 @@ function query(state = {}, action) {
 }
 
 const reducer = combineReducers({
-  aggregations,
   results,
   filters,
   form: formReducer,

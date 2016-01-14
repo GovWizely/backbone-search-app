@@ -3,7 +3,6 @@ import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 
 import Header from './header';
-import Select from './aggregation-select';
 
 function keywordInput(q, handleSubmit) {
   return (

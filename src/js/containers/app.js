@@ -24,9 +24,6 @@ var App = React.createClass({
     children: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   },
-  componentDidMount: function() {
-    this.props.dispatch(fetchAggregations());
-  },
   handleSubmit: function(form) {
     let query = parseFormData(form);
     const path = `${screen(query)}?${stringify(query)}`;

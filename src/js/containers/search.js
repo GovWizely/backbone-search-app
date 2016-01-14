@@ -69,7 +69,7 @@ var Search = React.createClass({
     if (noMatch(results)) {
       return <div>Your search did not match any documents.</div>;
     }
-    return [
+    const resultsView = [
       // Article Results
         <Result key="article"
       result={ results.article } resource={ resources.articles }
@@ -85,9 +85,18 @@ var Search = React.createClass({
       result={ results.tradeLead } resource={ resources.trade_leads }
       query={ location.query } screen="search" />
     ];
+
+    return [
+      <div id="left-pane" key="left-pane">
+        <Filter filters={ this.props.filters } onChange={ this.handleFilter } />
+      </div>,
+      <div id="content-pane" key="content-pane">
+        { resultsView }
+      </div>
+    ];
   },
   render: function() {
-    const { filters, location, onSubmit, params, results } = this.props;
+    const { location, onSubmit, params, results } = this.props;
     return (
       <div id="search">
         <Form
@@ -95,12 +104,7 @@ var Search = React.createClass({
           query={ location.query }
           onSubmit={ onSubmit } />
         <div id="main-pane">
-          <div id="left-pane">
-            <Filter filters={ filters } onChange={ this.handleFilter } />
-          </div>
-          <div id="content-pane">
-            { this.view() }
-          </div>
+          { this.view() }
         </div>
       </div>
     );

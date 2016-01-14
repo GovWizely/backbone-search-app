@@ -23,16 +23,13 @@ function shouldFetch(location, nextLocation) {
 }
 
 function noMatch(results) {
-  if (
-    _.has(results, 'article.metadata.total') && results.article.metadata.total === 0
-    &&
-    _.has(results, 'tradeEvent.metadata.total') && results.tradeEvent.metadata.total === 0
-    &&
-    _.has(results, 'tradeLead.metadata.total') && results.tradeLead.metadata.total === 0
-  ) {
-    return true;
+  for (let resource in results) {
+    let result = results[resource];
+    if (result.metadata && result.metadata.total > 0) {
+      return false;
+    }
   }
-  return false;
+  return true;
 }
 
 var Search = React.createClass({

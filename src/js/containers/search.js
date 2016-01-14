@@ -67,9 +67,17 @@ var Search = React.createClass({
     if (noMatch(results)) {
       return <div>Your search did not match any documents.</div>;
     }
-    const resultsView = (<Result key="article"
-      result={ results.article } resource={ resources.articles }
-      query={ location.query } screen="search" />);
+    const resultsView = [
+      <Result key="article"
+        result={ results.article } resource={ resources.articles }
+        query={ location.query } screen="search" />,
+      <Result key="tradeEvent"
+        result={ results.tradeEvent } resource={ resources.trade_events }
+        query={ location.query } screen="search" />,
+      <Result key="tradeLead"
+        result={ results.tradeLead } resource={ resources.trade_leads }
+        query={ location.query } screen="search" />,
+    ];
 
     return [
       <div id="left-pane" key="left-pane">

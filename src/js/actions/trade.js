@@ -46,7 +46,8 @@ function fetchTrades(dispatch, getState, resource, params) {
       let data = {
         aggregations: {
           countries: _.reduce(json.aggregations.countries, (results, record) => {
-            results[record.key] = record.key;
+            let country = taxonomy.abbrToCountry(record.key) || record.key;
+            results[country] = country;
             return results;
           }, {})
         },

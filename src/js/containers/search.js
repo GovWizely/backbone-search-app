@@ -79,12 +79,6 @@ var Search = React.createClass({
   },
   render: function() {
     const { aggregations, filters, location, onSubmit, params, results } = this.props;
-    var filter;
-    if (_.isUndefined(params.resource)) {
-      filter = results.article.aggregations;
-    } else {
-      filter = results[resources[params.resource].stateKey].aggregations;
-    }
     return (
       <div id="search">
         <Form
@@ -92,11 +86,11 @@ var Search = React.createClass({
           expanded={ false }
           query={ location.query }
           onSubmit={ onSubmit } />
-        <div className="uk-grid">
-          <div className="uk-width-1-4">
+        <div id="main-pane">
+          <div id="left-pane">
             <Filter filters={ filters } onChange={ this.handleFilter } />
           </div>
-          <div className="uk-width-3-4">
+          <div id="content-pane">
             { this.view() }
           </div>
         </div>

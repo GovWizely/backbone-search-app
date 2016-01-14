@@ -18,7 +18,7 @@ var Filter = React.createClass({
     return (
       <div>
         <h4 className="uk-text-muted">Filter Results</h4>
-        <div id="filters">
+        <div>
           <CheckboxTree
             id="filter-countries" label="Country"
             items={ filters.countries }

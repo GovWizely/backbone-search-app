@@ -73,16 +73,22 @@ input[type=text] {
   }
 }
 
-.cards {
-  padding-top: 26px;
-  border-top: 1px solid #eee;
+#main-pane {
+  width: 100%;
 }
 
+#left-pane {
+  display: block;
+  float: left;
+  position: relative;
+  width: 240px;
 
-#filters {
-  margin-top: 10px;
+  margin-left: 27px;
   border-right: 1px solid $border-color;
-  width: 100%;
+}
+
+#content-pane {
+  margin-left: 300px;
 }
 
 #index {

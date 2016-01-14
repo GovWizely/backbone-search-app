@@ -1388,9 +1388,9 @@ iframe {
  * 3. Remove `border-radius` in iOS.
  * 4. Correct `font` properties and `color` not being inherited.
  */
-.uk-form input,
-.uk-form select,
-.uk-form textarea {
+.uk-form input, .mi-form input,
+.uk-form select, .mi-form select,
+.uk-form textarea, .mi-form textarea {
   /* 1 */
   box-sizing: border-box;
   /* 2 */
@@ -1404,7 +1404,7 @@ iframe {
 /*
  * Address inconsistent `text-transform` inheritance which is only inherit in Firefox
  */
-.uk-form select {
+.uk-form select, .mi-form select {
   text-transform: none; }
 
 /*
@@ -1412,7 +1412,7 @@ iframe {
  * 2. Don't inherit the `font-weight` and use `bold` instead.
  * NOTE: Both declarations don't work in Chrome, Safari and Opera.
  */
-.uk-form optgroup {
+.uk-form optgroup, .mi-form optgroup {
   /* 1 */
   font: inherit;
   /* 2 */
@@ -1421,44 +1421,44 @@ iframe {
 /*
  * Removes inner padding and border in Firefox 4+.
  */
-.uk-form input::-moz-focus-inner {
+.uk-form input::-moz-focus-inner, .mi-form input::-moz-focus-inner {
   border: 0;
   padding: 0; }
 
 /*
  * Removes excess padding in IE 8/9/10.
  */
-.uk-form input[type="checkbox"],
-.uk-form input[type="radio"] {
+.uk-form input[type="checkbox"], .mi-form input[type="checkbox"],
+.uk-form input[type="radio"], .mi-form input[type="radio"] {
   padding: 0; }
 
 /*
  * Improves consistency of cursor style for clickable elements
  */
-.uk-form input[type="checkbox"]:not(:disabled),
-.uk-form input[type="radio"]:not(:disabled) {
+.uk-form input[type="checkbox"]:not(:disabled), .mi-form input[type="checkbox"]:not(:disabled),
+.uk-form input[type="radio"]:not(:disabled), .mi-form input[type="radio"]:not(:disabled) {
   cursor: pointer; }
 
 /*
  * Remove default style in iOS.
  */
-.uk-form textarea,
-.uk-form input:not([type]),
-.uk-form input[type="text"],
-.uk-form input[type="password"],
-.uk-form input[type="email"],
-.uk-form input[type="url"],
-.uk-form input[type="search"],
-.uk-form input[type="tel"],
-.uk-form input[type="number"],
-.uk-form input[type="datetime"] {
+.uk-form textarea, .mi-form textarea,
+.uk-form input:not([type]), .mi-form input:not([type]),
+.uk-form input[type="text"], .mi-form input[type="text"],
+.uk-form input[type="password"], .mi-form input[type="password"],
+.uk-form input[type="email"], .mi-form input[type="email"],
+.uk-form input[type="url"], .mi-form input[type="url"],
+.uk-form input[type="search"], .mi-form input[type="search"],
+.uk-form input[type="tel"], .mi-form input[type="tel"],
+.uk-form input[type="number"], .mi-form input[type="number"],
+.uk-form input[type="datetime"], .mi-form input[type="datetime"] {
   -webkit-appearance: none; }
 
 /*
  * Remove inner padding and search cancel button in Chrome, Safari and Opera on OS X.
  */
-.uk-form input[type="search"]::-webkit-search-cancel-button,
-.uk-form input[type="search"]::-webkit-search-decoration {
+.uk-form input[type="search"]::-webkit-search-cancel-button, .mi-form input[type="search"]::-webkit-search-cancel-button,
+.uk-form input[type="search"]::-webkit-search-decoration, .mi-form input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none; }
 
 /*
@@ -1466,14 +1466,14 @@ iframe {
  * `font-size` values of the `input`, it causes the cursor style of the
  * decrement button to change from `default` to `text`.
  */
-.uk-form input[type="number"]::-webkit-inner-spin-button,
-.uk-form input[type="number"]::-webkit-outer-spin-button {
+.uk-form input[type="number"]::-webkit-inner-spin-button, .mi-form input[type="number"]::-webkit-inner-spin-button,
+.uk-form input[type="number"]::-webkit-outer-spin-button, .mi-form input[type="number"]::-webkit-outer-spin-button {
   height: auto; }
 
 /*
  * Define consistent border, margin, and padding.
  */
-.uk-form fieldset {
+.uk-form fieldset, .mi-form fieldset {
   border: none;
   margin: 0;
   padding: 0; }
@@ -1482,7 +1482,7 @@ iframe {
  * 1. Remove default vertical scrollbar in IE 8/9/10/11.
  * 2. Improve readability and alignment in all browsers.
  */
-.uk-form textarea {
+.uk-form textarea, .mi-form textarea {
   /* 1 */
   overflow: auto;
   /* 2 */
@@ -1491,20 +1491,20 @@ iframe {
 /*
  * Removes placeholder transparency in Firefox.
  */
-.uk-form ::-moz-placeholder {
+.uk-form ::-moz-placeholder, .mi-form ::-moz-placeholder {
   opacity: 1; }
 
 /*
  * Removes `box-shadow` for invalid controls in Firefox.
  */
-.uk-form :invalid {
+.uk-form :invalid, .mi-form :invalid {
   box-shadow: none; }
 
 /*
  * Vertical alignment
  */
-.uk-form input:not([type="radio"]):not([type="checkbox"]),
-.uk-form select {
+.uk-form input:not([type="radio"]):not([type="checkbox"]), .mi-form input:not([type="radio"]):not([type="checkbox"]),
+.uk-form select, .mi-form select {
   vertical-align: middle; }
 
 /* Style
@@ -1512,7 +1512,7 @@ iframe {
 /*
  * Remove margin from the last-child
  */
-.uk-form > :last-child {
+.uk-form > :last-child, .mi-form > :last-child {
   margin-bottom: 0; }
 
 /*
@@ -1523,23 +1523,23 @@ iframe {
  * 3. Vertical `padding` needed for `select` elements in Firefox
  * 4. Style
  */
-.uk-form select,
-.uk-form textarea,
-.uk-form input:not([type]),
-.uk-form input[type="text"],
-.uk-form input[type="password"],
-.uk-form input[type="datetime"],
-.uk-form input[type="datetime-local"],
-.uk-form input[type="date"],
-.uk-form input[type="month"],
-.uk-form input[type="time"],
-.uk-form input[type="week"],
-.uk-form input[type="number"],
-.uk-form input[type="email"],
-.uk-form input[type="url"],
-.uk-form input[type="search"],
-.uk-form input[type="tel"],
-.uk-form input[type="color"] {
+.uk-form select, .mi-form select,
+.uk-form textarea, .mi-form textarea,
+.uk-form input:not([type]), .mi-form input:not([type]),
+.uk-form input[type="text"], .mi-form input[type="text"],
+.uk-form input[type="password"], .mi-form input[type="password"],
+.uk-form input[type="datetime"], .mi-form input[type="datetime"],
+.uk-form input[type="datetime-local"], .mi-form input[type="datetime-local"],
+.uk-form input[type="date"], .mi-form input[type="date"],
+.uk-form input[type="month"], .mi-form input[type="month"],
+.uk-form input[type="time"], .mi-form input[type="time"],
+.uk-form input[type="week"], .mi-form input[type="week"],
+.uk-form input[type="number"], .mi-form input[type="number"],
+.uk-form input[type="email"], .mi-form input[type="email"],
+.uk-form input[type="url"], .mi-form input[type="url"],
+.uk-form input[type="search"], .mi-form input[type="search"],
+.uk-form input[type="tel"], .mi-form input[type="tel"],
+.uk-form input[type="color"], .mi-form input[type="color"] {
   /* 1 */
   height: 34px;
   /* 2 */
@@ -1552,44 +1552,44 @@ iframe {
   color: #444;
   -webkit-transition: all linear 0.2s;
   transition: all linear 0.2s; }
-  .uk-form select:focus,
-  .uk-form textarea:focus,
-  .uk-form input:not([type]):focus,
-  .uk-form input[type="text"]:focus,
-  .uk-form input[type="password"]:focus,
-  .uk-form input[type="datetime"]:focus,
-  .uk-form input[type="datetime-local"]:focus,
-  .uk-form input[type="date"]:focus,
-  .uk-form input[type="month"]:focus,
-  .uk-form input[type="time"]:focus,
-  .uk-form input[type="week"]:focus,
-  .uk-form input[type="number"]:focus,
-  .uk-form input[type="email"]:focus,
-  .uk-form input[type="url"]:focus,
-  .uk-form input[type="search"]:focus,
-  .uk-form input[type="tel"]:focus,
-  .uk-form input[type="color"]:focus {
+  .uk-form select:focus, .mi-form select:focus,
+  .uk-form textarea:focus, .mi-form textarea:focus,
+  .uk-form input:not([type]):focus, .mi-form input:not([type]):focus,
+  .uk-form input[type="text"]:focus, .mi-form input[type="text"]:focus,
+  .uk-form input[type="password"]:focus, .mi-form input[type="password"]:focus,
+  .uk-form input[type="datetime"]:focus, .mi-form input[type="datetime"]:focus,
+  .uk-form input[type="datetime-local"]:focus, .mi-form input[type="datetime-local"]:focus,
+  .uk-form input[type="date"]:focus, .mi-form input[type="date"]:focus,
+  .uk-form input[type="month"]:focus, .mi-form input[type="month"]:focus,
+  .uk-form input[type="time"]:focus, .mi-form input[type="time"]:focus,
+  .uk-form input[type="week"]:focus, .mi-form input[type="week"]:focus,
+  .uk-form input[type="number"]:focus, .mi-form input[type="number"]:focus,
+  .uk-form input[type="email"]:focus, .mi-form input[type="email"]:focus,
+  .uk-form input[type="url"]:focus, .mi-form input[type="url"]:focus,
+  .uk-form input[type="search"]:focus, .mi-form input[type="search"]:focus,
+  .uk-form input[type="tel"]:focus, .mi-form input[type="tel"]:focus,
+  .uk-form input[type="color"]:focus, .mi-form input[type="color"]:focus {
     border-color: #99baca;
     outline: 0;
     background: #f5fbfe;
     color: #444; }
-  .uk-form select:disabled,
-  .uk-form textarea:disabled,
-  .uk-form input:not([type]):disabled,
-  .uk-form input[type="text"]:disabled,
-  .uk-form input[type="password"]:disabled,
-  .uk-form input[type="datetime"]:disabled,
-  .uk-form input[type="datetime-local"]:disabled,
-  .uk-form input[type="date"]:disabled,
-  .uk-form input[type="month"]:disabled,
-  .uk-form input[type="time"]:disabled,
-  .uk-form input[type="week"]:disabled,
-  .uk-form input[type="number"]:disabled,
-  .uk-form input[type="email"]:disabled,
-  .uk-form input[type="url"]:disabled,
-  .uk-form input[type="search"]:disabled,
-  .uk-form input[type="tel"]:disabled,
-  .uk-form input[type="color"]:disabled {
+  .uk-form select:disabled, .mi-form select:disabled,
+  .uk-form textarea:disabled, .mi-form textarea:disabled,
+  .uk-form input:not([type]):disabled, .mi-form input:not([type]):disabled,
+  .uk-form input[type="text"]:disabled, .mi-form input[type="text"]:disabled,
+  .uk-form input[type="password"]:disabled, .mi-form input[type="password"]:disabled,
+  .uk-form input[type="datetime"]:disabled, .mi-form input[type="datetime"]:disabled,
+  .uk-form input[type="datetime-local"]:disabled, .mi-form input[type="datetime-local"]:disabled,
+  .uk-form input[type="date"]:disabled, .mi-form input[type="date"]:disabled,
+  .uk-form input[type="month"]:disabled, .mi-form input[type="month"]:disabled,
+  .uk-form input[type="time"]:disabled, .mi-form input[type="time"]:disabled,
+  .uk-form input[type="week"]:disabled, .mi-form input[type="week"]:disabled,
+  .uk-form input[type="number"]:disabled, .mi-form input[type="number"]:disabled,
+  .uk-form input[type="email"]:disabled, .mi-form input[type="email"]:disabled,
+  .uk-form input[type="url"]:disabled, .mi-form input[type="url"]:disabled,
+  .uk-form input[type="search"]:disabled, .mi-form input[type="search"]:disabled,
+  .uk-form input[type="tel"]:disabled, .mi-form input[type="tel"]:disabled,
+  .uk-form input[type="color"]:disabled, .mi-form input[type="color"]:disabled {
     border-color: #ddd;
     background-color: #f5f5f5;
     color: #999; }
@@ -1597,22 +1597,22 @@ iframe {
 /*
  * Placeholder
  */
-.uk-form :-ms-input-placeholder {
+.uk-form :-ms-input-placeholder, .mi-form :-ms-input-placeholder {
   color: #999 !important; }
 
-.uk-form ::-moz-placeholder {
+.uk-form ::-moz-placeholder, .mi-form ::-moz-placeholder {
   color: #999; }
 
-.uk-form ::-webkit-input-placeholder {
+.uk-form ::-webkit-input-placeholder, .mi-form ::-webkit-input-placeholder {
   color: #999; }
 
-.uk-form :disabled:-ms-input-placeholder {
+.uk-form :disabled:-ms-input-placeholder, .mi-form :disabled:-ms-input-placeholder {
   color: #999 !important; }
 
-.uk-form :disabled::-moz-placeholder {
+.uk-form :disabled::-moz-placeholder, .mi-form :disabled::-moz-placeholder {
   color: #999; }
 
-.uk-form :disabled::-webkit-input-placeholder {
+.uk-form :disabled::-webkit-input-placeholder, .mi-form :disabled::-webkit-input-placeholder {
   color: #999; }
 
 /*
@@ -1624,7 +1624,7 @@ iframe {
  *    Using `padding` and :after instead to create the border
  * 5. Style
  */
-.uk-form legend {
+.uk-form legend, .mi-form legend {
   /* 1 */
   width: 100%;
   /* 2 */
@@ -1640,7 +1640,7 @@ iframe {
 /*
  * 1. Fixes IE9
  */
-.uk-form legend:after {
+.uk-form legend:after, .mi-form legend:after {
   content: "";
   display: block;
   border-bottom: 1px solid #ddd;
@@ -1671,9 +1671,9 @@ input:not([type]).uk-form-large,
 /* Reset height
  * Must be after size modifiers
  ========================================================================== */
-.uk-form textarea,
-.uk-form select[multiple],
-.uk-form select[size] {
+.uk-form textarea, .mi-form textarea,
+.uk-form select[multiple], .mi-form select[multiple],
+.uk-form select[size], .mi-form select[size] {
   height: auto; }
 
 /* Validation states
@@ -2501,89 +2501,6 @@ select.uk-form-width-mini {
   -moz-hyphens: auto;
   hyphens: auto; }
 
-.uk-width-1-12 {
-  width: 8.333%; }
-
-.uk-width-2-12 {
-  width: 16.666%; }
-
-.uk-width-3-12 {
-  width: 25%; }
-
-.uk-width-4-12 {
-  width: 33.333%; }
-
-.uk-width-5-12 {
-  width: 41.666%; }
-
-.uk-width-6-12 {
-  width: 50%; }
-
-.uk-width-7-12 {
-  width: 58.333%; }
-
-.uk-width-8-12 {
-  width: 66.666%; }
-
-.uk-width-9-12 {
-  width: 75%; }
-
-.uk-width-10-12 {
-  width: 83.333%; }
-
-.uk-width-11-12 {
-  width: 91.666%; }
-
-/* Only tablets and desktop */
-@media (min-width: 768px) {
-  .uk-width-medium-1-12 {
-    width: 8.333%; }
-  .uk-width-medium-2-12 {
-    width: 16.666%; }
-  .uk-width-medium-3-12 {
-    width: 25%; }
-  .uk-width-medium-4-12 {
-    width: 33.333%; }
-  .uk-width-medium-5-12 {
-    width: 41.666%; }
-  .uk-width-medium-6-12 {
-    width: 50%; }
-  .uk-width-medium-7-12 {
-    width: 58.333%; }
-  .uk-width-medium-8-12 {
-    width: 66.666%; }
-  .uk-width-medium-9-12 {
-    width: 75%; }
-  .uk-width-medium-10-12 {
-    width: 83.333%; }
-  .uk-width-medium-11-12 {
-    width: 91.666%; } }
-
-/* Only desktop */
-@media (min-width: 960px) {
-  .uk-width-large-1-12 {
-    width: 8.333%; }
-  .uk-width-large-2-12 {
-    width: 16.666%; }
-  .uk-width-large-3-12 {
-    width: 25%; }
-  .uk-width-large-4-12 {
-    width: 33.333%; }
-  .uk-width-large-5-12 {
-    width: 41.666%; }
-  .uk-width-large-6-12 {
-    width: 50%; }
-  .uk-width-large-7-12 {
-    width: 58.333%; }
-  .uk-width-large-8-12 {
-    width: 66.666%; }
-  .uk-width-large-9-12 {
-    width: 75%; }
-  .uk-width-large-10-12 {
-    width: 83.333%; }
-  .uk-width-large-11-12 {
-    width: 91.666%; } }
-
 .uk-button {
   border: none;
   border-radius: 6px; }
@@ -2592,12 +2509,15 @@ em {
   color: inherit;
   font-weight: bold; }
 
-.uk-form input[type=text] {
+.uk-form input[type=text], .mi-form input[type=text] {
   height: 34px; }
 
-.uk-form input:not([type]) {
+.uk-form input:not([type]), .mi-form input:not([type]) {
   border: none;
   padding: 0; }
+
+ul {
+  padding-left: 5px; }
 
 .sk-folding-cube {
   margin: 40px auto;
@@ -2695,7 +2615,8 @@ em {
 
 .mi-header {
   font-size: 18px;
-  font-weight: 500; }
+  font-weight: 500;
+  text-align: center; }
   .mi-header a {
     color: #32404e;
     text-decoration: none; }
@@ -2703,23 +2624,8 @@ em {
     color: #4cae4c;
     font-size: 13px;
     font-weight: 700; }
-
-.mi-form-expanded .mi-header {
-  text-align: center;
-  font-weight: 700;
-  line-height: 50px;
-  vertical-align: middle;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 16px; }
-
-.mi-form-condensed .mi-header {
-  text-align: left; }
-
-@media screen and (min-width: 48em) {
-  .mi-form-expanded .mi-header {
-    font-size: 45px; }
-  .mi-form-expanded .mi-header-version {
-    font-size: 20px; } }
+  .mi-header span {
+    white-space: nowrap; }
 
 .mi-footer {
   position: absolute;
@@ -2748,24 +2654,53 @@ em {
   .mi-keyword > span {
     vertical-align: top;
     margin: 0;
-    display: table-cell; }
+    display: table-cell;
+    width: 48px; }
     .mi-keyword > span > button {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       margin-left: -1px; }
 
-.mi-form-expanded .mi-keyword {
-  font-size: 20px;
-  width: 100%; }
+.mi-form-expanded {
+  padding-top: 15%; }
+  .mi-form-expanded form {
+    min-height: 300px; }
+  .mi-form-expanded .mi-header {
+    text-align: center;
+    font-weight: 700;
+    line-height: 50px;
+    vertical-align: middle;
+    padding-bottom: 36px; }
+  .mi-form-expanded .mi-keyword {
+    font-size: 20px;
+    margin: 0 auto;
+    width: 720px; }
 
-.mi-form-condensed .mi-keyword {
-  font-size: 14px; }
+.mi-form-condensed {
+  display: table;
+  padding: 24px 0px 12px 22px;
+  margin-bottom: 24px;
+  vertical-align: middle; }
+  .mi-form-condensed > div {
+    display: table-cell;
+    padding-right: 22px;
+    width: 250px;
+    vertical-align: middle; }
+  .mi-form-condensed > form {
+    display: table-cell; }
+  .mi-form-condensed .mi-header {
+    white-space: nowrap;
+    width: inherit; }
+  .mi-form-condensed .mi-keyword {
+    font-size: 14px;
+    max-width: 640px;
+    min-width: 560px; }
 
 .mi-keyword {
   display: table;
   float: none;
   display: table; }
-  .mi-keyword input.mi-keyword-input {
+  .mi-keyword input {
     display: table-cell;
     float: left;
     border-top-right-radius: 0;
@@ -2782,6 +2717,26 @@ em {
     color: #FFF;
     margin-left: -1px;
     z-index: 2; }
+
+@media screen and (min-width: 36em) {
+  .mi-form-expanded .mi-header {
+    font-size: 45px; }
+  .mi-form-expanded .mi-header-version {
+    font-size: 20px; } }
+
+.mi-card {
+  background-color: #FFF;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  box-sizing: border-box;
+  border-radius: 2px;
+  overflow: hidden;
+  padding-bottom: 6px; }
+  .mi-card > h4, .mi-card > ul, .mi-card > div {
+    padding: 8px 16px; }
+  .mi-card .show-more {
+    font-size: 16px; }
+  .mi-card .source {
+    color: #006621; }
 
 .mi-list-item {
   list-style-type: none;
@@ -2879,14 +2834,19 @@ em {
       border-top-right-radius: 6px;
       border-bottom-right-radius: 6px; }
 
+.mi-result-list > :nth-child(odd) {
+  background-color: #f9f9f9; }
+
 .mi-result-list-item {
-  margin-bottom: 35px; }
+  padding: 16px 48px 6px 10px; }
   .mi-result-list-item .title {
-    font: 500 normal 1.375em Lato,sans-serif; }
+    font: 500 normal 1.375em Lato,sans-serif;
+    margin-bottom: 8px; }
     .mi-result-list-item .title a {
       color: #248dc1; }
   .mi-result-list-item .url {
-    font: 300 normal 1em Lato,sans-serif; }
+    font: 300 normal 1em Lato,sans-serif;
+    margin-top: 5px; }
     .mi-result-list-item .url a {
       color: #4cae4c; }
   .mi-result-list-item .snippet {
@@ -2910,29 +2870,8 @@ input[type=text] {
   border: 1px solid #ccc;
   border-radius: 6px; }
 
-@media screen and (min-width: 48em) {
-  #main {
-    padding: 60px;
-    width: 80%;
-    margin: 0 auto; } }
-
-.searchbar {
-  padding-bottom: 16px;
-  margin-bottom: 20px; }
-
 .search-message {
-  border-bottom: 1px solid #EEE;
-  margin-bottom: 15px; }
-
-.keyword-input.expanded {
-  height: 300px; }
-  .keyword-input.expanded button {
-    padding-bottom: 11px; }
-
-.keyword-input.condensed {
-  border-right: 1px solid #EEE; }
-  .keyword-input.condensed button {
-    padding-bottom: 7px; }
+  margin-bottom: 20px; }
 
 .category-input .Select {
   margin-top: 12px;
@@ -2945,7 +2884,20 @@ input[type=text] {
 .category-input .submit {
   margin-top: 12px; }
 
-#filters {
-  margin-top: 10px;
-  border-right: 1px solid #EEE;
-  width: 100%; }
+#main-pane {
+  width: 100%;
+  padding: 0; }
+
+#left-pane {
+  display: block;
+  float: left;
+  position: relative;
+  width: 267px;
+  margin-left: 27px;
+  border-right: 1px solid #EEE; }
+
+#content-pane {
+  margin-left: 310px; }
+
+.mi-result {
+  margin-bottom: 50px; }

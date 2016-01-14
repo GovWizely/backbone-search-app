@@ -11,9 +11,10 @@ var SearchMessage = React.createClass({
   message: function() {
     if (this.props.total === null) return null;
 
-    let msg = this.props.resourceName;
-
-    msg = msg.concat(this.props.total ? ' results' : ' result');
+    let msg = '';
+    msg = msg.concat(this.props.total ? 'results' : 'result');
+    msg = msg.concat(' from the ');
+    msg = msg.concat(this.props.resourceName);
     msg = msg.concat(' were found');
 
     if (!_.isEmpty(this.props.keyword)) {

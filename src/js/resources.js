@@ -10,7 +10,7 @@ const resources = {
       title: ['title'],
       url: ['url']
     },
-    displayName: 'ITA Content',
+    displayName: 'International Trade Administration',
     pathname: 'articles',
     stateKey: 'article',
     maxOffset: 1000

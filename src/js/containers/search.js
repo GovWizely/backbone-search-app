@@ -24,7 +24,7 @@ function shouldFetch(location, nextLocation) {
 function noMatch(results) {
   for (let resource in results) {
     let result = results[resource];
-    if (result.metadata && result.metadata.total > 0) {
+    if (result.isFetching || (result.metadata && result.metadata.total > 0)) {
       return false;
     }
   }
@@ -66,22 +66,9 @@ var Search = React.createClass({
     if (noMatch(results)) {
       return <div>Your search did not match any documents.</div>;
     }
-    const resultsView = [
-      // Article Results
-      <Result key="article"
-        result={ results.article } resource={ resources.articles }
-        query={ location.query } screen="search" />,
-
-      // TradeEvent Results
-      <Result key="tradeEvent"
-        result={ results.tradeEvent } resource={ resources.trade_events }
-        query={ location.query } screen="search" />,
-
-      // TradeLead Results
-      <Result key="tradeLead"
-        result={ results.tradeLead } resource={ resources.trade_leads }
-        query={ location.query } screen="search" />
-    ];
+    const resultsView = (<Result key="article"
+      result={ results.article } resource={ resources.articles }
+      query={ location.query } screen="search" />);
 
     return [
       <div id="left-pane" key="left-pane">

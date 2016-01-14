@@ -33,30 +33,25 @@ var Form =  React.createClass({
   },
   condensed: function(q, handleSubmit) {
     return (
-      <form className="uk-grid uk-form mi-form mi-form-condensed">
-        <div className="uk-width-1-1 uk-width-medium-3-12">
+      <div className="mi-form mi-form-condensed">
+        <div>
           <Header />
         </div>
-        <div className="uk-width-1-1 uk-width-medium-4-12">
+        <form onSubmit={ handleSubmit }>
           { keywordInput(q, handleSubmit) }
-        </div>
-      </form>
+        </form>
+      </div>
     );
   },
   expanded: function(q, handleSubmit) {
     return (
-      <div className="mi-form mi-form-expanded">
-        <Header />
+      <div className="uk-grid mi-form mi-form-expanded">
+        <div className="uk-width-1-1">
+          <Header />
+        </div>
 
-        <hr />
-
-        <form className="uk-grid uk-grid-small uk-grid-divider" onSubmit={ handleSubmit }>
-          <div className="uk-width-1-1">
-            <p className="mi-text-muted">Search by Keyword</p>
-            <div className="uk-width-1-1">
-              { keywordInput(q, handleSubmit) }
-            </div>
-          </div>
+        <form className="uk-width-1-1" onSubmit={ handleSubmit }>
+          { keywordInput(q, handleSubmit) }
         </form>
       </div>
     );

@@ -21,6 +21,7 @@ var Result = React.createClass({
     return (
       <div key="result">
         <Message
+          resourceName={ resource.displayName }
           keyword={ query.q }
           total={ result.metadata.total }
         />

@@ -40,7 +40,7 @@ function pageItems(offset, total, options) {
       </li>
     );
   });
-  return  pages;
+  return pages;
 }
 
 var Pagination = React.createClass({
@@ -65,6 +65,10 @@ var Pagination = React.createClass({
           prevPage = offset - size < 0 ? 0 : offset - size,
           nextPage = offset + size > total ? _.floor(total, -1) : offset + size,
           lastPage = _.floor(total, -1);
+
+    const pages = pageItems(offset, total, { pathname, query, range, size });
+
+    if (pages.length <= 1) return null;
     return (
       <nav>
         <ul className="mi-pagination">
@@ -75,7 +79,7 @@ var Pagination = React.createClass({
             <a className="mi-icon mi-icon-angle-left" href={ href(pathname, query, prevPage) }></a>
           </li>
 
-          { pageItems(offset, total, { pathname, query, range, size })}
+          { pages }
 
           <li>
             <a className="mi-icon mi-icon-angle-right" href={ href(pathname, query, nextPage) }></a>

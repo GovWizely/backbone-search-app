@@ -10,7 +10,7 @@ const resources = {
       title: ['title'],
       url: ['url']
     },
-    displayName: 'Article',
+    displayName: 'ITA Content',
     pathname: 'articles',
     stateKey: 'article',
     maxOffset: 1000
@@ -24,7 +24,7 @@ const resources = {
       title: ['event_name'],
       url: ['url', 'registration_link']
     },
-    displayName: 'Trade Events',
+    displayName: 'Trade Event',
     pathname: 'trade_events',
     stateKey: 'tradeEvent'
   },
@@ -37,7 +37,7 @@ const resources = {
       title: ['title', 'description'],
       url: ['url']
     },
-    displayName: 'Trade Opportunities',
+    displayName: 'Trade Lead',
     pathname: 'trade_leads',
     stateKey: 'tradeLead'
   }

@@ -21,6 +21,7 @@
     vertical-align: top;
     margin: 0;
     display: table-cell;
+    width: 48px;
 
     >button {
       border-top-left-radius: 0;
@@ -30,12 +31,25 @@
   }
 }
 
-
 .#{$module}form-expanded {
+  padding-top: 15%;
+
+  form {
+    min-height: 300px;
+  }
+
+  .#{$module}header {
+    text-align: center;
+    font-weight: 700;
+    line-height: 50px;
+    vertical-align:middle;
+    padding-bottom: 36px;
+  }
 
   .#{$module}keyword {
     font-size: 20px;
-    width: 100%;
+    margin: 0 auto;
+    width: 720px;
 
     >input {
       @extend .uk-form-large;
@@ -48,8 +62,33 @@
 }
 
 .#{$module}form-condensed {
+  @extend .uk-form;
+
+  display: table;
+  padding: 24px 0px 12px 22px;
+  margin-bottom: 16px;
+  vertical-align: middle;
+  width: 100%;
+
+  >div {
+    display: table-cell;
+    padding-right: 22px;
+    width: 250px;
+  }
+
+  >form {
+    display: table-cell;
+  }
+
+  .#{$module}header {
+    white-space: nowrap;
+    width: inherit;
+  }
+
   .#{$module}keyword {
     font-size: 14px;
+    max-width: 640px;
+    min-width: 560px;
   }
 }
 
@@ -79,5 +118,17 @@
     color: #FFF;
     margin-left: -1px;
     z-index: 2;
+  }
+}
+
+@media screen and (min-width: 36em) {
+  .#{$module}form-expanded {
+    .#{$module}header {
+      font-size: 45px;
+    }
+
+    .#{$module}header-version {
+      font-size: 20px;
+    }
   }
 }

@@ -87,15 +87,11 @@ var Search = React.createClass({
     }
     return (
       <div id="search">
-        <div className="uk-grid">
-          <div className="uk-width-1-1 searchbar">
-            <Form
-              aggregations={ aggregations }
-              expanded={ false }
-              query={ location.query }
-              onSubmit={ onSubmit } />
-          </div>
-        </div>
+        <Form
+          aggregations={ aggregations }
+          expanded={ false }
+          query={ location.query }
+          onSubmit={ onSubmit } />
         <div className="uk-grid">
           <div className="uk-width-1-4">
             <Filter filters={ filters } onChange={ this.handleFilter } />

@@ -22,6 +22,19 @@ function shouldFetch(location, nextLocation) {
           location.search !== nextLocation.search);
 }
 
+function noMatch(results) {
+  if (
+    _.has(results, 'article.metadata.total') && results.article.metadata.total === 0
+    &&
+    _.has(results, 'tradeEvent.metadata.total') && results.tradeEvent.metadata.total === 0
+    &&
+    _.has(results, 'tradeLead.metadata.total') && results.tradeLead.metadata.total === 0
+  ) {
+    return true;
+  }
+  return false;
+}
+
 var Search = React.createClass({
   displayName: 'Search',
   propTypes: {
@@ -53,29 +66,26 @@ var Search = React.createClass({
     dispatch(updatePath(`/search/articles?${stringify(query)}`));
   },
   view: function() {
-    const { location, params, results } = this.props;
-    let resource = null;
-    switch(params.resource) {
-    default:
-      resource = resources.articles;
-      return [
-        // Article Results
-        <Result key="article"
-          result={ results.article } resource={ resource }
-          query={ location.query } screen="search" />,
-
-        // TradeLead Results
-        <Result key="tradeLead"
-          result={ results.tradeLead } resource={ resources.trade_leads }
-          query={ location.query } screen="search" />,
-
-        // TradeEvent Results
-        <Result key="tradeEvent"
-          result={ results.tradeEvent } resource={ resources.trade_events }
-          query={ location.query } screen="search" />
-      ];
+    const { location, results } = this.props;
+    if (noMatch(results)) {
+      return <div>Your search did not match any documents.</div>;
     }
-    return null;
+    return [
+      // Article Results
+        <Result key="article"
+      result={ results.article } resource={ resources.articles }
+      query={ location.query } screen="search" />,
+
+      // TradeEvent Results
+        <Result key="tradeEvent"
+      result={ results.tradeEvent } resource={ resources.trade_events }
+      query={ location.query } screen="search" />,
+
+      // TradeLead Results
+        <Result key="tradeLead"
+      result={ results.tradeLead } resource={ resources.trade_leads }
+      query={ location.query } screen="search" />
+    ];
   },
   render: function() {
     const { aggregations, filters, location, onSubmit, params, results } = this.props;

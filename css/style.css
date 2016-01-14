@@ -2680,7 +2680,8 @@ ul {
   display: table;
   padding: 24px 0px 12px 22px;
   margin-bottom: 24px;
-  vertical-align: middle; }
+  vertical-align: middle;
+  width: 98%; }
   .mi-form-condensed > div {
     display: table-cell;
     padding-right: 22px;

@@ -17,7 +17,7 @@ export default React.createClass({
   render: function() {
     const { items, fields } = this.props;
     return (
-      <section className="articles">
+      <section className="mi-result-list">
         { items.map(function(item) {
           return <ResultListItem key={ findFirst(item, fields.key) } item={ item } fields={ fields }/>;
         }) }

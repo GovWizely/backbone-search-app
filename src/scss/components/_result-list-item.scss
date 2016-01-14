@@ -1,8 +1,9 @@
 .#{$module}result-list-item {
-  margin-bottom: 35px;
+  padding: 16px 0 6px 10px;
 
   .title {
     font: 500 normal 1.375em Lato,sans-serif;
+    margin-bottom: 8px;
 
     a {
       color: #248dc1;
@@ -11,6 +12,8 @@
 
   .url {
     font: 300 normal 1em Lato,sans-serif;
+    margin-top: 5px;
+
     a {
       color: #4cae4c;
     }

@@ -7,8 +7,8 @@ import Select from './aggregation-select';
 
 function keywordInput(q, handleSubmit) {
   return (
-    <div className="uk-width-1-1 mi-keyword">
-      <input type="text" className="uk-width-1-1" placeholder="Keyword" { ...q } />
+    <div className="mi-keyword">
+      <input type="text" placeholder="Keyword" { ...q } />
       <span>
         <button className="uk-button uk-button-success" onClick={ handleSubmit }>
           <i className="mi-icon mi-icon-search"></i>
@@ -45,12 +45,12 @@ var Form =  React.createClass({
   },
   expanded: function(q, handleSubmit) {
     return (
-      <div className="uk-grid mi-form mi-form-expanded">
-        <div className="uk-width-1-1">
+      <div className="mi-form mi-form-expanded">
+        <div>
           <Header />
         </div>
 
-        <form className="uk-width-1-1" onSubmit={ handleSubmit }>
+        <form onSubmit={ handleSubmit }>
           { keywordInput(q, handleSubmit) }
         </form>
       </div>

@@ -19,7 +19,7 @@ var Result = React.createClass({
     if (result.isFetching) return <Spinner key="spinner" />;
     if (result.metadata.total === 0) return null;
     return (
-      <div key="result">
+      <div key="result" className="mi-result">
         <Message
           resourceName={ resource.displayName }
           keyword={ query.q }

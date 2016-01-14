@@ -9,7 +9,6 @@ import { page } from '../config';
 import { fetchConsolidatedResults } from '../actions/consolidatedResult';
 import resources from '../resources';
 import Filter from './filter';
-import Cards from './cards';
 import Result from './result';
 
 import Form from '../components/form';
@@ -57,9 +56,10 @@ var Search = React.createClass({
   handleFilter: function(filters) {
     const { dispatch, location } = this.props;
     let query = assign({}, location.query, {
-      [filters.id]: filters.items
+      [filters.name]: filters.items,
+      filter: true
     });
-    dispatch(updatePath(`/search/articles?${stringify(query)}`));
+    dispatch(updatePath(`/search?${stringify(query)}`));
   },
   view: function() {
     const { location, results } = this.props;
@@ -68,19 +68,19 @@ var Search = React.createClass({
     }
     const resultsView = [
       // Article Results
-        <Result key="article"
-      result={ results.article } resource={ resources.articles }
-      query={ location.query } screen="search" />,
+      <Result key="article"
+        result={ results.article } resource={ resources.articles }
+        query={ location.query } screen="search" />,
 
       // TradeEvent Results
-        <Result key="tradeEvent"
-      result={ results.tradeEvent } resource={ resources.trade_events }
-      query={ location.query } screen="search" />,
+      <Result key="tradeEvent"
+        result={ results.tradeEvent } resource={ resources.trade_events }
+        query={ location.query } screen="search" />,
 
       // TradeLead Results
-        <Result key="tradeLead"
-      result={ results.tradeLead } resource={ resources.trade_leads }
-      query={ location.query } screen="search" />
+      <Result key="tradeLead"
+        result={ results.tradeLead } resource={ resources.trade_leads }
+        query={ location.query } screen="search" />
     ];
 
     return [

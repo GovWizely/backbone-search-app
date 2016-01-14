@@ -6,13 +6,9 @@ import { fetchTradeEvents, fetchTradeLeads } from './trade';
 import { updateFilters } from './filter';
 
 function isFiltering(query) {
-  if (!query) return false;
+  if (!query || !query.filter) return false;
 
-  const keys = Object.keys(query).map(k => k);
-  for (let key in keys) {
-    if (keys[key].split('-')[0] === 'filter') return true;
-  }
-  return false;
+  return true;
 }
 
 function consolidateFilters(responses) {
@@ -31,7 +27,6 @@ function consolidateFilters(responses) {
 }
 
 function rejectEmptyData(responses) {
-  console.log(responses);
   return responses.filter(response => response.metadata.total > 0);
 }
 

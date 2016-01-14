@@ -32,13 +32,13 @@ var CheckboxTree = React.createClass({
   displayName: 'CheckboxTree',
   propTypes: {
     checkedItems: PropTypes.array,
-    id: PropTypes.string.isRequired,
     itemCssClass: PropTypes.string,
     itemLimit: PropTypes.number,
     items: PropTypes.object.isRequired,
     label: PropTypes.string,
     listCssClass: PropTypes.string,
     maxHeight: PropTypes.number,
+    name: PropTypes.string.isRequired,
     nested: PropTypes.bool,
     onChange: PropTypes.func
   },
@@ -83,7 +83,7 @@ var CheckboxTree = React.createClass({
       if (value) result.push(item);
       return result;
     }, []);
-    return { id: this.props.id, items: items };
+    return { name: this.props.name, items: items };
   },
 
   displayableItems: function() {
@@ -106,7 +106,7 @@ var CheckboxTree = React.createClass({
   render: function() {
     if (_.isEmpty(this.props.items)) return null;
 
-    const { id } = this.props;
+    const { name } = this.props;
     const items = this.displayableItems();
     const { showAll, visible } = this.state;
     const options = assign({}, this.props, {
@@ -115,7 +115,7 @@ var CheckboxTree = React.createClass({
     });
     const hrefCSS = visible ? '' : 'collapsed';
     const view = visible ?  (
-      <div id={ id }>{ list(items, options) }</div>
+      <div name={ name }>{ list(items, options) }</div>
     ) : null;
     const showAllText = showAll ? 'Less' : 'More';
     const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a onClick={ this.toggleShowAll } className="uk-text-small">+ See { showAllText }</a> : null;

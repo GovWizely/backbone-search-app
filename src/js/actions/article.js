@@ -11,16 +11,6 @@ export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES';
 
 const endpoint = 'https://pluto.kerits.org/v1/articles/search';
 
-function isFiltering(query) {
-  if (!query) return false;
-
-  const keys = Object.keys(query).map(k => k);
-  for (let key in keys) {
-    if (keys[key].split('-')[0] === 'filter') return true;
-  }
-  return false;
-}
-
 function requestArticles() {
   return {
     type: REQUEST_ARTICLES

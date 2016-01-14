@@ -20,18 +20,18 @@ var Filter = React.createClass({
         <h4 className="uk-text-muted">Filter Results</h4>
         <div>
           <CheckboxTree
-            id="filter-countries" label="Country"
+            name="countries" label="Country"
             items={ filters.countries }
             itemLimit={ 5 }
             onChange={ onChange } />
           { countrySeparator }
           <CheckboxTree
-            id="filter-industries" label="Industry"
+            name="industries" label="Industry"
             items={ filters.industries } nested
             onChange={ onChange } />
           { industrySeparator }
           <CheckboxTree
-            id="filter-topics" label="Topic"
+            name="topics" label="Topic"
             items={ filters.topics } nested
             onChange={ onChange } />
         </div>

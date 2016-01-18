@@ -59,5 +59,6 @@ export function fetchArticles(dispatch, getState, query) {
       };
       dispatch(receiveArticles(data));
       return data;
-    });
+    })
+    .catch(e => ({ error: e }));
 }

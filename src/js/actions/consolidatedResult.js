@@ -27,7 +27,7 @@ function consolidateFilters(responses) {
 }
 
 function rejectEmptyData(responses) {
-  return responses.filter(response => response.metadata.total > 0);
+  return responses.filter(response => _.get(response, 'metadata.total') > 0);
 }
 
 export function fetchConsolidatedResults(query) {
@@ -47,6 +47,7 @@ export function fetchConsolidatedResults(query) {
         dispatch(updateFilters(filters));
 
         return responses;
-      });
+      })
+      .catch(e => { console.log(e); });
   };
 }

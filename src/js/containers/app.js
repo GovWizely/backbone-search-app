@@ -33,9 +33,7 @@ var App = React.createClass({
     var props = {
       onSubmit: this.handleSubmit
     };
-    return (
-      React.cloneElement(this.props.children, props)
-    );
+    return React.cloneElement(this.props.children, props);
   }
 });
 

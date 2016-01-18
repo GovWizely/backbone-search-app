@@ -56,7 +56,8 @@ function fetchTrades(dispatch, getState, resource, params) {
       };
       dispatch(receiveTrades(resource, data));
       return data;
-    });
+    })
+    .catch(e => ({ error: e }));
 }
 
 export function fetchTradeEvents(dispatch, getState, query) {

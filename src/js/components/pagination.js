@@ -60,11 +60,14 @@ var Pagination = React.createClass({
           <a className="mi-icon mi-icon-angle-left" href={ href(url, query, prevPage * itemsOnPage) }></a>
         </li>) : null,
 
-      range.map(i => (
-        <li key={ i }>
-          <a href={ href(url, query, i * itemsOnPage )}>{ i + 1 }</a>
-        </li>
-      )),
+      range.map(i => {
+        const activeCSS = currentPage === i ? 'mi-active' : '';
+        return (
+          <li className={ activeCSS } key={ i }>
+            <a href={ href(url, query, i * itemsOnPage )}>{ i + 1 }</a>
+          </li>
+        );
+      }),
 
       currentPage !== pages ? (
         <li key="next">

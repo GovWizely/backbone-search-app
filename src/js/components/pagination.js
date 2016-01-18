@@ -44,7 +44,6 @@ var Pagination = React.createClass({
           pivot = displayedPages / 2,
           nextPage = currentPage + 1,
           prevPage = currentPage - 1;
-
     if (pages <= 1) return null;
 
     const range = getRange(currentPage, displayedPages, pages, pivot);
@@ -69,11 +68,11 @@ var Pagination = React.createClass({
         );
       }),
 
-      currentPage !== pages ? (
+      currentPage !== pages - 1 ? (
         <li key="next">
           <a className="mi-icon mi-icon-angle-right" href={ href(url, query, nextPage * itemsOnPage) }></a>
         </li>) : null,
-      currentPage !== pages ?(
+      currentPage !== pages - 1 ?(
         <li key="last">
           <a className="mi-icon mi-icon-angle-double-right" href={ href(url, query, (pages - 1) * itemsOnPage) }></a>
         </li>) : null

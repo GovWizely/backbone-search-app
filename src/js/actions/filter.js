@@ -1,8 +1,15 @@
-export const UPDATE_FILTERS = 'UPDATE_FILTERS';
+export const REQUEST_FILTERS = 'REQUEST_FILTERS';
+export const RECEIVE_FILTERS = 'RECEIVE_FILTERS';
 
-export function updateFilters(filters) {
+export function requestFilters() {
   return {
-    type: UPDATE_FILTERS,
+    type: REQUEST_FILTERS
+  };
+}
+
+export function receiveFilters(filters) {
+  return {
+    type: RECEIVE_FILTERS,
     filters
   };
 }

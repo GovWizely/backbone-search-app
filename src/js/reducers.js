@@ -7,10 +7,12 @@ import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
 import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from './actions/article';
 import { REQUEST_TRADES, RECEIVE_TRADES } from './actions/trade';
-import { UPDATE_FILTERS } from './actions/filter';
+import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 
 const initialState = {
   filters: {
+    isFetching: false,
+    items: {}
   },
   results: {
     article: {
@@ -84,10 +86,17 @@ function results(state = initialState.results, action) {
   }
 }
 
-function filters(state = {}, action) {
+function filters(state = initialState.filters, action) {
   switch(action.type) {
-  case UPDATE_FILTERS:
-    return action.filters;
+  case REQUEST_FILTERS:
+    return assign({}, state, {
+      isFetching: true
+    });
+  case RECEIVE_FILTERS:
+    return assign({}, state, {
+      isFetching: false,
+      items: action.filters
+    });
   default:
     return state;
   }

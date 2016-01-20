@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import CheckboxTree from '../components/checkbox-tree';
+import Spinner from '../components/spinner';
 
 var Filter = React.createClass({
   displayName: 'Filter',
@@ -9,32 +10,35 @@ var Filter = React.createClass({
     onChange: PropTypes.func.isRequired
   },
   render: function() {
-    const { filters, onChange } = this.props;
-    if (!filters) return null;
+    const { filters: { isFetching, items }, onChange } = this.props;
+    if (!items) return null;
 
-    const countrySeparator = _.isEmpty(filters.countries) ? null : <hr />;
-    const industrySeparator = _.isEmpty(filters.industries) ? null : <hr />;
+    const countrySeparator = _.isEmpty(items.countries) ? null : <hr />;
+    const industrySeparator = _.isEmpty(items.industries) ? null : <hr />;
+
+    const content = isFetching ? <Spinner /> : (
+      <div>
+        <CheckboxTree
+           name="countries" label="Country"
+           items={ items.countries }
+           itemLimit={ 5 }
+           onChange={ onChange } />
+        { countrySeparator }
+        <CheckboxTree
+           name="industries" label="Industry"
+           items={ items.industries } nested
+           onChange={ onChange } />
+        { industrySeparator }
+        <CheckboxTree
+           name="topics" label="Topic"
+           items={ items.topics } nested
+           onChange={ onChange } />
+      </div>);
 
     return (
       <div>
         <h4 className="uk-text-muted">Filter Results</h4>
-        <div>
-          <CheckboxTree
-            name="countries" label="Country"
-            items={ filters.countries }
-            itemLimit={ 5 }
-            onChange={ onChange } />
-          { countrySeparator }
-          <CheckboxTree
-            name="industries" label="Industry"
-            items={ filters.industries } nested
-            onChange={ onChange } />
-          { industrySeparator }
-          <CheckboxTree
-            name="topics" label="Topic"
-            items={ filters.topics } nested
-            onChange={ onChange } />
-        </div>
+        { content }
       </div>
     );
   }

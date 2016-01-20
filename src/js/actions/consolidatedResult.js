@@ -3,7 +3,7 @@ import assign from 'object-assign';
 import merge from 'deepmerge';
 import { fetchArticles } from './article';
 import { fetchTradeEvents, fetchTradeLeads } from './trade';
-import { updateFilters } from './filter';
+import { requestFilters, receiveFilters } from './filter';
 
 function isFiltering(query) {
   if (!query || !query.filter) return false;
@@ -32,6 +32,8 @@ function rejectEmptyData(responses) {
 
 export function fetchConsolidatedResults(query) {
   return (dispatch, getState) => {
+    const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
+    if (updateFilter) dispatch(requestFilters());
     const promises = [
       fetchArticles(dispatch, getState, query),
       fetchTradeEvents(dispatch, getState, query),
@@ -40,14 +42,13 @@ export function fetchConsolidatedResults(query) {
     return Promise
       .all(promises)
       .then(responses => {
-        if (isFiltering(query) && !_.isEmpty(getState().filters)) {
-          return responses;
-        }
+        if (!updateFilter) return responses;
+
         const filters = consolidateFilters(rejectEmptyData(responses));
-        dispatch(updateFilters(filters));
+        dispatch(receiveFilters(filters));
 
         return responses;
       })
-      .catch(e => { console.log(e); });
+      .catch(e => ({ error: e }));
   };
 }

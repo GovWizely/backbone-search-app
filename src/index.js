@@ -10,7 +10,6 @@ import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
 import App from './js/containers/app';
 import Index from './js/containers/index';
 import Search from './js/containers/search';
-import AdhocReport from './js/containers/adhoc-report';
 import configureStore from './js/store';
 
 const history = createHistory({ });
@@ -24,7 +23,6 @@ render(
       <Route component={ App }>
         <Route path="/" component={ Index } />
         <Route path="search(/:resource)" component={ Search } />
-        <Route path="adhoc_report(/:resource)" component={ AdhocReport } />
       </Route>
     </Router>
   </Provider>,

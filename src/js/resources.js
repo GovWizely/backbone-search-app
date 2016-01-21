@@ -1,16 +1,16 @@
-import { fetchArticles } from './actions/article';
 import { fetchTradeEvents, fetchTradeLeads } from './actions/trade';
+import { fetchConsolidatedResults } from './actions/consolidatedResult';
 
-export default {
+const resources = {
   articles: {
-    fetch: fetchArticles,
+    fetch: fetchConsolidatedResults,
     fields: {
       key: ['id'],
       snippet: ['snippet'],
       title: ['title'],
       url: ['url']
     },
-    displayName: 'Article',
+    displayName: 'International Trade Administration',
     pathname: 'articles',
     stateKey: 'article',
     maxOffset: 1000
@@ -24,7 +24,7 @@ export default {
       title: ['event_name'],
       url: ['url', 'registration_link']
     },
-    displayName: 'Trade Events',
+    displayName: 'Trade Event',
     pathname: 'trade_events',
     stateKey: 'tradeEvent'
   },
@@ -37,8 +37,10 @@ export default {
       title: ['title', 'description'],
       url: ['url']
     },
-    displayName: 'Trade Opportunities',
+    displayName: 'Trade Lead',
     pathname: 'trade_leads',
     stateKey: 'tradeLead'
   }
 };
+
+export default resources;

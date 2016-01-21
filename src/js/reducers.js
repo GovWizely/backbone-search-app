@@ -5,14 +5,15 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
-import { REQUEST_AGGREGATIONS, RECEIVE_AGGREGATIONS } from './actions/aggregation';
 import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from './actions/article';
 import { REQUEST_TRADES, RECEIVE_TRADES } from './actions/trade';
+import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 
 const initialState = {
-  aggregations: {
+  filters: {
     isFetching: false,
-    data: {}
+    items: {},
+    values: {}
   },
   results: {
     article: {
@@ -34,22 +35,6 @@ const initialState = {
   },
   query: {}
 };
-
-function aggregations(state = initialState.aggregations, action) {
-  switch(action.type) {
-  case REQUEST_AGGREGATIONS:
-    return assign({}, state, {
-      isFetching: true
-    });
-  case RECEIVE_AGGREGATIONS:
-    return assign({}, state, {
-      isFetching: false,
-      data: action.response
-    });
-  default:
-    return state;
-  }
-}
 
 function articles(state, action) {
   switch(action.type) {
@@ -102,6 +87,22 @@ function results(state = initialState.results, action) {
   }
 }
 
+function filters(state = initialState.filters, action) {
+  switch(action.type) {
+  case REQUEST_FILTERS:
+    return assign({}, state, {
+      isFetching: true
+    });
+  case RECEIVE_FILTERS:
+    return assign({}, state, {
+      isFetching: false,
+      items: action.filters
+    });
+  default:
+    return state;
+  }
+}
+
 function query(state = {}, action) {
   switch(action.type) {
   case UPDATE_PATH:
@@ -112,8 +113,8 @@ function query(state = {}, action) {
 }
 
 const reducer = combineReducers({
-  aggregations,
   results,
+  filters,
   form: formReducer,
   query,
   routing: routeReducer

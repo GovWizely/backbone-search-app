@@ -6,29 +6,63 @@ import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
 import { page } from '../config';
+import { fetchConsolidatedResults } from '../actions/consolidatedResult';
 import resources from '../resources';
 import Filter from './filter';
-import Cards from './cards';
 import Result from './result';
 
 import Form from '../components/form';
 import CheckboxTree from '../components/checkbox-tree';
 import Message from '../components/search-message';
 import Pagination from '../components/pagination';
+import Spinner from '../components/spinner';
+
+function getFilterQuery(query, filters) {
+  let filterQuery = assign({}, query, {
+    [filters.name]: filters.items,
+    offset: 0,
+    filter: null
+  });
+  for (let filter of ['countries', 'industries', 'topics']) {
+    if (filterQuery[filter] && !_.isEmpty(filterQuery[filter])) filterQuery.filter = true;
+  };
+  return filterQuery;
+}
 
 function shouldFetch(location, nextLocation) {
   return (location.pathname !== nextLocation.pathname ||
           location.search !== nextLocation.search);
 }
 
+function noMatch(results) {
+  for (let resource in results) {
+    let result = results[resource];
+    if (result.isFetching || (result.metadata && result.metadata.total > 0)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function showLoading(results) {
+  for (let resource in  results) {
+    let result = results[resource];
+    if (!result.isFetching) {
+      return false;
+    }
+  }
+  return true;
+}
+
 var Search = React.createClass({
   displayName: 'Search',
   propTypes: {
-    aggregations: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
+    filters: PropTypes.object,
     location: PropTypes.object.isRequired,
     onSubmit: PropTypes.func,
     params: PropTypes.object.isRequired,
+    query: PropTypes.object,
     results: PropTypes.object
   },
   componentDidMount: function() {
@@ -40,76 +74,58 @@ var Search = React.createClass({
     }
   },
   fetch: function(props) {
-    const { dispatch, params, location } = props;
-    switch(params.resource) {
-    case undefined:
-      for (let key in resources) {
-        dispatch(resources[key].fetch(location.query));
-      }
-      break;
-    default:
-      if (resources[params.resource]) {
-        dispatch(resources[params.resource].fetch(location.query));
-      }
-    }
+    const { dispatch, location } = props;
+    dispatch(fetchConsolidatedResults(location.query));
   },
   handleFilter: function(filters) {
     const { dispatch, location } = this.props;
-    let query = assign({}, location.query, {
-      [filters.id]: filters.items
-    });
-    dispatch(updatePath(`/search/articles?${stringify(query)}`));
+    let query = getFilterQuery(location.query, filters);
+    dispatch(updatePath(`/search?${stringify(query)}`));
   },
   view: function() {
-    const { location, params, results } = this.props;
-    let resource = null;
-    switch(params.resource) {
-    case undefined:
-      resource = resources.articles;
-      return [
-        <Result
-          result={ results.article } resource={ resource }
-          query={ location.query } screen="search" key="result" />,
-        <Cards results={ results } query={ location.query } key="cards" />
-      ];
-    default:
-      resource = resources[params.resource];
-      if (results[resource.stateKey]) {
-        return (
-          <Result
-            result={ results[resource.stateKey] } resource={ resource }
-            query={ location.query } screen="search" key="result" />
-        );
-      }
+    const { location, results } = this.props;
+
+    if (noMatch(results)) {
+      return <div>Your search did not match any documents.</div>;
     }
-    return null;
+
+    if (showLoading(results)) {
+      return <Spinner message="Searching..." />;
+    }
+    const content = [
+      <Result
+         key="article"
+         result={ results.article } resource={ resources.articles }
+         query={ location.query } screen="search" />,
+      <Result
+         key="tradeEvent"
+         result={ results.tradeEvent } resource={ resources.trade_events }
+         query={ location.query } screen="search" />,
+      <Result
+         key="tradeLead"
+         result={ results.tradeLead } resource={ resources.trade_leads }
+         query={ location.query } screen="search" />,
+    ];
+
+    return [
+      <div id="left-pane" key="left-pane">
+        <Filter filters={ this.props.filters } onChange={ this.handleFilter } query={ location.query }/>
+      </div>,
+      <div id="content-pane" key="content-pane">
+        { content }
+      </div>
+    ];
   },
   render: function() {
-    const { aggregations, location, onSubmit, params, results } = this.props;
-    var filter;
-    if (_.isUndefined(params.resource)) {
-      filter = results.article.aggregations;
-    } else {
-      filter = results[resources[params.resource].stateKey].aggregations;
-    }
+    const { location, onSubmit, params, results } = this.props;
     return (
       <div id="search">
-        <div className="uk-grid">
-          <div className="uk-width-1-1 searchbar">
-            <Form
-              aggregations={ aggregations }
-              expanded={ false }
-              query={ location.query }
-              onSubmit={ onSubmit } />
-          </div>
-        </div>
-        <div className="uk-grid">
-          <div className="uk-width-1-4">
-            <Filter aggregations={ filter } onChange={ this.handleFilter } />
-          </div>
-          <div className="uk-width-3-4">
-            { this.view() }
-          </div>
+        <Form
+          expanded={ false }
+          query={ location.query }
+          onSubmit={ onSubmit } />
+        <div id="main-pane">
+          { this.view() }
         </div>
       </div>
     );
@@ -117,9 +133,11 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { results } = state;
+  const { filters, query, results } = state;
 
   return {
+    filters,
+    query,
     results
   };
 }

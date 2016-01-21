@@ -8,81 +8,80 @@ function href(pathname, query, offset) {
   return `${pathname}?${stringify(params)}`;
 }
 
-function findRange(current, total, range) {
-  if (total <= range) return { head: 1, tail: total };
+function getRange(currentPage, displayedPages, pages, pivot) {
+  const head = Math.ceil(
+    currentPage > pivot ? Math.max(Math.min(currentPage - pivot, (pages - displayedPages)), 0) : 0
+  );
+  const tail = Math.ceil(
+    currentPage > pivot ? Math.min(currentPage + pivot, pages) : Math.min(displayedPages, pages)
+  );
 
-  const pivot = _.ceil(range / 2);
-  let head = current - pivot + 1,
-      tail = current + pivot;
-  const headOffset = 1 - head,
-        tailOffset = tail - total;
-  if (headOffset > 0) {
-    head = 1;
-    tail += headOffset;
-  }
-  if (tailOffset > 0) {
-    tail = total;
-    head -= tailOffset;
-  }
-  return { head, tail };
-}
-
-function pageItems(offset, total, options) {
-  const totalPage = _.ceil(total / options.size),
-        currentPage = _.ceil(offset / options.size);
-  const { head, tail } = findRange(currentPage, totalPage, options.range);
-  const pages = _.range(head, tail + 1).map(i =>  {
-    let pageOffset = (i - 1)  * options.size;
-    let activeCss = pageOffset == offset ? 'mi-active' : '';
-    return (
-      <li className={ activeCss } key={ i }>
-        <a href={ href(options.pathname, options.query, pageOffset) }>{ i }</a>
-      </li>
-    );
-  });
-  return  pages;
+  return _.range(head, tail);
 }
 
 var Pagination = React.createClass({
   displayName: 'Pagination',
   propTypes: {
-    metadata: PropTypes.object.isRequired,
-    options: PropTypes.object,
-    pathname: PropTypes.string.isRequired,
-    query: PropTypes.object.isRequired
+    currentOffset: PropTypes.number,
+    displayedPages: PropTypes.number,
+    items: PropTypes.number.isRequired,
+    itemsOnPage: PropTypes.number.isRequired,
+    query: PropTypes.object.isRequired,
+    url: PropTypes.string.isRequired
   },
   getDefaultProps: function() {
     return {
-      options: {
-        range: 10,
-        size: 10
-      }
+      currentOffset: 0,
+      displayedPages: 10,
+      items: 0,
+      itemsOnPage: 10
     };
   },
   render: function() {
-    const { pathname, query, metadata: { offset, total }, options: { range, size } } = this.props;
-    const firstPage = 0,
-          prevPage = offset - size < 0 ? 0 : offset - size,
-          nextPage = offset + size > total ? _.floor(total, -1) : offset + size,
-          lastPage = _.floor(total, -1);
+    const { currentOffset, displayedPages, query, url, items, itemsOnPage } = this.props;
+    const pages = Math.ceil(items / itemsOnPage),
+          currentPage = Math.ceil(currentOffset / itemsOnPage),
+          pivot = displayedPages / 2,
+          nextPage = currentPage + 1,
+          prevPage = currentPage - 1;
+    if (pages <= 1) return null;
+
+    const range = getRange(currentPage, displayedPages, pages, pivot);
+
+    const pageList = [
+      currentPage !== 0 ? (
+        <li key="first">
+          <a className="mi-icon mi-icon-angle-double-left" href={ href(url, query, 0) }></a>
+        </li>) : null,
+
+      currentPage !== 0 ? (
+        <li key="prev">
+          <a className="mi-icon mi-icon-angle-left" href={ href(url, query, prevPage * itemsOnPage) }></a>
+        </li>) : null,
+
+      range.map(i => {
+        const activeCSS = currentPage === i ? 'mi-active' : '';
+        return (
+          <li className={ activeCSS } key={ i }>
+            <a href={ href(url, query, i * itemsOnPage )}>{ i + 1 }</a>
+          </li>
+        );
+      }),
+
+      currentPage !== pages - 1 ? (
+        <li key="next">
+          <a className="mi-icon mi-icon-angle-right" href={ href(url, query, nextPage * itemsOnPage) }></a>
+        </li>) : null,
+      currentPage !== pages - 1 ?(
+        <li key="last">
+          <a className="mi-icon mi-icon-angle-double-right" href={ href(url, query, (pages - 1) * itemsOnPage) }></a>
+        </li>) : null
+    ];
+
     return (
       <nav>
         <ul className="mi-pagination">
-          <li>
-            <a className="mi-icon mi-icon-angle-double-left" href={ href(pathname, query, firstPage) }></a>
-          </li>
-          <li>
-            <a className="mi-icon mi-icon-angle-left" href={ href(pathname, query, prevPage) }></a>
-          </li>
-
-          { pageItems(offset, total, { pathname, query, range, size })}
-
-          <li>
-            <a className="mi-icon mi-icon-angle-right" href={ href(pathname, query, nextPage) }></a>
-          </li>
-          <li>
-            <a className="mi-icon mi-icon-angle-double-right" href={ href(pathname, query, lastPage) }></a>
-          </li>
+          { pageList }
         </ul>
       </nav>
     );

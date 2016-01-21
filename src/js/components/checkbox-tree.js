@@ -10,8 +10,7 @@ function checkbox(item, options) {
         <input
           type="checkbox"
           value={ item }
-          checked={ options.checkedItems.get(item) }
-        />
+          checked={ options.values.has(item) } />
         <span> { item }</span>
       </label>
       { options.nested ? list(options.items[item], options) : null }
@@ -32,15 +31,16 @@ var CheckboxTree = React.createClass({
   displayName: 'CheckboxTree',
   propTypes: {
     checkedItems: PropTypes.array,
-    id: PropTypes.string.isRequired,
     itemCssClass: PropTypes.string,
     itemLimit: PropTypes.number,
     items: PropTypes.object.isRequired,
     label: PropTypes.string,
     listCssClass: PropTypes.string,
     maxHeight: PropTypes.number,
+    name: PropTypes.string.isRequired,
     nested: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func.isRequired,
+    values: PropTypes.array
   },
   getDefaultProps: function() {
     return {
@@ -50,7 +50,8 @@ var CheckboxTree = React.createClass({
       items: {},
       label: 'Untitled',
       maxHeight: 180,
-      nested: false
+      nested: false,
+      values: []
     };
   },
 
@@ -63,9 +64,12 @@ var CheckboxTree = React.createClass({
   },
 
   handleClick: function(e) {
-    this.setState(({ checkedItems }) => ({
-      checkedItems: checkedItems.update(e.target.value, () => e.target.checked)
-    }), () => this.props.onChange(this.getCheckedItems()));
+    const { name, values } = this.props;
+    const { target } = e;
+    let valueSet = new Set(values);
+
+    target.checked ? valueSet.add(target.value) : valueSet.delete(target.value);
+    this.props.onChange({ name: name, items: Array.from(valueSet) });
   },
 
   toggleVisibility: function(e) {
@@ -76,14 +80,6 @@ var CheckboxTree = React.createClass({
   toggleShowAll: function(e) {
     e.preventDefault();
     this.setState({ showAll: !this.state.showAll });
-  },
-
-  getCheckedItems: function() {
-    const items = _.reduce(this.state.checkedItems.toJS(), function(result, value, item) {
-      if (value) result.push(item);
-      return result;
-    }, []);
-    return { id: this.props.id, items: items };
   },
 
   displayableItems: function() {
@@ -106,16 +102,16 @@ var CheckboxTree = React.createClass({
   render: function() {
     if (_.isEmpty(this.props.items)) return null;
 
-    const { id } = this.props;
+    const { name, values } = this.props;
     const items = this.displayableItems();
     const { showAll, visible } = this.state;
     const options = assign({}, this.props, {
-      checkedItems: this.state.checkedItems,
+      values: new Set(values),
       onClick: this.handleClick
     });
     const hrefCSS = visible ? '' : 'collapsed';
     const view = visible ?  (
-      <div id={ id }>{ list(items, options) }</div>
+      <div name={ name }>{ list(items, options) }</div>
     ) : null;
     const showAllText = showAll ? 'Less' : 'More';
     const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a onClick={ this.toggleShowAll } className="uk-text-small">+ See { showAllText }</a> : null;

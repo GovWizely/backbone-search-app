@@ -5,16 +5,20 @@ var SearchMessage = React.createClass({
   displayName: 'SearchMessage',
   propTypes: {
     keyword: PropTypes.string,
+    resourceName: PropTypes.string,
     total: PropTypes.number
   },
   message: function() {
     if (this.props.total === null) return null;
 
-    var msg = this.props.total ? 'results' : 'result';
+    let msg = '';
+    msg = msg.concat(this.props.total ? 'results' : 'result');
+    msg = msg.concat(' from the ');
+    msg = msg.concat(this.props.resourceName);
     msg = msg.concat(' were found');
 
     if (!_.isEmpty(this.props.keyword)) {
-      msg = msg.concat(' for the search for');
+      msg = msg.concat(' for');
     } else {
       msg = msg.concat('.');
     }

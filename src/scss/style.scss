@@ -36,72 +36,29 @@ input[type=text] {
   border-radius: $border-radius;
 }
 
-@media screen and (min-width: 48em) {
-  #main {
-    padding: 60px;
-    width: 80%;
-    margin: 0 auto;
-  }
-}
-
-.searchbar {
-  padding-bottom: 16px;
+.search-message {
   margin-bottom: 20px;
 }
 
-.search-message {
-  border-bottom: 1px solid $border-color;
-  margin-bottom: 15px;
-}
-
-.keyword-input {
-  &.expanded {
-    height: 300px;
-
-    button {
-      padding-bottom: 11px;
-    }
-  }
-
-  &.condensed {
-    border-right: 1px solid $border-color;
-    button {
-      padding-bottom: 7px;
-    }
-  }
-}
-
-.category-input {
-  .Select {
-    margin-top: 12px;
-    margin-bottom: 14px;
-  }
-  .separator {
-    margin-top: 18px;
-    margin-bottom: 18px;
-  }
-
-  .submit {
-    margin-top: 12px;
-  }
-}
-
-.cards {
-  padding-top: 26px;
-  border-top: 1px solid #eee;
-}
-
-
-#filters {
-  margin-top: 10px;
-  border-right: 1px solid $border-color;
+#main-pane {
   width: 100%;
+  padding: 0;
+  margin-left: 27px;
 }
 
-#index {
+#left-pane {
+  display: block;
+  float: left;
+  position: relative;
+  width: 267px;
 
+  border-right: 1px solid $border-color;
 }
 
-#search {
+#content-pane {
+  margin-left: 310px;
+}
 
+.mi-result {
+  margin-bottom: 50px;
 }

@@ -11,6 +11,7 @@ function validValues(values, items) {
 export default React.createClass({
   displayName: 'AggregationSelect',
   propTypes: {
+    isLoading   : React.PropTypes.bool,
     items       : React.PropTypes.array.isRequired,
     onChange    : React.PropTypes.func.isRequired,
     onSubmit    : React.PropTypes.func,

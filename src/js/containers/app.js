@@ -15,21 +15,14 @@ function parseFormData(form) {
 }
 
 function screen(query) {
-  if (_.isEmpty(query.q) && !_.isEmpty(query.countries) && !_.isEmpty(query.industries)) {
-    return '/adhoc_report/articles';
-  }
   return '/search';
 }
 
 var App = React.createClass({
   displayName: 'App',
   propTypes: {
-    aggregations: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
-  },
-  componentDidMount: function() {
-    this.props.dispatch(fetchAggregations());
   },
   handleSubmit: function(form) {
     let query = parseFormData(form);
@@ -38,22 +31,10 @@ var App = React.createClass({
   },
   render: function() {
     var props = {
-      aggregations: this.props.aggregations.data,
       onSubmit: this.handleSubmit
     };
-    return (
-        React.cloneElement(this.props.children, props)
-    );
+    return React.cloneElement(this.props.children, props);
   }
 });
 
-function mapStateToProps(state) {
-  const { aggregations, form } = state;
-
-  return {
-    aggregations,
-    form
-  };
-}
-
-export default connect(mapStateToProps)(App);
+export default connect()(App);

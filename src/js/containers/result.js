@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { stringify } from 'querystring';
 
 import { page } from '../config';
 import Message from '../components/search-message';
@@ -16,19 +17,23 @@ var Result = React.createClass({
   },
   render: function() {
     const { resource, query, result, screen } = this.props;
-    if (result.isFetching) return <Spinner key="spinner" />;
+    if (result.isFetching || result.metadata.total === 0) return null;
     return (
-      <div key="result">
+      <div key="result" className="mi-result">
         <Message
-          keyword={ query.q }
-          total={ result.metadata.total }
-        />
+           resourceName={ resource.displayName }
+           keyword={ query.q }
+           total={ result.metadata.total } />
+
         <ResultList items={ result.items } fields={ resource.fields }/>
+
         <Pagination
-          metadata={ result.metadata }
-          pathname={ `#/${screen}/${resource.pathname}` }
-          query={ query }
-          options={ page } />
+           currentOffset={ result.metadata.offset }
+           displayedPages={ 10 }
+           items={ result.metadata.total }
+           itemsOnPage={ 10 }
+           url={ `#/${screen}/${resource.pathname}` }
+           query={ query } />
       </div>
     );
   }

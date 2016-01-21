@@ -12,8 +12,7 @@ import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 const initialState = {
   filters: {
     isFetching: false,
-    items: {},
-    values: {}
+    items: {}
   },
   results: {
     article: {
@@ -25,12 +24,14 @@ const initialState = {
     tradeEvent: {
       isFetching: false,
       items: [],
-      metadata: {}
+      metadata: {},
+      aggregations: {}
     },
     tradeLead: {
       isFetching: false,
       items: [],
-      metadata: {}
+      metadata: {},
+      aggregations: {}
     }
   },
   query: {}

@@ -10,7 +10,7 @@ function checkbox(item, options) {
         <input
           type="checkbox"
           value={ item }
-          checked={ options.values.has(item) } />
+          checked={ options.values.has(item) } readOnly />
         <span> { item }</span>
       </label>
       { options.nested ? list(options.items[item], options) : null }
@@ -30,7 +30,6 @@ function list(items, options) {
 var CheckboxTree = React.createClass({
   displayName: 'CheckboxTree',
   propTypes: {
-    checkedItems: PropTypes.array,
     itemCssClass: PropTypes.string,
     itemLimit: PropTypes.number,
     items: PropTypes.object.isRequired,
@@ -57,7 +56,6 @@ var CheckboxTree = React.createClass({
 
   getInitialState: function() {
     return {
-      checkedItems: Map({}),
       visible: true,
       showAll: false
     };

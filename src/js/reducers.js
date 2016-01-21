@@ -12,7 +12,8 @@ import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 const initialState = {
   filters: {
     isFetching: false,
-    items: {}
+    items: {},
+    values: {}
   },
   results: {
     article: {

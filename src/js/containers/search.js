@@ -15,6 +15,19 @@ import Form from '../components/form';
 import CheckboxTree from '../components/checkbox-tree';
 import Message from '../components/search-message';
 import Pagination from '../components/pagination';
+import Spinner from '../components/spinner';
+
+function getFilterQuery(query, filters) {
+  let filterQuery = assign({}, query, {
+    [filters.name]: filters.items,
+    offset: 0,
+    filter: null
+  });
+  for (let filter of ['countries', 'industries', 'topics']) {
+    if (filterQuery[filter] && !_.isEmpty(filterQuery[filter])) filterQuery.filter = true;
+  };
+  return filterQuery;
+}
 
 function shouldFetch(location, nextLocation) {
   return (location.pathname !== nextLocation.pathname ||
@@ -31,6 +44,16 @@ function noMatch(results) {
   return true;
 }
 
+function showLoading(results) {
+  for (let resource in  results) {
+    let result = results[resource];
+    if (!result.isFetching) {
+      return false;
+    }
+  }
+  return true;
+}
+
 var Search = React.createClass({
   displayName: 'Search',
   propTypes: {
@@ -39,6 +62,7 @@ var Search = React.createClass({
     location: PropTypes.object.isRequired,
     onSubmit: PropTypes.func,
     params: PropTypes.object.isRequired,
+    query: PropTypes.object,
     results: PropTypes.object
   },
   componentDidMount: function() {
@@ -50,41 +74,45 @@ var Search = React.createClass({
     }
   },
   fetch: function(props) {
-    const { dispatch, params, location } = props;
+    const { dispatch, location } = props;
     dispatch(fetchConsolidatedResults(location.query));
   },
   handleFilter: function(filters) {
     const { dispatch, location } = this.props;
-    let query = assign({}, location.query, {
-      [filters.name]: filters.items,
-      filter: true,
-      offset: 0
-    });
+    let query = getFilterQuery(location.query, filters);
     dispatch(updatePath(`/search?${stringify(query)}`));
   },
   view: function() {
     const { location, results } = this.props;
+
     if (noMatch(results)) {
       return <div>Your search did not match any documents.</div>;
     }
-    const resultsView = [
-      <Result key="article"
-        result={ results.article } resource={ resources.articles }
-        query={ location.query } screen="search" />,
-      <Result key="tradeEvent"
-        result={ results.tradeEvent } resource={ resources.trade_events }
-        query={ location.query } screen="search" />,
-      <Result key="tradeLead"
-        result={ results.tradeLead } resource={ resources.trade_leads }
-        query={ location.query } screen="search" />,
+
+    if (showLoading(results)) {
+      return <Spinner message="Searching..." />;
+    }
+    const content = [
+      <Result
+         key="article"
+         result={ results.article } resource={ resources.articles }
+         query={ location.query } screen="search" />,
+      <Result
+         key="tradeEvent"
+         result={ results.tradeEvent } resource={ resources.trade_events }
+         query={ location.query } screen="search" />,
+      <Result
+         key="tradeLead"
+         result={ results.tradeLead } resource={ resources.trade_leads }
+         query={ location.query } screen="search" />,
     ];
 
     return [
       <div id="left-pane" key="left-pane">
-        <Filter filters={ this.props.filters } onChange={ this.handleFilter } />
+        <Filter filters={ this.props.filters } onChange={ this.handleFilter } query={ location.query }/>
       </div>,
       <div id="content-pane" key="content-pane">
-        { resultsView }
+        { content }
       </div>
     ];
   },
@@ -105,10 +133,11 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { filters, results } = state;
+  const { filters, query, results } = state;
 
   return {
     filters,
+    query,
     results
   };
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const FoldingCube = (
   <div className="sk-folding-cube">
@@ -28,7 +28,20 @@ const Circle = (
 
 export default React.createClass({
   displayName: 'Spinner',
+  propTypes: {
+    message: PropTypes.string
+  },
+  getDefaultProps: function() {
+   return {
+     message: 'Loading...'
+   };
+  },
   render: function() {
-    return Circle;
+    return (
+      <div>
+        { Circle }
+        <div className="uk-text-center">{ this.props.message }</div>
+      </div>
+    );
   }
 });

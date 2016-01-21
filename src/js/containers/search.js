@@ -20,9 +20,9 @@ import Spinner from '../components/spinner';
 function getFilterQuery(query, filters) {
   let filterQuery = assign({}, query, {
     [filters.name]: filters.items,
-    offset: 0,
-    filter: null
+    offset: 0
   });
+  delete filterQuery.filter;
   for (let filter of ['countries', 'industries', 'topics']) {
     if (filterQuery[filter] && !_.isEmpty(filterQuery[filter])) filterQuery.filter = true;
   };

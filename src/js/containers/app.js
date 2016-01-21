@@ -3,7 +3,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
 import { stringify } from 'querystring';
-import { fetchAggregations } from '../actions/aggregation';
 
 function parseFormData(form) {
   const { q, countries, industries } = form;

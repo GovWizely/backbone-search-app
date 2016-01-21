@@ -9,10 +9,6 @@ import { UPDATE_PATH } from 'redux-simple-router';
 
 describe('reducer', () => {
   const initialState = {
-    aggregations: {
-      isFetching: false,
-      data: {}
-    },
     results: {
       article: {
         isFetching: false,
@@ -38,27 +34,6 @@ describe('reducer', () => {
     it('should return current state', () => {
       const action = { type: 'UNKNOWN_ACTION' };
       expect(reducer({}, action).results).to.eql(initialState.results);
-    });
-  });
-
-  it('should return the initial aggregations state', () => {
-    expect(reducer(undefined, {}).aggregations).to.eql({
-      isFetching: false, data: {}
-    });
-  });
-
-  it('should handle REQUEST_AGGREGATIONS', () => {
-    const action = { type: REQUEST_AGGREGATIONS };
-    expect(reducer({}, action).aggregations).to.eql({
-      isFetching: true, data: {}
-    });
-  });
-
-  it('should handle RECEIVE_AGGREGATIONS', () => {
-    const response = { countries: [], industries: [], topics: [] };
-    const action = { type: RECEIVE_AGGREGATIONS, response };
-    expect(reducer({}, action).aggregations).to.eql({
-      data: response, isFetching: false
     });
   });
 

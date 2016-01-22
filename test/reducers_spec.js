@@ -2,7 +2,6 @@ import { expect } from 'chai';
 
 import reducer from '../src/js/reducers';
 
-import { REQUEST_AGGREGATIONS, RECEIVE_AGGREGATIONS } from '../src/js/actions/aggregation';
 import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from '../src/js/actions/article';
 import { REQUEST_TRADES, RECEIVE_TRADES } from '../src/js/actions/trade';
 import { UPDATE_PATH } from 'redux-simple-router';

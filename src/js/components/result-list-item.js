@@ -8,9 +8,7 @@ function renderMeta(meta) {
   if (_.isEmpty(items)) return null;
   return (
     <ul className="meta">
-      { _(items).map(item => {
-        return <li key={ item }>{ item }</li>;
-      }).value() }
+      { _.map(items, item => (<li key={ item }>{ item }</li>)) }
     </ul>
   );
 }

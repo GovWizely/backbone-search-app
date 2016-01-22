@@ -5,16 +5,10 @@ import { updatePath } from 'redux-simple-router';
 import { stringify } from 'querystring';
 
 function parseFormData(form) {
-  const { q, countries, industries } = form;
-  let query = {};
-  if (q) query.q = q;
-  if (!_.isEmpty(countries)) query.countries = countries;
-  if (!_.isEmpty(industries)) query.industries = industries;
-  return query;
-}
+  const { q } = form;
+  const query = form.q ? { q } : {};
 
-function screen(query) {
-  return '/search';
+  return query;
 }
 
 var App = React.createClass({
@@ -25,7 +19,7 @@ var App = React.createClass({
   },
   handleSubmit: function(form) {
     let query = parseFormData(form);
-    const path = `${screen(query)}?${stringify(query)}`;
+    const path = `/search?${stringify(query)}`;
     this.props.dispatch(updatePath(path));
   },
   render: function() {

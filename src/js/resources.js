@@ -1,21 +1,22 @@
+import { fetchArticles } from './actions/article';
 import { fetchTradeEvents, fetchTradeLeads } from './actions/trade';
-import { fetchConsolidatedResults } from './actions/consolidatedResult';
 
 const resources = {
   articles: {
-    fetch: fetchConsolidatedResults,
+    displayName: 'International Trade Administration',
+    fetch: fetchArticles,
     fields: {
       key: ['id'],
       snippet: ['snippet'],
       title: ['title'],
       url: ['url']
     },
-    displayName: 'International Trade Administration',
     pathname: 'articles',
     stateKey: 'article',
     maxOffset: 1000
   },
   trade_events:  {
+    displayName: 'Trade Event',
     fetch: fetchTradeEvents,
     fields: {
       key: ['id', 'event_name'],
@@ -24,11 +25,11 @@ const resources = {
       title: ['event_name'],
       url: ['url', 'registration_link']
     },
-    displayName: 'Trade Event',
     pathname: 'trade_events',
     stateKey: 'tradeEvent'
   },
   trade_leads: {
+    displayName: 'Trade Lead',
     fetch: fetchTradeLeads,
     fields: {
       key: ['id', 'title', 'description'],
@@ -37,7 +38,6 @@ const resources = {
       title: ['title', 'description'],
       url: ['url']
     },
-    displayName: 'Trade Lead',
     pathname: 'trade_leads',
     stateKey: 'tradeLead'
   }

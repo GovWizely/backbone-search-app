@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
-import { stringify } from 'querystring';
 
-import { page } from '../config';
 import Message from '../components/search-message';
 import ResultList from '../components/result-list';
 import Pagination from '../components/pagination';

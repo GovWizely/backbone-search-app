@@ -5,15 +5,13 @@ import { connect } from 'react-redux';
 import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
-import { page } from '../config';
+import { resources } from '../config';
 import { fetchConsolidatedResults } from '../actions/consolidatedResult';
-import resources from '../resources';
 import Filter from './filter';
 import Result from './result';
 
 import Form from '../components/form';
 import CheckboxTree from '../components/checkbox-tree';
-import Message from '../components/search-message';
 import Pagination from '../components/pagination';
 import Spinner from '../components/spinner';
 
@@ -75,6 +73,7 @@ var Search = React.createClass({
   },
   fetch: function(props) {
     const { dispatch, location } = props;
+
     dispatch(fetchConsolidatedResults(location.query));
   },
   handleFilter: function(filters) {
@@ -83,7 +82,11 @@ var Search = React.createClass({
     dispatch(updatePath(`/search?${stringify(query)}`));
   },
   view: function() {
-    const { location, results } = this.props;
+    const { location, params, results } = this.props;
+
+    if (!resources.hasOwnProperty(params.resource)) {
+      return <div>Invalid resource type.</div>;
+    }
 
     if (noMatch(results)) {
       return <div>Your search did not match any documents.</div>;
@@ -92,20 +95,16 @@ var Search = React.createClass({
     if (showLoading(results)) {
       return <Spinner message="Searching..." />;
     }
-    const content = [
-      <Result
-         key="article"
-         result={ results.article } resource={ resources.articles }
-         query={ location.query } screen="search" />,
-      <Result
-         key="tradeEvent"
-         result={ results.tradeEvent } resource={ resources.trade_events }
-         query={ location.query } screen="search" />,
-      <Result
-         key="tradeLead"
-         result={ results.tradeLead } resource={ resources.trade_leads }
-         query={ location.query } screen="search" />,
-    ];
+
+    const resource = resources[params.resource],
+          result = results[resource.stateKey],
+          props = {
+            query: location.query,
+            resource,
+            result,
+            screen: `search/${resource.pathname}`
+          },
+          content = <Result {...props} />;
 
     return [
       <div id="left-pane" key="left-pane">

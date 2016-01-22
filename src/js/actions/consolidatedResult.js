@@ -32,15 +32,11 @@ function rejectEmptyData(responses) {
 
 export function fetchConsolidatedResults(query) {
   return (dispatch, getState) => {
+    const fetches = [fetchArticles, fetchTradeEvents, fetchTradeLeads];
     const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
     if (updateFilter) dispatch(requestFilters());
-    const promises = [
-      fetchArticles(dispatch, getState, query),
-      fetchTradeEvents(dispatch, getState, query),
-      fetchTradeLeads(dispatch, getState, query)
-    ];
     return Promise
-      .all(promises)
+      .all(_.map(fetches, fetch => fetch(dispatch, getState, query)))
       .then(responses => {
         if (!updateFilter) return responses;
 

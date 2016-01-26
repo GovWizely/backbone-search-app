@@ -4,19 +4,6 @@ import { reduxForm } from 'redux-form';
 
 import Header from './header';
 
-function keywordInput(q, handleSubmit) {
-  return (
-    <div className="mi-keyword">
-      <input type="text" placeholder="Keyword" { ...q } />
-      <span>
-        <button className="uk-button uk-button-success" onClick={ handleSubmit }>
-          <i className="mi-icon mi-icon-search"></i>
-        </button>
-      </span>
-    </div>
-  );
-}
-
 var Form =  React.createClass({
   displayName: 'ExpandedForm',
   propTypes: {
@@ -34,13 +21,20 @@ var Form =  React.createClass({
     const { expanded, fields: { q }, handleSubmit } = this.props;
     const css = expanded ? 'mi-form mi-form-expanded' : 'mi-form mi-form-condensed';
     return (
-        <div className={ css }>
+      <div className={ css }>
         <div>
           <Header />
         </div>
 
         <form onSubmit={ handleSubmit }>
-          { keywordInput(q, handleSubmit) }
+          <div className="mi-keyword">
+            <input type="text" placeholder="Keyword" { ...q } />
+            <span>
+              <button className="uk-button uk-button-success" onClick={ handleSubmit }>
+                <i className="mi-icon mi-icon-search"></i>
+              </button>
+            </span>
+          </div>
         </form>
       </div>
     );

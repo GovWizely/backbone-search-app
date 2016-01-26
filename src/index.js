@@ -10,7 +10,7 @@ import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
 import App from './js/containers/app';
 import Index from './js/containers/index';
 import Search from './js/containers/search';
-import configureStore from './js/store';
+import configureStore from './js/store/configureStore';
 
 const history = createHistory({ });
 const store = configureStore();

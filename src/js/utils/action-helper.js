@@ -34,7 +34,6 @@ export function formatMetadata(json, formats) {
   for (let field of formats) {
     metadata[field] = _.get(json, field);
   }
-  console.log(metadata);
   return metadata;
 }
 

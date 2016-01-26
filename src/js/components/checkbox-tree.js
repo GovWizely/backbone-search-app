@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
-import { Map } from 'immutable';
 import assign from 'object-assign';
 
 function checkbox(item, options) {

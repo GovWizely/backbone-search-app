@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
 import { stringify } from 'querystring';
+import DevTools from './dev-tools';
 
 function parseFormData(form) {
   const { q } = form;
@@ -26,7 +27,12 @@ var App = React.createClass({
     var props = {
       onSubmit: this.handleSubmit
     };
-    return React.cloneElement(this.props.children, props);
+    return (
+      <div>
+        { React.cloneElement(this.props.children, props) }
+        <DevTools />
+      </div>
+    );
   }
 });
 

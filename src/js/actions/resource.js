@@ -63,7 +63,6 @@ function Resource(resource, dispatch, getState) {
       this.dispatch(noAction());
       return null;
     }
-    console.log(resource);
     let params = {};
     if (query) {
       params = formatParams(query, resource.permittedParams);

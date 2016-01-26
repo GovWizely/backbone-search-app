@@ -7,7 +7,7 @@ import { updatePath } from 'redux-simple-router';
 
 import { resources } from '../config';
 import { fetchResources } from '../actions/resource';
-import Cards from './cards';
+import Deck from './deck';
 import Filter from './filter';
 import Result from './result';
 
@@ -78,9 +78,9 @@ var Search = React.createClass({
     dispatch(fetchResources(location.query, resource));
   },
   handleFilter: function(filters) {
-    const { dispatch, location } = this.props;
+    const { dispatch, location, params } = this.props;
     let query = getFilterQuery(location.query, filters);
-    dispatch(updatePath(`/search?${stringify(query)}`));
+    dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
   },
   screen: function() {
     const resourceType = this.props.params.resource;
@@ -102,7 +102,7 @@ var Search = React.createClass({
 
     let content = null;
     if (!params.resource) {
-      content = <Cards query={ location.query } results={ results } />;
+      content = <Deck query={ location.query } results={ results } />;
     } else {
       let resource = resources[params.resource],
           result = results[resource.stateKey],

@@ -5,8 +5,8 @@ import { stringify } from 'querystring';
 import Card from '../components/card';
 import { resources } from '../config';
 
-var Cards = React.createClass({
-  displayName: 'Cards',
+var Deck = React.createClass({
+  displayName: 'Deck',
   propTypes: {
     query: PropTypes.object.isRequired,
     results: PropTypes.object.isRequired
@@ -14,7 +14,7 @@ var Cards = React.createClass({
   render: function() {
     const { query, results } = this.props;
     return (
-      <div className="cards uk-grid">
+      <div className="mi-deck">
         {
           _.map(resources, function(resource) {
             const { displayName, fields, pathname, stateKey } = resource;
@@ -22,7 +22,6 @@ var Cards = React.createClass({
             const url = `#/search/${pathname}?${stringify(query)}`;
             if (isFetching || !items.length) return null;
             return [
-              <div className="uk-width-1-1 uk-width-large-1-2">
               <Card
                 id={ stateKey }
                 fields={ fields }
@@ -31,7 +30,6 @@ var Cards = React.createClass({
                 label={ displayName }
                 url={ url }
                 />
-              </div>
             ];
           })
         }
@@ -40,4 +38,4 @@ var Cards = React.createClass({
   }
 });
 
-export default Cards;
+export default Deck;

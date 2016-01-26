@@ -28,7 +28,7 @@ var Card = React.createClass({
     const { displayedItems, fields, items, label, url } = this.props;
     return (
       <section className="mi-card">
-        <h4 className="text-muted">{ label }</h4>
+        <h4 className="title uk-text-muted">{ label }</h4>
         <ul className="mi-list">
           {
             items.slice(0, displayedItems).map(function(item) {

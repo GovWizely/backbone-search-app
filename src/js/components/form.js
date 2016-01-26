@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 import Header from './header';
 
 var Form =  React.createClass({
-  displayName: 'ExpandedForm',
+  displayName: 'Form',
   propTypes: {
     expanded: PropTypes.bool.isRequired,
     fields: PropTypes.object.isRequired,

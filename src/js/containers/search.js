@@ -44,7 +44,7 @@ function noMatch(results) {
 }
 
 function showLoading(results) {
-  for (let resource in  results) {
+  for (let resource in results) {
     let result = results[resource];
     if (!result.isFetching) {
       return false;

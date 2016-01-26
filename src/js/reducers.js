@@ -1,6 +1,5 @@
 import assign from 'object-assign';
 import { parse } from 'url';
-import { List, Map } from 'immutable';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';

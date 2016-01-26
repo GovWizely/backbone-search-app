@@ -78,7 +78,7 @@ function resource(state, action) {
   }
 }
 
-function resources(state = initialState.results, action) {
+function results(state = initialState.results, action) {
   switch(action.type) {
   case REQUEST_RESOURCE:
     return assign({}, state, { [action.meta]: resource(state[action.meta], action) });
@@ -90,7 +90,7 @@ function resources(state = initialState.results, action) {
 }
 
 const reducer = combineReducers({
-  results: resources,
+  results,
   filters,
   form: formReducer,
   query,

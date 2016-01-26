@@ -2,13 +2,10 @@ import React, { PropTypes } from 'react';
 
 import { formatResult } from '../utils/view-helper';
 
-const config = {
-  count: 5
-};
-
 var Card = React.createClass({
   displayName: 'Card',
   propTypes: {
+    displayedItems: PropTypes.number,
     fields: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
     items: PropTypes.array.isRequired,
@@ -18,6 +15,7 @@ var Card = React.createClass({
   },
   getDefaultProps: function() {
     return {
+      displayedItems: 5,
       items: [],
       label: 'Untitled'
     };
@@ -27,13 +25,13 @@ var Card = React.createClass({
     onClick(e, id);
   },
   render: function() {
-    const { fields, items, label, url } = this.props;
+    const { displayedItems, fields, items, label, url } = this.props;
     return (
-      <section className="uk-panel uk-panel-box uk-width-1-3">
+      <section className="mi-card">
         <h4 className="text-muted">{ label }</h4>
         <ul className="mi-list">
           {
-            items.slice(0, config.count).map(function(item) {
+            items.slice(0, displayedItems).map(function(item) {
               const result = formatResult(item, fields);
               return (
                   <li className="mi-list-item" key={ result.key }>
@@ -46,8 +44,8 @@ var Card = React.createClass({
             })
           }
         </ul>
-        <div>
-          <a className="show-more" href={ url }>Show All { label }</a>
+        <div className="show-more">
+          <a href={ url }>See More { label }</a>
         </div>
       </section>
     );

@@ -6,7 +6,8 @@ import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
 import { resources } from '../config';
-import { fetchConsolidatedResults } from '../actions/consolidatedResult';
+import { fetchResources } from '../actions/resource';
+import Cards from './cards';
 import Filter from './filter';
 import Result from './result';
 
@@ -72,19 +73,22 @@ var Search = React.createClass({
     }
   },
   fetch: function(props) {
-    const { dispatch, location } = props;
-
-    dispatch(fetchConsolidatedResults(location.query));
+    const { dispatch, location, params } = props;
+    const resource = resources[params.resource] || _.map(resources, resource => resource);
+    dispatch(fetchResources(location.query, resource));
   },
   handleFilter: function(filters) {
     const { dispatch, location } = this.props;
     let query = getFilterQuery(location.query, filters);
     dispatch(updatePath(`/search?${stringify(query)}`));
   },
+  screen: function() {
+    const resourceType = this.props.params.resource;
+  },
   view: function() {
     const { location, params, results } = this.props;
 
-    if (!resources.hasOwnProperty(params.resource)) {
+    if (params.resource && !resources.hasOwnProperty(params.resource)) {
       return <div>Invalid resource type.</div>;
     }
 
@@ -96,15 +100,19 @@ var Search = React.createClass({
       return <Spinner message="Searching..." />;
     }
 
-    const resource = resources[params.resource],
+    let content = null;
+    if (!params.resource) {
+      content = <Cards query={ location.query } results={ results } />;
+    } else {
+      let resource = resources[params.resource],
           result = results[resource.stateKey],
           props = {
             query: location.query,
-            resource,
-            result,
-            screen: `search/${resource.pathname}`
-          },
-          content = <Result {...props} />;
+            resource: resources[params.resource],
+            result: results[resource.stateKey]
+          };
+      content = <Result {...props} />;
+    }
 
     return [
       <div id="left-pane" key="left-pane">

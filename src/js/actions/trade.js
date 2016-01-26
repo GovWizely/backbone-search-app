@@ -63,18 +63,10 @@ function fetchTrades(dispatch, getState, resource, params) {
 export function fetchTradeEvents(dispatch, getState, query) {
   const resource = { stateKey: 'tradeEvent', apiPath: 'trade_events' };
 
-  const params = formatParams(query, [
-    'q', 'countries', 'industries', 'sources',
-    'start_date', 'end_date', 'size', 'offset'
-  ]);
   return fetchTrades(dispatch, getState, resource, params);
 }
 
 export function fetchTradeLeads(dispatch, getState, query) {
   const resource = { stateKey: 'tradeLead', apiPath: 'trade_leads' };
-  const params = formatParams(query, [
-    'q', 'countries', 'industries', 'sources',
-    'start_date', 'end_date', 'size', 'offset'
-  ]);
   return fetchTrades(dispatch, getState, resource, params);
 }

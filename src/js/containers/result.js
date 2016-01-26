@@ -30,7 +30,7 @@ var Result = React.createClass({
            displayedPages={ 10 }
            items={ result.metadata.total }
            itemsOnPage={ 10 }
-           url={ `#/${screen}/${resource.pathname}` }
+           url={ `#/search/${resource.pathname}` }
            query={ query } />
       </div>
     );

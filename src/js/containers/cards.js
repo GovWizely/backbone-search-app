@@ -1,9 +1,9 @@
+import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import { stringify } from 'querystring';
 
-import { cards } from '../config';
 import Card from '../components/card';
-import resources from '../resources';
+import { resources } from '../config';
 
 var Cards = React.createClass({
   displayName: 'Cards',
@@ -14,23 +14,24 @@ var Cards = React.createClass({
   render: function() {
     const { query, results } = this.props;
     return (
-      <div className="cards">
+      <div className="cards uk-grid">
         {
-          cards.map(function(card) {
-            const { displayName, fields, stateKey } = resources[card];
+          _.map(resources, function(resource) {
+            const { displayName, fields, pathname, stateKey } = resource;
             const { isFetching, items } = results[stateKey];
-            const url = `#/search/${card}?${stringify(query)}`;
+            const url = `#/search/${pathname}?${stringify(query)}`;
             if (isFetching || !items.length) return null;
             return [
+              <div className="uk-width-1-1 uk-width-large-1-2">
               <Card
-                id={ card }
+                id={ stateKey }
                 fields={ fields }
                 items={ items }
-                key={ card }
+                key={ stateKey }
                 label={ displayName }
                 url={ url }
-                />,
-              <hr />
+                />
+              </div>
             ];
           })
         }

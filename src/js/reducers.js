@@ -6,8 +6,6 @@ import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
 import { REQUEST_RESOURCE, RECEIVE_RESOURCE } from './actions/resource';
-import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from './actions/article';
-import { REQUEST_TRADES, RECEIVE_TRADES } from './actions/trade';
 import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 
 const initialState = {
@@ -37,57 +35,6 @@ const initialState = {
   },
   query: {}
 };
-
-function articles(state, action) {
-  switch(action.type) {
-  case REQUEST_ARTICLES:
-    return assign({}, state, {
-      isFetching: true
-    });
-  case RECEIVE_ARTICLES:
-    return assign({}, state, {
-      isFetching: false,
-      items: action.response.results,
-      metadata: action.response.metadata,
-      aggregations: action.response.aggregations
-    });
-
-    /* istanbul ignore next */
-  default:
-    return state;
-  }
-}
-
-function trades(state, action) {
-  switch(action.type) {
-  case REQUEST_TRADES:
-    return assign({}, state, {
-      isFetching: true
-    });
-  case RECEIVE_TRADES:
-    return assign({}, state, {
-      isFetching: false,
-      items: action.response.results,
-      metadata: action.response.metadata
-    });
-    /* istanbul ignore next */
-  default:
-    return state;
-  }
-}
-
-function results(state = initialState.results, action) {
-  switch(action.type) {
-  case REQUEST_ARTICLES:
-  case RECEIVE_ARTICLES:
-    return assign({}, state, { article: articles(state.article, action) });
-  case REQUEST_TRADES:
-  case RECEIVE_TRADES:
-    return assign({}, state, { [action.resource]: trades(state[action.resource], action) });
-  default:
-    return state;
-  }
-}
 
 function filters(state = initialState.filters, action) {
   switch(action.type) {

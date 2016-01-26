@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 
-import { findFirst } from '../utils/view-helper';
+import { formatResult } from '../utils/view-helper';
 
 function renderMeta(meta) {
   const items = _.pick(meta, _.identity);
@@ -21,10 +21,7 @@ var ResultListItem = React.createClass({
   },
   render: function() {
     const { fields, item } = this.props;
-    const url = findFirst(item, fields.url),
-          title = findFirst(item, fields.title),
-          snippet = findFirst(item, fields.snippet),
-          source = findFirst(item, fields.source);
+    const { snippet, source, title, url } = formatResult(item, fields);
     return (
       <article className="mi-result-list-item">
         <h1 className="title">

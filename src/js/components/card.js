@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import { findFirst } from '../utils/view-helper';
+import { formatResult } from '../utils/view-helper';
 
 const config = {
   count: 5
@@ -29,16 +29,17 @@ var Card = React.createClass({
   render: function() {
     const { fields, items, label, url } = this.props;
     return (
-      <section className="mi-card">
+      <section className="uk-panel uk-panel-box uk-width-1-3">
         <h4 className="text-muted">{ label }</h4>
         <ul className="mi-list">
           {
             items.slice(0, config.count).map(function(item) {
+              const result = formatResult(item, fields);
               return (
-                  <li className="mi-list-item" key={ findFirst(item, fields.key)}>
-                    <a target="_blank" href={ findFirst(item, fields.url ) }>{ findFirst(item, fields.title) }</a>
+                  <li className="mi-list-item" key={ result.key }>
+                    <a target="_blank" href={ result.url }>{ result.title }</a>
                     <div>
-                      <span className="source">{ findFirst(item, fields.source) }</span>
+                      <span className="source">{ result.source }</span>
                     </div>
                   </li>
               );

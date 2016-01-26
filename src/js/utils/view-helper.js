@@ -10,3 +10,13 @@ export function findFirst(item, fields) {
     .omit(_.isNull)
     .toArray().value()[0];
 }
+
+export function formatResult(result, fields) {
+  return {
+    key: findFirst(result, fields.key),
+    snippet: findFirst(result, fields.snippet),
+    source: findFirst(result, fields.source),
+    title: findFirst(result, fields.title),
+    url: findFirst(result, fields.url)
+  };
+}

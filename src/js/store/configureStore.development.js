@@ -15,13 +15,5 @@ const wrapperCreateStore = compose(
 )(createStore);
 
 export default function configureStore(initialState) {
-  const store = wrapperCreateStore(reducers, initialState);
-
-  if (module.hot) {
-    module.hot.accept('../reducers', function() {
-      store.replaceReducer(require('../reducers'));
-    });
-  }
-
-  return store;
+  return wrapperCreateStore(reducers, initialState);
 }

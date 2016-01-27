@@ -80,7 +80,8 @@ function Resource(resource, dispatch, getState) {
         };
         this.dispatch(receiveResource(resource, data));
         return data;
-      });
+      })
+      .catch(e => ({ error: e }));
   };
 }
 

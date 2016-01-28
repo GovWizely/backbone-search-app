@@ -53,14 +53,10 @@ function receiveResource(resource, response) {
   };
 }
 
-function Resource(resource, dispatch, getState) {
-  this.dispatch = dispatch;
-  this.resource = resource;
-  this.getState = getState;
-
-  this.fetch = function(query) {
-    if (this.getState().results[resource.stateKey].isFetching) {
-      this.dispatch(noAction());
+function generateFetch(resource, dispatch, getState) {
+  return function(query) {
+    if (getState().results[resource.stateKey].isFetching) {
+      dispatch(noAction());
       return null;
     }
     let params = {};
@@ -69,7 +65,7 @@ function Resource(resource, dispatch, getState) {
     }
     if (!params.q) params.q = '';
 
-    this.dispatch(requestResource(resource));
+    dispatch(requestResource(resource));
     return fetch(formatEndpoint(resource.endpoint, params))
       .then(response => response.json())
       .then(json => {
@@ -78,7 +74,7 @@ function Resource(resource, dispatch, getState) {
           results: json.results,
           aggregations: formatAggregations(json.aggregations, resource.aggregations)
         };
-        this.dispatch(receiveResource(resource, data));
+        dispatch(receiveResource(resource, data));
         return data;
       })
       .catch(e => ({ error: e }));
@@ -89,11 +85,11 @@ export function fetchResources(query, resources) {
   resources = _.isArray(resources) ? resources : [resources];
 
   return (dispatch, getState) => {
-    const fetchers = resources.map(resource => new Resource(resource, dispatch, getState));
+    const fetches = resources.map(resource => generateFetch(resource, dispatch, getState));
     const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
     if (updateFilter) dispatch(requestFilters());
     return Promise
-      .all(_.map(fetchers, o => o.fetch(query)))
+      .all(_.map(fetches, f => f(query)))
       .then(responses => {
         if (updateFilter) {
           const filters = consolidateFilters(rejectEmptyData(responses));

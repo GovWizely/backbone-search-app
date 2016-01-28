@@ -1,3 +1,4 @@
+require('!style!css!sass!./scss/style.scss');
 require('es6-promise').polyfill();
 
 import React from 'react';

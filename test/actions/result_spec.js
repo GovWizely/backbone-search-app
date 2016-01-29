@@ -21,12 +21,12 @@ const initialState = {
   }
 };
 
-describe('resource', () => {
+describe('result', () => {
   afterEach(() => {
     nock.cleanAll();
   });
 
-  it('creates RECEIVE_RESOURCE & RECEIVE_FILTERS when fetching resource has been done', (done) => {
+  it('creates RECEIVE_RESULTS & RECEIVE_FILTERS when fetching resource has been done', (done) => {
     nock('http://www.example.com')
       .get('/todos')
       .reply(200, { results: [{ id: '1', title: 'result #1' }], total: 1 });
@@ -34,10 +34,10 @@ describe('resource', () => {
     const expectedActions = [
       { type: actions.REQUEST_FILTERS },
       { type: actions.RECEIVE_FILTERS },
-      { type: actions.REQUEST_RESOURCE },
-      { type: actions.RECEIVE_RESOURCE, payload: { results: [] } }
+      { type: actions.REQUEST_RESULTS },
+      { type: actions.RECEIVE_RESULTS, payload: { results: [] } }
     ];
     const store = mockStore(initialState, expectedActions);
-    store.dispatch(actions.fetchResources({}, resources[1]));
+    store.dispatch(actions.fetchResults({}, resources[1]));
   });
 });

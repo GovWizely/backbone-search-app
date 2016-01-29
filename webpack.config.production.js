@@ -21,6 +21,6 @@ module.exports = assign({}, base, {
         warnings: false
       }
     }),
-    new HtmlWebpackPlugin({ template: path.join(__dirname, 'index.html') })
+    new HtmlWebpackPlugin({ template: base.index })
   ]
 });

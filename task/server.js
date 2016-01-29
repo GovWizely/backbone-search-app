@@ -13,7 +13,7 @@ module.exports = function(config) {
   app.use(require('webpack-hot-middleware')(compiler));
 
   app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(config.index);
   });
 
   app.listen(3000, 'localhost', function(err) {

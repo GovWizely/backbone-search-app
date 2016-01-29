@@ -6,7 +6,7 @@ import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
 import resources from '../resources';
-import { fetchResources } from '../actions/resource';
+import { fetchResults } from '../actions/result';
 import Deck from './deck';
 import Filter from './filter';
 import Result from './result';
@@ -75,7 +75,7 @@ var Search = React.createClass({
   fetch: function(props) {
     const { dispatch, location, params } = props;
     const resource = resources[params.resource] || _.map(resources, resource => resource);
-    dispatch(fetchResources(location.query, resource));
+    dispatch(fetchResults(location.query, resource));
   },
   handleFilter: function(filters) {
     const { dispatch, location, params } = this.props;

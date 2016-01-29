@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
-import { REQUEST_RESOURCE, RECEIVE_RESOURCE } from './actions/resource';
+import { REQUEST_RESULTS, RECEIVE_RESULTS } from './actions/result';
 import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 import initialState from './initial-state';
 
@@ -33,13 +33,13 @@ function query(state = {}, action) {
   }
 }
 
-function resource(state, action) {
+function result(state, action) {
   switch(action.type) {
-  case REQUEST_RESOURCE:
+  case REQUEST_RESULTS:
     return assign({}, state, {
       isFetching: true
     });
-  case RECEIVE_RESOURCE:
+  case RECEIVE_RESULTS:
     return assign({}, state, {
       isFetching: false,
       items: action.payload.results,
@@ -52,10 +52,10 @@ function resource(state, action) {
 
 function results(state = initialState.results, action) {
   switch(action.type) {
-  case REQUEST_RESOURCE:
-    return assign({}, state, { [action.meta]: resource(state[action.meta], action) });
-  case RECEIVE_RESOURCE:
-    return assign({}, state, { [action.meta]: resource(state[action.meta], action) });
+  case REQUEST_RESULTS:
+    return assign({}, state, { [action.meta]: result(state[action.meta], action) });
+  case RECEIVE_RESULTS:
+    return assign({}, state, { [action.meta]: result(state[action.meta], action) });
   default:
     return state;
   }

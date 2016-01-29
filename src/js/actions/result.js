@@ -10,8 +10,8 @@ import {
 } from '../utils/action-helper';
 import { requestFilters, receiveFilters } from './filter';
 
-export const REQUEST_RESOURCE = 'REQUEST_RESOURCE';
-export const RECEIVE_RESOURCE = 'RECEIVE_RESOURCE';
+export const REQUEST_RESULTS = 'REQUEST_RESULTS';
+export const RECEIVE_RESULTS = 'RECEIVE_RESULTS';
 
 function isFiltering(query) {
   if (!query || !query.filter) return false;
@@ -38,16 +38,16 @@ function rejectEmptyData(responses) {
   return responses.filter(response => _.get(response, 'metadata.total') > 0);
 }
 
-function requestResource(resource) {
+function requestResults(resource) {
   return {
-    type: REQUEST_RESOURCE,
+    type: REQUEST_RESULTS,
     meta: resource.stateKey
   };
 }
 
-function receiveResource(resource, response) {
+function receiveResults(resource, response) {
   return {
-    type: RECEIVE_RESOURCE,
+    type: RECEIVE_RESULTS,
     payload: response,
     meta: resource.stateKey
   };
@@ -68,7 +68,7 @@ function generateFetch(resource, dispatch, getState) {
     }
     if (!params.q) params.q = '';
 
-    dispatch(requestResource(resource));
+    dispatch(requestResults(resource));
     return fetch(formatEndpoint(resource.endpoint, params))
       .then(response => response.json())
       .then(json => resource.transformResponse ? resource.transformResponse(json): json)
@@ -78,14 +78,14 @@ function generateFetch(resource, dispatch, getState) {
           results: json.results,
           aggregations: formatAggregations(json.aggregations, resource.aggregations)
         };
-        dispatch(receiveResource(resource, data));
+        dispatch(receiveResults(resource, data));
         return data;
       })
       .catch(e => ({ error: e }));
   };
 }
 
-export function fetchResources(query, resources) {
+export function fetchResults(query, resources) {
   resources = _.isArray(resources) ? resources : [resources];
 
   return (dispatch, getState) => {

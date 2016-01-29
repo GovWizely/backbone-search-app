@@ -1,8 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 var assign = require('object-assign');
-var base = require('./webpack.config.base');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var base = require('./webpack.config.base');
 
 module.exports = assign({}, base, {
   devtool: 'cheap-module-eval-source-map',

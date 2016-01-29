@@ -11,8 +11,6 @@ import Deck from './deck';
 import Filter from './filter';
 import Result from './result';
 
-console.log(resources);
-
 import Form from '../components/form';
 import CheckboxTree from '../components/checkbox-tree';
 import Pagination from '../components/pagination';

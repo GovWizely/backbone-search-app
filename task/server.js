@@ -11,7 +11,7 @@ module.exports = function(config) {
   }));
 
   app.use(require('webpack-hot-middleware')(compiler));
-  console.log(__dirname);
+
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
   });

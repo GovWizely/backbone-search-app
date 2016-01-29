@@ -1,9 +1,6 @@
-// require('./gulp/gulpfile.development')();
-// require('./gulp/gulpfile.production')();
-
 var gulp = require('gulp'),
     env = require('gulp-env'),
-    path = require('path');
+    path = require('path'),
     webpack = require('webpack-stream');
 
 gulp.task('start', function() {

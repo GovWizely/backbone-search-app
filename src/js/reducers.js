@@ -6,34 +6,7 @@ import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
 import { REQUEST_RESOURCE, RECEIVE_RESOURCE } from './actions/resource';
 import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
-
-const initialState = {
-  filters: {
-    isFetching: false,
-    items: {}
-  },
-  results: {
-    article: {
-      isFetching: false,
-      items: [],
-      metadata: {},
-      aggregations: {}
-    },
-    tradeEvent: {
-      isFetching: false,
-      items: [],
-      metadata: {},
-      aggregations: {}
-    },
-    tradeLead: {
-      isFetching: false,
-      items: [],
-      metadata: {},
-      aggregations: {}
-    }
-  },
-  query: {}
-};
+import initialState from './initial-state';
 
 function filters(state = initialState.filters, action) {
   switch(action.type) {
@@ -89,10 +62,10 @@ function results(state = initialState.results, action) {
 }
 
 const reducer = combineReducers({
-  results,
   filters,
   form: formReducer,
   query,
+  results,
   routing: routeReducer
 });
 

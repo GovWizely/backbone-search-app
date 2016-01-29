@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
-import { resources } from '../resources';
+import resources from '../resources';
 import { fetchResources } from '../actions/resource';
 import Deck from './deck';
 import Filter from './filter';

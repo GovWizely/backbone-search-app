@@ -25,13 +25,13 @@ var Card = React.createClass({
     onClick(e, id);
   },
   render: function() {
-    const { displayedItems, fields, items, label, url } = this.props;
+    const { displayedItems, fields, id, items, label, url } = this.props;
     return (
       <section className="mi-card">
         <h4 className="title uk-text-muted">{ label }</h4>
         <ul className="mi-list">
           {
-            items.slice(0, displayedItems).map(function(item) {
+            items.slice(0, displayedItems).map(function(item, index) {
               const result = formatResult(item, fields);
               return (
                   <li className="mi-list-item" key={ result.key }>

@@ -7,7 +7,7 @@ var base = require('./webpack.config.base');
 module.exports = assign({}, base, {
   devtool: 'source-map',
   entry: [
-    './src/index.js'
+    './src/index'
   ],
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -21,6 +21,6 @@ module.exports = assign({}, base, {
         warnings: false
       }
     }),
-    new HtmlWebpackPlugin({ template: './index.html' })
+    new HtmlWebpackPlugin({ template: path.join(__dirname, 'index.html') })
   ]
 });

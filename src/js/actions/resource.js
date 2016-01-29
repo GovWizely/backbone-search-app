@@ -63,11 +63,15 @@ function generateFetch(resource, dispatch, getState) {
     if (query) {
       params = formatParams(query, resource.permittedParams);
     }
+    if (resource.transformParams) {
+      params = resource.transformParams(params);
+    }
     if (!params.q) params.q = '';
 
     dispatch(requestResource(resource));
     return fetch(formatEndpoint(resource.endpoint, params))
       .then(response => response.json())
+      .then(json => resource.transformResponse ? resource.transformResponse(json): json)
       .then(json => {
         const data = {
           metadata: json.metadata || formatMetadata(json, resource.metadata),

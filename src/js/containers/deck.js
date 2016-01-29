@@ -3,16 +3,16 @@ import React, { PropTypes } from 'react';
 import { stringify } from 'querystring';
 
 import Card from '../components/card';
-import { resources } from '../config';
 
 var Deck = React.createClass({
   displayName: 'Deck',
   propTypes: {
     query: PropTypes.object.isRequired,
+    resources: PropTypes.object.isRequired,
     results: PropTypes.object.isRequired
   },
   render: function() {
-    const { query, results } = this.props;
+    const { query, resources, results } = this.props;
     return (
       <div className="mi-deck">
         {

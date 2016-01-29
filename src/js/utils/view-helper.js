@@ -6,8 +6,8 @@ export function findFirst(item, fields) {
 
   return _.chain(item)
     .at(...fields)
-    .omit(_.isUndefined)
-    .omit(_.isNull)
+    .omitBy(_.isUndefined)
+    .omitBy(_.isNull)
     .toArray().value()[0];
 }
 

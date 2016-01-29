@@ -1,10 +1,12 @@
 var gulp = require('gulp'),
     path = require('path'),
     assign = require('object-assign'),
-    history = require('connect-history-api-fallback'),
-    watchify = require('watchify'),
-    browserSync = require('browser-sync').create(),
     runSequence = require('run-sequence');
+
+// gulp build
+// gulp start
+// gulp lint
+// gulp test
 
 var defaultConfig = require('./config.default');
 

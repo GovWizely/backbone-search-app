@@ -5,11 +5,13 @@ import { connect } from 'react-redux';
 import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
-import { resources } from '../config';
+import { resources } from '../resources';
 import { fetchResources } from '../actions/resource';
 import Deck from './deck';
 import Filter from './filter';
 import Result from './result';
+
+console.log(resources);
 
 import Form from '../components/form';
 import CheckboxTree from '../components/checkbox-tree';
@@ -102,7 +104,7 @@ var Search = React.createClass({
 
     let content = null;
     if (!params.resource) {
-      content = <Deck query={ location.query } results={ results } />;
+      content = <Deck query={ location.query } resources={ resources} results={ results } />;
     } else {
       let resource = resources[params.resource],
           result = results[resource.stateKey],

@@ -5,12 +5,13 @@ import { parseAsTree } from '../utils/aggregation-parser';
 
 function reduceArray(array) {
   return _.reduce(array, (output, element) => {
-    output[element.key] = element.key;
+    output[element.key] = {};
     return output;
   }, {});
 }
 
 export function formatAggregations(aggregations, formats) {
+  if (!aggregations) return {};
   let output = {};
   for (let key in formats) {
     let format = formats[key];

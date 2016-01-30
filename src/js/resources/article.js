@@ -4,6 +4,7 @@ export default {
       countries: { type: 'array' },
       industries: { type: 'tree' },
       topics: { type: 'tree' },
+      trade_regions: { type: 'array' },
       types: { type: 'array' }
     },
     displayName: 'International Trade Administration',

@@ -8,6 +8,8 @@ function transformParams(params) {
 }
 
 function transformResponse(response) {
+  if (!response.aggregations) { return response; }
+
   for (let i in response.aggregations.countries) {
     response.aggregations.countries[i].key =
       taxonomy.abbrToCountry(response.aggregations.countries[i].key);

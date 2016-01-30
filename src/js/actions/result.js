@@ -81,17 +81,17 @@ function generateFetch(resource, dispatch, getState) {
         dispatch(receiveResults(resource, data));
         return data;
       })
-      .catch(e => ({ error: e }));
+      .catch(e => {console.log(e); return { error: e }; });
   };
 }
 
 export function fetchResults(query, resources) {
   resources = _.isArray(resources) ? resources : [resources];
-
   return (dispatch, getState) => {
     const fetches = resources.map(resource => generateFetch(resource, dispatch, getState));
     const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
     if (updateFilter) dispatch(requestFilters());
+
     return Promise
       .all(_.map(fetches, f => f(query)))
       .then(responses => {

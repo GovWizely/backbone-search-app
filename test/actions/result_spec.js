@@ -1,43 +1,47 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as actions from '../../src/js/actions/result';
 import nock from 'nock';
 import resources from '../../src/js/resources';
+import initialState from '../../src/js/initial-state';
+import { REQUEST_FILTERS, RECEIVE_FILTERS } from '../../src/js/actions/filter';
+import { fetchResults, REQUEST_RESULTS, RECEIVE_RESULTS } from '../../src/js/actions/result';
+import { mockArticlesAPI } from './mocks/article';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-const initialState = {
-  results: {
-    articles: {
-      isFetching: false,
-      items: [],
-      metadata: {},
-      aggregations: {}
-    }
-  },
-  filters: {
-    isFetching: false,
-    items: {}
-  }
-};
 
 describe('result', () => {
-  afterEach(() => {
-    nock.cleanAll();
-  });
+  const articlePayload = require('./mocks/article.payload.js').default;
+  const filterPayload = require('./mocks/filter.payload.js').default;
 
-  it('creates RECEIVE_RESULTS & RECEIVE_FILTERS when fetching resource has been done', (done) => {
-    nock('http://www.example.com')
-      .get('/todos')
-      .reply(200, { results: [{ id: '1', title: 'result #1' }], total: 1 });
+  describe('#fetchResults', () => {
+    context('when fetching results of a single resource', () => {
+      const resource = resources.articles;
+      it('create RECEIVE_RESULTS & RECEIVE_FILTERS when fetch done', done => {
+        mockArticlesAPI();
+        const expectedActions = [
+          { type: REQUEST_FILTERS },
+          { type: REQUEST_RESULTS, meta: resource.stateKey },
+          { type: RECEIVE_RESULTS, meta: resource.stateKey, payload: articlePayload },
+          { type: RECEIVE_FILTERS, payload: filterPayload }
+        ];
+        const store = mockStore(initialState, expectedActions, done);
+        store.dispatch(fetchResults({ q: '' }, resource));
+      });
 
-    const expectedActions = [
-      { type: actions.REQUEST_FILTERS },
-      { type: actions.RECEIVE_FILTERS },
-      { type: actions.REQUEST_RESULTS },
-      { type: actions.RECEIVE_RESULTS, payload: { results: [] } }
-    ];
-    const store = mockStore(initialState, expectedActions);
-    store.dispatch(actions.fetchResults({}, resources[1]));
+    });
+
+    context('when fetching results of multiple resources', () => {
+      nock('https://api.trade.gov')
+        .get('/trade_leads/search')
+        .query({ api_key: 'hSLqwdFz1U25N3ZrWpLB-Ld4', q: '' })
+        .reply(200, { offset: 0, total: 100, results: [] });
+
+      const multiResources = [resources.articles, resources.trade_events, resources.trade_leads];
+
+      xit('create RECEIVE_RESULTS & RECEIVE_FILTERS when fetches done', done => {
+
+      });
+    });
   });
 });

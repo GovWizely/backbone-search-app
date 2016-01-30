@@ -17,7 +17,7 @@ function filters(state = initialState.filters, action) {
   case RECEIVE_FILTERS:
     return assign({}, state, {
       isFetching: false,
-      items: action.filters
+      items: action.payload
     });
   default:
     return state;

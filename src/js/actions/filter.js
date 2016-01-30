@@ -10,6 +10,6 @@ export function requestFilters() {
 export function receiveFilters(filters) {
   return {
     type: RECEIVE_FILTERS,
-    filters
+    payload: filters
   };
 }

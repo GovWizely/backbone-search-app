@@ -48,8 +48,8 @@ function requestResults(resource) {
 function receiveResults(resource, response) {
   return {
     type: RECEIVE_RESULTS,
-    payload: response,
-    meta: resource.stateKey
+    meta: resource.stateKey,
+    payload: response
   };
 }
 
@@ -74,14 +74,13 @@ function generateFetch(resource, dispatch, getState) {
       .then(json => resource.transformResponse ? resource.transformResponse(json): json)
       .then(json => {
         const data = {
+          aggregations: formatAggregations(json.aggregations, resource.aggregations),
           metadata: json.metadata || formatMetadata(json, resource.metadata),
-          results: json.results,
-          aggregations: formatAggregations(json.aggregations, resource.aggregations)
+          results: json.results
         };
         dispatch(receiveResults(resource, data));
         return data;
-      })
-      .catch(e => {console.log(e); return { error: e }; });
+      });
   };
 }
 
@@ -100,7 +99,6 @@ export function fetchResults(query, resources) {
           dispatch(receiveFilters(filters));
         }
         return responses;
-      })
-      .catch(e => ({ error: e }));
+      });
   };
 }

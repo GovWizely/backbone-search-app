@@ -1,0 +1,1009 @@
+{
+    "aggregations": {
+        "countries": {
+            "Afghanistan": {
+            },
+            "Albania": {
+            },
+            "Algeria": {
+            },
+            "Angola": {
+            },
+            "Argentina": {
+            },
+            "Armenia": {
+            },
+            "Australia": {
+            },
+            "Austria": {
+            },
+            "Azerbaijan": {
+            },
+            "Bahrain": {
+            },
+            "Bangladesh": {
+            },
+            "Barbados": {
+            },
+            "Belgium": {
+            },
+            "Belize": {
+            },
+            "Benin": {
+            },
+            "Bermuda": {
+            },
+            "Bolivia": {
+            },
+            "Bosnia and Herzegovina": {
+            },
+            "Botswana": {
+            },
+            "Brazil": {
+            },
+            "Brunei": {
+            },
+            "Bulgaria": {
+            },
+            "Burma": {
+            },
+            "Cambodia": {
+            },
+            "Canada": {
+            },
+            "Chile": {
+            },
+            "China": {
+            },
+            "Colombia": {
+            },
+            "Congo-Brazzaville": {
+            },
+            "Congo-Kinshasa": {
+            },
+            "Costa Rica": {
+            },
+            "Croatia": {
+            },
+            "Cyprus": {
+            },
+            "Czech Republic": {
+            },
+            "Denmark": {
+            },
+            "Dominican Republic": {
+            },
+            "Egypt": {
+            },
+            "El Salvador": {
+            },
+            "Estonia": {
+            },
+            "Ethiopia": {
+            },
+            "Fiji": {
+            },
+            "Finland": {
+            },
+            "France": {
+            },
+            "Gabon": {
+            },
+            "Georgia": {
+            },
+            "Ghana": {
+            },
+            "Greece": {
+            },
+            "Guatemala": {
+            },
+            "Guinea": {
+            },
+            "Honduras": {
+            },
+            "Hong Kong": {
+            },
+            "Hungary": {
+            },
+            "Iceland": {
+            },
+            "India": {
+            },
+            "Indonesia": {
+            },
+            "Ireland": {
+            },
+            "Israel": {
+            },
+            "Italy": {
+            },
+            "Jamaica": {
+            },
+            "Japan": {
+            },
+            "Jordan": {
+            },
+            "Kazakhstan": {
+            },
+            "Kenya": {
+            },
+            "Kosovo": {
+            },
+            "Kuwait": {
+            },
+            "Laos": {
+            },
+            "Latvia": {
+            },
+            "Lebanon": {
+            },
+            "Lesotho": {
+            },
+            "Liberia": {
+            },
+            "Lithuania": {
+            },
+            "Macau": {
+            },
+            "Macedonia": {
+            },
+            "Madagascar": {
+            },
+            "Malawi": {
+            },
+            "Malaysia": {
+            },
+            "Mali": {
+            },
+            "Malta": {
+            },
+            "Mauritius": {
+            },
+            "Mexico": {
+            },
+            "Mongolia": {
+            },
+            "Montenegro": {
+            },
+            "Morocco": {
+            },
+            "Nepal": {
+            },
+            "Netherlands": {
+            },
+            "New Zealand": {
+            },
+            "Nicaragua": {
+            },
+            "Nigeria": {
+            },
+            "Norway": {
+            },
+            "Pakistan": {
+            },
+            "Panama": {
+            },
+            "Paraguay": {
+            },
+            "Peru": {
+            },
+            "Philippines": {
+            },
+            "Poland": {
+            },
+            "Portugal": {
+            },
+            "Qatar": {
+            },
+            "Romania": {
+            },
+            "Russia": {
+            },
+            "Rwanda": {
+            },
+            "Sao Tome and Principe": {
+            },
+            "Saudi Arabia": {
+            },
+            "Serbia": {
+            },
+            "Singapore": {
+            },
+            "Slovakia": {
+            },
+            "Slovenia": {
+            },
+            "South Africa": {
+            },
+            "South Korea": {
+            },
+            "Spain": {
+            },
+            "Swaziland": {
+            },
+            "Sweden": {
+            },
+            "Taiwan": {
+            },
+            "Tajikistan": {
+            },
+            "Tanzania": {
+            },
+            "Thailand": {
+            },
+            "Trinidad and Tobago": {
+            },
+            "Tunisia": {
+            },
+            "Turkey": {
+            },
+            "Turkmenistan": {
+            },
+            "Ukraine": {
+            },
+            "United Arab Emirates": {
+            },
+            "United Kingdom": {
+            },
+            "United States": {
+            },
+            "Uruguay": {
+            },
+            "Uzbekistan": {
+            },
+            "Venezuela": {
+            },
+            "Vietnam": {
+            },
+            "Zambia": {
+            }
+        },
+        "industries": {
+            "Aerospace and Defense": {
+                "Aviation": {
+                    "Aircraft and Aircraft Parts": {
+                    }
+                },
+                "Defense Equipment": {
+                }
+            },
+            "Agribusiness": {
+                "Agricultural Commodities": {
+                },
+                "Agricultural Equipment and Machinery": {
+                },
+                "Forestry Equipment and Machinery": {
+                },
+                "Lawn and Garden Equipment": {
+                },
+                "Livestock": {
+                }
+            },
+            "Automotive": {
+                "Automotive Parts": {
+                }
+            },
+            "Business and Professional Services": {
+            },
+            "Chemicals": {
+            },
+            "Consumer Goods": {
+                "Apparel": {
+                },
+                "Cosmetics and Toiletries": {
+                },
+                "Firearms and Accessories": {
+                },
+                "Household Appliances": {
+                },
+                "Housewares": {
+                },
+                "Lawn and Garden Equipment": {
+                },
+                "Pleasure Boats and Accessories": {
+                },
+                "Sporting Goods": {
+                }
+            },
+            "Design and Construction": {
+                "Building Products": {
+                },
+                "Construction Equipment and Machinery": {
+                },
+                "Infrastructure": {
+                }
+            },
+            "Distribution and Logistics": {
+                "Rail Transportation": {
+                }
+            },
+            "Education": {
+                "Adult Education and Training": {
+                }
+            },
+            "Energy": {
+                "Civil Nuclear Power": {
+                },
+                "Coal": {
+                },
+                "Electricity Infrastructure": {
+                },
+                "Mining Equipment and Machinery": {
+                },
+                "Oil and Gas": {
+                },
+                "Renewable Energy": {
+                }
+            },
+            "Environmental Technology": {
+                "Waste Management and Recycling": {
+                },
+                "Water and Wastewater": {
+                }
+            },
+            "Equipment and Machinery": {
+                "Construction Equipment and Machinery": {
+                },
+                "Machinery and Tools": {
+                },
+                "Mining Equipment and Machinery": {
+                },
+                "Packaging Equipment": {
+                }
+            },
+            "Financial Services": {
+                "Banking": {
+                }
+            },
+            "Food and Beverage": {
+                "Beverages": {
+                },
+                "Food Processing Equipment": {
+                },
+                "Vitamins and Supplements": {
+                }
+            },
+            "Franchising": {
+            },
+            "Healthcare": {
+                "Healthcare Services": {
+                },
+                "Medical Biotechnology": {
+                    "In Vitro Diagnostics": {
+                    }
+                },
+                "Medical Devices": {
+                },
+                "Pharmaceuticals": {
+                    "Drug Development and Discovery": {
+                    },
+                    "Vitamins and Supplements": {
+                    }
+                }
+            },
+            "Industrial Materials": {
+                "Metals": {
+                }
+            },
+            "Information and Communication Technology": {
+                "Computer Hardware": {
+                },
+                "Computer Software": {
+                },
+                "Computer Systems": {
+                },
+                "Cybersecurity": {
+                },
+                "Electronics": {
+                    "Semiconductor Manufacturing Equipment": {
+                    },
+                    "Semiconductors": {
+                    }
+                },
+                "Information Technology Services": {
+                    "Computer Services": {
+                    },
+                    "Information Services": {
+                    }
+                },
+                "Telecommunications": {
+                    "Telecommunications Equipment": {
+                    },
+                    "Telecommunications Services": {
+                    }
+                },
+                "eCommerce Industry": {
+                }
+            },
+            "Marine Technology": {
+                "Pleasure Boats and Accessories": {
+                }
+            },
+            "Media and Entertainment": {
+            },
+            "Public Sector": {
+            },
+            "Retail Trade": {
+                "Food and Grocery Retailing": {
+                },
+                "eCommerce Industry": {
+                }
+            },
+            "Safety and Security": {
+                "Cybersecurity": {
+                },
+                "Firearms and Accessories": {
+                },
+                "Security and Safety Equipment": {
+                }
+            },
+            "Textiles and Apparel": {
+                "Apparel": {
+                }
+            },
+            "Travel and Tourism": {
+                "Hotel and Restaurant Equipment": {
+                }
+            },
+            "Wholesale Trade": {
+            }
+        },
+        "topics": {
+            "Business Management": {
+                "Advertising": {
+                },
+                "Business Registration": {
+                },
+                "Business Travel and Etiquette": {
+                },
+                "Business to Business": {
+                },
+                "Business to Consumer": {
+                },
+                "Business to Government": {
+                },
+                "Communication": {
+                },
+                "Costing and Pricing": {
+                    "Prices": {
+                    }
+                },
+                "Design": {
+                },
+                "Distribution": {
+                },
+                "Enterprises": {
+                    "Agents": {
+                    },
+                    "Exporters": {
+                    },
+                    "Importers": {
+                    },
+                    "Retailers": {
+                    },
+                    "Small and Medium Enterprises": {
+                    },
+                    "Wholesalers": {
+                    }
+                },
+                "Management": {
+                    "Accounting": {
+                    },
+                    "Performance Management": {
+                    },
+                    "Planning": {
+                    },
+                    "Research and Development": {
+                    }
+                },
+                "Market Research": {
+                },
+                "Marketing": {
+                    "Direct Marketing": {
+                    }
+                },
+                "Risk Management": {
+                },
+                "Sales Promotion": {
+                },
+                "Supply Chain": {
+                },
+                "Supply Management": {
+                },
+                "eCommerce": {
+                }
+            },
+            "Economic Development and Investment": {
+                "Capital": {
+                },
+                "Economic Conditions": {
+                },
+                "Economic Development": {
+                },
+                "Economic Indicators": {
+                },
+                "Economic Policy": {
+                },
+                "Investment": {
+                    "Foreign Direct Investment": {
+                    },
+                    "Foreign Investment": {
+                    },
+                    "Investment Policy": {
+                    },
+                    "Investment Regulations": {
+                    }
+                },
+                "Investment Incentives": {
+                },
+                "Investment Support Services": {
+                },
+                "Joint Ventures": {
+                }
+            },
+            "Environment": {
+                "Waste Management": {
+                }
+            },
+            "Finance": {
+                "Banks": {
+                    "Development Banks": {
+                    }
+                },
+                "Export Financing": {
+                },
+                "Foreign Exchange": {
+                },
+                "Insurance": {
+                    "Political Risk Insurance": {
+                    }
+                },
+                "Letters of Credit": {
+                },
+                "Loans": {
+                },
+                "Microfinancing": {
+                },
+                "Payment": {
+                    "Letters of Credit": {
+                    }
+                },
+                "Project Financing": {
+                },
+                "Taxes": {
+                },
+                "Trade Financing": {
+                }
+            },
+            "Government": {
+                "Government Agencies": {
+                    "Overseas Private Investment Corporation": {
+                    }
+                },
+                "Labor": {
+                },
+                "Policy": {
+                }
+            },
+            "Information Management": {
+            },
+            "International Cooperation": {
+                "International Financial Institutions": {
+                    "World Bank": {
+                    }
+                },
+                "International Organizations": {
+                    "WTO": {
+                    }
+                }
+            },
+            "Law": {
+                "Commercial Law": {
+                    "Foreign Corrupt Practices Act": {
+                    }
+                },
+                "Competition Law": {
+                },
+                "Dispute Resolution": {
+                    "Arbitration": {
+                    }
+                },
+                "International Agreements": {
+                    "Bilateral Investment Treaties": {
+                    }
+                },
+                "International Trade Law": {
+                },
+                "Legal Conditions": {
+                },
+                "Legislation": {
+                    "Licensing": {
+                    }
+                }
+            },
+            "Market Access": {
+                "Eco-Labeling": {
+                },
+                "Export Controls": {
+                },
+                "Foreign Trade Regulations": {
+                    "Export Regulations": {
+                    },
+                    "Import Regulations": {
+                    }
+                },
+                "Foreign Trade Zones": {
+                },
+                "Intellectual Property": {
+                    "Patents": {
+                    },
+                    "Trademarks": {
+                    }
+                },
+                "Packaging": {
+                    "Labeling": {
+                    },
+                    "Marking": {
+                    },
+                    "Packaging Standards": {
+                    }
+                },
+                "Safeguards": {
+                },
+                "Sanitary and Phytosanitary Measures": {
+                },
+                "Tariff-Rate Quotas": {
+                },
+                "Trade Barriers": {
+                    "Anti-Dumping": {
+                    },
+                    "Certification Barriers": {
+                    },
+                    "Customs Barriers": {
+                    },
+                    "Non-Tariff Barriers": {
+                    },
+                    "Tariffs": {
+                        "Anti-Dumping and Countervailing Duties": {
+                        },
+                        "Import Duties": {
+                        }
+                    }
+                },
+                "Trade Facilitation": {
+                },
+                "Trade Practices": {
+                }
+            },
+            "Trade Development and Promotion": {
+                "Competitiveness": {
+                },
+                "Export Marketing": {
+                },
+                "Export Potential": {
+                },
+                "Exports": {
+                },
+                "Government Procurement": {
+                },
+                "Import Management": {
+                },
+                "Imports": {
+                },
+                "Trade Development": {
+                    "Export Strategy": {
+                    },
+                    "Foreign Trade": {
+                    }
+                },
+                "Trade Events": {
+                    "Trade Fairs": {
+                    }
+                },
+                "Trade Promotion": {
+                },
+                "Trade Support Institutions": {
+                    "Trade Associations": {
+                    },
+                    "Trade Promotion Organizations": {
+                    }
+                },
+                "Trade Support Services": {
+                    "Business Matchmaking": {
+                    }
+                }
+            },
+            "Trade Policy and Agreements": {
+                "Free Trade Areas": {
+                },
+                "Trade Agreements": {
+                    "Free Trade Agreements": {
+                    }
+                },
+                "Trade Policy": {
+                }
+            },
+            "Transport and Logistics": {
+                "Customs": {
+                },
+                "Preshipment Inspection": {
+                },
+                "Trade Documents": {
+                    "Certificate of Origin": {
+                    },
+                    "Export Packing List": {
+                    },
+                    "Preshipment Inspection": {
+                    }
+                },
+                "Transport Documents": {
+                }
+            }
+        },
+        "trade_regions": {
+            "African Growth and Opportunity Act": {
+            },
+            "Andean Community": {
+            },
+            "Asia Pacific Economic Cooperation": {
+            },
+            "Association of Southeast Asian Nations": {
+            },
+            "Caribbean Community and Common Market": {
+            },
+            "Common Market for Eastern and Southern Africa": {
+            },
+            "Commonwealth of Independent States": {
+            },
+            "Economic Cooperation Organization": {
+            },
+            "Economic and Monetary Community of Central Africa": {
+            },
+            "Eurasian Economic Union": {
+            },
+            "European Free Trade Association": {
+            },
+            "European Union - 28": {
+            },
+            "Global System of Trade Preferences among Developing Countries": {
+            },
+            "Gulf Cooperation Council": {
+            },
+            "Organization of the Petroleum Exporting Countries": {
+            },
+            "South African Customs Union": {
+            },
+            "South African Development Community": {
+            },
+            "South Asian Association for Regional Cooperation": {
+            },
+            "Southern Common Market": {
+            },
+            "Trans Pacific Partnership": {
+            },
+            "West African Economic and Monetary Union": {
+            }
+        },
+        "types": {
+            "Country Commercial Guide": {
+            },
+            "Generic": {
+            },
+            "Market Insight": {
+            },
+            "State Report": {
+            },
+            "Top Markets Report": {
+            }
+        }
+    },
+    "metadata": {
+        "next_offset": 10,
+        "offset": 0,
+        "count": 10,
+        "total": 10242
+    },
+    "results": [
+        {
+            "snippet": "This information is derived from the State Department's Office of Investment Affairs\u2019 2015 Investment Climate Statement. Any questions on the ICS can be directed to EB-ICS-DL@state.gov.",
+            "title": "Portugal - Performance Requirements and Investment Incentives",
+            "id": "ka0t0000000POHdAAO",
+            "url": "https:\/\/success.export.gov\/article2?id=Portugal-Performance-Requirements-and-Incentives",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "European Union - 28"
+                ]
+            ],
+            "topics": [
+                "Economic Development and Investment",
+                "Law"
+            ],
+            "industries": [],
+            "countries": [
+                "Portugal"
+            ]
+        },
+        {
+            "snippet": "This information is derived from the State Department's Office of Investment Affairs\u2019 2015 Investment Climate Statement. Any questions on the ICS can be directed to EB-ICS-DL@state.gov.",
+            "title": "Portugal - Labor",
+            "id": "ka0t0000000POIHAA4",
+            "url": "https:\/\/success.export.gov\/article2?id=Portugal-Labor",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "European Union - 28"
+                ]
+            ],
+            "topics": [
+                "Economic Development and Investment",
+                "Law"
+            ],
+            "industries": [],
+            "countries": [
+                "Portugal"
+            ]
+        },
+        {
+            "snippet": "Discusses key economic indicators and trade statistics, which countries are dominant in the market, the U.S. market share, the political situation if relevant, the top reasons why U.S. companies should consider exporting to this country, and other issues that affect trade, e.g., terrorism, currency devaluations, trade agreements.",
+            "title": "Nigeria - Market Overview",
+            "id": "ka0t0000000POJ0AAO",
+            "url": "https:\/\/success.export.gov\/article2?id=Nigeria-Market-Overview",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "Organization of the Petroleum Exporting Countries",
+                    "Global System of Trade Preferences among Developing Countries",
+                    "African Growth and Opportunity Act"
+                ]
+            ],
+            "topics": [
+                "Trade Development and Promotion"
+            ],
+            "industries": [],
+            "countries": [
+                "Nigeria"
+            ]
+        },
+        {
+            "snippet": "Describes the country's standards landscape, identifies the national standards and accreditation bodies, and lists the main national testing organization(s) and conformity assessment bodies.",
+            "title": "Romania - Trade Standards",
+            "id": "ka0t0000000POJKAA4",
+            "url": "https:\/\/success.export.gov\/article2?id=Romania-Trade-Standards",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "European Union - 28"
+                ]
+            ],
+            "topics": [
+                "Market Access",
+                "Trade Development and Promotion"
+            ],
+            "industries": [],
+            "countries": [
+                "Romania"
+            ]
+        },
+        {
+            "snippet": "This information is derived from the State Department's Office of Investment Affairs\u2019 2015 Investment Climate Statement. Any questions on the ICS can be directed to EB-ICS-DL@state.gov ...",
+            "title": "Romania - Dispute Settlement",
+            "id": "ka0t0000000POJPAA4",
+            "url": "https:\/\/success.export.gov\/article2?id=Romania-Dispute-Settlement",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "European Union - 28"
+                ]
+            ],
+            "topics": [
+                "Dispute Resolution",
+                "Economic Development and Investment"
+            ],
+            "industries": [],
+            "countries": [
+                "Romania"
+            ]
+        },
+        {
+            "snippet": "This information is derived from the State Department's Office of Investment Affairs\u2019 2015 Investment Climate Statement. Any questions on the ICS can be directed to EB-ICS-DL@state.gov ...",
+            "title": "Romania - Corruption",
+            "id": "ka0t0000000POJUAA4",
+            "url": "https:\/\/success.export.gov\/article2?id=Romania-Corruption",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "European Union - 28"
+                ]
+            ],
+            "topics": [
+                "Economic Development and Investment",
+                "Market Access"
+            ],
+            "industries": [],
+            "countries": [
+                "Romania"
+            ]
+        },
+        {
+            "snippet": "This is a best prospect industry sector for this country. Includes a market overview and trade data.",
+            "title": "Guatemala - Travel and Tourism",
+            "id": "ka0t0000000POK3AAO",
+            "url": "https:\/\/success.export.gov\/article2?id=Guatemala-Travel-and-Tourism",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                []
+            ],
+            "topics": [
+                "Trade Development and Promotion"
+            ],
+            "industries": [
+                "Travel and Tourism"
+            ],
+            "countries": [
+                "Guatemala"
+            ]
+        },
+        {
+            "snippet": "Includes the local time zone, typical hours of business and a list of holidays in the country\/economy.",
+            "title": "Algeria - Local Time, Business Hours, &amp; Holidays",
+            "id": "ka0t0000000POJoAAO",
+            "url": "https:\/\/success.export.gov\/article2?id=Algeria-Local-Time-Business-Hours-Holidays",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "Organization of the Petroleum Exporting Countries",
+                    "Global System of Trade Preferences among Developing Countries"
+                ]
+            ],
+            "topics": [
+                "Business Travel and Etiquette",
+                "Trade Development and Promotion"
+            ],
+            "industries": [],
+            "countries": [
+                "Algeria"
+            ]
+        },
+        {
+            "snippet": "Trade Finance Guide: A Quick Reference for U.S. Exporters, published by the International Trade Administration\u2019s Industry &amp; Analysis team www.export.gov\/tradefinanceguide\/index.asp Export-Import Bank of the United States www.exim.gov OPIC www.opic.gov Trade and Development Agency www.ustda.gov SBA's Office of International Trade www.sba.gov\/oit USDA Commodity Credit Corporation www.fsa.usda.gov\/about-fsa\/index U.S. Agency for International Development www.usaid.gov Citibank Romania: www.citibank.ro European Bank for Reconstruction and Development: www.ebrd.com International Financial Corporation: www.ifc.org Romanian Ministry of Public Finance: www.mfinante.ro World Bank, Multilateral Development Bank: www.worldbank.org ...",
+            "title": "Romania - Web Resources",
+            "id": "ka0t0000000POJFAA4",
+            "url": "https:\/\/success.export.gov\/article2?id=Romania-Financing-Resources",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "European Union - 28"
+                ]
+            ],
+            "topics": [
+                "Finance",
+                "Market Access"
+            ],
+            "industries": [],
+            "countries": [
+                "Romania"
+            ]
+        },
+        {
+            "snippet": "This information is derived from the State Department's Office of Investment Affairs\u2019 2015 Investment Climate Statement. Any questions on the ICS can be directed to EB-ICS-DL@state.gov.",
+            "title": "Algeria - Foreign Direct Investment and Foreign Portfolio Investment Statistics",
+            "id": "ka0t0000000POJAAA4",
+            "url": "https:\/\/success.export.gov\/article2?id=Algeria-foreign-direct-investment-statistics",
+            "type": "Country Commercial Guide",
+            "trade_regions": [
+                [
+                    "Organization of the Petroleum Exporting Countries",
+                    "Global System of Trade Preferences among Developing Countries"
+                ]
+            ],
+            "topics": [
+                "Economic Development and Investment"
+            ],
+            "industries": [],
+            "countries": [
+                "Algeria"
+            ]
+        }
+    ]
+}

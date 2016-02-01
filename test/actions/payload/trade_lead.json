@@ -1,0 +1,658 @@
+{
+    "aggregations": {
+        "countries": {
+            "Australia": {
+            },
+            "United Kingdom": {
+            },
+            "Canada": {
+            },
+            "Germany": {
+            },
+            "Japan": {
+            },
+            "India": {
+            },
+            "Afghanistan": {
+            },
+            "China": {
+            },
+            "Italy": {
+            },
+            "Georgia": {
+            },
+            "Ethiopia": {
+            },
+            "Guam": {
+            },
+            "Indonesia": {
+            },
+            "Trinidad And Tobago": {
+            },
+            "Colombia": {
+            },
+            "Viet Nam": {
+            },
+            "Pakistan": {
+            },
+            "Costa Rica": {
+            },
+            "Haiti": {
+            },
+            "Mexico": {
+            },
+            "Korea": {
+            },
+            "Tunisia": {
+            },
+            "Bangladesh": {
+            },
+            "Botswana": {
+            },
+            "Iraq": {
+            },
+            "United Arab Emirates": {
+            },
+            "Lithuania": {
+            },
+            "Tanzania": {
+            },
+            "Congo, Democratic Republic": {
+            },
+            "Egypt": {
+            },
+            "Morocco": {
+            },
+            "Malawi": {
+            },
+            "Philippines": {
+            },
+            "Kenya": {
+            },
+            "Nigeria": {
+            },
+            "Benin": {
+            },
+            "Kuwait": {
+            },
+            "Paraguay": {
+            },
+            "Senegal": {
+            },
+            "Brazil": {
+            },
+            "Spain": {
+            },
+            "Israel": {
+            },
+            "Kyrgyzstan": {
+            },
+            "Liberia": {
+            },
+            "Nepal": {
+            },
+            "Turkey": {
+            },
+            "Uganda": {
+            },
+            "Belgium": {
+            },
+            "Ghana": {
+            },
+            "Sri Lanka": {
+            },
+            "Mongolia": {
+            },
+            "Mozambique": {
+            },
+            "Ukraine": {
+            },
+            "Uzbekistan": {
+            },
+            "Barbados": {
+            },
+            "Brunei Darussalam": {
+            },
+            "Switzerland": {
+            },
+            "Croatia": {
+            },
+            "Serbia": {
+            },
+            "El Salvador": {
+            },
+            "Swaziland": {
+            },
+            "Central African Republic": {
+            },
+            "Ecuador": {
+            },
+            "Oman": {
+            },
+            "Azerbaijan": {
+            },
+            "Jordan": {
+            },
+            "Kazakhstan": {
+            },
+            "Russian Federation": {
+            },
+            "Saudi Arabia": {
+            },
+            "Zambia": {
+            },
+            "Cambodia": {
+            },
+            "Moldova": {
+            },
+            "Niger": {
+            },
+            "Qatar": {
+            },
+            "Tajikistan": {
+            },
+            "Argentina": {
+            },
+            "Cameroon": {
+            },
+            "Cyprus": {
+            },
+            "Lebanon": {
+            },
+            "Mali": {
+            },
+            "Netherlands": {
+            },
+            "Peru": {
+            },
+            "Burundi": {
+            },
+            "Chile": {
+            },
+            "Greenland": {
+            },
+            "Honduras": {
+            },
+            "Lao People's Democratic Republic": {
+            },
+            "Panama": {
+            },
+            "Portugal": {
+            },
+            "Romania": {
+            },
+            "Rwanda": {
+            },
+            "Sudan": {
+            },
+            "Albania": {
+            },
+            "Burkina Faso": {
+            },
+            "Bolivia": {
+            },
+            "Dominican Republic": {
+            },
+            "Hungary": {
+            },
+            "Malaysia": {
+            },
+            "Puerto Rico": {
+            },
+            "Singapore": {
+            },
+            "Thailand": {
+            },
+            "Turkmenistan": {
+            },
+            "Uruguay": {
+            },
+            "Armenia": {
+            },
+            "Austria": {
+            },
+            "Bosnia And Herzegovina": {
+            },
+            "Belize": {
+            },
+            "Congo": {
+            },
+            "Djibouti": {
+            },
+            "Greece": {
+            },
+            "Latvia": {
+            },
+            "Madagascar": {
+            },
+            "Macedonia": {
+            },
+            "Myanmar": {
+            },
+            "": {
+            },
+            "Timor-Leste": {
+            },
+            "South Africa": {
+            },
+            "Bulgaria": {
+            },
+            "Bahrain": {
+            },
+            "Bhutan": {
+            },
+            "Guinea": {
+            },
+            "Marshall Islands": {
+            },
+            "Nicaragua": {
+            },
+            "Poland": {
+            },
+            "Solomon Islands": {
+            },
+            "Antarctica": {
+            },
+            "Denmark": {
+            },
+            "Gabon": {
+            },
+            "Guatemala": {
+            },
+            "Jamaica": {
+            },
+            "Saint Lucia": {
+            },
+            "Libyan Arab Jamahiriya": {
+            },
+            "Montenegro": {
+            },
+            "Mauritania": {
+            },
+            "Namibia": {
+            },
+            "Chad": {
+            },
+            "Saint Vincent And Grenadines": {
+            },
+            "Yemen": {
+            },
+            "Zimbabwe": {
+            },
+            "Angola": {
+            },
+            "Bahamas": {
+            },
+            "Belarus": {
+            },
+            "Cape Verde": {
+            },
+            "Czech Republic": {
+            },
+            "Estonia": {
+            },
+            "British Indian Ocean Territory": {
+            },
+            "Lesotho": {
+            },
+            "Northern Mariana Islands": {
+            },
+            "Mauritius": {
+            },
+            "New Zealand": {
+            },
+            "Togo": {
+            },
+            "Netherlands Antilles": {
+            },
+            "Cuba": {
+            },
+            "Eritrea": {
+            },
+            "Fiji": {
+            },
+            "France": {
+            },
+            "Gambia": {
+            },
+            "Guinea-Bissau": {
+            },
+            "Guyana": {
+            },
+            "Hong Kong": {
+            },
+            "Malta": {
+            },
+            "Maldives": {
+            },
+            "Palau": {
+            },
+            "Seychelles": {
+            },
+            "Slovakia": {
+            },
+            "Sierra Leone": {
+            },
+            "Sao Tome And Principe": {
+            },
+            "Venezuela": {
+            },
+            "Virgin Islands, U.S.": {
+            },
+            "Vanuatu": {
+            },
+            "Samoa": {
+            }
+        },
+        "sources": {
+            "AUSTRALIA": {
+            },
+            "STATE": {
+            },
+            "UK": {
+            },
+            "FBO": {
+            },
+            "CANADA": {
+            },
+            "MCA": {
+            },
+            "USTDA": {
+            }
+        }
+    },
+    "metadata": {
+        "total": 5166,
+        "offset": 0,
+        "sources_used": [
+            {
+                "source": "AUSTRALIA",
+                "source_last_updated": "2016-01-30T08:38:39+00:00",
+                "last_imported": "2016-01-30T08:38:39+00:00"
+            },
+            {
+                "source": "CANADA",
+                "source_last_updated": "2016-01-31T09:05:58+00:00",
+                "last_imported": "2016-01-31T09:05:58+00:00"
+            },
+            {
+                "source": "FBO",
+                "source_last_updated": "",
+                "last_imported": "2016-01-31T08:51:09+00:00"
+            },
+            {
+                "source": "STATE",
+                "source_last_updated": "2016-01-31T08:38:41+00:00",
+                "last_imported": "2016-01-31T08:38:41+00:00"
+            },
+            {
+                "source": "UK",
+                "source_last_updated": "2016-01-27T15:44:30+00:00",
+                "last_imported": "2016-01-27T15:44:30+00:00"
+            },
+            {
+                "source": "MCA",
+                "source_last_updated": "2016-01-27T15:56:25+00:00",
+                "last_imported": "2016-01-27T15:56:25+00:00"
+            },
+            {
+                "source": "USTDA",
+                "source_last_updated": "2016-01-27T15:42:29+00:00",
+                "last_imported": "2016-01-27T15:42:29+00:00"
+            }
+        ],
+        "search_performed_at": "2016-02-01T05:38:38+00:00"
+    },
+    "results": [
+        {
+            "id": "DATATABLE.471",
+            "lead_source": "African Development Bank",
+            "country": "CF",
+            "specific_location": "Africa",
+            "title": "Pan-African University Support Project (PHASE II)",
+            "project_number": "P-Z1-IAD-018",
+            "industry": "Educational Services",
+            "ita_industries": [],
+            "project_size": 50000000,
+            "description": "Expansion of the thematic networks: support the inclusion of 10 Centers of Excellence by thematic area. Establishing the virtual platform to expand e-learning and m-learning in Africa (based on needs assessment conducted in Phase 1). Strenghtening R&D and Innovation as a major instrument for Africa's economic transformation through inclusive and green growth. Support consolidation of the PAU Governance structure. Currency: UAC",
+            "tags": "Human Capital Development, Education",
+            "publish_date": "2016-04-01",
+            "end_date": "2016-10-16",
+            "funding_source": "Development Banks",
+            "borrowing_entity": "Pan African University for Science, Technology and Innovation",
+            "procurement_organization": "Pan African University for Science, Technology and Innovation",
+            "contact": "Corbin Michel Casimir Guedegbe - OSHD2, African Development Bank",
+            "comments": null,
+            "submitting_officer": "Chuka Asike",
+            "submitting_officer_contact": "asikec@state.gov",
+            "url": "http:\/\/bit.ly\/1LfhEbM",
+            "status": "Pipeline",
+            "source": "STATE"
+        },
+        {
+            "id": "DATATABLE.599",
+            "lead_source": "African Development Bank",
+            "country": "NG",
+            "specific_location": "Nigeria",
+            "title": "Skills and Entrepreneurship Development",
+            "project_number": "P-NG-IA0-002",
+            "industry": "Educational Services",
+            "ita_industries": [],
+            "project_size": 50000000,
+            "description": "While specific benefits of the project are yet to be determined, it is anticipated that it will improve access to training for disadvantaged and underemployed young women and men, including basic education cycle school leavers in underserved regions. It will contribute to increasing female participation rates in VTE. Currency: NGN.",
+            "tags": "Human Capital Development, Education",
+            "publish_date": "2016-03-30",
+            "end_date": "2016-10-15",
+            "funding_source": "Development Banks",
+            "borrowing_entity": "Government of Nigeria",
+            "procurement_organization": "Government of Nigeria",
+            "contact": null,
+            "comments": null,
+            "submitting_officer": "Dwight Nystrom",
+            "submitting_officer_contact": "nystromdd@state.gov",
+            "url": "http:\/\/bit.ly\/1LfhrWb",
+            "status": "Pipeline",
+            "source": "STATE"
+        },
+        {
+            "id": "DATATABLE.182",
+            "lead_source": "African Development Bank",
+            "country": "MZ",
+            "specific_location": "Maputo, Mozambique",
+            "title": "SADC Regional Fisheries Monitoring",
+            "project_number": "P-Z1-AAF-008",
+            "industry": "Agriculture, Forestry, Fishing and Hunting",
+            "ita_industries": [],
+            "project_size": 996710,
+            "description": "This project seeks to better manage fisheries, protecting them from crime and improving livelihoods for local communities. The project will focus on regional integration, support for sustainable development, and institutional capacity building.",
+            "tags": "Africa, Southern African Development Countries, SADC, Mozambique, South Africa, Fisheries, Sustainable development, Livelihoods",
+            "publish_date": "2016-02-01",
+            "end_date": "2016-12-31",
+            "funding_source": "Development Bank",
+            "borrowing_entity": null,
+            "procurement_organization": "Southern African Development Community (SADC)",
+            "contact": "Felix Jan Baptist Marttin, African Development Bank",
+            "comments": null,
+            "submitting_officer": null,
+            "submitting_officer_contact": null,
+            "url": "http:\/\/bit.ly\/1OF5OKj",
+            "status": "Pipeline",
+            "source": "STATE"
+        },
+        {
+            "id": "DATATABLE.591",
+            "lead_source": "African Development Bank",
+            "country": "NA",
+            "specific_location": "Namibia",
+            "title": "Aquaculture Sector Support Project",
+            "project_number": "P-NA-AAF-003",
+            "industry": "Agriculture, Forestry, Fishing and Hunting",
+            "ita_industries": [],
+            "project_size": 15000000,
+            "description": "Increase aquaculture production, resulting in increased income, increased availability of quality fish, increasing national (fish)food security and safety. Currency: NAD",
+            "tags": "Agriculture & Agro-industries",
+            "publish_date": "2016-02-01",
+            "end_date": "2016-12-31",
+            "funding_source": "Development Banks",
+            "borrowing_entity": "GOVERNMENT OF NAMIBIA",
+            "procurement_organization": "MINISTRY OF FISHERIES & MARINE RESOURCES",
+            "contact": null,
+            "comments": null,
+            "submitting_officer": "Dwight Nystrom",
+            "submitting_officer_contact": "nystromdd@state.gov",
+            "url": "http:\/\/bit.ly\/1OF6nUh",
+            "status": "Pipeline",
+            "source": "STATE"
+        },
+        {
+            "notice_type": "MOD",
+            "publish_date": "2016-01-29",
+            "procurement_organization": "Department of the Army",
+            "procurement_office": "Army Contracting Command, ECC",
+            "procurement_organization_address": "ECC-AFG TCC CAPITAL",
+            "classification_code": "58",
+            "industry": "423690: Other Electronic Parts and Equipment Merchant Wholesalers",
+            "ita_industries": [],
+            "procurement_office_address": "APO APO AE 1",
+            "title": "MoI Workshop Radio Spare Parts",
+            "contract_number": "W56SGK-16-R-0010",
+            "end_date": "2016-02-11",
+            "contact": "Jason S. Rinehart, Phone 3184494221, Email jason.s.rinehart.mil@mail.mil - Alfredo Milan Sanchez, Team Chief, Phone 3184494837, Email alfredo.m.sanchez@afghan.swa.army.mil",
+            "description": "Solcitation Posted.",
+            "competitive_procurement_strategy": "N\/A",
+            "url": "http:\/\/1.usa.gov\/1SPvQwo",
+            "country": "AF",
+            "specific_address": "Headquarters Resolute SupportKabul",
+            "source": "FBO"
+        },
+        {
+            "notice_type": "COMBINE",
+            "publish_date": "2016-01-29",
+            "procurement_organization": "Other Defense Agencies",
+            "procurement_office": "United States Transportation Command",
+            "procurement_organization_address": "USTRANSCOM Command Acquisition",
+            "classification_code": "V",
+            "industry": "481211: Nonscheduled Chartered Passenger Air Transportation",
+            "ita_industries": [],
+            "procurement_office_address": "508 Scott DriveBldg 1900 Scott AFB IL 62225",
+            "title": "USCENTCOM Rotary Wing Transportation Support",
+            "contract_number": "HTC711-16-R-R002",
+            "end_date": "2017-08-01",
+            "contact": "Carrie E Yearian, Contract Specialist, Phone 618-220-7100, Fax 618-220-7918, Email carrie.e.yearian.civ@mail.mil - Sarah Mudd, Contract Specialist, Phone (618) 220-7100, Email sarah.l.mudd2.civ@mail.mil",
+            "description": "See attached solicitation documents.",
+            "competitive_procurement_strategy": "N\/A",
+            "url": "http:\/\/1.usa.gov\/1Q0tDYS",
+            "country": "AF",
+            "specific_address": "Based at Bagram air base, performance throughout Afghanistan.",
+            "source": "FBO"
+        },
+        {
+            "notice_type": "PRESOL",
+            "publish_date": "2016-01-29",
+            "procurement_organization": "Department of State",
+            "procurement_office": "European Posts",
+            "procurement_organization_address": "U.S. Embassy Brussels, Belgium",
+            "classification_code": "91",
+            "industry": "324110: Petroleum Refineries",
+            "ita_industries": [],
+            "procurement_office_address": "Regentlaan 27 Boulevard du Rgent B-1000 Brussels 1",
+            "title": "Purchase of gasoline for official fleet vehicles.",
+            "contract_number": "SBE20016R0004",
+            "end_date": "2017-05-31",
+            "contact": "Brian E. Kressin, Contracting Officer, Phone 3228114000, Fax 3228114774, Email KressinBE@state.gov - Danny Coppens, Contracting Agent, Phone 3228114000, Fax 3228114774, Email Coppensdm@state.gov",
+            "description": "The Embassy of the United States in Brussels will issue a proposal for the purchase of gasoline for official fleet vehicles.This is a firm fixed price with economic price adjustment indefinite quantity\/indefinite delivery contract for the services specified and effective for the period stated in the Schedule.The requirements may change depending on funding availability in forth coming periods. Anticipated performance is for one base period and four one-year periods at the option of the Government.The contractor shall furnish managerial, administrative and direct labor personnel to accomplish all work required.All responsible sources may submit an offer which shall be considered. The Government plans to issue the proposal during the month of February, 2016.Please note this solicitation is not ready to be issued as of this date. The Embassy of the United States in Belgium will launch the solicitation on the Federal Business Opportunities (FedBizOpps) website when it is available.This solicitation will also be issued on the Embassy's website at http:\/\/belgium.usembassy.gov\/contract_opportunities.html.Note: Please see the RFP for the actual response date.All contractors have to be registered in the SAM (System for Award Management) Database prior to contract award pursuant to FAR provision 5.207. Therefore prospective offerors are encouraged to register prior to the submittal of quotations\/proposals.Electronic Submission\/Responses:No electronic offers will be accepted. Please mail your offer to the contracting office listed in this notice prior to the response date and time.",
+            "competitive_procurement_strategy": "N\/A",
+            "url": "http:\/\/1.usa.gov\/1Q0tzZ1",
+            "country": "BE",
+            "specific_address": "Regentlaan 27Brussels, 1",
+            "source": "FBO"
+        },
+        {
+            "country": "CA",
+            "title": "STRAINER, SEDIMENT (W8482-168317\/A)",
+            "reference_number": "PW-$$HS-639-68939",
+            "contract_number": "W8482-168317\/A",
+            "publish_date": "2016-01-29",
+            "end_date": "2016-03-10",
+            "publish_date_amended": null,
+            "status": "Active",
+            "industry": [
+                "N4730: Hose, Pipe, Tube, Lubrication, and Railing Fittings"
+            ],
+            "ita_industries": [],
+            "specific_location": "British Columbia, Nova Scotia",
+            "notice_type": "APM-NPP",
+            "trade_agreement": "Canada-Panama Free Trade Agreement, Agreement on Internal Trade (AIT), Canada-Colombia Free Trade Agreement, Canada-Peru Free Trade Agreement (CPFTA), North America Free Trade Agreement (NAFTA)",
+            "bid_type": "All interested suppliers may submit a bid",
+            "competitive_procurement_strategy": null,
+            "non_competitive_procurement_strategy": null,
+            "procurement_organization": "Public Works and Government Services Canada",
+            "implementing_entity": "Department of National Defence",
+            "description": "Trade Agreement: NAFTA\/AIT\/Canada FTAs with Peru\/Colombia\/Panama Tendering Procedures: All interested suppliers may submit a bid Competitive Procurement Strategy: Comprehensive Land Claim Agreement: No Nature of Requirements: STRAINER, SEDIMENT W8482-168317\/A Christine Beaudry Telephone No. 873-469-3335 Fax No. 819-956-5227 Email address: christine.beaudry@pwgsc-tpsgc.gc.ca The Department of National Defence has a requirement for the items detailed below fordelivery by April 2016 to Canadian Forces Supply Depots in Halifax, Nova Scotia and Esquimalt, British Columbia. Trade Agreements The requirement is subject to the provisions of the North American Free Trade Agreement (NAFTA) and the Agreement on Internal Trade (AIT). Item Description Item 001, GSIN: N4730, NSN: 4730-01-372-2136, STRAINER, SEDIMENT, NSCM\/CAGE: 54307, Part No.: 8709090 Quantity: 1, Unit of Issue: EA, Delivery: Halifax, Nova Scotia Item 002, GSIN: N4730, NSN: 4730-01-372-2136, STRAINER, SEDIMENT, NSCM\/CAGE: 54307, Part No.: 8709090 Quantity: 2, Unit of Issue: EA, Delivery: Esquimalt, British Columbia Debriefings Bidders may request a debriefing on the results of the bid solicitation process. Bidders should make the request to the Contracting Authority within fifteen (15) working days from receipt of the results of the bid solicitation process. The debriefing may be provided in writing, by telephone or in person. Delivery Date: Above-mentioned The Crown retains the right to negotiate with suppliers on any procurement. Documents may be submitted in either official language of Canada.",
+            "contact": "Beaudry, Christine, (873) 469-3335 ( ), (819) 956-5227, 11 Laurier St.\/11, rue Laurier 7B1, Place du Portage, Phase III Gatineau Qu\u00e9bec K1A 0S5, 11 Laurier St.\/11, rue Laurier 7B1, Place du Portage, Phase III Gatineau Qu\u00e9bec K1A 0S5",
+            "urls": [
+                "http:\/\/bit.ly\/1PJhJZh",
+                "http:\/\/bit.ly\/1NF0rVo"
+            ],
+            "source": "CANADA"
+        },
+        {
+            "country": "CA",
+            "title": "CIRCUIT CARD ASSEMBLY (W8482-168298\/A)",
+            "reference_number": "PW-$$HN-336-68943",
+            "contract_number": "W8482-168298\/A",
+            "publish_date": "2016-01-29",
+            "end_date": "2016-02-17",
+            "publish_date_amended": null,
+            "status": "Active",
+            "industry": [
+                "N5998: Electrical and Electronic Assemblies, Boards, Cards and Associated Hardware"
+            ],
+            "ita_industries": [],
+            "specific_location": "British Columbia, Nova Scotia",
+            "notice_type": "APM-NPP",
+            "trade_agreement": "Agreement on Internal Trade (AIT)",
+            "bid_type": "All interested suppliers may submit a bid",
+            "competitive_procurement_strategy": null,
+            "non_competitive_procurement_strategy": null,
+            "procurement_organization": "Public Works and Government Services Canada",
+            "implementing_entity": "Department of National Defence",
+            "description": "Trade Agreement: Agreement on Internal Trade (AIT) Tendering Procedures: All interested suppliers may submit a bid Competitive Procurement Strategy: Comprehensive Land Claim Agreement: No Nature of Requirements: CIRCUIT CARD ASSEMBLY W8482-168298\/A Bisson, Phillipe Telephone No. - (873) 469-3345 ITEM 001, NATO Stock Number (NSN): 5998-20-005-2075, CIRCUIT CARD ASSEMBLY, Part Number (P\/N): 148019-1, DRS TECHNOLOGIES CANADA CO (38200) OR EQUIVALENT Quantity: 5, Unit of issue: EACH, Delivery Destination: Halifax, NS ITEM 002, NATO Stock Number (NSN): 5998-20-005-2075, CIRCUIT CARD ASSEMBLY, Part Number (P\/N): 148019-1, DRS TECHNOLOGIES CANADA CO (38200) OR EQUIVALENT Quantity: 3, Unit of issue:EACH, Delivery Destination: Victoria, BC Delivery Date: Above-mentioned The Crown retains the right to negotiate with suppliers on any procurement. Documents may be submitted in either official language of Canada.",
+            "contact": "Bisson, Phillipe, (873) 469-3345 ( ), 11 Laurier St.\/11, rue Laurier 7B3, Place du Portage, Phase III Gatineau, Qu\u00e9bec K1A 0S5, 11 Laurier St.\/11, rue Laurier 7B3, Place du Portage, Phase III Gatineau, Qu\u00e9bec K1A 0S5",
+            "urls": [
+                "http:\/\/bit.ly\/1NF0uAH",
+                "http:\/\/bit.ly\/1PJhLQK"
+            ],
+            "source": "CANADA"
+        },
+        {
+            "country": "CA",
+            "title": "ROYALTY FREE PHOTOS SUBSCRIPTION (0X001-150596\/A)",
+            "reference_number": "PW-$$PI-008-68942",
+            "contract_number": "0X001-150596\/A",
+            "publish_date": "2016-01-29",
+            "end_date": "2016-02-17",
+            "publish_date_amended": null,
+            "status": "Active",
+            "industry": [
+                "D317E: Information Products"
+            ],
+            "ita_industries": [],
+            "specific_location": "National Capital Region",
+            "notice_type": "APM-NPP",
+            "trade_agreement": "Agreement on Internal Trade (AIT)",
+            "bid_type": "All interested suppliers may submit a bid",
+            "competitive_procurement_strategy": null,
+            "non_competitive_procurement_strategy": null,
+            "procurement_organization": "Public Works and Government Services Canada",
+            "implementing_entity": "Canada School of Public Service",
+            "description": "Trade Agreement: Agreement on Internal Trade (AIT) Tendering Procedures: All interested suppliers may submit a bid Competitive Procurement Strategy: Comprehensive Land Claim Agreement: No Nature of Requirements: The Canada School of Public Service requires access to a broad amount of multi-media assests via a royalty free site for use in learning products over the learning products life-cycle. The Canada School produces learning products for Public Servantsacross Canada. The School has a requirment to insert a variety of multi-media assests within these products, to be viewed by learning clients in order to enhance the learning experience. The solicitation is intended to result in the award of 1 (one)contract for 1 (one) year, and up to 2 (two) irrevocable option years allowing Canada to extend the term of the Contract. The requirement is subject to the Agreement on Internal Trade (AIT). Delivery Date: Above-mentioned The Crown retains the right to negotiate with suppliers on any procurement. Documents may be submitted in either official language of Canada.",
+            "contact": "Rinaldo(pi008), Rosella, (819) 956-0001 ( ), 11 Laurier St. \/ 11, rue Laurier Place du Portage, Phase III, 6A2 Gatineau Quebec K1A 0S5, 11 Laurier St. \/ 11, rue Laurier Place du Portage, Phase III, 6A2 Gatineau Quebec K1A 0S5",
+            "urls": [
+                "http:\/\/bit.ly\/1NF0uRb",
+                "http:\/\/bit.ly\/1PJhNYX"
+            ],
+            "source": "CANADA"
+        }
+    ]
+}

@@ -43,7 +43,8 @@ function result(state, action) {
     return assign({}, state, {
       isFetching: false,
       items: action.payload.results,
-      metadata: action.payload.metadata
+      metadata: action.payload.metadata,
+      aggregations: action.payload.aggregations
     });
   default:
     return state;

@@ -30,7 +30,7 @@ describe('components', () => {
 
     context('when items is empty', () => {
       const { output } = setup();
-      it('should render correctly', () => {
+      it('should render null', () => {
         expect(output).to.equal(null);
       });
     });

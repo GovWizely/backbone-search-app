@@ -4,7 +4,7 @@ import { reduxForm } from 'redux-form';
 
 import Header from './header';
 
-var Form =  React.createClass({
+export const Form =  React.createClass({
   displayName: 'Form',
   propTypes: {
     expanded: PropTypes.bool.isRequired,
@@ -40,7 +40,6 @@ var Form =  React.createClass({
     );
   }
 });
-
 
 export default reduxForm({
   form: 'form',

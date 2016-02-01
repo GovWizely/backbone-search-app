@@ -7,13 +7,19 @@ const { renderIntoDocument, scryRenderedDOMComponentsWithTag } = TestUtils;
 
 describe('ResultList', () => {
   it('renders a list of items', () => {
-    var items = [
+    let fields = {
+      key: ['id'],
+      url: ['url'],
+      title: ['title'],
+      snippet: ['snippet']
+    };
+    let items = [
       { id: 1, url: 'http://www.example.com', title: 'article#1', snippet: 'Lorem Ipsum' },
       { id: 2, url: 'http://www.example.com', title: 'article#2', snippet: 'Lorem Ipsum' },
       { id: 3, url: 'http://www.example.com', title: 'article#3', snippet: 'Lorem Ipsum' }
     ];
     const component = renderIntoDocument(
-      <ResultList items={ items }/>
+      <ResultList fields={ fields} items={ items }/>
     );
 
     const resultsDOM = scryRenderedDOMComponentsWithTag(component, 'article');

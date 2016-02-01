@@ -63,11 +63,11 @@
     "html-webpack-plugin": "^2.7.2",
     "isparta": "^4.0.0",
     "istanbul": "^0.4.1",
+    "jsdom": "^8.0.2",
     "mocha": "^2.4.4",
     "nock": "^3.6.0",
     "node-sass": "^3.4.2",
     "object-assign": "^4.0.1",
-    "phantomjs": "^1.9.19",
     "react-addons-test-utils": "^0.14.3",
     "react-proxy": "^1.1.1",
     "react-transform-catch-errors": "^1.0.1",
@@ -95,7 +95,7 @@
     "build:webpack": "NODE_ENV=production webpack --config webpack.config.production.js",
     "clean": "rimraf dist",
     "lint": "eslint src",
-    "test": "NODE_ENV=test mocha --compilers js:babel-core/register --recursive",
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
     "test:watch": "npm test -- --watch",
     "start": "node dev.js"
   }

@@ -31,19 +31,18 @@ describe('reducer', () => {
     });
   });
 
-  it('should handle REQUEST_RESULTS for tradeLead', () => {
-    const action = { type: REQUEST_RESULTS, meta: 'tradeLead' };
-    expect(reducer({}, action).results.tradeLead).to.eql({
-      isFetching: true, items: [], metadata: {}, aggregations: {}
+  it('should handle REQUEST_FILTERS', () => {
+    const action = { type: REQUEST_FILTERS };
+    expect(reducer({}, action).filters).to.eql({
+      isFetching: true, items: {}
     });
   });
 
-  it('should handle RECEIVE_RESULTS for tradeLead ', () => {
-    const results = [{ title: 'item #1' }, { title: 'item #2' }];
-    const payload = { results, metadata: {}, aggregations: {} };
-    const action = { type: RECEIVE_RESULTS, meta: 'tradeLead', payload };
-    expect(reducer({}, action).results.tradeLead).to.eql({
-      isFetching: false, items: results, metadata: {}, aggregations: {}
+  it('should handle RECEIVE_FILTERS', () => {
+    const payload = { countries: { 'Country #1': {}, 'Country #2': {} } };
+    const action = { type: RECEIVE_FILTERS, payload };
+    expect(reducer({}, action).filters).to.eql({
+      isFetching: false, items: payload
     });
   });
 

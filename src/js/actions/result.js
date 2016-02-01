@@ -12,6 +12,7 @@ import { requestFilters, receiveFilters } from './filter';
 
 export const REQUEST_RESULTS = 'REQUEST_RESULTS';
 export const RECEIVE_RESULTS = 'RECEIVE_RESULTS';
+export const FAILURE_RESULTS = 'FAILURE_RESULTS';
 
 function isFiltering(query) {
   if (!query || !query.filter) return false;
@@ -53,6 +54,15 @@ function receiveResults(resource, response) {
   };
 }
 
+function failureResults(resource, e) {
+  return {
+    type: FAILURE_RESULTS,
+    error: true,
+    meta: resource.stateKey,
+    payload: e
+  };
+}
+
 function generateFetch(resource, dispatch, getState) {
   return function(query) {
     if (getState().results[resource.stateKey].isFetching) {
@@ -80,7 +90,8 @@ function generateFetch(resource, dispatch, getState) {
         };
         dispatch(receiveResults(resource, data));
         return data;
-      });
+      })
+      .catch(e => dispatch(failureResults(resource, e)));
   };
 }
 
@@ -99,6 +110,7 @@ export function fetchResults(query, resources) {
           dispatch(receiveFilters(filters));
         }
         return responses;
-      });
+      })
+      .catch(e => dispatch(failureResults('filter', e)));
   };
 }

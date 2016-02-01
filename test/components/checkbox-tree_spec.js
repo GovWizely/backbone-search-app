@@ -19,20 +19,18 @@ function setup(items={}) {
   return { props, output, renderer };
 }
 
-describe('components', () => {
-  describe('CheckboxTree', () => {
-    context('when items is not empty', () => {
-      const { output } = setup({ 'Country #1': {}, 'Country #2': {} });
-      it('should render correctly', () => {
-        expect(output.type).to.equal('section');
-      });
+describe('components/CheckboxTree', () => {
+  context('when items is not empty', () => {
+    const { output } = setup({ 'Country #1': {}, 'Country #2': {} });
+    it('should render correctly', () => {
+      expect(output.type).to.equal('section');
     });
+  });
 
-    context('when items is empty', () => {
-      const { output } = setup();
-      it('should render null', () => {
-        expect(output).to.equal(null);
-      });
+  context('when items is empty', () => {
+    const { output } = setup();
+    it('should render null', () => {
+      expect(output).to.equal(null);
     });
   });
 });

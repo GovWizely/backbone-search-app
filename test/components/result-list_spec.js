@@ -5,7 +5,7 @@ import ResultList from '../../src/js/components/result-list';
 
 const { renderIntoDocument, scryRenderedDOMComponentsWithTag } = TestUtils;
 
-describe('ResultList', () => {
+describe('components/ResultList', () => {
   it('renders a list of items', () => {
     let fields = {
       key: ['id'],

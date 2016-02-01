@@ -25,7 +25,7 @@ var Pagination = React.createClass({
     currentOffset: PropTypes.number,
     displayedPages: PropTypes.number,
     items: PropTypes.number.isRequired,
-    itemsOnPage: PropTypes.number.isRequired,
+    itemsOnPage: PropTypes.number,
     query: PropTypes.object.isRequired,
     url: PropTypes.string.isRequired
   },

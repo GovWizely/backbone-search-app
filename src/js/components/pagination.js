@@ -51,30 +51,30 @@ var Pagination = React.createClass({
     const pageList = [
       currentPage !== 0 ? (
         <li key="first">
-          <a className="mi-icon mi-icon-angle-double-left" href={ href(url, query, 0) }></a>
+          <a title="First Page" className="mi-icon mi-icon-angle-double-left" href={ href(url, query, 0) }></a>
         </li>) : null,
 
       currentPage !== 0 ? (
         <li key="prev">
-          <a className="mi-icon mi-icon-angle-left" href={ href(url, query, prevPage * itemsOnPage) }></a>
+          <a title="Previous Page" className="mi-icon mi-icon-angle-left" href={ href(url, query, prevPage * itemsOnPage) }></a>
         </li>) : null,
 
       range.map(i => {
         const activeCSS = currentPage === i ? 'mi-active' : '';
         return (
           <li className={ activeCSS } key={ i }>
-            <a href={ href(url, query, i * itemsOnPage )}>{ i + 1 }</a>
+            <a title={ `Page #${i + 1}`}href={ href(url, query, i * itemsOnPage )}>{ i + 1 }</a>
           </li>
         );
       }),
 
       currentPage !== pages - 1 ? (
         <li key="next">
-          <a className="mi-icon mi-icon-angle-right" href={ href(url, query, nextPage * itemsOnPage) }></a>
+          <a title="Next Page" className="mi-icon mi-icon-angle-right" href={ href(url, query, nextPage * itemsOnPage) }></a>
         </li>) : null,
       currentPage !== pages - 1 ?(
         <li key="last">
-          <a className="mi-icon mi-icon-angle-double-right" href={ href(url, query, (pages - 1) * itemsOnPage) }></a>
+          <a title="Last Page" className="mi-icon mi-icon-angle-double-right" href={ href(url, query, (pages - 1) * itemsOnPage) }></a>
         </li>) : null
     ];
 

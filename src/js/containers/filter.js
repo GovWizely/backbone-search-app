@@ -52,7 +52,7 @@ var Filter = React.createClass({
 
     return (
       <div>
-        <h4 className="uk-text-muted">Filter Results</h4>
+        <h4 className="">Filter Results</h4>
         { content }
       </div>
     );

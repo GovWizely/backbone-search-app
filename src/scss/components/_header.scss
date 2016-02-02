@@ -9,7 +9,7 @@
   }
 
   .#{$module}header-version {
-    Color: #308830;
+    color: $success-color;
     font-size: 13px;
     font-weight: 700;
   }

@@ -67,7 +67,6 @@ describe('components/Pagination', () => {
         expect(buttons[0].props.children.props.className).to.equal(firstButton);
         expect(buttons[1].props.children.props.className).to.equal(prevButton);
       });
-
       it('should not render next page * last page button', () => {
         expect(buttons[3]).to.be.null;
         expect(buttons[4]).to.be.null;

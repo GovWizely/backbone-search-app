@@ -13,7 +13,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <header className="mi-header">
+      <header className="mi-header" role="banner">
         <a href="#" onClick={ this.props.onClick }>
           Market Intelligence Search <span className="mi-header-version">beta</span>
         </a>

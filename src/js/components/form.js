@@ -28,10 +28,10 @@ export const Form =  React.createClass({
 
         <form onSubmit={ handleSubmit }>
           <div className="mi-keyword">
-            <input type="text" placeholder="Keyword" { ...q } />
+            <input type="text" placeholder="Keyword" { ...q } title="Keyword" />
             <span>
               <button className="uk-button uk-button-success" onClick={ handleSubmit }>
-                <i className="mi-icon mi-icon-search"></i>
+                <i className="mi-icon mi-icon-search" title="Search"></i>
               </button>
             </span>
           </div>

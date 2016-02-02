@@ -3,13 +3,13 @@ import React, { PropTypes } from 'react';
 import assign from 'object-assign';
 
 function checkbox(item, options) {
+  let checked = options.values.has(item);
   return (
-    <li className="list-item" key={ item }>
+    <li role="treeitem" className="list-item" key={ item }>
       <label>
         <input
-          type="checkbox"
-          value={ item }
-          checked={ options.values.has(item) } readOnly />
+           type="checkbox" value={ item } readOnly
+           checked={ checked } aria-checked={ checked } />
         <span> { item }</span>
       </label>
       { options.nested ? list(options.items[item], options) : null }
@@ -20,7 +20,7 @@ function checkbox(item, options) {
 function list(items, options) {
   if (_.isEmpty(items)) return null;
   return (
-    <ul className="list">
+    <ul role="tree" className="list" >
       { _.keys(items).map(item => checkbox(item, options)) }
     </ul>
   );

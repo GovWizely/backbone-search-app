@@ -1,6 +1,5 @@
 .#{$module}form {
   @extend .uk-form;
-  margin-bottom: 30px;
 
   hr {
     border-style: none none solid none; // reset border
@@ -97,6 +96,7 @@
     display: block;
   }
   .#{$module}keyword {
+    font-size: 14px;
     width: 96%;
     margin: 0 auto;
   }
@@ -126,7 +126,6 @@
     }
 
     .#{$module}keyword {
-      font-size: 14px;
       max-width: 640px;
       min-width: 560px;
       margin: 0;

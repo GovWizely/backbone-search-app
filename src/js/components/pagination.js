@@ -79,7 +79,7 @@ var Pagination = React.createClass({
     ];
 
     return (
-      <nav>
+        <nav style={ { width: '100%' }}>
         <ul className="mi-pagination">
           { pageList }
         </ul>

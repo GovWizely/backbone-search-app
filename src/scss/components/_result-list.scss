@@ -1,5 +1,5 @@
 .#{$module}result-list {
-  >:nth-child(odd) {
+  >:nth-child(even) {
     background-color: #f9f9f9;
   }
 }

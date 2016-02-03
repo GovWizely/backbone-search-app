@@ -14,9 +14,14 @@ var Result = React.createClass({
     screen: PropTypes.string,
     window: PropTypes.object
   },
+  displayedPages: function() {
+    const { innerWidth } = this.props.window;
+    if (innerWidth > 960) return 10;
+    if (innerWidth > 768) return 8;
+    return 5;
+  },
   render: function() {
     const { resource, query, result, screen, window } = this.props;
-    const displayedPages = window.innerWidth > 768 ? 10 : 5;
     if (result.isFetching || result.metadata.total === 0) return null;
     return (
       <div key="result" className="mi-result">
@@ -29,7 +34,7 @@ var Result = React.createClass({
 
         <Pagination
            currentOffset={ result.metadata.offset }
-           displayedPages={ displayedPages }
+           displayedPages={ this.displayedPages() }
            items={ result.metadata.total }
            itemsOnPage={ 10 }
            url={ `#/search/${resource.pathname}` }

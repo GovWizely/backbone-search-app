@@ -20,7 +20,6 @@
 
 html {
   position: relative;
-  min-height: 100%;
 }
 
 body {
@@ -35,7 +34,12 @@ input[type=text] {
 }
 
 .search-message {
-  margin-bottom: 20px;
+  display: none;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    display: block;
+    margin-bottom: 20px;
+  }
 }
 
 #main-pane {

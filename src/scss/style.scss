@@ -23,9 +23,13 @@ html {
 }
 
 body {
-  margin-bottom: 100px;
+  padding-top: 5%;
   font-size: 14px;
   font-family: $font-family-base;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    padding-top: 0;
+  }
 }
 
 input[type=text] {

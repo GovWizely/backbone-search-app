@@ -40,20 +40,30 @@ input[type=text] {
 
 #main-pane {
   padding: 0;
-  margin-left: 27px;
+  margin: 0 auto;
+  width: 96%;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 27px;
+  }
 }
 
 #left-pane {
-  display: block;
-  float: left;
-  position: relative;
-  width: 267px;
+  display: none;
 
-  border-right: 1px solid $border-color;
+  @media screen and (min-width: $breakpoint-medium) {
+    display: block;
+    float: left;
+    position: relative;
+    width: 267px;
+    border-right: 1px solid $border-color;
+  }
 }
 
 #content-pane {
-  margin-left: 310px;
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 300px;
+  }
 }
 
 .mi-result {

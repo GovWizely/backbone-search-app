@@ -17,6 +17,24 @@ var App = React.createClass({
     children: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   },
+  getInitialState: function() {
+    return {};
+  },
+  componentWillMount: function() {
+    this.handleResize({ currentTarget: window });
+  },
+  componentDidMount: function() {
+    window.addEventListener('resize', this.handleResize);
+  },
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+  handleResize: function(e) {
+    const { innerWidth, innerHeight } = e.currentTarget;
+    this.setState({
+      window: { innerWidth, innerHeight }
+    });
+  },
   handleSubmit: function(form) {
     let query = parseFormData(form);
     const path = `/search?${stringify(query)}`;
@@ -24,7 +42,8 @@ var App = React.createClass({
   },
   render: function() {
     var props = {
-      onSubmit: this.handleSubmit
+      onSubmit: this.handleSubmit,
+      window: this.state.window
     };
     return React.cloneElement(this.props.children, props);
   }

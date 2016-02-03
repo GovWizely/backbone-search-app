@@ -62,7 +62,8 @@ var Search = React.createClass({
     onSubmit: PropTypes.func,
     params: PropTypes.object.isRequired,
     query: PropTypes.object,
-    results: PropTypes.object
+    results: PropTypes.object,
+    window: PropTypes.object
   },
   componentDidMount: function() {
     this.fetch(this.props);
@@ -86,7 +87,7 @@ var Search = React.createClass({
     const resourceType = this.props.params.resource;
   },
   view: function() {
-    const { location, params, results } = this.props;
+    const { location, params, results, window } = this.props;
 
     if (params.resource && !resources.hasOwnProperty(params.resource)) {
       return <div>Invalid resource type.</div>;
@@ -109,7 +110,8 @@ var Search = React.createClass({
           props = {
             query: location.query,
             resource: resources[params.resource],
-            result: results[resource.stateKey]
+            result: results[resource.stateKey],
+            window
           };
       content = <Result {...props} />;
     }

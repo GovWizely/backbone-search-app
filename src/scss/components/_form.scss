@@ -1,5 +1,6 @@
 .#{$module}form {
   @extend .uk-form;
+  margin-bottom: 30px;
 
   hr {
     border-style: none none solid none; // reset border
@@ -13,8 +14,10 @@
   border-collapse: collapse;
 
   >input[type=text] {
-    vertical-align: top;
     display: table-cell;
+    float: left;
+    width: 100%;
+    vertical-align: top;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -31,6 +34,15 @@
       margin-left: -1px;
     }
   }
+
+  .#{$module}keyword-button {
+    background-color: $success-color;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: #FFF;
+    margin-left: -1px;
+    z-index: 2;
+  }
 }
 
 .#{$module}form-expanded {
@@ -46,12 +58,26 @@
     line-height: 50px;
     vertical-align:middle;
     padding-bottom: 36px;
+    font-size: 22px;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      font-size: 45px;
+    }
+  }
+
+  .#{$module}header-version {
+    font-size: 13px;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      font-size: 20px;
+    }
   }
 
   .#{$module}keyword {
     font-size: 20px;
     margin: 0 auto;
-    width: 720px;
+    width: 96%;
+    max-width: 720px;
 
     >input {
       @extend .uk-form-large;
@@ -64,72 +90,46 @@
 }
 
 .#{$module}form-condensed {
-  display: table;
-  padding: 24px 0px 12px 22px;
-  margin-bottom: 24px;
-  vertical-align: middle;
-  width: 98%;
-
-  >div {
-    display: table-cell;
-    padding-right: 22px;
-    width: 250px;
-    vertical-align: middle;
-  }
-
-  >form {
-    display: table-cell;
-  }
-
   .#{$module}header {
-    white-space: nowrap;
-    width: inherit;
+    margin-bottom: 10px;
   }
-
+  form {
+    display: block;
+  }
   .#{$module}keyword {
-    font-size: 14px;
-    max-width: 640px;
-    min-width: 560px;
-  }
-}
-
-.#{$module}keyword {
-  display: table;
-  float: none;
-  display: table;
-
-  input {
-    display: table-cell;
-    float: left;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    width: 100%;
+    width: 96%;
+    margin: 0 auto;
   }
 
-  >span {
-    display: table-cell;
+  @media screen and (min-width: $breakpoint-medium) {
+    display: table;
+    padding: 24px 0px 12px 22px;
+    margin-bottom: 24px;
     vertical-align: middle;
-    white-space: nowrap;
-  }
+    width: 98%;
 
-  .#{$module}keyword-button {
-    background-color: $success-color;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    color: #FFF;
-    margin-left: -1px;
-    z-index: 2;
-  }
-}
-
-@media screen and (min-width: 36em) {
-  .#{$module}form-expanded {
-    .#{$module}header {
-      font-size: 45px;
+    >div {
+      display: table-cell;
+      padding-right: 22px;
+      width: 250px;
+      vertical-align: middle;
     }
 
-    .#{$module}header-version {
-      font-size: 20px;
+    >form {
+      display: table-cell;
+    }
+
+    .#{$module}header {
+      white-space: nowrap;
+      width: inherit;
+      font-size: 18px;
+    }
+
+    .#{$module}keyword {
+      font-size: 14px;
+      max-width: 640px;
+      min-width: 560px;
+      margin: 0;
     }
   }
 }

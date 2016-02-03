@@ -1,7 +1,11 @@
 .#{$module}pagination {
   display: inline-block;
-  padding-left: 0;
-  margin: 20px 0;
+  margin: 0 auto;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    padding-left: 0;
+    margin: 20px 0;
+  }
 
   li {
     display: inline;
@@ -35,6 +39,5 @@
       border-top-right-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }
-
   }
 }

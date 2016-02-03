@@ -16,14 +16,16 @@ import CheckboxTree from '../components/checkbox-tree';
 import Pagination from '../components/pagination';
 import Spinner from '../components/spinner';
 
-function getFilterQuery(query, filters) {
+function getFilterQuery(query, filter, filterState) {
   let filterQuery = assign({}, query, {
-    [filters.name]: filters.items,
+    [filter.name]: filter.items,
     offset: 0
   });
+  if (_.isEmpty(filter.items)) delete filterQuery[filter.name];
+
   delete filterQuery.filter;
-  for (let filter of ['countries', 'industries', 'topics']) {
-    if (filterQuery[filter] && !_.isEmpty(filterQuery[filter])) filterQuery.filter = true;
+  for (let key in filterState.items) {
+    if (filterQuery[key] && !_.isEmpty(filterQuery[key])) filterQuery.filter = true;
   };
   return filterQuery;
 }
@@ -73,6 +75,13 @@ var Search = React.createClass({
       this.fetch(nextProps);
     }
   },
+  disableFiltering: function() {
+    const { results } = this.props;
+    for (let key in results) {
+      if (results[key].isFetching) return true;
+    }
+    return false;
+  },
   fetch: function(props) {
     const { dispatch, location, params } = props;
     const resource = resources[params.resource] || _.map(resources, resource => resource);
@@ -80,7 +89,8 @@ var Search = React.createClass({
   },
   handleFilter: function(filters) {
     const { dispatch, location, params } = this.props;
-    let query = getFilterQuery(location.query, filters);
+    let query = getFilterQuery(location.query, filters, this.props.filters);
+    console.log(location.query);
     dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
   },
   screen: function() {
@@ -118,7 +128,7 @@ var Search = React.createClass({
 
     return [
       <div id="left-pane" key="left-pane">
-        <Filter filters={ this.props.filters } onChange={ this.handleFilter } query={ location.query }/>
+        <Filter disabled={ this.disableFiltering() } filters={ this.props.filters } onChange={ this.handleFilter } query={ location.query } resource={ resources[params.resource] } />
       </div>,
       <div id="content-pane" key="content-pane">
         { content }

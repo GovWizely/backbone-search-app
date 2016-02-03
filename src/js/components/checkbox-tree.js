@@ -8,11 +8,11 @@ function checkbox(item, options) {
     <li role="treeitem" className="list-item" key={ item }>
       <label>
         <input
-           type="checkbox" value={ item } readOnly
+           type="checkbox" value={ item } readOnly disabled={ options.disabled }
            checked={ checked } aria-checked={ checked } />
         <span> { item }</span>
       </label>
-      { options.nested ? list(options.items[item], options) : null }
+      { list(options.items[item], options) }
     </li>
   );
 }
@@ -29,6 +29,7 @@ function list(items, options) {
 var CheckboxTree = React.createClass({
   displayName: 'CheckboxTree',
   propTypes: {
+    disabled: PropTypes.bool,
     itemCssClass: PropTypes.string,
     itemLimit: PropTypes.number,
     items: PropTypes.object.isRequired,

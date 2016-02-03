@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react';
 import CheckboxTree from '../components/checkbox-tree';
 import Spinner from '../components/spinner';
 
-function parseFilterQuery(query) {
+function parseFilterQuery(query, filters) {
   let values = {};
-  ['countries', 'industries', 'topics'].forEach(function(filter) {
+  _.map(filters, function(o, filter) {
     values[filter] = query[filter] ? query[filter] : [];
     if(!_.isArray(values[filter])) values[filter] = [values[filter]];
   });
@@ -15,16 +15,33 @@ function parseFilterQuery(query) {
 var Filter = React.createClass({
   displayName: 'Filter',
   propTypes: {
+    disabled: PropTypes.bool,
     filters: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     query: PropTypes.object
   },
+  getDefaultProps: function() {
+    return {
+      disabled: false
+    };
+  },
   render: function() {
-    const { filters: { isFetching, items }, onChange, query } = this.props;
+    const { disabled, filters: { isFetching, items }, onChange, query } = this.props;
 
     if (!items) return null;
 
-    const values = parseFilterQuery(query);
+    const values = parseFilterQuery(query, items);
+
+    const checkboxTrees = _.map(items, function(filters, key) {
+      return (
+        <CheckboxTree
+           disabled={ disabled }
+           key={ key } name={ key } label={ _.capitalize(key) }
+           items={ filters }
+           onChange={ onChange }
+           values={ values[key] } />
+      );
+    });
 
     const countrySeparator = _.isEmpty(items.countries) ? null : <hr />;
     const industrySeparator = _.isEmpty(items.industries) ? null : <hr />;
@@ -53,7 +70,7 @@ var Filter = React.createClass({
     return (
       <div>
         <h4 className="">Filter Results</h4>
-        { content }
+        { checkboxTrees }
       </div>
     );
   }

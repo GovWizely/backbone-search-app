@@ -35,14 +35,6 @@ const tradeAPI = {
 
 export default {
   trade_events:  Object.assign({}, tradeAPI, {
-    aggregations: {
-      countries: {
-        type: 'array'
-      },
-      sources: {
-        type: 'array'
-      }
-    },
     displayName: 'Trade Event',
     endpoint: endpoint('trade_events'),
     fields: {

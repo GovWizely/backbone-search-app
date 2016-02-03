@@ -35,7 +35,7 @@ var Card = React.createClass({
               const result = formatResult(item, fields);
               return (
                   <li className="mi-list-item" key={ result.key }>
-                    <a target="_blank" href={ result.url }>{ result.title }</a>
+                    <a target="_blank" href={ result.url } dangerouslySetInnerHTML={ { __html: result.title } }></a>
                     <div>
                       <span className="source">{ result.source }</span>
                     </div>

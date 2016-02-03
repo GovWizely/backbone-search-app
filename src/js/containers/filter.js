@@ -33,39 +33,15 @@ var Filter = React.createClass({
     const values = parseFilterQuery(query, items);
 
     const checkboxTrees = _.map(items, function(filters, key) {
-      return (
+      return [
         <CheckboxTree
            disabled={ disabled }
            key={ key } name={ key } label={ _.capitalize(key) }
            items={ filters }
            onChange={ onChange }
            values={ values[key] } />
-      );
+      ];
     });
-
-    const countrySeparator = _.isEmpty(items.countries) ? null : <hr />;
-    const industrySeparator = _.isEmpty(items.industries) ? null : <hr />;
-    const content = isFetching ? <Spinner /> : (
-      <div>
-        <CheckboxTree
-           name="countries" label="Country"
-           items={ items.countries }
-           itemLimit={ 5 }
-           onChange={ onChange }
-           values={ values.countries } />
-        { countrySeparator }
-        <CheckboxTree
-           name="industries" label="Industry"
-           items={ items.industries } nested
-           onChange={ onChange }
-           values={ values.industries } />
-        { industrySeparator }
-        <CheckboxTree
-           name="topics" label="Topic"
-           items={ items.topics } nested
-           onChange={ onChange }
-           values={ values.topics } />
-      </div>);
 
     return (
       <div>

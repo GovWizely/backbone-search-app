@@ -67,6 +67,11 @@ input[type=text] {
     width: 267px;
     border-right: 1px solid $border-color;
   }
+
+  .mi-checkbox-tree {
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 12px;
+  }
 }
 
 #content-pane {

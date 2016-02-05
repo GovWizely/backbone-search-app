@@ -1,5 +1,7 @@
-export default Object.assign(
+import assign from 'object-assign';
+
+export default assign(
   {},
-  require('./resources/article.js').default,
-  require('./resources/trade.js').default
+  require('./resources/article').default,
+  require('./resources/trade').default
 );

@@ -28,13 +28,13 @@ var Card = React.createClass({
     const { displayedItems, fields, id, items, label, url } = this.props;
     return (
       <section className="mi-card">
-        <h4 className="title uk-text-muted">{ label }</h4>
+        <h4 className="title">{ label }</h4>
         <ul className="mi-list">
           {
             items.slice(0, displayedItems).map(function(item, index) {
               const result = formatResult(item, fields);
               return (
-                  <li className="mi-list-item" key={ result.key }>
+                  <li className="mi-list-item" key={ index }>
                     <a target="_blank" href={ result.url } dangerouslySetInnerHTML={ { __html: result.title } }></a>
                     <div>
                       <span className="source">{ result.source }</span>

@@ -45,7 +45,10 @@ function noMatch(results) {
   return true;
 }
 
-function showLoading(results) {
+function showLoading(results, key=null) {
+  if (key && results[key].isFetching) return true;
+  if (key && !results[key].isFetching) return false;
+
   for (let resource in results) {
     let result = results[resource];
     if (!result.isFetching) {
@@ -90,7 +93,6 @@ var Search = React.createClass({
   handleFilter: function(filters) {
     const { dispatch, location, params } = this.props;
     let query = getFilterQuery(location.query, filters, this.props.filters);
-    console.log(location.query);
     dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
   },
   screen: function() {
@@ -98,7 +100,6 @@ var Search = React.createClass({
   },
   view: function() {
     const { location, params, results, window } = this.props;
-
     if (params.resource && !resources.hasOwnProperty(params.resource)) {
       return <div>Invalid resource type.</div>;
     }
@@ -107,7 +108,7 @@ var Search = React.createClass({
       return <div>Your search did not match any documents.</div>;
     }
 
-    if (showLoading(results)) {
+    if (showLoading(results, params.resource)) {
       return <Spinner message="Searching..." />;
     }
 

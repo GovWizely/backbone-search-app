@@ -1,4 +1,6 @@
+import assign from 'object-assign';
 import * as taxonomy from '../utils/taxonomy';
+import { setup } from '../utils/resource-helper';
 
 function transformParams(params) {
   if (params.countries) {
@@ -22,42 +24,125 @@ function endpoint(path) {
   return `https://api.trade.gov/${path}/search?api_key=${tradeAPIKey}`;
 }
 
-const tradeAPI = {
-  aggregations: {
-    countries: { type: 'array' },
-    sources: { type: 'array' }
-  },
-  metadata: ['total', 'offset', 'sources_used', 'search_performed_at'],
-  permittedParams: ['q', 'countries', 'industries', 'sources', 'start_date', 'end_date', 'size', 'offset'],
-  transformParams,
-  transformResponse
-};
+function setupTradeAPI(key, attributes) {
+  const tradeAPI = {
+    aggregations: {
+      countries: { type: 'array' },
+      sources: { type: 'array' }
+    },
+    endpoint: endpoint(key),
+    metadata: ['total', 'offset', 'sources_used', 'search_performed_at'],
+    permittedParams: ['q', 'countries', 'industries', 'sources', 'start_date', 'end_date', 'size', 'offset'],
+    transformParams,
+    transformResponse
+  };
+  return setup(key, assign({}, tradeAPI, attributes));
+}
 
-export default {
-  trade_events:  Object.assign({}, tradeAPI, {
-    displayName: 'Trade Event',
-    endpoint: endpoint('trade_events'),
+export default assign(
+  {},
+  setupTradeAPI('trade_events', {
     fields: {
       key: ['id', 'event_name'],
       snippet: ['snippet'],
       source: ['source'],
       title: ['event_name'],
       url: ['url', 'registration_link']
-    },
-    pathname: 'trade_events',
-    stateKey: 'tradeEvent'
+    }
   }),
-  trade_leads: Object.assign({}, tradeAPI, {
-    displayName: 'Trade Lead',
-    endpoint: endpoint('trade_leads'),
+
+  setupTradeAPI('trade_leads', {
     fields: {
-      key: ['id', 'title', 'description'],
+      key: ['id'],
       snippet: ['snippet'],
       source: ['source'],
       title: ['title', 'description'],
       url: ['url']
-    },
-    pathname: 'trade_leads',
-    stateKey: 'tradeLead'
+    }
+  }),
+
+  setupTradeAPI('consolidated_screening_list', {
+    fields: {
+      key: ['name'],
+      source: ['source'],
+      title: ['title', 'name'],
+      url: ['source_list_url']
+    }
+  }),
+
+  setupTradeAPI('market_research_library', {
+    fields: {
+      key: ['id'],
+      snippet: ['description'],
+      source: ['source'],
+      title: ['title', 'name'],
+      url: ['url']
+    }
+  }),
+
+  setupTradeAPI('tariff_rates', {
+    fields: {
+      key: ['source_id'],
+      snippet: ['rule_text'],
+      source: ['source'],
+      title: ['subheading_description'],
+      url: ['link_url']
+    }
+  }),
+
+  setupTradeAPI('ita_faqs', {
+    fields: {
+      key: ['id'],
+      snippet: ['answer'],
+      title: ['question']
+    }
+  }),
+
+  setupTradeAPI('ita_office_locations', {
+    fields: {
+      key: ['id'],
+      snippet: ['address'],
+      title: ['office_name']
+    }
+  }),
+  setupTradeAPI('trade_articles', {
+    fields: {
+      key: ['id'],
+      snippet: ['summary'],
+      source: ['source_agencies'],
+      title: ['title'],
+      url: ['trade_url']
+    }
+  }),
+  setupTradeAPI('ita_zipcode_to_post', {
+    fields: {
+      key: ['zip_code'],
+      snippet: ['zip_city'],
+      source: ['state'],
+      title: ['zip_code']
+    }
+  }),
+  setupTradeAPI('business_service_providers', {
+    fields: {
+      key: ['company_name'],
+      snippet: ['company_description'],
+      title: ['company_name'],
+      url: ['company_website']
+    }
+  }),
+  setupTradeAPI('ita_taxonomies', {
+    fields: {
+      key: ['id'],
+      snippet: ['narrower_terms'],
+      title: ['name']
+    }
+  }),
+  setupTradeAPI('de_minimis', {
+    endpoint: endpoint('v1/de_minimis'),
+    fields: {
+      key: ['country'],
+      snippet: ['notes'],
+      title: ['country_name']
+    }
   })
-};
+);

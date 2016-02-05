@@ -9,6 +9,7 @@ const Index = React.createClass({
   },
   render: function() {
     const props = {
+      focused: true,
       onSubmit: this.props.onSubmit };
     return <Form {...props} />;
   }

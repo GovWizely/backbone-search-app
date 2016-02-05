@@ -9,16 +9,18 @@ export const Form =  React.createClass({
   propTypes: {
     expanded: PropTypes.bool.isRequired,
     fields: PropTypes.object.isRequired,
+    focused: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func
   },
   getDefaultProps: function() {
     return {
-      expanded: true
+      expanded: true,
+      focused: false
     };
   },
   render: function() {
-    const { expanded, fields: { q }, handleSubmit } = this.props;
+    const { expanded, fields: { q }, focused, handleSubmit } = this.props;
     const css = expanded ? 'mi-form mi-form-expanded' : 'mi-form mi-form-condensed';
     return (
       <div className={ css }>
@@ -28,7 +30,7 @@ export const Form =  React.createClass({
 
         <form onSubmit={ handleSubmit }>
           <div className="mi-keyword">
-            <input type="text" placeholder="Keyword" { ...q } aria-label="Enter keyword" />
+            <input autoFocus={ focused } type="text" placeholder="Keyword" { ...q } aria-label="Enter keyword" />
             <span>
               <button className="uk-button uk-button-success" onClick={ handleSubmit }>
                 <i className="mi-icon mi-icon-search" aria-label="Search"></i>

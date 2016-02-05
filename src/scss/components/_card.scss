@@ -1,15 +1,16 @@
 .#{$module}card {
-  min-height: 450px;
-  max-width: 400px;
-  min-width: 400px;
-  position: relative;
+  border: 1px solid $border-color;
+  display: block;
   float: left;
-  width: 50%;
-  padding: 10px;
-  margin-right: 45px;
-  margin-bottom: 55px;
+  margin: 16px;
+  min-height: 400px;
+  padding: 16px;
+  position: relative;
+  width: 450px;
 
-  border: 1px solid #eee;
+  @media screen and (min-width: $breakpoint-medium) {
+    display: table-cell;
+  }
 
   .title {
     margin: 0px 0px 21px 22px;
@@ -23,5 +24,16 @@
 
   .source {
     color: #006621;
+    margin: 0;
+  }
+
+  .snippet {
+    height: 22px;
+    overflow: hidden;
+    margin: 5px;
+  }
+
+  .#{$module}list-item {
+    padding: 8px 4px;
   }
 }

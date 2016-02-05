@@ -27,6 +27,6 @@ describe('components/ResultListItem', () => {
     let { output } = setup();
 
     expect(output.type).to.equal('article');
-    expect(output.props.className).to.equal('mi-result-list-item');
+    expect(output.props.className).to.equal('mi-result-item');
   });
 });

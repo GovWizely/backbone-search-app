@@ -6,22 +6,26 @@ import { findFirst } from '../utils/view-helper';
 export default React.createClass({
   displayName: 'ResultList',
   propTypes: {
-    fields: PropTypes.object.isRequired,
+    displayedItems: PropTypes.number,
+    formatter: PropTypes.func,
     items: PropTypes.array.isRequired
   },
   getDefaultProps: function() {
     return {
+      displayedItems: -1,
       items: []
     };
   },
   render: function() {
-    const { items, fields } = this.props;
+    const { displayedItems, formatter, items } = this.props;
+    const slicedItems = displayedItems < 0 ? items : items.slice(0, displayedItems);
     return (
-      <section className="mi-result-list">
-        { items.map(function(item, index) {
-          return <ResultListItem key={ index } item={ item } fields={ fields }/>;
+      <ul className="mi-list mi-result-list">
+        { slicedItems.map(function(item, index) {
+          if (formatter) item = formatter(item);
+          return <ResultListItem key={ index } item={ item } />;
         }) }
-      </section>
+      </ul>
     );
   }
 });

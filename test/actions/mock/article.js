@@ -1,10 +1,10 @@
 import nock from 'nock';
 import { format, parse } from 'url';
-import r from '../../../src/js/resources/article';
+import apis from '../../../src/js/apis';
 
-const resource = r.articles;
-const { host, pathname, protocol } = parse(resource.endpoint);
-const response = require(`../response/${resource.stateKey}.json`);
+const api = apis.articles;
+const { host, pathname, protocol } = parse(api.endpoint);
+const response = require(`../response/${api.uniqueId}.json`);
 
 export function mockArticlesAPI() {
   nock(format({ host, protocol }))

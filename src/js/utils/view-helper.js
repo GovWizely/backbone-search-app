@@ -20,3 +20,7 @@ export function formatResult(result, fields) {
     url: findFirst(result, fields.url)
   };
 }
+
+export function createResultFormatter(fields) {
+  return results => formatResult(results, fields);
+}

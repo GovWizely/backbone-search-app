@@ -1,6 +1,6 @@
-import { setup } from '../utils/resource-helper';
+import { defineAPI } from './utils.js';
 
-export default setup('articles', {
+module.exports = defineAPI('articles', {
   aggregations: {
     countries: { type: 'array' },
     industries: { type: 'tree' },

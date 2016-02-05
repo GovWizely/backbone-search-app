@@ -7,8 +7,7 @@ const loggerMiddleware = createLogger();
 
 const wrapperCreateStore = compose(
   applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware // Must be the last middleware to be included.
+    thunkMiddleware
   )
 )(createStore);
 

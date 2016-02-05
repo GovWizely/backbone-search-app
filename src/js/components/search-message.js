@@ -4,8 +4,8 @@ import React, { PropTypes } from 'react';
 var SearchMessage = React.createClass({
   displayName: 'SearchMessage',
   propTypes: {
+    apiName: PropTypes.string,
     keyword: PropTypes.string,
-    resourceName: PropTypes.string,
     total: PropTypes.number
   },
   message: function() {
@@ -14,7 +14,7 @@ var SearchMessage = React.createClass({
     let msg = '';
     msg = msg.concat(this.props.total ? 'results' : 'result');
     msg = msg.concat(' from the ');
-    msg = msg.concat(this.props.resourceName);
+    msg = msg.concat(this.props.apiName);
     msg = msg.concat(' were found');
 
     if (!_.isEmpty(this.props.keyword)) {

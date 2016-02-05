@@ -14,9 +14,7 @@
 @import "./components/button";
 @import "./components/checkbox-tree";
 @import "./components/pagination";
-@import "./components/result-list";
-@import "./components/result-list-item";
-
+@import "./components/result-item";
 
 html {
   position: relative;
@@ -78,6 +76,10 @@ input[type=text] {
   @media screen and (min-width: $breakpoint-medium) {
     margin-left: 300px;
   }
+}
+
+.mi-deck {
+  display: table;
 }
 
 .mi-result {

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
-import resources from '../resources';
+import apis from '../apis';
 import { fetchResults } from '../actions/result';
 import Deck from './deck';
 import Filter from './filter';
@@ -36,8 +36,8 @@ function shouldFetch(location, nextLocation) {
 }
 
 function noMatch(results) {
-  for (let resource in results) {
-    let result = results[resource];
+  for (let api in results) {
+    let result = results[api];
     if (result.isFetching || (result.metadata && result.metadata.total > 0)) {
       return false;
     }
@@ -49,8 +49,8 @@ function showLoading(results, key=null) {
   if (key && results[key].isFetching) return true;
   if (key && !results[key].isFetching) return false;
 
-  for (let resource in results) {
-    let result = results[resource];
+  for (let api in results) {
+    let result = results[api];
     if (!result.isFetching) {
       return false;
     }
@@ -87,8 +87,8 @@ var Search = React.createClass({
   },
   fetch: function(props) {
     const { dispatch, location, params } = props;
-    const resource = resources[params.resource] || _.map(resources, resource => resource);
-    dispatch(fetchResults(location.query, resource));
+    const api = apis[params.api] || _.map(apis, api => api);
+    dispatch(fetchResults(location.query, api));
   },
   handleFilter: function(filters) {
     const { dispatch, location, params } = this.props;
@@ -96,32 +96,32 @@ var Search = React.createClass({
     dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
   },
   screen: function() {
-    const resourceType = this.props.params.resource;
+    const apiType = this.props.params.api;
   },
   view: function() {
     const { location, params, results, window } = this.props;
-    if (params.resource && !resources.hasOwnProperty(params.resource)) {
-      return <div>Invalid resource type.</div>;
+    if (params.api && !apis.hasOwnProperty(params.api)) {
+      return <div>Invalid api type.</div>;
     }
 
     if (noMatch(results)) {
       return <div>Your search did not match any documents.</div>;
     }
 
-    if (showLoading(results, params.resource)) {
+    if (showLoading(results, params.api)) {
       return <Spinner message="Searching..." />;
     }
 
     let content = null;
-    if (!params.resource) {
-      content = <Deck query={ location.query } resources={ resources} results={ results } />;
+    if (!params.api) {
+      content = <Deck query={ location.query } apis={ apis} results={ results } />;
     } else {
-      let resource = resources[params.resource],
-          result = results[resource.stateKey],
+      let api = apis[params.api],
+          result = results[api.uniqueId],
           props = {
             query: location.query,
-            resource: resources[params.resource],
-            result: results[resource.stateKey],
+            api: apis[params.api],
+            result: results[api.uniqueId],
             window
           };
       content = <Result {...props} />;
@@ -129,7 +129,7 @@ var Search = React.createClass({
 
     return [
       <div id="left-pane" key="left-pane">
-        <Filter disabled={ this.disableFiltering() } filters={ this.props.filters } onChange={ this.handleFilter } query={ location.query } resource={ resources[params.resource] } />
+        <Filter disabled={ this.disableFiltering() } filters={ this.props.filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
       </div>,
       <div id="content-pane" key="content-pane">
         { content }

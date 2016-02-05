@@ -39,66 +39,66 @@ function rejectEmptyData(responses) {
   return responses.filter(response => _.get(response, 'metadata.total') > 0);
 }
 
-function requestResults(resource) {
+function requestResults(api) {
   return {
     type: REQUEST_RESULTS,
-    meta: resource.stateKey
+    meta: api.uniqueId
   };
 }
 
-function receiveResults(resource, response) {
+function receiveResults(api, response) {
   return {
     type: RECEIVE_RESULTS,
-    meta: resource.stateKey,
+    meta: api.uniqueId,
     payload: response
   };
 }
 
-function failureResults(resource, e) {
+function failureResults(api, e) {
   return {
     type: FAILURE_RESULTS,
     error: true,
-    meta: resource.stateKey,
+    meta: api.uniqueId,
     payload: e
   };
 }
 
-function generateFetch(resource, dispatch, getState) {
+function generateFetch(api, dispatch, getState) {
   return function(query) {
-    if (getState().results[resource.stateKey].isFetching) {
+    if (getState().results[api.uniqueId].isFetching) {
       dispatch(noAction());
       return null;
     }
     let params = {};
     if (query) {
-      params = formatParams(query, resource.permittedParams);
+      params = formatParams(query, api.permittedParams);
     }
-    if (resource.transformParams) {
-      params = resource.transformParams(params);
+    if (api.transformParams) {
+      params = api.transformParams(params);
     }
     if (!params.q) params.q = '';
 
-    dispatch(requestResults(resource));
-    return fetch(formatEndpoint(resource.endpoint, params))
+    dispatch(requestResults(api));
+    return fetch(formatEndpoint(api.endpoint, params))
       .then(response => response.json())
-      .then(json => resource.transformResponse ? resource.transformResponse(json): json)
+      .then(json => api.transformResponse ? api.transformResponse(json): json)
       .then(json => {
         const data = {
-          aggregations: formatAggregations(json.aggregations, resource.aggregations),
-          metadata: json.metadata || formatMetadata(json, resource.metadata),
+          aggregations: formatAggregations(json.aggregations, api.aggregations),
+          metadata: json.metadata || formatMetadata(json, api.metadata),
           results: json.results
         };
-        dispatch(receiveResults(resource, data));
+        dispatch(receiveResults(api, data));
         return data;
       })
-      .catch(e => dispatch(failureResults(resource, e)));
+      .catch(e => dispatch(failureResults(api, e)));
   };
 }
 
-export function fetchResults(query, resources) {
-  resources = _.isArray(resources) ? resources : [resources];
+export function fetchResults(query, apis) {
+  apis = _.isArray(apis) ? apis : [apis];
   return (dispatch, getState) => {
-    const fetches = resources.map(resource => generateFetch(resource, dispatch, getState));
+    const fetches = apis.map(api => generateFetch(api, dispatch, getState));
     const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
     if (updateFilter) dispatch(requestFilters());
 

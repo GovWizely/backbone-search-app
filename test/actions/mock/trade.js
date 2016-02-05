@@ -1,10 +1,10 @@
 import nock from 'nock';
 import { format, parse } from 'url';
-import r from '../../../src/js/resources/trade';
+import apis from '../../../src/js/apis';
 
 export function mockTradeEventsAPI() {
-  const resource = r.trade_events;
-  const { host, pathname, protocol, query } = parse(resource.endpoint, true);
+  const api = apis.trade_events;
+  const { host, pathname, protocol, query } = parse(api.endpoint, true);
   const response = require('../response/trade_event.json');
 
   nock(format({ host, protocol }))
@@ -14,8 +14,8 @@ export function mockTradeEventsAPI() {
 }
 
 export function mockTradeLeadsAPI() {
-  const resource = r.trade_leads;
-  const { host, pathname, protocol, query } = parse(resource.endpoint, true);
+  const api = apis.trade_leads;
+  const { host, pathname, protocol, query } = parse(api.endpoint, true);
   const response = require('../response/trade_lead.json');
 
   nock(format({ host, protocol }))

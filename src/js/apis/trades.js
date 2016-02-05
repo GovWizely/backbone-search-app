@@ -1,6 +1,6 @@
 import assign from 'object-assign';
 import * as taxonomy from '../utils/taxonomy';
-import { setup } from '../utils/resource-helper';
+import { defineAPI } from './utils';
 
 function transformParams(params) {
   if (params.countries) {
@@ -24,7 +24,7 @@ function endpoint(path) {
   return `https://api.trade.gov/${path}/search?api_key=${tradeAPIKey}`;
 }
 
-function setupTradeAPI(key, attributes) {
+function defineTradeAPI(key, attributes) {
   const tradeAPI = {
     aggregations: {
       countries: { type: 'array' },
@@ -36,12 +36,12 @@ function setupTradeAPI(key, attributes) {
     transformParams,
     transformResponse
   };
-  return setup(key, assign({}, tradeAPI, attributes));
+  return defineAPI(key, assign({}, tradeAPI, attributes));
 }
 
-export default assign(
+module.exports = assign(
   {},
-  setupTradeAPI('trade_events', {
+  defineTradeAPI('trade_events', {
     fields: {
       key: ['id', 'event_name'],
       snippet: ['snippet'],
@@ -51,17 +51,17 @@ export default assign(
     }
   }),
 
-  setupTradeAPI('trade_leads', {
+  defineTradeAPI('trade_leads', {
     fields: {
       key: ['id'],
-      snippet: ['snippet'],
+      snippet: ['description'],
       source: ['source'],
       title: ['title', 'description'],
       url: ['url']
     }
   }),
 
-  setupTradeAPI('consolidated_screening_list', {
+  defineTradeAPI('consolidated_screening_list', {
     fields: {
       key: ['name'],
       source: ['source'],
@@ -70,7 +70,7 @@ export default assign(
     }
   }),
 
-  setupTradeAPI('market_research_library', {
+  defineTradeAPI('market_research_library', {
     fields: {
       key: ['id'],
       snippet: ['description'],
@@ -80,7 +80,7 @@ export default assign(
     }
   }),
 
-  setupTradeAPI('tariff_rates', {
+  defineTradeAPI('tariff_rates', {
     fields: {
       key: ['source_id'],
       snippet: ['rule_text'],
@@ -90,7 +90,7 @@ export default assign(
     }
   }),
 
-  setupTradeAPI('ita_faqs', {
+  defineTradeAPI('ita_faqs', {
     fields: {
       key: ['id'],
       snippet: ['answer'],
@@ -98,14 +98,14 @@ export default assign(
     }
   }),
 
-  setupTradeAPI('ita_office_locations', {
+  defineTradeAPI('ita_office_locations', {
     fields: {
       key: ['id'],
       snippet: ['address'],
       title: ['office_name']
     }
   }),
-  setupTradeAPI('trade_articles', {
+  defineTradeAPI('trade_articles', {
     fields: {
       key: ['id'],
       snippet: ['summary'],
@@ -114,7 +114,7 @@ export default assign(
       url: ['trade_url']
     }
   }),
-  setupTradeAPI('ita_zipcode_to_post', {
+  defineTradeAPI('ita_zipcode_to_post', {
     fields: {
       key: ['zip_code'],
       snippet: ['zip_city'],
@@ -122,7 +122,7 @@ export default assign(
       title: ['zip_code']
     }
   }),
-  setupTradeAPI('business_service_providers', {
+  defineTradeAPI('business_service_providers', {
     fields: {
       key: ['company_name'],
       snippet: ['company_description'],
@@ -130,14 +130,14 @@ export default assign(
       url: ['company_website']
     }
   }),
-  setupTradeAPI('ita_taxonomies', {
+  defineTradeAPI('ita_taxonomies', {
     fields: {
       key: ['id'],
       snippet: ['narrower_terms'],
       title: ['name']
     }
   }),
-  setupTradeAPI('de_minimis', {
+  defineTradeAPI('de_minimis', {
     endpoint: endpoint('v1/de_minimis'),
     fields: {
       key: ['country'],

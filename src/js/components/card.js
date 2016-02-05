@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react';
 
 import { formatResult } from '../utils/view-helper';
+import ResultList from './result-list';
 
 var Card = React.createClass({
   displayName: 'Card',
   propTypes: {
     displayedItems: PropTypes.number,
-    fields: PropTypes.object.isRequired,
+    formatter: PropTypes.func,
     id: PropTypes.string.isRequired,
     items: PropTypes.array.isRequired,
     label: PropTypes.string,
@@ -15,7 +16,7 @@ var Card = React.createClass({
   },
   getDefaultProps: function() {
     return {
-      displayedItems: 5,
+      displayedItems: 3,
       items: [],
       label: 'Untitled'
     };
@@ -25,25 +26,11 @@ var Card = React.createClass({
     onClick(e, id);
   },
   render: function() {
-    const { displayedItems, fields, id, items, label, url } = this.props;
+    const { displayedItems, formatter, id, items, label, url } = this.props;
     return (
       <section className="mi-card">
         <h4 className="title">{ label }</h4>
-        <ul className="mi-list">
-          {
-            items.slice(0, displayedItems).map(function(item, index) {
-              const result = formatResult(item, fields);
-              return (
-                  <li className="mi-list-item" key={ index }>
-                    <a target="_blank" href={ result.url } dangerouslySetInnerHTML={ { __html: result.title } }></a>
-                    <div>
-                      <span className="source">{ result.source }</span>
-                    </div>
-                  </li>
-              );
-            })
-          }
-        </ul>
+        <ResultList displayedItems={ 3 } formatter={ formatter } items={ items } />
         <div className="show-more">
           <a href={ url }>See More { label }</a>
         </div>

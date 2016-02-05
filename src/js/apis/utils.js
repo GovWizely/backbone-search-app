@@ -1,4 +1,5 @@
 import assign from 'object-assign';
+import path from 'path';
 import { snakeCase, startCase } from 'lodash';
 
 function verbatim(value) {
@@ -16,9 +17,9 @@ function createTypeChecker(expectedType) {
     if (Array.isArray(value)) actualType = 'array';
     if (actualType === expectedType) return null;
 
-    return new Error(
+    throw new Error(
       `Invalid \`${attrName}\` of type \`${actualType}\` ` +
-      `specified in resource \`${key}\`, expected \`${expectedType}\`.`
+      `specified in API \`${key}\`, expected \`${expectedType}\`.`
     );
   };
 }
@@ -57,7 +58,11 @@ const ATTRIBUTES = {
     defaultValue: ['q'],
     type: AttributeTypes.array
   },
-  stateKey: {
+  uniqueId: {
+    derive: verbatim,
+    type: AttributeTypes.string
+  },
+  template: {
     derive: verbatim,
     type: AttributeTypes.string
   },
@@ -72,11 +77,11 @@ const ATTRIBUTES = {
 };
 
 let uniqueKeys = [];
-export function setup(key, attributes) {
+export function defineAPI(key, attributes) {
   if (attributes.disabled) return null;
   if (uniqueKeys.indexOf(key)> 0) {
     throw new Error(
-      `Duplicate resource key found: \`${key}\``
+      `Duplicated API found: \`${key}\``
     );
   }
   let config = assign({}, attributes);
@@ -85,8 +90,8 @@ export function setup(key, attributes) {
     let attr = ATTRIBUTES[attrName];
 
     if (attr.isRequired && !config[attrName]) {
-      return new Error(
-        `Required attribute \`${attrName}\` was not specified for resource \`${key}\`.`
+      throw new Error(
+        `Required attribute \`${attrName}\` was not specified for API \`${key}\`.`
       );
     }
 

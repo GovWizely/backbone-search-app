@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import assign from 'object-assign';
-import resources from './resources';
+import apis from './apis';
 
 export default {
   filters: {
@@ -8,8 +8,8 @@ export default {
     items: {}
   },
   results: _.reduce(
-    resources, function(output, value) {
-      output[value.stateKey] = {
+    apis, function(output, value) {
+      output[value.uniqueId] = {
         isFetching: false,
         items: [],
         metadata: {},

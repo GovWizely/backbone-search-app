@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import nock from 'nock';
-import resources from '../../src/js/resources';
+import apis from '../../src/js/apis';
 import initialState from '../../src/js/initial-state';
 import { REQUEST_FILTERS, RECEIVE_FILTERS } from '../../src/js/actions/filter';
 import { fetchResults, REQUEST_RESULTS, RECEIVE_RESULTS } from '../../src/js/actions/result';
@@ -23,40 +23,40 @@ describe('result', () => {
     context('when fetching a resource', () => {
       mockArticlesAPI();
 
-      const resource = resources.articles;
+      const apis = apis.articles;
 
       it('create RECEIVE_RESULTS & RECEIVE_FILTERS when fetch done', done => {
         const expectedActions = [
           { type: REQUEST_FILTERS },
-          { type: REQUEST_RESULTS, meta: resource.stateKey },
-          { type: RECEIVE_RESULTS, meta: resource.stateKey, payload: payload.article },
+          { type: REQUEST_RESULTS, meta: apis.uniqueId },
+          { type: RECEIVE_RESULTS, meta: apis.uniqueId, payload: payload.article },
           { type: RECEIVE_FILTERS, payload: payload.filter }
         ];
         const store = mockStore(initialState, expectedActions, done);
-        store.dispatch(fetchResults({ q: '' }, resource));
+        store.dispatch(fetchResults({ q: '' }, apis));
       });
     });
 
-    context('when fetching multiple resources', () => {
+    context('when fetching multiple apiss', () => {
       mockArticlesAPI();
       mockTradeEventsAPI();
       mockTradeLeadsAPI();
 
-      const multiResources = [resources.articles, resources.trade_events, resources.trade_leads];
+      const multiApis = [apis.articles, apis.trade_events, apis.trade_leads];
 
       it('create RECEIVE_RESULTS & RECEIVE_FILTERS when fetches done', done => {
         const expectedActions = [
           { type: REQUEST_FILTERS },
-          { type: REQUEST_RESULTS, meta: multiResources[0].stateKey },
-          { type: REQUEST_RESULTS, meta: multiResources[1].stateKey },
-          { type: REQUEST_RESULTS, meta: multiResources[2].stateKey },
-          { type: RECEIVE_RESULTS, meta: multiResources[0].stateKey, payload: payload.article },
-          { type: RECEIVE_RESULTS, meta: multiResources[1].stateKey, payload: payload.trade_event },
-          { type: RECEIVE_RESULTS, meta: multiResources[2].stateKey, payload: payload.trade_lead },
+          { type: REQUEST_RESULTS, meta: multiApis[0].uniqueId },
+          { type: REQUEST_RESULTS, meta: multiApis[1].uniqueId },
+          { type: REQUEST_RESULTS, meta: multiApis[2].uniqueId },
+          { type: RECEIVE_RESULTS, meta: multiApis[0].uniqueId, payload: payload.article },
+          { type: RECEIVE_RESULTS, meta: multiApis[1].uniqueId, payload: payload.trade_event },
+          { type: RECEIVE_RESULTS, meta: multiApis[2].uniqueId, payload: payload.trade_lead },
           { type: RECEIVE_FILTERS, payload: payload.consolidated_filter }
         ];
         const store = mockStore(initialState, expectedActions, done);
-        store.dispatch(fetchResults({ q: '' }, multiResources));
+        store.dispatch(fetchResults({ q: '' }, multiApis));
       });
     });
   });

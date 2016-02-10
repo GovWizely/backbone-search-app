@@ -36,7 +36,7 @@ var Filter = React.createClass({
       return [
         <CheckboxTree
            disabled={ disabled }
-           key={ key } name={ key } label={ _.capitalize(key) }
+           key={ key } name={ key } label={ _.startCase(key) }
            items={ filters }
            onChange={ onChange }
            values={ values[key] } />

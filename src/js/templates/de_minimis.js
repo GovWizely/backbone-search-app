@@ -7,6 +7,9 @@ export const de_minimis = {
     return (
       <article className="mi-de-minimis mi-result-item">
         <header>{ country_name }({country})</header>
+        <p>De Minimis: { de_minimis_currency } { de_minimis_value }</p>
+        <p>VAT: { vat_currency ? `${vat_currency} ${vat_amount}` : 'null' }</p>
+        <p>{ notes }</p>
       </article>
     );
   },

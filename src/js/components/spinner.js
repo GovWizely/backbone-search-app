@@ -26,22 +26,21 @@ const Circle = (
   </div>
 );
 
-export default React.createClass({
-  displayName: 'Spinner',
-  propTypes: {
-    message: PropTypes.string
-  },
-  getDefaultProps: function() {
-   return {
-     message: 'Loading...'
-   };
-  },
-  render: function() {
-    return (
-      <div>
-        { Circle }
-        <div className="uk-text-center">{ this.props.message }</div>
-      </div>
-    );
-  }
-});
+var Spinner = ({ message }) => {
+  return (
+    <div>
+      { Circle }
+      <div className="uk-text-center">{ message }</div>
+    </div>
+  );
+};
+
+Spinner.propTypes = {
+  message: PropTypes.string
+};
+
+Spinner.DefaultProps = {
+  message: 'Loading...'
+};
+
+export default Spinner;

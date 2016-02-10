@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { stringify } from 'querystring';
 
 import Card from '../components/card';
-import { createResultFormatter } from '../utils/view-helper';
+import { template } from '../templates';
 
 var Deck = React.createClass({
   displayName: 'Deck',
@@ -17,17 +17,17 @@ var Deck = React.createClass({
     const children = _.map(apis, function(api) {
       const { displayName, fields, pathname, uniqueId } = api;
       const { isFetching, items } = results[uniqueId];
-      const formatter = createResultFormatter(fields);
+      const _template = template(api.uniqueId).CardItem;
       const url = `#/search/${pathname}?${stringify(query)}`;
       if (isFetching || !items.length) return null;
       return [
         <Card
            id={ uniqueId }
-           formatter={ formatter }
            items={ items }
            key={ uniqueId }
            label={ displayName }
-           url={ url }/>
+           template={ _template }
+           url={ url } />
       ];
     });
 

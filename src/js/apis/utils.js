@@ -58,14 +58,6 @@ const ATTRIBUTES = {
     defaultValue: ['q'],
     type: AttributeTypes.array
   },
-  uniqueId: {
-    derive: verbatim,
-    type: AttributeTypes.string
-  },
-  template: {
-    derive: verbatim,
-    type: AttributeTypes.string
-  },
   transformParams: {
     isRequired: false,
     type: AttributeTypes.func
@@ -73,15 +65,19 @@ const ATTRIBUTES = {
   transformResponse: {
     isRequired: false,
     type: AttributeTypes.func
+  },
+  uniqueId: {
+    derive: verbatim,
+    type: AttributeTypes.string
   }
 };
 
-let uniqueKeys = [];
-export function defineAPI(key, attributes) {
+let uniqueIds = [];
+export function defineAPI(uniqueId, attributes) {
   if (attributes.disabled) return null;
-  if (uniqueKeys.indexOf(key)> 0) {
+  if (uniqueIds.indexOf(uniqueId)> 0) {
     throw new Error(
-      `Duplicated API found: \`${key}\``
+      `Duplicated API found: \`${uniqueId}\``
     );
   }
   let config = assign({}, attributes);
@@ -91,13 +87,13 @@ export function defineAPI(key, attributes) {
 
     if (attr.isRequired && !config[attrName]) {
       throw new Error(
-        `Required attribute \`${attrName}\` was not specified for API \`${key}\`.`
+        `Required attribute \`${attrName}\` was not specified for API \`${uniqueId}\`.`
       );
     }
 
     if (!config[attrName]) {
       if (attr.derive) {
-        config[attrName] = attr.derive(key);
+        config[attrName] = attr.derive(uniqueId);
       } else if (attr.defaultValue) {
         config[attrName] = attr.defaultValue;
       } else {
@@ -105,10 +101,10 @@ export function defineAPI(key, attributes) {
       }
     }
 
-    let typeMismatched = attr.type(key, attrName, config[attrName]);
+    let typeMismatched = attr.type(uniqueId, attrName, config[attrName]);
     if (typeMismatched) return typeMismatched;
   }
 
-  uniqueKeys.push(key);
-  return { [key]: config };
+  uniqueIds.push(uniqueId);
+  return { [uniqueId]: config };
 }

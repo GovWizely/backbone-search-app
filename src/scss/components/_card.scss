@@ -3,18 +3,10 @@
   display: block;
   float: left;
   margin: 16px;
-  min-height: 400px;
+  height: 520px;
   padding: 16px;
   position: relative;
   width: 450px;
-
-  @media screen and (min-width: $breakpoint-medium) {
-    display: table-cell;
-  }
-
-  .title {
-    margin: 0px 0px 21px 22px;
-  }
 
   .show-more {
     font-size: 18px;
@@ -22,18 +14,11 @@
     bottom: 12px;
   }
 
-  .source {
-    color: #006621;
-    margin: 0;
-  }
-
-  .snippet {
-    height: 22px;
-    overflow: hidden;
-    margin: 5px;
-  }
-
   .#{$module}list-item {
     padding: 8px 4px;
+  }
+
+  p {
+    margin: 0;
   }
 }

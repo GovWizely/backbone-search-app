@@ -1,23 +1,13 @@
-var React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
-  displayName: 'Header',
-  propTypes: {
-    cssClass: React.PropTypes.string,
-    onClick: React.PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      cssClass: ''
-    };
-  },
-  render: function() {
-    return (
-      <header className="mi-header" role="banner">
-        <a href="#" onClick={ this.props.onClick }>
-          Market Intelligence Search <span className="mi-header-version">beta</span>
-        </a>
-      </header>
-    );
-  }
-});
+var Header = () => {
+  return (
+    <header className="mi-header" role="banner">
+      <a href="#">
+        Market Intelligence Search <span className="mi-header-version">beta</span>
+      </a>
+    </header>
+  );
+};
+
+export default Header;

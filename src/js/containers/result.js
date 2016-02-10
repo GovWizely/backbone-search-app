@@ -5,15 +5,13 @@ import ResultList from '../components/result-list';
 import Pagination from '../components/pagination';
 import Spinner from '../components/spinner';
 
-import templates from '../templates';
-
-import { createResultFormatter } from '../utils/view-helper';
+import { template } from '../templates';
 
 var Result = React.createClass({
   displayName: 'Result',
   propTypes: {
-    query: PropTypes.object,
     api: PropTypes.object,
+    query: PropTypes.object,
     result: PropTypes.object,
     screen: PropTypes.string,
     window: PropTypes.object
@@ -28,7 +26,8 @@ var Result = React.createClass({
     const { api, query, result, screen, window } = this.props;
     if (result.isFetching || result.metadata.total === 0) return null;
 
-    const formatter = createResultFormatter(api.fields);
+    const _template = template(api.uniqueId).ResultItem;
+
     return (
       <div key="result" className="mi-result">
         <Message
@@ -36,7 +35,7 @@ var Result = React.createClass({
            keyword={ query.q }
            total={ result.metadata.total } />
 
-        <ResultList formatter={ formatter } items={ result.items } />
+        <ResultList items={ result.items } template={ _template } />
 
         <Pagination
            currentOffset={ result.metadata.offset }

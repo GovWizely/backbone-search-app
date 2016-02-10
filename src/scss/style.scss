@@ -3,6 +3,8 @@
 @import "./variable";
 @import "./font";
 
+@import "./templates/templates";
+@import "./components/typography";
 @import "./components/spinner";
 @import "./components/navbar";
 @import "./components/header";
@@ -76,10 +78,6 @@ input[type=text] {
   @media screen and (min-width: $breakpoint-medium) {
     margin-left: 300px;
   }
-}
-
-.mi-deck {
-  display: table;
 }
 
 .mi-result {

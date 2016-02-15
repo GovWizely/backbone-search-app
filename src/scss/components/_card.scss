@@ -22,6 +22,7 @@
     border-top: none;
     height: 550px;
     padding-top: 12px;
+    z-index: 1001;
 
     @media screen and (min-width: $breakpoint-medium) {
       padding: 12px;
@@ -44,6 +45,7 @@
     font-size: 14px;
     position: absolute;
     bottom: 12px;
+    z-index: 0;
 
     a {
       background-color: #FFF;

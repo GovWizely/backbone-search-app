@@ -14,8 +14,10 @@ var Deck = React.createClass({
   },
   render: function() {
     const { query, apis, results } = this.props;
-    const children = _.map(apis, function(api) {
-      const { displayName, fields, pathname, uniqueId } = api;
+    const children = _.compact(_.map(apis, function(api) {
+      const { deckable, displayName, fields, pathname, uniqueId } = api;
+      if (!deckable) return null;
+
       const { isFetching, items } = results[uniqueId];
       const _template = template(api.uniqueId).CardItem;
       const url = `#/search/${pathname}?${stringify(query)}`;
@@ -29,7 +31,7 @@ var Deck = React.createClass({
            template={ _template }
            url={ url } />
       ];
-    });
+    }));
 
     return <div className="mi-deck">{ children }</div>;
   }

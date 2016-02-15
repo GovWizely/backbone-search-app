@@ -86,7 +86,7 @@ var Search = React.createClass({
   },
   fetch: function(props) {
     const { dispatch, location, params } = props;
-    const api = apis[params.api] || _.map(apis, api => api);
+    const api = apis[params.api] || _.filter(apis, api => api.deckable);
     dispatch(fetchResults(location.query, api));
   },
   handleFilter: function(filters) {

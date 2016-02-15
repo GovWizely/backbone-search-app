@@ -27,12 +27,12 @@ function endpoint(path) {
 function defineTradeAPI(key, attributes={}) {
   const tradeAPI = {
     aggregations: {
-      countries: { type: 'array' },
-      sources: { type: 'array' }
+      countries: { type: 'array' }
     },
+    deckable: false,
     endpoint: endpoint(key),
     metadata: ['total', 'offset', 'sources_used', 'search_performed_at'],
-    permittedParams: ['q', 'countries', 'industries', 'sources', 'start_date', 'end_date', 'size', 'offset'],
+    permittedParams: ['q', 'countries', 'industries', 'start_date', 'end_date', 'size', 'offset'],
     transformParams,
     transformResponse
   };
@@ -40,41 +40,37 @@ function defineTradeAPI(key, attributes={}) {
 }
 
 const disabled = true;
+const deckable = true;
+
 module.exports = assign(
   {},
   defineTradeAPI('ita_faqs', {
-    displayName: 'Frequently Asked Questions'
+    displayName: 'Frequently Asked Questions',
+    deckable
   }),
   defineTradeAPI('trade_events', {
+    deckable
   }),
   defineTradeAPI('trade_leads', {
+    deckable
   }),
   defineTradeAPI('consolidated_screening_list', {
-    disabled
   }),
   defineTradeAPI('market_research_library', {
-    disabled
   }),
   defineTradeAPI('tariff_rates', {
-    disabled
   }),
   defineTradeAPI('ita_office_locations', {
-    disabled
   }),
   defineTradeAPI('trade_articles', {
-    disabled
   }),
   defineTradeAPI('ita_zipcode_to_post', {
-    disabled
   }),
   defineTradeAPI('business_service_providers', {
-    disabled
   }),
   defineTradeAPI('ita_taxonomies', {
-    disabled
   }),
   defineTradeAPI('de_minimis', {
-    disabled,
     endpoint: endpoint('v1/de_minimis')
   })
 );

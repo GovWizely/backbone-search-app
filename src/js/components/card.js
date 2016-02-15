@@ -44,9 +44,12 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
 var Card = ({ isFetching, displayedItems, id, items, label, template, url }) => {
   return (
     <section className="mi-card">
-      <header className="title">{ label }</header>
+      <header className="title" title={ label }>{ label }</header>
 
       { view({ isFetching, displayedItems, id, items, label, template, url }) }
+
+      <footer>
+      </footer>
     </section>
   );
 };
@@ -63,7 +66,7 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  displayedItems: 4,
+  displayedItems: 5,
   items: [],
   label: 'Untitled'
 };

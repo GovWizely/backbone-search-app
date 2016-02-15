@@ -54,9 +54,11 @@ var Card = ({ isFetching, displayedItems, id, items, label, template, url }) => 
 Card.propTypes = {
   displayedItems: PropTypes.number,
   id: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool,
   items: PropTypes.array.isRequired,
   label: PropTypes.string,
   onClick: PropTypes.func,
+  template: PropTypes.func,
   url: PropTypes.string.isRequired
 };
 

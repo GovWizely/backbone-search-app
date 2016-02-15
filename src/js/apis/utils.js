@@ -1,6 +1,6 @@
 import assign from 'object-assign';
 import path from 'path';
-import { snakeCase, startCase } from 'lodash';
+import { isUndefined, snakeCase, startCase } from 'lodash';
 
 function verbatim(value) {
   return value;
@@ -37,6 +37,10 @@ const AttributeTypes = {
 const ATTRIBUTES = {
   aggregations: {
     type: AttributeTypes.object
+  },
+  deckable: {
+    defaultValue: true,
+    type: AttributeTypes.bool
   },
   displayName: {
     derive: startCase,
@@ -87,10 +91,10 @@ export function defineAPI(uniqueId, attributes) {
       );
     }
 
-    if (!config[attrName]) {
+    if (isUndefined(config[attrName])) {
       if (attr.derive) {
         config[attrName] = attr.derive(uniqueId);
-      } else if (attr.defaultValue) {
+      } else if (!isUndefined(attr.defaultValue)) {
         config[attrName] = attr.defaultValue;
       } else {
         continue;

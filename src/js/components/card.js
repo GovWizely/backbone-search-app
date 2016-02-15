@@ -7,7 +7,7 @@ var Card = ({ displayedItems, id, items, label, template, url }) => {
     <section className="mi-card">
       <h4 className="title">{ label }</h4>
 
-      <ResultList displayedItems={ 3 } items={ items } template={ template } />
+      <ResultList displayedItems={ displayedItems } items={ items } template={ template } />
       <div className="show-more">
         <a href={ url }>See More { label }</a>
       </div>
@@ -25,7 +25,7 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  displayedItems: 3,
+  displayedItems: 4,
   items: [],
   label: 'Untitled'
 };

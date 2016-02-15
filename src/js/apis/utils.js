@@ -46,10 +46,6 @@ const ATTRIBUTES = {
     isRequired: true,
     type: AttributeTypes.string
   },
-  fields: {
-    isRequired: true,
-    type: AttributeTypes.object
-  },
   pathname: {
     derive: snakeCase,
     type: AttributeTypes.string

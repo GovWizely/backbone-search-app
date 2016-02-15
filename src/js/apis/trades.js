@@ -24,7 +24,7 @@ function endpoint(path) {
   return `https://api.trade.gov/${path}/search?api_key=${tradeAPIKey}`;
 }
 
-function defineTradeAPI(key, attributes) {
+function defineTradeAPI(key, attributes={}) {
   const tradeAPI = {
     aggregations: {
       countries: { type: 'array' },
@@ -39,110 +39,22 @@ function defineTradeAPI(key, attributes) {
   return defineAPI(key, assign({}, tradeAPI, attributes));
 }
 
+const disabled = true;
 module.exports = assign(
   {},
-  defineTradeAPI('trade_events', {
-    fields: {
-      key: ['id', 'event_name'],
-      snippet: ['snippet'],
-      source: ['source'],
-      title: ['event_name'],
-      url: ['url', 'registration_link']
-    }
-  }),
-
-  defineTradeAPI('trade_leads', {
-    fields: {
-      key: ['id'],
-      snippet: ['description'],
-      source: ['source'],
-      title: ['title', 'description'],
-      url: ['url']
-    }
-  }),
-
-  defineTradeAPI('consolidated_screening_list', {
-    fields: {
-      key: ['name'],
-      source: ['source'],
-      title: ['title', 'name'],
-      url: ['source_list_url']
-    }
-  }),
-
-  defineTradeAPI('market_research_library', {
-    fields: {
-      key: ['id'],
-      snippet: ['description'],
-      source: ['source'],
-      title: ['title', 'name'],
-      url: ['url']
-    }
-  }),
-
-  defineTradeAPI('tariff_rates', {
-    fields: {
-      key: ['source_id'],
-      snippet: ['rule_text'],
-      source: ['source'],
-      title: ['subheading_description'],
-      url: ['link_url']
-    }
-  }),
-
   defineTradeAPI('ita_faqs', {
-    fields: {
-      key: ['id'],
-      snippet: ['answer'],
-      title: ['question']
-    }
+    displayName: 'Frequently Asked Questions'
   }),
+  defineTradeAPI('trade_events'),
+  defineTradeAPI('trade_leads'),
+  defineTradeAPI('consolidated_screening_list'),
+  defineTradeAPI('market_research_library'),
+  defineTradeAPI('tariff_rates'),
 
-  defineTradeAPI('ita_office_locations', {
-    fields: {
-      key: ['id'],
-      snippet: ['address'],
-      title: ['office_name']
-    }
-  }),
-  defineTradeAPI('trade_articles', {
-    fields: {
-      key: ['id'],
-      snippet: ['summary'],
-      source: ['source_agencies'],
-      title: ['title'],
-      url: ['trade_url']
-    }
-  }),
-  defineTradeAPI('ita_zipcode_to_post', {
-    fields: {
-      key: ['zip_code'],
-      snippet: ['zip_city'],
-      source: ['state'],
-      title: ['zip_code']
-    }
-  }),
-  defineTradeAPI('business_service_providers', {
-    fields: {
-      key: ['company_name'],
-      snippet: ['company_description'],
-      title: ['company_name'],
-      url: ['company_website']
-    }
-  }),
-  defineTradeAPI('ita_taxonomies', {
-    fields: {
-      key: ['id'],
-      snippet: ['narrower_terms'],
-      title: ['name']
-    }
-  }),
-  defineTradeAPI('de_minimis', {
-    endpoint: endpoint('v1/de_minimis'),
-    fields: {
-      key: ['country'],
-      snippet: ['notes'],
-      title: ['country_name']
-    }
-  })
+  defineTradeAPI('ita_office_locations'),
+  defineTradeAPI('trade_articles'),
+  defineTradeAPI('ita_zipcode_to_post'),
+  defineTradeAPI('business_service_providers'),
+  defineTradeAPI('ita_taxonomies'),
+  defineTradeAPI('de_minimis', { endpoint: endpoint('v1/de_minimis') })
 );

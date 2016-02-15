@@ -4,17 +4,11 @@ module.exports = defineAPI('articles', {
   aggregations: {
     countries: { type: 'array' },
     industries: { type: 'tree' },
-    trade_regions: { type: 'array' },
-    types: { type: 'array' }
+    trade_regions: { type: 'array' }
   },
-  displayName: 'International Trade Administration',
+  displayName: 'International Trade Administration Content',
+  linkDisplayName: 'International Trade Administration Market Intelligence',
   endpoint: 'https://pluto.kerits.org/v1/articles/search',
-  fields: {
-    key: ['id'],
-    snippet: ['snippet'],
-    title: ['title'],
-    url: ['url']
-  },
-  permittedParams: ['q', 'countries', 'industries', 'topics', 'trade_regions', 'types', 'offset'],
+  permittedParams: ['q', 'countries', 'industries', 'topics', 'trade_regions', 'offset'],
   maxOffset: 1000
 });

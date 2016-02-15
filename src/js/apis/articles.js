@@ -15,6 +15,6 @@ module.exports = defineAPI('articles', {
     title: ['title'],
     url: ['url']
   },
-  permittedParams: ['q', 'countries', 'industries', 'topics', 'types', 'offset'],
+  permittedParams: ['q', 'countries', 'industries', 'topics', 'trade_regions', 'types', 'offset'],
   maxOffset: 1000
 });

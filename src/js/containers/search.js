@@ -79,6 +79,7 @@ var Search = React.createClass({
     }
   },
   disableFiltering: function() {
+    // Prevent rapid fire filtering.
     const { results } = this.props;
     for (let key in results) {
       if (results[key].isFetching) return true;
@@ -109,7 +110,8 @@ var Search = React.createClass({
     }
 
     if (showLoading(results, params.api)) {
-      return <Spinner message="Searching..." />;
+      let spinnerMargin = { marginTop: 100 };
+      return <div style={ spinnerMargin }><Spinner message="Searching..." /></div>;
     }
 
     let content = null;

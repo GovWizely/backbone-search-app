@@ -30,7 +30,7 @@ var Spinner = ({ message }) => {
   return (
     <div>
       { Circle }
-      <div className="uk-text-center">{ message }</div>
+      <div className="uk-text-center" style={ { color: '#666' }}>{ message }</div>
     </div>
   );
 };

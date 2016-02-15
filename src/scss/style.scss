@@ -15,7 +15,6 @@
 @import "./components/button";
 @import "./components/checkbox-tree";
 @import "./components/pagination";
-@import "./components/result-item";
 
 html {
   position: relative;
@@ -58,6 +57,11 @@ input[type=text] {
 
 #left-pane {
   display: none;
+
+  header {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
 
   @media screen and (min-width: $breakpoint-medium) {
     display: block;

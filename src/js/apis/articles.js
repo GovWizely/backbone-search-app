@@ -6,8 +6,7 @@ module.exports = defineAPI('articles', {
     industries: { type: 'tree' },
     trade_regions: { type: 'array' }
   },
-  displayName: 'International Trade Administration Content',
-  linkDisplayName: 'International Trade Administration Market Intelligence',
+  displayName: 'International Trade Administration Market Intelligence',
   endpoint: 'https://pluto.kerits.org/v1/articles/search',
   permittedParams: ['q', 'countries', 'industries', 'topics', 'trade_regions', 'offset'],
   maxOffset: 1000

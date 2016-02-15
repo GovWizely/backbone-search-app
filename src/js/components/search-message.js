@@ -14,7 +14,7 @@ var SearchMessage = ({ apiName, keyword, total }) => {
 
   return (
     <div className="search-message">
-      <h5>{ count } { message } { query }</h5>
+      { count } { message } { query }
     </div>
   );
 };

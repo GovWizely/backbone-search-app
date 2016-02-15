@@ -6,8 +6,8 @@ function checkbox(item, options) {
   let checked = options.values.has(item);
   return (
     <li role="treeitem" className="list-item" key={ item }>
-      <label>
-        <input
+      <label htmlFor={ item }>
+        <input id={ item }
            type="checkbox" value={ item } readOnly disabled={ options.disabled }
            checked={ checked } aria-checked={ checked } />
         <span> { item }</span>
@@ -109,7 +109,7 @@ var CheckboxTree = React.createClass({
     });
     const hrefCSS = visible ? '' : 'collapsed';
     const showAllText = showAll ? 'Less' : 'More';
-    const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a onClick={ this.toggleShowAll } className="uk-text-small">+ See { showAllText }</a> : null;
+    const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a href="#" onClick={ this.toggleShowAll } className="uk-text-small">+ See { showAllText }</a> : null;
 
     const view = visible ?  (
       <div name={ name }>{ list(items, options) } { showAllLink }</div>

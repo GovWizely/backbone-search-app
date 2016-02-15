@@ -19,10 +19,10 @@ var Deck = React.createClass({
       const { isFetching, items } = results[uniqueId];
       const _template = template(api.uniqueId).CardItem;
       const url = `#/search/${pathname}?${stringify(query)}`;
-      if (isFetching || !items.length) return null;
       return [
         <Card
            id={ uniqueId }
+           isFetching={ isFetching }
            items={ items }
            key={ uniqueId }
            label={ displayName }

@@ -45,16 +45,36 @@ module.exports = assign(
   defineTradeAPI('ita_faqs', {
     displayName: 'Frequently Asked Questions'
   }),
-  defineTradeAPI('trade_events'),
-  defineTradeAPI('trade_leads'),
-  defineTradeAPI('consolidated_screening_list'),
-  defineTradeAPI('market_research_library'),
-  defineTradeAPI('tariff_rates'),
-
-  defineTradeAPI('ita_office_locations'),
-  defineTradeAPI('trade_articles'),
-  defineTradeAPI('ita_zipcode_to_post'),
-  defineTradeAPI('business_service_providers'),
-  defineTradeAPI('ita_taxonomies'),
-  defineTradeAPI('de_minimis', { endpoint: endpoint('v1/de_minimis') })
+  defineTradeAPI('trade_events', {
+  }),
+  defineTradeAPI('trade_leads', {
+  }),
+  defineTradeAPI('consolidated_screening_list', {
+    disabled
+  }),
+  defineTradeAPI('market_research_library', {
+    disabled
+  }),
+  defineTradeAPI('tariff_rates', {
+    disabled
+  }),
+  defineTradeAPI('ita_office_locations', {
+    disabled
+  }),
+  defineTradeAPI('trade_articles', {
+    disabled
+  }),
+  defineTradeAPI('ita_zipcode_to_post', {
+    disabled
+  }),
+  defineTradeAPI('business_service_providers', {
+    disabled
+  }),
+  defineTradeAPI('ita_taxonomies', {
+    disabled
+  }),
+  defineTradeAPI('de_minimis', {
+    disabled,
+    endpoint: endpoint('v1/de_minimis')
+  })
 );

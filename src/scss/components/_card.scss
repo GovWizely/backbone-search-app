@@ -1,21 +1,46 @@
 .#{$module}card {
-  border: 1px solid $border-color;
   display: block;
   float: left;
   margin: 16px;
-  height: 520px;
-  padding: 16px;
   position: relative;
   width: 450px;
 
-  .show-more {
-    font-size: 18px;
-    position: absolute;
-    bottom: 12px;
+  >header {
+    background-color: #597DB5;
+    color: #FFF;
+    line-height: 50px;
+    font-size: 16px;
+    font-weight: 900;
+    text-align: center;
   }
 
-  .#{$module}list-item {
-    padding: 8px 4px;
+  .content {
+    border: 1px solid #eee;
+    border-top: none;
+    height: 550px;
+    padding: 12px;
+  }
+
+  .no-match {
+    color: #444;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    line-height: 30px;
+
+    i {
+      font-size: 48px;
+    }
+  }
+
+  .show-more {
+    font-size: 14px;
+    position: absolute;
+    bottom: 12px;
+
+    a {
+      background-color: #FFF;
+    }
   }
 
   p {

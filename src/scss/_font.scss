@@ -35,3 +35,5 @@ $font-css-prefix: 'mi-icon';
 .#{$font-css-prefix}-angle-right:before { content: '\f105'; }
 .#{$font-css-prefix}-angle-up:before { content: '\f106'; }
 .#{$font-css-prefix}-angle-down:before { content: '\f107'; }
+.#{$font-css-prefix}-exclamation-triangle:before { content: "\f071"; }
+.#{$font-css-prefix}-warning:before { content: "\f071"; }

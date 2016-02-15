@@ -45,7 +45,7 @@ var Filter = React.createClass({
 
     return (
       <div>
-        <h4 className="">Filter Results</h4>
+        <header className="">Filter Results</header>
         { checkboxTrees }
       </div>
     );

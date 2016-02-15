@@ -12,8 +12,6 @@ import Filter from './filter';
 import Result from './result';
 
 import Form from '../components/form';
-import CheckboxTree from '../components/checkbox-tree';
-import Pagination from '../components/pagination';
 import Spinner from '../components/spinner';
 
 function getFilterQuery(query, filter, filterState) {

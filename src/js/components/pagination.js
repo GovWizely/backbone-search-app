@@ -25,7 +25,7 @@ var Pagination = ({ currentOffset, displayedPages, items, itemsOnPage, query, ur
         pivot = displayedPages / 2,
         nextPage = currentPage + 1,
         prevPage = currentPage - 1;
-  if (pages <= 1) return null;
+  if (pages <= 1) return <span />;
 
   const range = getRange(currentPage, displayedPages, pages, pivot);
 

@@ -11,15 +11,26 @@
   >header {
     background-color: #5377af;
     color: #FFF;
-    line-height: 50px;
     font-size: 16px;
     font-weight: 900;
+    padding: 14px;
     text-align: center;
   }
 
-  .content {
+  >footer {
+    background-color: #FFF;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 10px;
+    text-align: center;
     border: 1px solid #eee;
     border-top: none;
+  }
+
+  >.content {
+    border: 1px solid #eee;
+    border-top: none;
+    border-bottom: none;
     height: 550px;
     padding-top: 12px;
     z-index: 1001;
@@ -40,18 +51,6 @@
       font-size: 48px;
     }
   }
-
-  .show-more {
-    font-size: 14px;
-    position: absolute;
-    bottom: 12px;
-    z-index: 0;
-
-    a {
-      background-color: #FFF;
-    }
-  }
-
   p {
     margin: 0;
   }

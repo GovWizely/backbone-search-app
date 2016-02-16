@@ -34,9 +34,6 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
   return (
     <div className="content">
       <ResultList displayedItems={ displayedItems } items={ items } template={ template } />
-      <div className="show-more">
-        <a href={ url }>See More { label }</a>
-      </div>
     </div>
   );
 }
@@ -49,6 +46,7 @@ var Card = ({ isFetching, displayedItems, id, items, label, template, url }) => 
       { view({ isFetching, displayedItems, id, items, label, template, url }) }
 
       <footer>
+        <a href={ url }>See More { label }</a>
       </footer>
     </section>
   );

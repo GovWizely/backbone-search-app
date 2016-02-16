@@ -1,11 +1,12 @@
 .#{$module}card {
   display: block;
   float: left;
+  margin: 0 auto;
   position: relative;
-  width: 450px;
 
   @media screen and (min-width: $breakpoint-medium) {
     margin: 16px;
+    width: 450px;
   }
 
   >header {

@@ -20,7 +20,7 @@ export const trade_events = {
         <header>
           <a href={ registration_link } dangerouslySetInnerHTML={ { __html: event_name } }></a>
         </header>
-        <p className="description" dangerouslySetInnerHTML={ { __html: description } }></p>
+        <p dangerouslySetInnerHTML={ { __html: description } }></p>
       </article>
     );
   }

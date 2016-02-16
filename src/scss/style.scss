@@ -23,13 +23,16 @@ html {
 #mi-body {
   font-size: 14px;
   font-family: $font-family-base;
-  margin-bottom: 200px;
   padding-top: 5%;
   padding-bottom: 80px;
 
   @media screen and (min-width: $breakpoint-medium) {
     padding-top: 0;
   }
+}
+
+#mi-index {
+  margin-bottom: 200px;
 }
 
 .mi-search-message {

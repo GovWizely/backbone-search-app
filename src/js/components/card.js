@@ -31,9 +31,11 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
 
   if (!items.length) return verticalAlignMiddle(noMatch(label));
 
+  const options = { url };
+
   return (
     <div className="content">
-      <ResultList displayedItems={ displayedItems } items={ items } template={ template } />
+      <ResultList displayedItems={ displayedItems } items={ items } template={ template } options={ options } />
     </div>
   );
 }

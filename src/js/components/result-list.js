@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 
-var ResultList = ({ displayedItems, items, template }) => {
+var ResultList = ({ displayedItems, items, template, options }) => {
   const slicedItems = displayedItems < 0 ? items : items.slice(0, displayedItems);
   const resultItems = slicedItems.map((item, index) => {
-    return <li key={ index }>{ template(item) }</li>;
+    return <li key={ index }>{ template(item, options) }</li>;
   });
   return (
-    <ul className="mi-list mi-result-list">
+    <ul className="mi-list">
       { resultItems }
     </ul>
   );
@@ -15,12 +15,14 @@ var ResultList = ({ displayedItems, items, template }) => {
 ResultList.propTypes = {
   displayedItems: PropTypes.number,
   items: PropTypes.array.isRequired,
+  options: PropTypes.object,
   template: PropTypes.func.isRequired
 };
 
 ResultList.defaultProps = {
   displayedItems: -1,
-  items: []
+  items: [],
+  options: {}
 };
 
 

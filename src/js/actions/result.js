@@ -106,7 +106,6 @@ export function fetchResults(query, apis) {
             .reject(o => _.isEmpty(o.aggregations))
             .reject(o => _.get(o, 'metadata.total') === 0)
             .value();
-          console.log(filterableResponses);
           const filters = consolidateFilters(filterableResponses);
           dispatch(receiveFilters(filters));
         }

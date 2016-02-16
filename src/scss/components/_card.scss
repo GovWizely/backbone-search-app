@@ -5,8 +5,10 @@
   position: relative;
 
   @media screen and (min-width: $breakpoint-medium) {
-    margin: 16px;
-    width: 450px;
+    margin: 14px 0 16px 14px;
+    min-width: 400px;
+    max-width: 460px;
+    width: 44%;
   }
 
   >header {

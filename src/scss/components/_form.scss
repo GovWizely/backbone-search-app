@@ -17,6 +17,8 @@
     float: left;
     width: 100%;
     vertical-align: top;
+    border: 1px solid #ccc;
+    border-radius: $border-radius;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }

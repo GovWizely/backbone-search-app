@@ -38,8 +38,10 @@
 
     > label {
       cursor: pointer;
+      display: inline-block;
       font-weight: normal;
       padding-left: 20px;
+      margin-bottom: 0;
       min-height: 20px;
     }
   }

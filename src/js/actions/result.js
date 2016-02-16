@@ -32,11 +32,8 @@ function consolidateFilters(responses) {
       filters[key] = merge(filters[key], response.aggregations[key]);
     });
   });
-  return filters;
-}
 
-function rejectEmptyData(responses) {
-  return responses.filter(response => _.get(response, 'metadata.total') > 0);
+  return filters;
 }
 
 function requestResults(api) {
@@ -63,7 +60,7 @@ function failureResults(api, e) {
   };
 }
 
-function generateFetch(api, dispatch, getState) {
+function createFetch(api, dispatch, getState) {
   return function(query) {
     if (getState().results[api.uniqueId].isFetching) {
       dispatch(noAction());
@@ -98,15 +95,19 @@ function generateFetch(api, dispatch, getState) {
 export function fetchResults(query, apis) {
   apis = _.isArray(apis) ? apis : [apis];
   return (dispatch, getState) => {
-    const fetches = apis.map(api => generateFetch(api, dispatch, getState));
+    const fetches = apis.map(api => createFetch(api, dispatch, getState));
     const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
     if (updateFilter) dispatch(requestFilters());
-
     return Promise
       .all(_.map(fetches, f => f(query)))
       .then(responses => {
         if (updateFilter) {
-          const filters = consolidateFilters(rejectEmptyData(responses));
+          const filterableResponses = _(responses)
+            .reject(o => _.isEmpty(o.aggregations))
+            .reject(o => _.get(o, 'metadata.total') === 0)
+            .value();
+          console.log(filterableResponses);
+          const filters = consolidateFilters(filterableResponses);
           dispatch(receiveFilters(filters));
         }
         return responses;

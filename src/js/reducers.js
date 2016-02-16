@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
-import { REQUEST_RESULTS, RECEIVE_RESULTS } from './actions/result';
+import { REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
 import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 import initialState from './initial-state';
 
@@ -62,9 +62,19 @@ function results(state = initialState.results, action) {
   }
 }
 
+function notifications(state = [], action) {
+  switch(action.type) {
+  case FAILURE_RESULTS:
+    return state.concat(action.payload);
+  default:
+    return state;
+  }
+}
+
 const reducer = combineReducers({
   filters,
   form: formReducer,
+  notifications,
   query,
   results,
   routing: routeReducer

@@ -153,10 +153,11 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { filters, query, results } = state;
+  const { filters, notifications, query, results } = state;
 
   return {
     filters,
+    notifications,
     query,
     results
   };

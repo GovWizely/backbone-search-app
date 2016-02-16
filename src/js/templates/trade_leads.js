@@ -7,10 +7,10 @@ export const trade_leads = {
     return (
       <article className="mi-trade-leads mi-result-item">
         <header>
-          <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
+          <a href={ url } dangerouslySetInnerHTML={ { __html: title || description } }></a>
         </header>
-        <p className="url"><a target="_blank" href={ url }>{ url }</a></p>
-        <p className="description" dangerouslySetInnerHTML={ { __html: description } }></p>
+        <p><a target="_blank" href={ url }>{ url }</a></p>
+        <p dangerouslySetInnerHTML={ { __html: description } }></p>
       </article>
     );
   },
@@ -18,9 +18,9 @@ export const trade_leads = {
     return (
       <article className="mi-trade-leads mi-card-item">
         <header>
-          <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
+          <a href={ url } dangerouslySetInnerHTML={ { __html: title || description } }></a>
         </header>
-        <p className="description" dangerouslySetInnerHTML={ { __html: description } }></p>
+        <p dangerouslySetInnerHTML={ { __html: description } }></p>
       </article>
     );
   }

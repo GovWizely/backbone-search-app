@@ -6,7 +6,7 @@
 
   @media screen and (min-width: $breakpoint-medium) {
     margin: 14px 0 16px 14px;
-    min-width: 400px;
+    min-width: 414px;
     max-width: 460px;
     width: 44%;
   }
@@ -16,7 +16,7 @@
     color: #FFF;
     font-size: 16px;
     font-weight: 900;
-    padding: 14px;
+    padding: 14px 5px;
     text-align: center;
   }
 
@@ -24,13 +24,13 @@
     background-color: #FFF;
     font-size: 14px;
     font-weight: 900;
-    padding: 10px;
+    padding: 10px 2px;
     text-align: center;
     border: 1px solid #eee;
     border-top: none;
   }
 
-  >.content {
+  >.#{$module}content {
     border: 1px solid #eee;
     border-top: none;
     border-bottom: none;

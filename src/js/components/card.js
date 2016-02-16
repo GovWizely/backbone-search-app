@@ -18,7 +18,7 @@ function noMatch(label) {
 function verticalAlignMiddle(component) {
   const style = { width: '100%' };
   return (
-    <div className="content uk-vertical-align">
+    <div className="mi-content uk-vertical-align">
       <div className="uk-vertical-align-middle" style={ style }>
         { component }
       </div>
@@ -34,7 +34,7 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
   const options = { url };
 
   return (
-    <div className="content">
+    <div className="mi-content">
       <ResultList displayedItems={ displayedItems } items={ items } template={ template } options={ options } />
     </div>
   );

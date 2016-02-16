@@ -125,17 +125,10 @@ var Search = React.createClass({
     }
     return pane;
   },
-  screen: function() {
-    const apiType = this.props.params.api;
-  },
   view: function() {
     const { filters, location, params, results, window } = this.props;
     if (params.api && !apis.hasOwnProperty(params.api)) {
       return <div>Invalid api type.</div>;
-    }
-
-    if (noMatch(results)) {
-      return <div>Your search did not match any documents.</div>;
     }
 
     if (showLoading(results, params.api)) {

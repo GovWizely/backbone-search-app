@@ -94,23 +94,8 @@ var Search = React.createClass({
     let query = getFilterQuery(location.query, filters, this.props.filters);
     dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
   },
-  screen: function() {
-    const apiType = this.props.params.api;
-  },
-  view: function() {
-    const { location, params, results, window } = this.props;
-    if (params.api && !apis.hasOwnProperty(params.api)) {
-      return <div>Invalid api type.</div>;
-    }
-
-    if (noMatch(results)) {
-      return <div>Your search did not match any documents.</div>;
-    }
-
-    if (showLoading(results, params.api)) {
-      let spinnerMargin = { marginTop: 100 };
-      return <div style={ spinnerMargin }><Spinner message="Searching..." /></div>;
-    }
+  contentPane: function() {
+    const { location, params, results } = this.props;
 
     let content = null;
     if (!params.api) {
@@ -126,14 +111,41 @@ var Search = React.createClass({
           };
       content = <Result {...props} />;
     }
+    return <div id="content-pane" key="content-pane">{ content }</div>;
+  },
+  leftPane: function() {
+    const { filters, location, params } = this.props;
+    let pane = null;
+    if (filters.isFetching || !_.isEmpty(filters.items)) {
+      pane = (
+        <div id="left-pane" className="left-pane" key="left-pane">
+          <Filter disabled={ this.disableFiltering() } filters={ filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
+        </div>
+      );
+    }
+    return pane;
+  },
+  screen: function() {
+    const apiType = this.props.params.api;
+  },
+  view: function() {
+    const { filters, location, params, results, window } = this.props;
+    if (params.api && !apis.hasOwnProperty(params.api)) {
+      return <div>Invalid api type.</div>;
+    }
+
+    if (noMatch(results)) {
+      return <div>Your search did not match any documents.</div>;
+    }
+
+    if (showLoading(results, params.api)) {
+      let spinnerMargin = { marginTop: 100 };
+      return <div style={ spinnerMargin }><Spinner message="Searching..." /></div>;
+    }
 
     return [
-      <div id="left-pane" key="left-pane">
-        <Filter disabled={ this.disableFiltering() } filters={ this.props.filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
-      </div>,
-      <div id="content-pane" key="content-pane">
-        { content }
-      </div>
+      this.leftPane(),
+      this.contentPane()
     ];
   },
   render: function() {

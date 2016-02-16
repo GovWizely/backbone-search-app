@@ -77,7 +77,7 @@ input[type=text] {
   }
 }
 
-#content-pane {
+#left-pane + #content-pane {
   @media screen and (min-width: $breakpoint-medium) {
     margin-left: 300px;
   }

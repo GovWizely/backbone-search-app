@@ -1,11 +1,10 @@
 @import url("http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext");
-@import "node_modules/react-select/dist/react-select";
 @import "./uikit";
-@import "./spinner";
 @import "./variable";
 @import "./font";
 
-// @import "./components/_typography";
+@import "./components/typography";
+@import "./components/spinner";
 @import "./components/navbar";
 @import "./components/header";
 @import "./components/footer";
@@ -16,19 +15,20 @@
 @import "./components/button";
 @import "./components/checkbox-tree";
 @import "./components/pagination";
-@import "./components/result-list";
-@import "./components/result-list-item";
-
 
 html {
   position: relative;
-  min-height: 100%;
 }
 
 body {
-  margin-bottom: 100px;
+  padding-top: 5%;
+  padding-bottom: 80px;
   font-size: 14px;
   font-family: $font-family-base;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    padding-top: 0;
+  }
 }
 
 input[type=text] {
@@ -37,26 +37,50 @@ input[type=text] {
 }
 
 .search-message {
-  margin-bottom: 20px;
+  display: none;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    display: block;
+    margin-bottom: 20px;
+  }
 }
 
 #main-pane {
-  width: 100%;
   padding: 0;
-  margin-left: 27px;
+  margin: 0 auto;
+  width: 96%;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 27px;
+  }
 }
 
 #left-pane {
-  display: block;
-  float: left;
-  position: relative;
-  width: 267px;
+  display: none;
 
-  border-right: 1px solid $border-color;
+  header {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+
+  @media screen and (min-width: $breakpoint-medium) {
+    display: block;
+    float: left;
+    position: relative;
+    width: 267px;
+    border-right: 1px solid $border-color;
+  }
+
+  .mi-checkbox-tree {
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 12px;
+  }
 }
 
-#content-pane {
-  margin-left: 310px;
+#left-pane + #content-pane {
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 300px;
+  }
 }
 
 .mi-result {

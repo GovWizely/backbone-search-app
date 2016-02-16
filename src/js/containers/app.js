@@ -3,19 +3,12 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
 import { stringify } from 'querystring';
-import { fetchAggregations } from '../actions/aggregation';
 
 function parseFormData(form) {
-  const { q, countries, industries } = form;
-  let query = {};
-  if (q) query.q = q;
-  if (!_.isEmpty(countries)) query.countries = countries;
-  if (!_.isEmpty(industries)) query.industries = industries;
-  return query;
-}
+  const { q } = form;
+  const query = form.q ? { q } : {};
 
-function screen(query) {
-  return '/search';
+  return query;
 }
 
 var App = React.createClass({
@@ -24,14 +17,33 @@ var App = React.createClass({
     children: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired
   },
+  getInitialState: function() {
+    return {};
+  },
+  componentWillMount: function() {
+    this.handleResize({ currentTarget: window });
+  },
+  componentDidMount: function() {
+    window.addEventListener('resize', this.handleResize);
+  },
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+  handleResize: function(e) {
+    const { innerWidth, innerHeight } = e.currentTarget;
+    this.setState({
+      window: { innerWidth, innerHeight }
+    });
+  },
   handleSubmit: function(form) {
     let query = parseFormData(form);
-    const path = `${screen(query)}?${stringify(query)}`;
+    const path = `/search?${stringify(query)}`;
     this.props.dispatch(updatePath(path));
   },
   render: function() {
     var props = {
-      onSubmit: this.handleSubmit
+      onSubmit: this.handleSubmit,
+      window: this.state.window
     };
     return React.cloneElement(this.props.children, props);
   }

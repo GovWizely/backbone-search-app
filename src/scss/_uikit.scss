@@ -1,7 +1,7 @@
 @import "bower_components/uikit/scss/uikit-mixins";
 @import "bower_components/uikit/scss/uikit-variables";
 
-$base-link-color: #337ab7;
+$base-link-color: #226DAF;
 $base-body-font-family: "Lato", sans-serif;
 $base-heading-font-family: "Lato", sans-serif;
 $base-nav-font-family: "Lato", sans-serif;
@@ -18,6 +18,7 @@ $form-large-height: 46px;
 $form-large-padding: 10px 16px;
 $form-large-font-size: 18px;
 
+$text-danger-color: #B72525;
 
 @import "bower_components/uikit/scss/core/variables";
 @import "bower_components/uikit/scss/core/base";
@@ -27,6 +28,8 @@ $form-large-font-size: 18px;
 @import "bower_components/uikit/scss/core/pagination";
 @import "bower_components/uikit/scss/core/button";
 @import "bower_components/uikit/scss/core/text";
+@import "bower_components/uikit/scss/core/panel";
+@import "bower_components/uikit/scss/core/utility";
 
 .uk-button {
   border: none;

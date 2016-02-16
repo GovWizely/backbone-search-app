@@ -5,12 +5,11 @@ import Form from '../components/form';
 const Index = React.createClass({
   displayName: 'Index',
   propTypes: {
-    aggregations: PropTypes.object,
     onSubmit: PropTypes.func
   },
   render: function() {
     const props = {
-      aggregations: this.props.aggregations,
+      focused: true,
       onSubmit: this.props.onSubmit };
     return <Form {...props} />;
   }
@@ -18,11 +17,7 @@ const Index = React.createClass({
 
 
 function mapStateToProps(state) {
-  const { aggregations } = state;
-
-  return {
-    aggregations
-  };
+  return {};
 }
 
 export default connect(mapStateToProps)(Index);

@@ -1,43 +1,28 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
+import pluralize from 'pluralize';
 
-var SearchMessage = React.createClass({
-  displayName: 'SearchMessage',
-  propTypes: {
-    keyword: PropTypes.string,
-    resourceName: PropTypes.string,
-    total: PropTypes.number
-  },
-  message: function() {
-    if (this.props.total === null) return null;
+var SearchMessage = ({ apiName, keyword, total }) => {
+  if (total === null) return null;
 
-    let msg = '';
-    msg = msg.concat(this.props.total ? 'results' : 'result');
-    msg = msg.concat(' from the ');
-    msg = msg.concat(this.props.resourceName);
-    msg = msg.concat(' were found');
+  const count = <strong className="uk-text-danger">{ total }</strong>;
+  const message =
+          pluralize('result', total) +
+          ` from the ${apiName} were found` +
+          (_.isEmpty(keyword) ? '.' : ' for');
+  const query = _.isEmpty(keyword) ? null : <strong className="uk-text-danger">{ keyword }.</strong>;
 
-    if (!_.isEmpty(this.props.keyword)) {
-      msg = msg.concat(' for');
-    } else {
-      msg = msg.concat('.');
-    }
-    return msg;
-  },
-  count: function() {
-    return <strong className="uk-text-danger">{ this.props.total }</strong>;
-  },
-  keyword: function() {
-    if (!this.props.keyword) return null;
-    return <strong className="uk-text-danger">{ this.props.keyword }.</strong>;
-  },
-  render: function() {
-    return (
-      <div className="search-message">
-        <h5>{ this.count() } { this.message() } { this.keyword() }</h5>
-      </div>
-    );
-  }
-});
+  return (
+    <div className="search-message">
+      { count } { message } { query }
+    </div>
+  );
+};
+
+SearchMessage.propTypes = {
+  apiName: PropTypes.string,
+  keyword: PropTypes.string,
+  total: PropTypes.number
+};
 
 export default SearchMessage;

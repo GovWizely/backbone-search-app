@@ -3,9 +3,12 @@ import TestUtils from 'react-addons-test-utils';
 import { expect } from 'chai';
 import CheckboxTree from '../../src/js/components/checkbox-tree';
 
-function setup() {
+function setup(items={}) {
   let props = {
-    items: {},
+    itemCssClass: 'cssClass',
+    itemLimit: 1,
+    items,
+    name: 'Checkbox',
     onChange: (e) => e
   };
 
@@ -16,13 +19,18 @@ function setup() {
   return { props, output, renderer };
 }
 
-describe('components', () => {
-  describe('CheckboxTree', () => {
-
+describe('components/CheckboxTree', () => {
+  context('when items is not empty', () => {
+    const { output } = setup({ 'Country #1': {}, 'Country #2': {} });
     it('should render correctly', () => {
-      const { output } = setup();
-
       expect(output.type).to.equal('section');
+    });
+  });
+
+  context('when items is empty', () => {
+    const { output } = setup();
+    it('should render null', () => {
+      expect(output).to.equal(null);
     });
   });
 });

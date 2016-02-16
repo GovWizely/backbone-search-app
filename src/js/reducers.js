@@ -1,91 +1,12 @@
 import assign from 'object-assign';
 import { parse } from 'url';
-import { List, Map } from 'immutable';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
-import { REQUEST_ARTICLES, RECEIVE_ARTICLES } from './actions/article';
-import { REQUEST_TRADES, RECEIVE_TRADES } from './actions/trade';
+import { REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
 import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
-
-const initialState = {
-  filters: {
-    isFetching: false,
-    items: {},
-    values: {}
-  },
-  results: {
-    article: {
-      isFetching: false,
-      items: [],
-      metadata: {},
-      aggregations: {}
-    },
-    tradeEvent: {
-      isFetching: false,
-      items: [],
-      metadata: {}
-    },
-    tradeLead: {
-      isFetching: false,
-      items: [],
-      metadata: {}
-    }
-  },
-  query: {}
-};
-
-function articles(state, action) {
-  switch(action.type) {
-  case REQUEST_ARTICLES:
-    return assign({}, state, {
-      isFetching: true
-    });
-  case RECEIVE_ARTICLES:
-    return assign({}, state, {
-      isFetching: false,
-      items: action.response.results,
-      metadata: action.response.metadata,
-      aggregations: action.response.aggregations
-    });
-
-    /* istanbul ignore next */
-  default:
-    return state;
-  }
-}
-
-function trades(state, action) {
-  switch(action.type) {
-  case REQUEST_TRADES:
-    return assign({}, state, {
-      isFetching: true
-    });
-  case RECEIVE_TRADES:
-    return assign({}, state, {
-      isFetching: false,
-      items: action.response.results,
-      metadata: action.response.metadata
-    });
-    /* istanbul ignore next */
-  default:
-    return state;
-  }
-}
-
-function results(state = initialState.results, action) {
-  switch(action.type) {
-  case REQUEST_ARTICLES:
-  case RECEIVE_ARTICLES:
-    return assign({}, state, { article: articles(state.article, action) });
-  case REQUEST_TRADES:
-  case RECEIVE_TRADES:
-    return assign({}, state, { [action.resource]: trades(state[action.resource], action) });
-  default:
-    return state;
-  }
-}
+import initialState from './initial-state';
 
 function filters(state = initialState.filters, action) {
   switch(action.type) {
@@ -96,7 +17,7 @@ function filters(state = initialState.filters, action) {
   case RECEIVE_FILTERS:
     return assign({}, state, {
       isFetching: false,
-      items: action.filters
+      items: action.payload
     });
   default:
     return state;
@@ -112,11 +33,50 @@ function query(state = {}, action) {
   }
 }
 
+function result(state, action) {
+  switch(action.type) {
+  case REQUEST_RESULTS:
+    return assign({}, state, {
+      isFetching: true
+    });
+  case RECEIVE_RESULTS:
+    return assign({}, state, {
+      isFetching: false,
+      items: action.payload.results,
+      metadata: action.payload.metadata,
+      aggregations: action.payload.aggregations
+    });
+  default:
+    return state;
+  }
+}
+
+function results(state = initialState.results, action) {
+  switch(action.type) {
+  case REQUEST_RESULTS:
+    return assign({}, state, { [action.meta]: result(state[action.meta], action) });
+  case RECEIVE_RESULTS:
+    return assign({}, state, { [action.meta]: result(state[action.meta], action) });
+  default:
+    return state;
+  }
+}
+
+function notifications(state = [], action) {
+  switch(action.type) {
+  case FAILURE_RESULTS:
+    return state.concat(action.payload);
+  default:
+    return state;
+  }
+}
+
 const reducer = combineReducers({
-  results,
   filters,
   form: formReducer,
+  notifications,
   query,
+  results,
   routing: routeReducer
 });
 

@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react';
 import CheckboxTree from '../components/checkbox-tree';
 import Spinner from '../components/spinner';
 
-function parseFilterQuery(query) {
+function parseFilterQuery(query, filters) {
   let values = {};
-  ['countries', 'industries', 'topics'].forEach(function(filter) {
+  _.map(filters, function(o, filter) {
     values[filter] = query[filter] ? query[filter] : [];
     if(!_.isArray(values[filter])) values[filter] = [values[filter]];
   });
@@ -15,45 +15,38 @@ function parseFilterQuery(query) {
 var Filter = React.createClass({
   displayName: 'Filter',
   propTypes: {
+    disabled: PropTypes.bool,
     filters: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     query: PropTypes.object
   },
+  getDefaultProps: function() {
+    return {
+      disabled: false
+    };
+  },
   render: function() {
-    const { filters: { isFetching, items }, onChange, query } = this.props;
+    const { disabled, filters: { isFetching, items }, onChange, query } = this.props;
 
     if (!items) return null;
 
-    const values = parseFilterQuery(query);
+    const values = parseFilterQuery(query, items);
 
-    const countrySeparator = _.isEmpty(items.countries) ? null : <hr />;
-    const industrySeparator = _.isEmpty(items.industries) ? null : <hr />;
-    const content = isFetching ? <Spinner /> : (
-      <div>
+    const checkboxTrees = _.map(items, function(filters, key) {
+      return [
         <CheckboxTree
-           name="countries" label="Country"
-           items={ items.countries }
-           itemLimit={ 5 }
+           disabled={ disabled }
+           key={ key } name={ key } label={ _.startCase(key) }
+           items={ filters }
            onChange={ onChange }
-           values={ values.countries } />
-        { countrySeparator }
-        <CheckboxTree
-           name="industries" label="Industry"
-           items={ items.industries } nested
-           onChange={ onChange }
-           values={ values.industries } />
-        { industrySeparator }
-        <CheckboxTree
-           name="topics" label="Topic"
-           items={ items.topics } nested
-           onChange={ onChange }
-           values={ values.topics } />
-      </div>);
+           values={ values[key] } />
+      ];
+    });
 
     return (
       <div>
-        <h4 className="uk-text-muted">Filter Results</h4>
-        { content }
+        <header className="">Filter Results</header>
+        { checkboxTrees }
       </div>
     );
   }

@@ -5,26 +5,25 @@ import { connect } from 'react-redux';
 import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
-import { page } from '../config';
-import { fetchConsolidatedResults } from '../actions/consolidatedResult';
-import resources from '../resources';
+import apis from '../apis';
+import { fetchResults } from '../actions/result';
+import Deck from './deck';
 import Filter from './filter';
 import Result from './result';
 
 import Form from '../components/form';
-import CheckboxTree from '../components/checkbox-tree';
-import Message from '../components/search-message';
-import Pagination from '../components/pagination';
 import Spinner from '../components/spinner';
 
-function getFilterQuery(query, filters) {
+function getFilterQuery(query, filter, filterState) {
   let filterQuery = assign({}, query, {
-    [filters.name]: filters.items,
-    offset: 0,
-    filter: null
+    [filter.name]: filter.items,
+    offset: 0
   });
-  for (let filter of ['countries', 'industries', 'topics']) {
-    if (filterQuery[filter] && !_.isEmpty(filterQuery[filter])) filterQuery.filter = true;
+  if (_.isEmpty(filter.items)) delete filterQuery[filter.name];
+
+  delete filterQuery.filter;
+  for (let key in filterState.items) {
+    if (filterQuery[key] && !_.isEmpty(filterQuery[key])) filterQuery.filter = true;
   };
   return filterQuery;
 }
@@ -35,8 +34,8 @@ function shouldFetch(location, nextLocation) {
 }
 
 function noMatch(results) {
-  for (let resource in results) {
-    let result = results[resource];
+  for (let api in results) {
+    let result = results[api];
     if (result.isFetching || (result.metadata && result.metadata.total > 0)) {
       return false;
     }
@@ -44,9 +43,12 @@ function noMatch(results) {
   return true;
 }
 
-function showLoading(results) {
-  for (let resource in  results) {
-    let result = results[resource];
+function showLoading(results, key=null) {
+  if (key && results[key].isFetching) return true;
+  if (key && !results[key].isFetching) return false;
+
+  for (let api in results) {
+    let result = results[api];
     if (!result.isFetching) {
       return false;
     }
@@ -63,7 +65,8 @@ var Search = React.createClass({
     onSubmit: PropTypes.func,
     params: PropTypes.object.isRequired,
     query: PropTypes.object,
-    results: PropTypes.object
+    results: PropTypes.object,
+    window: PropTypes.object
   },
   componentDidMount: function() {
     this.fetch(this.props);
@@ -73,47 +76,69 @@ var Search = React.createClass({
       this.fetch(nextProps);
     }
   },
+  disableFiltering: function() {
+    // Prevent rapid fire filtering.
+    const { results } = this.props;
+    for (let key in results) {
+      if (results[key].isFetching) return true;
+    }
+    return false;
+  },
   fetch: function(props) {
-    const { dispatch, location } = props;
-    dispatch(fetchConsolidatedResults(location.query));
+    const { dispatch, location, params } = props;
+    const api = apis[params.api] || _.filter(apis, api => api.deckable);
+    dispatch(fetchResults(location.query, api));
   },
   handleFilter: function(filters) {
-    const { dispatch, location } = this.props;
-    let query = getFilterQuery(location.query, filters);
-    dispatch(updatePath(`/search?${stringify(query)}`));
+    const { dispatch, location, params } = this.props;
+    let query = getFilterQuery(location.query, filters, this.props.filters);
+    dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
+  },
+  contentPane: function() {
+    const { location, params, results } = this.props;
+
+    let content = null;
+    if (!params.api) {
+      content = <Deck query={ location.query } apis={ apis} results={ results } />;
+    } else {
+      let api = apis[params.api],
+          result = results[api.uniqueId],
+          props = {
+            query: location.query,
+            api: apis[params.api],
+            result: results[api.uniqueId],
+            window
+          };
+      content = <Result {...props} />;
+    }
+    return <div id="content-pane" key="content-pane">{ content }</div>;
+  },
+  leftPane: function() {
+    const { filters, location, params } = this.props;
+    let pane = null;
+    if (filters.isFetching || !_.isEmpty(filters.items)) {
+      pane = (
+        <div id="left-pane" className="left-pane" key="left-pane">
+          <Filter disabled={ this.disableFiltering() } filters={ filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
+        </div>
+      );
+    }
+    return pane;
   },
   view: function() {
-    const { location, results } = this.props;
-
-    if (noMatch(results)) {
-      return <div>Your search did not match any documents.</div>;
+    const { filters, location, params, results, window } = this.props;
+    if (params.api && !apis.hasOwnProperty(params.api)) {
+      return <div>Invalid api type.</div>;
     }
 
-    if (showLoading(results)) {
-      return <Spinner message="Searching..." />;
+    if (showLoading(results, params.api)) {
+      let spinnerMargin = { marginTop: 100 };
+      return <div style={ spinnerMargin }><Spinner message="Searching..." /></div>;
     }
-    const content = [
-      <Result
-         key="article"
-         result={ results.article } resource={ resources.articles }
-         query={ location.query } screen="search" />,
-      <Result
-         key="tradeEvent"
-         result={ results.tradeEvent } resource={ resources.trade_events }
-         query={ location.query } screen="search" />,
-      <Result
-         key="tradeLead"
-         result={ results.tradeLead } resource={ resources.trade_leads }
-         query={ location.query } screen="search" />,
-    ];
 
     return [
-      <div id="left-pane" key="left-pane">
-        <Filter filters={ this.props.filters } onChange={ this.handleFilter } query={ location.query }/>
-      </div>,
-      <div id="content-pane" key="content-pane">
-        { content }
-      </div>
+      this.leftPane(),
+      this.contentPane()
     ];
   },
   render: function() {
@@ -133,10 +158,11 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { filters, query, results } = state;
+  const { filters, notifications, query, results } = state;
 
   return {
     filters,
+    notifications,
     query,
     results
   };

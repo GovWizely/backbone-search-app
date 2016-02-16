@@ -1,27 +1,29 @@
 import React, { PropTypes } from 'react';
 
-import ResultListItem from './result-list-item';
-import { findFirst } from '../utils/view-helper';
+var ResultList = ({ displayedItems, items, template, options }) => {
+  const slicedItems = displayedItems < 0 ? items : items.slice(0, displayedItems);
+  const resultItems = slicedItems.map((item, index) => {
+    return <li key={ index }>{ template(item, options) }</li>;
+  });
+  return (
+    <ul className="mi-list">
+      { resultItems }
+    </ul>
+  );
+};
 
-export default React.createClass({
-  displayName: 'ResultList',
-  propTypes: {
-    fields: PropTypes.object.isRequired,
-    items: PropTypes.array.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      items: []
-    };
-  },
-  render: function() {
-    const { items, fields } = this.props;
-    return (
-      <section className="mi-result-list">
-        { items.map(function(item) {
-          return <ResultListItem key={ findFirst(item, fields.key) } item={ item } fields={ fields }/>;
-        }) }
-      </section>
-    );
-  }
-});
+ResultList.propTypes = {
+  displayedItems: PropTypes.number,
+  items: PropTypes.array.isRequired,
+  options: PropTypes.object,
+  template: PropTypes.func.isRequired
+};
+
+ResultList.defaultProps = {
+  displayedItems: -1,
+  items: [],
+  options: {}
+};
+
+
+export default ResultList;

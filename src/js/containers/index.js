@@ -1,18 +1,27 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Form from '../components/form';
 
-export default React.createClass({
+const Index = React.createClass({
   displayName: 'Index',
   propTypes: {
-    aggregations: PropTypes.object,
-    onSubmit: PropTypes.func,
-    query: PropTypes.object
+    onSubmit: PropTypes.func
   },
   render: function() {
     const props = {
-      aggregations: this.props.aggregations,
-      onSubmit: this.props.onSubmit,
-      query: this.props.query };
-    return <Form {...props} />;
+      focused: true,
+      onSubmit: this.props.onSubmit };
+    return (
+      <div id="mi-index">
+        <Form {...props} />
+      </div>
+    );
   }
 });
+
+
+function mapStateToProps(state) {
+  return {};
+}
+
+export default connect(mapStateToProps)(Index);

@@ -5,31 +5,68 @@ import { connect } from 'react-redux';
 import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
-import { page } from '../config';
-import resources from '../resources';
+import apis from '../apis';
+import { fetchResults } from '../actions/result';
+import Deck from './deck';
 import Filter from './filter';
-import Cards from './cards';
 import Result from './result';
 
 import Form from '../components/form';
-import CheckboxTree from '../components/checkbox-tree';
-import Message from '../components/search-message';
-import Pagination from '../components/pagination';
+import Spinner from '../components/spinner';
+
+function getFilterQuery(query, filter, filterState) {
+  let filterQuery = assign({}, query, {
+    [filter.name]: filter.items,
+    offset: 0
+  });
+  if (_.isEmpty(filter.items)) delete filterQuery[filter.name];
+
+  delete filterQuery.filter;
+  for (let key in filterState.items) {
+    if (filterQuery[key] && !_.isEmpty(filterQuery[key])) filterQuery.filter = true;
+  };
+  return filterQuery;
+}
 
 function shouldFetch(location, nextLocation) {
   return (location.pathname !== nextLocation.pathname ||
           location.search !== nextLocation.search);
 }
 
+function noMatch(results) {
+  for (let api in results) {
+    let result = results[api];
+    if (result.isFetching || (result.metadata && result.metadata.total > 0)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function showLoading(results, key=null) {
+  if (key && results[key].isFetching) return true;
+  if (key && !results[key].isFetching) return false;
+
+  for (let api in results) {
+    let result = results[api];
+    if (!result.isFetching) {
+      return false;
+    }
+  }
+  return true;
+}
+
 var Search = React.createClass({
   displayName: 'Search',
   propTypes: {
-    aggregations: PropTypes.object,
     dispatch: PropTypes.func.isRequired,
+    filters: PropTypes.object,
     location: PropTypes.object.isRequired,
     onSubmit: PropTypes.func,
     params: PropTypes.object.isRequired,
-    results: PropTypes.object
+    query: PropTypes.object,
+    results: PropTypes.object,
+    window: PropTypes.object
   },
   componentDidMount: function() {
     this.fetch(this.props);
@@ -39,77 +76,81 @@ var Search = React.createClass({
       this.fetch(nextProps);
     }
   },
-  fetch: function(props) {
-    const { dispatch, params, location } = props;
-    switch(params.resource) {
-    case undefined:
-      for (let key in resources) {
-        dispatch(resources[key].fetch(location.query));
-      }
-      break;
-    default:
-      if (resources[params.resource]) {
-        dispatch(resources[params.resource].fetch(location.query));
-      }
+  disableFiltering: function() {
+    // Prevent rapid fire filtering.
+    const { results } = this.props;
+    for (let key in results) {
+      if (results[key].isFetching) return true;
     }
+    return false;
+  },
+  fetch: function(props) {
+    const { dispatch, location, params } = props;
+    const api = apis[params.api] || _.filter(apis, api => api.deckable);
+    dispatch(fetchResults(location.query, api));
   },
   handleFilter: function(filters) {
-    const { dispatch, location } = this.props;
-    let query = assign({}, location.query, {
-      [filters.id]: filters.items
-    });
-    dispatch(updatePath(`/search/articles?${stringify(query)}`));
+    const { dispatch, location, params } = this.props;
+    let query = getFilterQuery(location.query, filters, this.props.filters);
+    dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
+  },
+  contentPane: function() {
+    const { location, params, results } = this.props;
+
+    let content = null;
+    if (!params.api) {
+      content = <Deck query={ location.query } apis={ apis} results={ results } />;
+    } else {
+      let api = apis[params.api],
+          result = results[api.uniqueId],
+          props = {
+            query: location.query,
+            api: apis[params.api],
+            result: results[api.uniqueId],
+            window
+          };
+      content = <Result {...props} />;
+    }
+    return <div id="mi-content-pane" key="content-pane">{ content }</div>;
+  },
+  leftPane: function() {
+    const { filters, location, params } = this.props;
+    let pane = null;
+    if (filters.isFetching || !_.isEmpty(filters.items)) {
+      pane = (
+        <div id="mi-left-pane" key="left-pane">
+          <Filter disabled={ this.disableFiltering() } filters={ filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
+        </div>
+      );
+    }
+    return pane;
   },
   view: function() {
-    const { location, params, results } = this.props;
-    let resource = null;
-    switch(params.resource) {
-    case undefined:
-      resource = resources.articles;
-      return [
-        <Result
-          result={ results.article } resource={ resource }
-          query={ location.query } screen="search" key="result" />,
-        <Cards results={ results } query={ location.query } key="cards" />
-      ];
-    default:
-      resource = resources[params.resource];
-      if (results[resource.stateKey]) {
-        return (
-          <Result
-            result={ results[resource.stateKey] } resource={ resource }
-            query={ location.query } screen="search" key="result" />
-        );
-      }
+    const { filters, location, params, results, window } = this.props;
+    if (params.api && !apis.hasOwnProperty(params.api)) {
+      return <div>Invalid api type.</div>;
     }
-    return null;
+
+    if (showLoading(results, params.api)) {
+      let spinnerMargin = { marginTop: 100 };
+      return <div style={ spinnerMargin }><Spinner message="Searching..." /></div>;
+    }
+
+    return [
+      this.leftPane(),
+      this.contentPane()
+    ];
   },
   render: function() {
-    const { aggregations, location, onSubmit, params, results } = this.props;
-    var filter;
-    if (_.isUndefined(params.resource)) {
-      filter = results.article.aggregations;
-    } else {
-      filter = results[resources[params.resource].stateKey].aggregations;
-    }
+    const { location, onSubmit, params, results } = this.props;
     return (
       <div id="search">
-        <div className="uk-grid">
-          <div className="uk-width-1-1 searchbar">
-            <Form
-              aggregations={ aggregations }
-              expanded={ false }
-              query={ location.query }
-              onSubmit={ onSubmit } />
-          </div>
-        </div>
-        <div className="uk-grid">
-          <div className="uk-width-1-4">
-            <Filter aggregations={ filter } onChange={ this.handleFilter } />
-          </div>
-          <div className="uk-width-3-4">
-            { this.view() }
-          </div>
+        <Form
+          expanded={ false }
+          query={ location.query }
+          onSubmit={ onSubmit } />
+        <div id="mi-main-pane">
+          { this.view() }
         </div>
       </div>
     );
@@ -117,9 +158,12 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { results } = state;
+  const { filters, notifications, query, results } = state;
 
   return {
+    filters,
+    notifications,
+    query,
     results
   };
 }

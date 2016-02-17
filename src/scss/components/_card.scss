@@ -1,20 +1,60 @@
 .#{$module}card {
-  background-color: #FFF;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
-  box-sizing: border-box;
-  border-radius: 2px;
-  overflow: hidden;
-  padding-bottom: 6px;
+  display: block;
+  float: left;
+  margin: 0 auto;
+  position: relative;
 
-  >h4, >ul, >div {
-    padding: 8px 16px;
+  @media screen and (min-width: $breakpoint-medium) {
+    margin: 14px 0 16px 14px;
+    min-width: 414px;
+    max-width: 460px;
+    width: 44%;
   }
 
-  .show-more {
+  >header {
+    background-color: #5377af;
+    color: #FFF;
     font-size: 16px;
+    font-weight: 900;
+    padding: 14px 5px;
+    text-align: center;
   }
 
-  .source {
-    color: #006621;
+  >footer {
+    background-color: #FFF;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 10px 2px;
+    text-align: center;
+    border: 1px solid #eee;
+    border-top: none;
+  }
+
+  >.#{$module}content {
+    border: 1px solid #eee;
+    border-top: none;
+    border-bottom: none;
+    height: 550px;
+    padding-top: 12px;
+    z-index: 1001;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      padding: 12px;
+    }
+  }
+
+  .no-match {
+    color: #444;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    line-height: 30px;
+
+    i {
+      font-size: 48px;
+    }
+  }
+  p {
+    margin: 0;
   }
 }

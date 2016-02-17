@@ -1,5 +1,5 @@
 import _ from 'lodash';
-const countries = _.invert({
+const definitions = {
   'AF' : 'Afghanistan',
   'AX' : 'Aland Islands',
   'AL' : 'Albania',
@@ -245,10 +245,13 @@ const countries = _.invert({
   'YE' : 'Yemen',
   'ZM' : 'Zambia',
   'ZW' : 'Zimbabwe'
-});
+};
+const abbreviations = _.invert(definitions);
 
+export function countryToAbbr(names) {
+  return _(abbreviations).pick(names.split(',')).values().value().join(',');
+}
 
-export function country(names) {
-  let _names = names.split(',');
-  return _(countries).pick(names.split(',')).values().value().join(',');
+export function abbrToCountry(abbrs) {
+  return _(definitions).pick(abbrs.split(',')).values().value().join(',');
 }

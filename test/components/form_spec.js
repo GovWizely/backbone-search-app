@@ -1,35 +1,33 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import { createHistory } from 'history';
 import { expect } from 'chai';
-import Form from '../../src/js/components/form';
+import { Form } from '../../src/js/components/form';
 
-const { renderIntoDocument } = TestUtils;
+function setup(expanded=true) {
+  let renderer = TestUtils.createRenderer(),
+      props = { fields: { q: {} }, expanded, handleSubmit: e => e };
+  renderer.render(<Form {...props} />);
+  let output = renderer.getRenderOutput();
+
+  return {
+    props,
+    output,
+    renderer
+  };
+}
 
 describe('Form', () => {
-  it.skip('render ExpandedForm by default', () => {
-    const component = renderIntoDocument(
-      <Form />
-    );
-    var form = component.view();
-    expect(form.type.displayName).to.equal('ExpandedForm');
+  context('when form is condensed', () => {
+    it('should render correctly', () => {
+      let { output } = setup(false);
+      expect(output.props.className).to.equal('mi-form mi-form-condensed');
+    });
   });
 
-  it.skip('render CondensedForm when expanded property is false', () => {
-    const component = renderIntoDocument(
-      <Form expanded={ false }/>
-    );
-    var form = component.view();
-    expect(form.type.displayName).to.equal('CondensedForm');
-  });
-
-  it.skip('route to /search on submit event', () => {
-    const component = renderIntoDocument(
-      <Form expanded={ false } history={ createHistory() }/>
-    );
-    var e = { target: { value: 'keyword' } };
-    component.handleKeywordChange(e);
-    component.handleSubmit();
-    expect(window.location.pathname).to.equal('/search');
+  context('when form is expanded', () => {
+    it('should render correctly', () => {
+      let { output } = setup();
+      expect(output.props.className).to.equal('mi-form mi-form-expanded');
+    });
   });
 });

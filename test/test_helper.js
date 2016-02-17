@@ -1,48 +1,5 @@
-require('babel-polyfill');
+import { jsdom } from 'jsdom';
 
-/* chai configuration */
-import chai, { expect } from 'chai';
-
-chai.config.truncateThreshold = 0;
-
-/* async action mock */
-import { applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-
-const middlewares = [ thunk ];
-
-export function mockStore(getState, expectedActions, done) {
-  if (!Array.isArray(expectedActions)) {
-    throw new Error('expectedActions should be an array of expected actions.');
-  }
-  if (typeof done !== 'undefined' && typeof done !== 'function') {
-    throw new Error('done should either be undefined or function.');
-  }
-
-  function mockStoreWithoutMiddleware() {
-    return {
-      getState() {
-        return typeof getState === 'function' ? getState() : getState;
-      },
-
-      dispatch(action) {
-        const expectedAction = expectedActions.shift();
-
-        try {
-          expect(action).to.eql(expectedAction);
-          if (done && !expectedActions.length) {
-            done();
-          }
-        } catch(e) {
-          done(e);
-        }
-      }
-    };
-  }
-
-  const mockStoreWithMiddleware = applyMiddleware(
-    ...middlewares
-  )(mockStoreWithoutMiddleware);
-
-  return mockStoreWithMiddleware();
-}
+global.document = jsdom('<!doctype html><html><body></body></html>');
+global.window = document.defaultView;
+global.navigator = global.window.navigator;

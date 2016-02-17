@@ -1,8 +1,11 @@
-.#{$module}-list {
+.#{$module}list {
+  >:nth-child(even) {
+    background-color: #f9f9f9;
+  }
 
-}
-
-.#{$module}list-item {
-  list-style-type: none;
-  margin-bottom: 14px;
+  >li {
+    padding: 4px 12px;
+    list-style-type: none;
+    margin-bottom: 6px;
+  }
 }

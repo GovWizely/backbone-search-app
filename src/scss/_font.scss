@@ -4,11 +4,11 @@ $font-css-prefix: 'mi-icon';
 
 @font-face {
   font-family: 'icomoon';
-  src: url('#{$font-path}/icomoon.eot?v=#{$font-version}');
-  src: url('#{$font-path}/icomoon.eot?#iefix&v=#{$font-version}') format('embedded-opentype'),
-       url('#{$font-path}/icomoon.ttf?v=#{$font-version}') format('truetype'),
-       url('#{$font-path}/icomoon.woff?v=#{$font-version}') format('woff'),
-       url('#{$font-path}/icomoon.svg?v=#{$font-version}#fontawesomeregular') format('svg');
+  src: url('#{$font-path}/icomoon.eot');
+  src: url('#{$font-path}/icomoon.eot') format('embedded-opentype'),
+       url('#{$font-path}/icomoon.ttf') format('truetype'),
+       url('#{$font-path}/icomoon.woff') format('woff'),
+       url('#{$font-path}/icomoon.svg#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -22,9 +22,9 @@ $font-css-prefix: 'mi-icon';
   text-transform: none;
   line-height: 1;
 
-   /* Better Font Rendering =========== */
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .#{$font-css-prefix}-search:before { content: "\f002"; }
@@ -35,3 +35,5 @@ $font-css-prefix: 'mi-icon';
 .#{$font-css-prefix}-angle-right:before { content: '\f105'; }
 .#{$font-css-prefix}-angle-up:before { content: '\f106'; }
 .#{$font-css-prefix}-angle-down:before { content: '\f107'; }
+.#{$font-css-prefix}-exclamation-triangle:before { content: "\f071"; }
+.#{$font-css-prefix}-warning:before { content: "\f071"; }

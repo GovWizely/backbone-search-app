@@ -1,40 +1,52 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import CheckboxTree from '../components/checkbox-tree';
+import Spinner from '../components/spinner';
+
+function parseFilterQuery(query, filters) {
+  let values = {};
+  _.map(filters, function(o, filter) {
+    values[filter] = query[filter] ? query[filter] : [];
+    if(!_.isArray(values[filter])) values[filter] = [values[filter]];
+  });
+  return values;
+}
 
 var Filter = React.createClass({
   displayName: 'Filter',
   propTypes: {
-    aggregations: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
+    disabled: PropTypes.bool,
+    filters: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    query: PropTypes.object
+  },
+  getDefaultProps: function() {
+    return {
+      disabled: false
+    };
   },
   render: function() {
-    const { aggregations, onChange } = this.props;
-    if (!aggregations) return null;
+    const { disabled, filters: { isFetching, items }, onChange, query } = this.props;
 
-    const countrySeparator = _.isEmpty(aggregations.countries) ? null : <hr />;
-    const industrySeparator = _.isEmpty(aggregations.industries) ? null : <hr />;
+    if (!items) return null;
+
+    const values = parseFilterQuery(query, items);
+
+    const checkboxTrees = _.map(items, function(filters, key) {
+      return [
+        <CheckboxTree
+           disabled={ disabled }
+           key={ key } name={ key } label={ _.startCase(key) }
+           items={ filters }
+           onChange={ onChange }
+           values={ values[key] } />
+      ];
+    });
 
     return (
       <div>
-        <h4 className="uk-text-muted">Filter Results</h4>
-        <div id="filters">
-          <CheckboxTree
-            id="filter-countries" label="Country"
-            items={ aggregations.countries }
-            itemLimit={ 5 }
-            onChange={ onChange } />
-          { countrySeparator }
-          <CheckboxTree
-            id="filter-industries" label="Industry"
-            items={ aggregations.industries } nested
-            onChange={ onChange } />
-          { industrySeparator }
-          <CheckboxTree
-            id="filter-topics" label="Topic"
-            items={ aggregations.topics } nested
-            onChange={ onChange } />
-        </div>
+        <header className="">Filter Results</header>
+        { checkboxTrees }
       </div>
     );
   }

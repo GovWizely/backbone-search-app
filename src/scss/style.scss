@@ -1,11 +1,12 @@
-@import url("http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext");
-@import "node_modules/react-select/dist/react-select";
+@import url("//fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext");
+@import "./uikit";
 @import "./variable";
 @import "./font";
 @import "./uikit";
 @import "./spinner";
 
-// @import "./components/_typography";
+@import "./components/typography";
+@import "./components/spinner";
 @import "./components/navbar";
 @import "./components/header";
 @import "./components/footer";
@@ -16,92 +17,73 @@
 @import "./components/button";
 @import "./components/checkbox-tree";
 @import "./components/pagination";
-@import "./components/result-list";
-@import "./components/result-list-item";
-
 
 html {
   position: relative;
-  min-height: 100%;
 }
 
-body {
-  margin-bottom: 100px;
+#main {
   font-size: 14px;
   font-family: $font-family-base;
-}
+  padding-top: 5%;
+  padding-bottom: 80px;
 
-input[type=text] {
-  border: 1px solid #ccc;
-  border-radius: $border-radius;
-}
-
-@media screen and (min-width: 48em) {
-  #main {
-    padding: 60px;
-    width: 80%;
-    margin: 0 auto;
+  @media screen and (min-width: $breakpoint-medium) {
+    padding-top: 0;
   }
 }
 
-.searchbar {
-  padding-bottom: 16px;
-  margin-bottom: 20px;
+#mi-index {
+  margin-bottom: 200px;
 }
 
-.search-message {
-  border-bottom: 1px solid $border-color;
-  margin-bottom: 15px;
+.mi-search-message {
+  display: none;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    display: block;
+    margin-bottom: 20px;
+  }
 }
 
-.keyword-input {
-  &.expanded {
-    height: 300px;
+#mi-main-pane {
+  padding: 0;
+  margin: 0 auto;
+  width: 96%;
 
-    button {
-      padding-bottom: 11px;
-    }
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 27px;
+  }
+}
+
+#mi-left-pane {
+  display: none;
+
+  header {
+    font-size: 15px;
+    margin-bottom: 5px;
   }
 
-  &.condensed {
+  @media screen and (min-width: $breakpoint-medium) {
+    display: block;
+    float: left;
+    position: relative;
+    width: 267px;
     border-right: 1px solid $border-color;
-    button {
-      padding-bottom: 7px;
-    }
+  }
+
+  .mi-checkbox-tree {
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 12px;
   }
 }
 
-.category-input {
-  .Select {
-    margin-top: 12px;
-    margin-bottom: 14px;
-  }
-  .separator {
-    margin-top: 18px;
-    margin-bottom: 18px;
-  }
-
-  .submit {
-    margin-top: 12px;
+#mi-left-pane + #mi-content-pane {
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 300px;
   }
 }
 
-.cards {
-  padding-top: 26px;
-  border-top: 1px solid #eee;
-}
-
-
-#filters {
-  margin-top: 10px;
-  border-right: 1px solid $border-color;
-  width: 100%;
-}
-
-#index {
-
-}
-
-#search {
-
+.mi-result {
+  margin-bottom: 50px;
 }

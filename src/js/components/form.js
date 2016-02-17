@@ -3,103 +3,47 @@ import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 
 import Header from './header';
-import Select from './aggregation-select';
 
-function keywordInput(q, handleSubmit) {
+var Form = ({ expanded, fields, focused, handleSubmit, onSubmit }) => {
+  const css = expanded ? 'mi-form mi-form-expanded' : 'mi-form mi-form-condensed';
   return (
-    <div className="uk-width-1-1 mi-keyword">
-      <input type="text" className="uk-width-1-1" placeholder="Keyword" { ...q } />
-      <span>
-        <button className="uk-button uk-button-success" onClick={ handleSubmit }>
-          <i className="mi-icon mi-icon-search"></i>
-        </button>
-      </span>
-    </div>
-  );
-}
+    <div className={ css }>
+      <div>
+        <Header />
+      </div>
 
-var Form =  React.createClass({
-  displayName: 'ExpandedForm',
-  propTypes: {
-    aggregations: PropTypes.object.isRequired,
-    expanded: PropTypes.bool.isRequired,
-    fields: PropTypes.object.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func
-  },
-  getDefaultProps: function() {
-    return {
-      expanded: true
-    };
-  },
-  condensed: function(q, countries, industries, handleSubmit) {
-    return (
-      <form className="uk-grid uk-form mi-form mi-form-condensed">
-        <div className="uk-width-1-1 uk-width-medium-3-12">
-          <Header />
-        </div>
-
-        <div className="uk-width-1-1 uk-width-medium-4-12">
-          { keywordInput(q, handleSubmit) }
-        </div>
-
-        <div className="uk-width-medium-2-12">
-          <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
-        </div>
-
-        <div className="uk-width-medium-2-12">
-        <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
-        </div>
-
-        <div className="uk-width-medium-1-12">
-          <button type="button" role="button" className="uk-button uk-button-primary" onClick={ handleSubmit }>Search</button>
+      <form onSubmit={ handleSubmit }>
+        <div className="mi-keyword">
+          <input autoFocus={ focused } type="text" placeholder="Keyword" { ...fields.q } aria-label="Enter keyword" />
+          <span>
+            <button className="uk-button uk-button-success" onClick={ handleSubmit } title="Search">
+              <i className="mi-icon mi-icon-search" aria-label="Search"></i>
+            </button>
+          </span>
         </div>
       </form>
-    );
-  },
-  expanded: function(q, countries, industries, handleSubmit) {
-    return (
-      <div className="mi-form mi-form-expanded">
-        <Header />
+    </div>
+  );
+};
 
-        <hr />
+Form.propTypes = {
+  expanded: PropTypes.bool.isRequired,
+  fields: PropTypes.object.isRequired,
+  focused: PropTypes.bool,
+  handleSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func
+};
 
-        <form className="uk-grid uk-grid-small uk-grid-divider" onSubmit={ handleSubmit }>
-          <div className="uk-width-1-1 uk-width-medium-2-3">
-            <p className="mi-text-muted">Search by Keyword</p>
-            <div className="uk-width-1-1">
-              { keywordInput(q, handleSubmit) }
-            </div>
-          </div>
-          <div className="uk-width-1-1 uk-width-medium-1-3 category-input">
-            <p className="mi-text-muted">Search by Category</p>
-            <Select placeholder="Select Country" items={ this.props.aggregations.countries } onSubmit={ handleSubmit } { ...countries } />
-            <p className="mi-text-muted separator">And / Or</p>
-            <Select placeholder="Select Industry" items={ this.props.aggregations.industries } onSubmit={ handleSubmit } { ...industries } />
+Form.defaultProps = {
+  expanded: true,
+  focused: false
+};
 
-            <button type="button" role="button" className="uk-button uk-button-primary submit" onClick={ handleSubmit }>Search</button>
-          </div>
-        </form>
-      </div>
-    );
-  },
-  render: function() {
-    const {
-      fields: { q, countries, industries },
-      handleSubmit
-    } = this.props;
-    if (this.props.expanded) {
-      return this.expanded(q, countries, industries, handleSubmit);
-    } else {
-      return this.condensed(q, countries, industries, handleSubmit);
-    }
-  }
-});
-
+exports.Form;
 
 export default reduxForm({
   form: 'form',
-  fields: ['q', 'countries', 'industries']
+  fields: ['q']
 }, state => ({
   initialValues: state.query
 }))(Form);

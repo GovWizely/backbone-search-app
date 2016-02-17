@@ -16,12 +16,9 @@ function setup() {
   return { props, output, renderer };
 }
 
-describe('components', () => {
-  describe('Header', () => {
-
-    it('should render correctly', () => {
-      const { output } = setup();
-      expect(output.type).to.equal('header');
-    });
+describe('components/Header', () => {
+  it('should render correctly', () => {
+    const { output } = setup();
+    expect(output.type).to.equal('header');
   });
 });

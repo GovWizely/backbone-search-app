@@ -12,6 +12,7 @@ A control to display search message in the below format:
 
 Properties |  Type  | Description
 -----------|--------|------------
+apiName    | string | Required. Name of the API.
 keyword    | string | Optional. Keyword used in search.
 total      | number | Required. Total number of results from search.
 
@@ -20,8 +21,9 @@ total      | number | Required. Total number of results from search.
 ```js
 import SearchMessage from 'src/js/components/search-message';
 
+const apiName = 'Market Intelligence';
 const keyword = 'Test';
 const total = 10;
 
-<SearchMessage keyword={ keyword } total={ total } />
+<SearchMessage apiName={ apiName } keyword={ keyword } total={ total } />
 ```

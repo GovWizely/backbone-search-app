@@ -3,7 +3,7 @@
 * [Read Me](/README.md)
 * Resources
 * [Components](/docs/components/README.md)
-  * [Card](/docs/components/card.md)
+  * [Card](/docs/components/Card.md)
   * [CheckboxTree](/docs/components/CheckboxTree.md)
   * [Header](/docs/components/Header.md)
   * Pagination

@@ -14,7 +14,7 @@ url           | string | Required. Url to detail view.
 ## Using Card
 
 ```js
-import Card from 'src/js/components/card;
+import Card from 'src/js/components/card';
 
 
 const template = ({ title, description }, options) => {

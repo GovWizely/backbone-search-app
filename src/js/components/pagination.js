@@ -1,3 +1,5 @@
+require('./styles/pagination.scss');
+
 import _ from 'lodash';
 import assign from 'object-assign';
 import { stringify } from 'querystring';

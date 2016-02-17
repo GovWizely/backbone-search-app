@@ -2,17 +2,12 @@ $module: 'mi-';
 $font-family-base: 'Lato', sans-serif;
 
 $success-color: #308430;
-$error-color: rgb(202, 60, 60);
-$warning-color: rgb(223, 117, 20);
-$secondary-color: rgb(66, 184, 221);
 $border-color: #EEE;
 $header-color: #32404e;
 
-$screen-sm-min: 568px;
-$screen-md-min: 768px;
-$screen-lg-min: 1024px;
-$screen-xl-min: 1280px;
-
-$small: 10px;
-
 $border-radius: 6px;
+
+$breakpoint-small: 480px !default;
+$breakpoint-medium: 768px !default;
+$breakpoint-large: 960px !default;
+$breakpoint-xlarge: 1220px !default;

@@ -111,7 +111,7 @@ var CheckboxTree = React.createClass({
     });
     const hrefCSS = visible ? '' : 'collapsed';
     const showAllText = showAll ? 'Less' : 'More';
-    const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a href="#" onClick={ this.toggleShowAll } className="uk-text-small">+ See { showAllText }</a> : null;
+    const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a href="#" onClick={ this.toggleShowAll } className="see-more">+ See { showAllText }</a> : null;
 
     const view = visible ?  (
       <div name={ name }>{ list(items, options) } { showAllLink }</div>

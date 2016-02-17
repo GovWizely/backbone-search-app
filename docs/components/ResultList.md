@@ -2,22 +2,31 @@
 
 An item list control. It generates a list of `ResultListItem`.
 
-Properties |  Type  | Description
------------|--------|------------
-fields     | object | Required. Fields to be displayed from item.
-items      |  array | Required. Items to be listed.
+  Properties  |  Type  | Description
+--------------|--------|------------
+displayedItems| number | Optional. Number of items to be displayed.
+items         | array  | Required. Items to be listed.
+options       | object | Optional. Other properties that is required in template.
+template      | func   | Required. Item Template.
+
 
 ## Using ResultList
 
 ```js
 import ResultList from 'src/js/components/result-list';
 
-const fields = {
-    key: ['id'],
-    snippet: ['snippet', 'description'], // if snippet is not found in item, look for description.
-    source: ['source'],
-    title: ['title'],
-    url: ['url', 'link'] // if url is not found in item, look for link.
+const template = ({ title, description }, options) => {
+  return (
+    <article>
+      <header>{ title }</header>
+      <p>{ description }</p>
+      <footer>{ options.text }</footer>
+    </article>
+  );
+};
+
+const options = {
+  text: 'Lorem Ipsum'
 };
 
 const items = [
@@ -26,5 +35,5 @@ const items = [
     { id: "item-3", description: "item #1", source: "item", title: "Item One", link: "http://www.example.com" }
 ];
 
-<ResultList items={ items } fields={ fields } />
+<ResultList displayedItems={ 5 } items={ items } options={ options } template={ template } />
 ```

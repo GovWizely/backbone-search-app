@@ -22,7 +22,7 @@ This is a React+Flux front-end JS app which provides a search UI to export.gov's
 4. Launching the development server:
 
 ```sh
-  $ gulp watch
+  $ gulp start
 ```
 
 ## Deploying
@@ -48,23 +48,17 @@ Note that gulp lint merely displays errors, it doesn't fix them (that's on you).
 To run the test suite:
 
 ```sh
-  $ gulp test
+  $ npm test
 ```
 
 To auto-run tests on file changes:
 
 ```sh
-  $ gulp test:watch
+  $ npm test --watch
 ```
 
 To run tests on specific files:
 
 ```sh
-  $ gulp test:single --file "test/example.js" --file "test/example2.js"
-```
-
-To run code coverage:
-
-```sh
-  $ npm test
+  $ npm test test/example2.js
 ```

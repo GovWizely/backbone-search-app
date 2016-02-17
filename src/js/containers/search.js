@@ -136,6 +136,10 @@ var Search = React.createClass({
       return <div style={ spinnerMargin }><Spinner message="Searching..." /></div>;
     }
 
+    if (noMatch(results)) {
+      return <div>Your search did not match any documents.</div>;
+    }
+
     return [
       this.leftPane(),
       this.contentPane()

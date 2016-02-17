@@ -1,0 +1,110 @@
+@import "../../../scss/uikit";
+@import "../../../scss/variable";
+
+$form-focus-border: #99baca !default;
+$form-focus-background: #f5fbfe !default;
+$form-focus-color: #444 !default;
+
+.mi-form {
+  margin-bottom: 20px;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    display: table;
+    padding: 24px 0px 12px 22px;
+    vertical-align: middle;
+    width: 98%;
+  }
+
+  form {
+    border-collapse: collapse;
+    display: table;
+    margin: 0 auto;
+    width: 96%;
+    max-width: 640px;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      margin: 0;
+    }
+  }
+
+  .mi-header-container {
+    @media screen and (min-width: $breakpoint-medium) {
+      display: table-cell;
+      padding-right: 22px;
+      vertical-align: middle;
+      width: 250px;
+    }
+  }
+
+  #mi-input {
+    border: 1px solid #ccc;
+    border-radius: $border-radius;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-sizing: border-box;
+    color: #444;
+    display: table-cell;
+    float: left;
+    font-size: 13px;
+    height: 34px;
+    line-height: 1.5;
+    padding: 4px 6px;
+    width: 100%;
+    vertical-align: top;
+
+    &:focus {
+      border-color: $form-focus-border;
+      outline: 0;
+      background: $form-focus-background;
+      color: $form-focus-color;
+    }
+  }
+
+  #mi-submit {
+    display: table-cell;
+    margin: 0;
+    vertical-align: middle;
+    width: 34px;
+
+    >button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-left: -1px;
+    }
+  }
+
+  &.mi-form-expanded {
+    display: block;
+    padding: 15% 0 0 0;
+
+    form {
+      margin: 0 auto;
+      max-width: 720px;
+      min-width: 0;
+    }
+
+    .mi-header-container {
+      display: block;
+      padding-right: 0;
+      width: 100%;
+    }
+
+    #mi-input {
+      font-size: 18px;
+      height: 46px;
+      margin: 0;
+      padding: 10px 16px;
+    }
+
+    #mi-submit {
+      width: 48px;
+
+      >button {
+        font-size: 18px;
+        height: 46px;
+        line-height: 46px;
+        padding: 0 16px;
+      }
+    }
+  }
+}

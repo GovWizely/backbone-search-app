@@ -1,3 +1,5 @@
+require('./styles/spinner.scss');
+
 import React, { PropTypes } from 'react';
 
 const FoldingCube = (

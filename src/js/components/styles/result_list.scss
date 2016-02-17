@@ -1,4 +1,8 @@
-.#{$module}list {
+@import "../../../scss/variable";
+
+.#{$module}result-list {
+  padding-left: 5px;
+
   >:nth-child(even) {
     background-color: #f9f9f9;
   }

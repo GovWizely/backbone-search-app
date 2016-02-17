@@ -1,3 +1,5 @@
+require('./styles/checkbox_tree.scss');
+
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import assign from 'object-assign';
@@ -107,9 +109,9 @@ var CheckboxTree = React.createClass({
       values: new Set(values),
       onClick: this.handleClick
     });
-    const hrefCSS = visible ? '' : 'collapsed';
+    const hrefCSS = visible ? 'mi-icon mi-icon-angle-down' : 'mi-icon mi-icon-angle-right';
     const showAllText = showAll ? 'Less' : 'More';
-    const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a href="#" onClick={ this.toggleShowAll } className="uk-text-small">+ See { showAllText }</a> : null;
+    const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a href="#" onClick={ this.toggleShowAll } className="see-more">+ See { showAllText }</a> : null;
 
     const view = visible ?  (
       <div name={ name }>{ list(items, options) } { showAllLink }</div>

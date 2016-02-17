@@ -14,17 +14,19 @@
 }
 
 .mi-card-item {
-  height: 90px;
+  height: 97px;
   overflow: hidden;
   header {
     font-size: 16px;
-    max-height: 24px;
+    line-height: 1.5;
+    max-height: 48px;
     margin-bottom: 5px;
     overflow: hidden;
   }
   p {
-    line-height: 22px;
-    max-height: 46px;
+    font-size: 14px;
+    line-height: 21px;
+    max-height: 42px;
     overflow: hidden;
   }
 }

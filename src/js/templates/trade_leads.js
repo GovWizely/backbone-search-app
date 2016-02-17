@@ -2,23 +2,25 @@ require('./styles/trade_leads.scss');
 
 import React from 'react';
 
+const href = (id => `https://success.export.gov/tradelead?id=${id}`);
+
 export const trade_leads = {
-  ResultItem: ({ title, description, url }) => {
+  ResultItem: ({ id, title, description, url }) => {
     return (
       <article className="mi-trade-leads mi-result-item">
         <header>
-          <a href={ url } dangerouslySetInnerHTML={ { __html: title || description } }></a>
+          <a href={ href(id) } dangerouslySetInnerHTML={ { __html: title || description } }></a>
         </header>
         <p><a target="_blank" href={ url }>{ url }</a></p>
         <p dangerouslySetInnerHTML={ { __html: description } }></p>
       </article>
     );
   },
-  CardItem: ({ title, description, url }) => {
+  CardItem: ({ id, title, description, url }) => {
     return (
       <article className="mi-trade-leads mi-card-item">
         <header>
-          <a href={ url } dangerouslySetInnerHTML={ { __html: title || description } }></a>
+          <a href={ href(id) } dangerouslySetInnerHTML={ { __html: title || description } }></a>
         </header>
         <p dangerouslySetInnerHTML={ { __html: description } }></p>
       </article>

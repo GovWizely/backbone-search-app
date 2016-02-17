@@ -1,8 +1,11 @@
+@import "../../../scss/variable";
+
 .#{$module}card {
   display: block;
   float: left;
   margin: 0 auto;
   position: relative;
+  width: 100%;
 
   @media screen and (min-width: $breakpoint-medium) {
     margin: 14px 0 16px 14px;

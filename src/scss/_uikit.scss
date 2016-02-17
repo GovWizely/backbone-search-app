@@ -3,8 +3,6 @@
 @import "variable";
 
 $base-link-color: #226DAF;
-$base-heading-font-family: "Lato", sans-serif;
-$base-nav-font-family: "Lato", sans-serif;
 
 $button-height: 34px;
 $button-large-height: 46px;
@@ -22,10 +20,7 @@ $text-danger-color: #B72525;
 
 @import "bower_components/uikit/scss/core/variables";
 @import "bower_components/uikit/scss/core/base";
-@import "bower_components/uikit/scss/core/grid";
 @import "bower_components/uikit/scss/core/form";
-@import "bower_components/uikit/scss/core/navbar";
-@import "bower_components/uikit/scss/core/pagination";
 @import "bower_components/uikit/scss/core/button";
 @import "bower_components/uikit/scss/core/text";
 @import "bower_components/uikit/scss/core/panel";
@@ -39,18 +34,4 @@ $text-danger-color: #B72525;
 em {
   color: inherit;
   font-weight: bold;
-}
-
-.uk-form {
-  input[type=text] {
-    height: 34px;
-  }
-  input:not([type]) {
-    border: none;
-    padding: 0;
-  }
-}
-
-ul {
-  padding-left: 5px;
 }

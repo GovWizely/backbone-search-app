@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
+require('./styles/card.scss');
 
+import React, { PropTypes } from 'react';
 import ResultList from './result-list';
 import Spinner from './spinner';
 

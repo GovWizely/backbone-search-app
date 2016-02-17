@@ -9,8 +9,8 @@ export const articles = {
         <header>
           <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
         </header>
-        <p className="url"><a target="_blank" href={ url }>{ url }</a></p>
-        <p className="snippet" dangerouslySetInnerHTML={ { __html: snippet } }></p>
+        <p><a target="_blank" href={ url }>{ url }</a></p>
+        <p dangerouslySetInnerHTML={ { __html: snippet } }></p>
       </article>
     );
   },
@@ -20,7 +20,7 @@ export const articles = {
         <header>
           <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
         </header>
-        <p className="mi-text" dangerouslySetInnerHTML={ { __html: snippet } }></p>
+        <p dangerouslySetInnerHTML={ { __html: snippet } }></p>
       </article>
     );
   }

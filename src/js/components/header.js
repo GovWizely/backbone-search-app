@@ -1,3 +1,5 @@
+require('./styles/header.scss');
+
 import React from 'react';
 
 var Header = () => {

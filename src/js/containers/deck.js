@@ -21,7 +21,9 @@ var Deck = React.createClass({
       const { isFetching, items } = results[uniqueId];
       const _template = template(api.uniqueId).CardItem;
       const url = `#/search/${pathname}?${stringify(query)}`;
-      return [
+      if (!isFetching && !items.length) return null;
+
+      return (
         <Card
            id={ uniqueId }
            isFetching={ isFetching }
@@ -30,7 +32,7 @@ var Deck = React.createClass({
            label={ displayName }
            template={ _template }
            url={ url } />
-      ];
+      );
     }));
 
     return <div className="mi-deck">{ children }</div>;

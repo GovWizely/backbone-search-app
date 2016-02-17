@@ -10,19 +10,18 @@ var Form = ({ expanded, fields, focused, handleSubmit, onSubmit }) => {
   const css = expanded ? 'mi-form mi-form-expanded' : 'mi-form mi-form-condensed';
   return (
     <div className={ css }>
-      <div>
+      <div className="mi-header-container">
         <Header />
       </div>
 
       <form onSubmit={ handleSubmit }>
-        <div className="mi-keyword">
-          <input autoFocus={ focused } type="text" placeholder="Keyword" { ...fields.q } aria-label="Enter keyword" />
-          <span>
+
+          <input id="mi-input" autoFocus={ focused } type="text" placeholder="Keyword" { ...fields.q } aria-label="Enter keyword" />
+          <span id="mi-submit">
             <button className="uk-button uk-button-success" onClick={ handleSubmit } title="Search">
               <i className="mi-icon mi-icon-search" aria-label="Search"></i>
             </button>
           </span>
-        </div>
       </form>
     </div>
   );

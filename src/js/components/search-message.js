@@ -20,9 +20,9 @@ var SearchMessage = ({ apiName, keyword, total }) => {
 };
 
 SearchMessage.propTypes = {
-  apiName: PropTypes.string,
+  apiName: PropTypes.string.isRequired,
   keyword: PropTypes.string,
-  total: PropTypes.number
+  total: PropTypes.number.isRequired
 };
 
 export default SearchMessage;

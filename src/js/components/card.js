@@ -40,12 +40,12 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
   );
 }
 
-var Card = ({ isFetching, displayedItems, id, items, label, template, url }) => {
+var Card = ({ isFetching, displayedItems, items, label, template, url }) => {
   return (
     <section className="mi-card">
       <header className="title" title={ label }>{ label }</header>
 
-      { view({ isFetching, displayedItems, id, items, label, template, url }) }
+      { view({ isFetching, displayedItems, items, label, template, url }) }
 
       <footer>
         <a href={ url }>See More { label }</a>
@@ -56,12 +56,10 @@ var Card = ({ isFetching, displayedItems, id, items, label, template, url }) => 
 
 Card.propTypes = {
   displayedItems: PropTypes.number,
-  id: PropTypes.string.isRequired,
   isFetching: PropTypes.bool,
   items: PropTypes.array.isRequired,
   label: PropTypes.string,
-  onClick: PropTypes.func,
-  template: PropTypes.func,
+  template: PropTypes.func.isRequired,
   url: PropTypes.string.isRequired
 };
 

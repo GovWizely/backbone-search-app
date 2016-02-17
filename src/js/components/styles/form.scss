@@ -27,7 +27,7 @@ $form-focus-color: #444 !default;
   .mi-header-container {
     @media screen and (min-width: $breakpoint-medium) {
       display: table-cell;
-      padding-right: 22px;
+      padding-right: 12px;
       vertical-align: middle;
       width: 250px;
     }
@@ -102,22 +102,6 @@ $form-focus-color: #444 !default;
         line-height: 46px;
         padding: 0 16px;
       }
-    }
-  }
-
-
-}
-
-.#{$module}form-condensed {
-  margin-bottom: 24px;
-  .#{$module}header {
-    margin-bottom: 10px;
-  }
-
-  @media screen and (min-width: $breakpoint-medium) {
-
-    .#{$module}keyword {
-      margin: 0;
     }
   }
 }

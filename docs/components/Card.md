@@ -1,19 +1,21 @@
-# ResultList
+# Card
 
-An item list control.
+A card element.
 
-  Properties  |  Type  | Description
+Properties    |  Type  | Description
 --------------|--------|------------
 displayedItems| number | Optional. Number of items to be displayed.
+isFetching    | boolean| Optional. Display a loading indicator if true.
 items         | array  | Required. An array of items to be listed.
-options       | object | Optional. Other properties that is required in template.
-template      | func   | Required. Item template.
+label         | string | Optional. Label for card.
+template      |function| Required. Item template.
+url           | string | Required. Url to detail view.
 
-
-## Using ResultList
+## Using Card
 
 ```js
-import ResultList from 'src/js/components/result-list';
+import Card from 'src/js/components/card;
+
 
 const template = ({ title, description }, options) => {
   return (
@@ -25,19 +27,17 @@ const template = ({ title, description }, options) => {
   );
 };
 
-const options = {
-  text: 'Lorem Ipsum'
-};
-
 const items = [
     { description: "item #1", title: "Item One" },
     { description: "item #2", title: "Item One" },
     { description: "item #3", title: "Item One" }
 ];
 
-<ResultList
+<Card
    displayedItems={ 5 }
+   isFetching={ false }
    items={ items }
-   options={ options }
-   template={ template } />
+   label="Items"
+   template={ template }
+   url={ http://www.example.com } />
 ```

@@ -13,7 +13,7 @@ var SearchMessage = ({ apiName, keyword, total }) => {
   const query = _.isEmpty(keyword) ? null : <strong className="uk-text-danger">{ keyword }.</strong>;
 
   return (
-    <div className="search-message">
+    <div className="mi-search-message">
       { count } { message } { query }
     </div>
   );

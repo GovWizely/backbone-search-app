@@ -111,14 +111,14 @@ var Search = React.createClass({
           };
       content = <Result {...props} />;
     }
-    return <div id="content-pane" key="content-pane">{ content }</div>;
+    return <div id="mi-content-pane" key="content-pane">{ content }</div>;
   },
   leftPane: function() {
     const { filters, location, params } = this.props;
     let pane = null;
     if (filters.isFetching || !_.isEmpty(filters.items)) {
       pane = (
-        <div id="left-pane" className="left-pane" key="left-pane">
+        <div id="mi-left-pane" key="left-pane">
           <Filter disabled={ this.disableFiltering() } filters={ filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
         </div>
       );
@@ -149,7 +149,7 @@ var Search = React.createClass({
           expanded={ false }
           query={ location.query }
           onSubmit={ onSubmit } />
-        <div id="main-pane">
+        <div id="mi-main-pane">
           { this.view() }
         </div>
       </div>

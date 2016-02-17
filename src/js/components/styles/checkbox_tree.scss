@@ -61,17 +61,8 @@
     text-decoration: none;
     user-select: none;
 
-    &:before, &.collapsed:before {
-      @extend .mi-icon;
-      margin-right: 10px;
-    }
-
-    &.collapsed:before {
-      @extend .mi-icon-angle-right;
-    }
-
     &:before {
-      @extend .mi-icon-angle-down;
+      margin-right: 10px;
     }
   }
 }

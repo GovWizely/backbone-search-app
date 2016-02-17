@@ -13,17 +13,17 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loader: 'babel-loader',
+      loader: 'babel',
       include: path.join(__dirname, 'src')
     },{
       test: /\.scss$/,
       loaders: ['style', 'css', 'sass']
     },{
       test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'file-loader'
+      loader: 'file'
     },{
       test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url-loader?limit=10000&minetype=application/font-woff'
+      loader: 'url?limit=10000&minetype=application/font-woff'
     }]
   }
 };

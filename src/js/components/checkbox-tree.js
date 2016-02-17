@@ -1,3 +1,5 @@
+require('./styles/checkbox_tree.scss');
+
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import assign from 'object-assign';

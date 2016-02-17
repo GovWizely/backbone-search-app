@@ -1,4 +1,6 @@
-.#{$module}list {
+@import "../../../scss/variable";
+
+.#{$module}result-list {
   >:nth-child(even) {
     background-color: #f9f9f9;
   }

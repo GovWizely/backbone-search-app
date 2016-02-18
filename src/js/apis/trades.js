@@ -27,7 +27,8 @@ function endpoint(path) {
 function defineTradeAPI(key, attributes={}) {
   const tradeAPI = {
     aggregations: {
-      countries: { type: 'array' }
+      countries: { type: 'array' },
+      industries: { type: 'tree' }
     },
     deckable: false,
     endpoint: endpoint(key),

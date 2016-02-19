@@ -1,0 +1,59 @@
+$error-color: #d85030;
+$error-background-color: #fff1f0;
+$error-border-color: #F9C0C0;
+$top: 14px;
+$width: 350px;
+$margin-left: $width / -2;
+
+.mi-notification {
+  display: block;
+  margin-left: $margin-left;
+  position: fixed;
+  width: $width;
+  z-index: 2048;
+
+  .mi-notification-message {
+    color: #000;
+    margin: 0 auto;
+    padding: 6px;
+    position: relative;
+
+    >ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      >li {
+        border: 1px solid #eee;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 1.5;
+        padding: 12px;
+        margin-bottom: 12px;
+
+        &.mi-error {
+          background-color: $error-background-color;
+          border-color: $error-border-color;
+          color: $error-color;
+        }
+      }
+    }
+  }
+
+  &.mi-notification-top-center {
+    top: $top;
+    left: 50%;
+  }
+
+  &.mi-notification-top-left {
+    top: $top;
+    left: 0;
+  }
+
+  &.mi-notification-top-right {
+    top: $top;
+    right: 0;
+  }
+
+}

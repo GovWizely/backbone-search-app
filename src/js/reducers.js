@@ -62,10 +62,15 @@ function results(state = initialState.results, action) {
   }
 }
 
-function notifications(state = [], action) {
+function notifications(state = {}, action) {
   switch(action.type) {
   case FAILURE_RESULTS:
-    return state.concat(action.payload);
+    return assign({}, state, {
+      [action.meta]: {
+        payload: action.payload,
+        type: action.error ? 'error' : 'info'
+      }
+    });
   default:
     return state;
   }

@@ -12,6 +12,7 @@ import Filter from './filter';
 import Result from './result';
 
 import Form from '../components/form';
+import Notification from '../components/notification';
 import Spinner from '../components/spinner';
 
 function getFilterQuery(query, filter, filterState) {
@@ -62,6 +63,7 @@ var Search = React.createClass({
     dispatch: PropTypes.func.isRequired,
     filters: PropTypes.object,
     location: PropTypes.object.isRequired,
+    notifications: PropTypes.object,
     onSubmit: PropTypes.func,
     params: PropTypes.object.isRequired,
     query: PropTypes.object,
@@ -146,9 +148,10 @@ var Search = React.createClass({
     ];
   },
   render: function() {
-    const { location, onSubmit, params, results } = this.props;
+    const { location, onSubmit, notifications, params, results } = this.props;
     return (
       <div id="search">
+        <Notification notifications={ notifications } />
         <Form
           expanded={ false }
           query={ location.query }

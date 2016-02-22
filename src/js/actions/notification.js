@@ -1,9 +1,16 @@
-export const NOTIFY_ERRORS = 'NOTIFY_ERRORS';
+export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
+export const DEL_NOTIFICATION = 'DEL_NOTIFICATION';
 
-export function notifyErrors(error) {
+function addNotification(notification) {
   return {
-    type: NOTIFY_ERRORS,
-    message: error,
-    status: 'danger'
+    type: ADD_NOTIFICATION,
+    payload: notification
+  };
+}
+
+function delNotification(notification) {
+  return {
+    type: DEL_NOTIFICATION,
+    payload: notification
   };
 }

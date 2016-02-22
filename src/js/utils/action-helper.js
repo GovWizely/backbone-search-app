@@ -62,7 +62,7 @@ export function formatFilterParams(query) {
 
 export function formatEndpoint(endpoint, params) {
   let parsedEndpoint = Url.parse(endpoint, true);
-  parsedEndpoint.query = Object.assign({}, parsedEndpoint.query, params);
+  parsedEndpoint.query = assign({}, parsedEndpoint.query, params);
   parsedEndpoint.search = null;
   return Url.format(parsedEndpoint);
 }

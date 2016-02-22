@@ -18,7 +18,7 @@ var Form = ({ expanded, fields, focused, handleSubmit, onSubmit }) => {
 
           <input id="mi-input" autoFocus={ focused } type="text" placeholder="Keyword" { ...fields.q } aria-label="Enter keyword" />
           <span id="mi-submit">
-            <button className="uk-button uk-button-success" onClick={ handleSubmit } title="Search">
+            <button className="uk-button" onClick={ handleSubmit } title="Search">
               <i className="mi-icon mi-icon-search" aria-label="Search"></i>
             </button>
           </span>

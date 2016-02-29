@@ -4,7 +4,7 @@ import React from 'react';
 
 var Header = () => {
   return (
-    <header className="mi-header" role="banner">
+    <header className="mi-header">
       <a href="#">
         Market Intelligence Search <span className="mi-header-version">beta</span>
       </a>

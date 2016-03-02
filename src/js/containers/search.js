@@ -44,6 +44,20 @@ function noMatch(results) {
   return true;
 }
 
+function multipleMatches(results) {
+  let count = 0;
+  for (let api in results) {
+    let result = results[api];
+    if (results.isFetching || (result.metadata && result.metadata.total > 0)) {
+      count++;
+    }
+    if (count > 1) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function showLoading(results, key=null) {
   if (key && results[key].isFetching) return true;
   if (key && !results[key].isFetching) return false;
@@ -100,6 +114,16 @@ var Search = React.createClass({
     const { location, params, results } = this.props;
 
     let content = null;
+
+    if (!params.api && !multipleMatches(results)) {
+      for (let api in results) {
+        let result = results[api];
+        if (result.metadata && result.metadata.total > 0) {
+          params.api = api;
+        }
+      }
+    }
+
     if (!params.api) {
       content = <Deck query={ location.query } apis={ apis} results={ results } />;
     } else {

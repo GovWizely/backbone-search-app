@@ -17,5 +17,9 @@ export default {
       };
       return output;
     }, {}),
-  query: {}
+  query: { q: '' },
+  status: {
+    isFetching: false,
+    resourcesMatched: []
+  }
 };

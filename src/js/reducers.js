@@ -6,6 +6,7 @@ import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
 import { REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
 import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
+import { UPDATE_STATUS } from './actions/status';
 import initialState from './initial-state';
 
 function filters(state = initialState.filters, action) {
@@ -24,10 +25,10 @@ function filters(state = initialState.filters, action) {
   }
 }
 
-function query(state = {}, action) {
+function query(state = initialState.query, action) {
   switch(action.type) {
   case UPDATE_PATH:
-    return parse(action.path, true).query;
+    return assign({}, state, parse(action.path, true).query);
   default:
     return state;
   }
@@ -76,13 +77,23 @@ function notifications(state = {}, action) {
   }
 }
 
+function status(state = initialState.status, action) {
+  switch(action.type) {
+  case UPDATE_STATUS:
+    return assign({}, state, action.payload);
+  default:
+    return state;
+  }
+}
+
 const reducer = combineReducers({
   filters,
   form: formReducer,
   notifications,
   query,
   results,
-  routing: routeReducer
+  routing: routeReducer,
+  status
 });
 
 export default reducer;

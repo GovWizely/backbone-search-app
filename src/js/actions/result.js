@@ -97,6 +97,7 @@ export function fetchResults(query, apis) {
   return (dispatch, getState) => {
     const fetches = apis.map(api => createFetch(api, dispatch, getState));
     const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
+
     if (updateFilter) dispatch(requestFilters());
     return Promise
       .all(_.map(fetches, f => f(query)))

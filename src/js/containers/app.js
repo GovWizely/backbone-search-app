@@ -3,13 +3,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
 import { stringify } from 'querystring';
-
-function parseFormData(form) {
-  const { q } = form;
-  const query = form.q ? { q } : {};
-
-  return query;
-}
+import { fetchResults } from '../actions/result';
 
 var App = React.createClass({
   displayName: 'App',
@@ -35,18 +29,43 @@ var App = React.createClass({
       window: { innerWidth, innerHeight }
     });
   },
-  handleSubmit: function(form) {
-    let query = parseFormData(form);
-    const path = `/search?${stringify(query)}`;
-    this.props.dispatch(updatePath(path));
-  },
   render: function() {
-    var props = {
-      onSubmit: this.handleSubmit,
-      window: this.state.window
-    };
-    return React.cloneElement(this.props.children, props);
+    return React.cloneElement(this.props.children, this.props);
   }
 });
 
-export default connect()(App);
+function mapStateToProps() {
+  return { apis, window: {} };
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+  const { apis } = ownProps.route;
+  return {
+    dispatch,
+
+    onFilter: () => {
+
+    },
+    onLanded: () => {
+
+    },
+    onPaging: () => {
+
+    },
+    onResize: () => {
+
+    },
+    onSubmit: (values) => {
+      let query = {
+        q: values.q ? values.q : ''
+      };
+      dispatch(fetchResults(query, apis));
+      dispatch(updatePath(`/search?${stringify(query)}`));
+    }
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

@@ -24,3 +24,14 @@ export function formatResult(result, fields) {
 export function createResultFormatter(fields) {
   return results => formatResult(results, fields);
 }
+
+export function isAnyFetching(results) {
+  for (let api in results) {
+    if (results[api].isFetching) return true;
+  }
+  return false;
+}
+
+export function isMultiMatched(results) {
+
+}

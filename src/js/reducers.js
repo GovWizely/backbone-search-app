@@ -4,28 +4,38 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
-import { REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
-import { REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
-import { UPDATE_STATUS } from './actions/status';
-import initialState from './initial-state';
+import {
+  UPDATE_IS_ANY_FETCHING,
+  REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
+import { INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 
-function filters(state = initialState.filters, action) {
+function filters(state = {
+  invalidated: false,
+  isFetching: false,
+  items: {}
+}, action) {
   switch(action.type) {
   case REQUEST_FILTERS:
     return assign({}, state, {
-      isFetching: true
+      isFetching: true,
+      invalidated: false
     });
   case RECEIVE_FILTERS:
     return assign({}, state, {
       isFetching: false,
+      invalidated: false,
       items: action.payload
+    });
+  case INVALIDATE_FILTERS:
+    return assign({}, state, {
+      invalidated: true
     });
   default:
     return state;
   }
 }
 
-function query(state = initialState.query, action) {
+function query(state = { q: '' }, action) {
   switch(action.type) {
   case UPDATE_PATH:
     return assign({}, state, parse(action.path, true).query);
@@ -34,7 +44,12 @@ function query(state = initialState.query, action) {
   }
 }
 
-function result(state, action) {
+function results(state = {
+  aggregations: {},
+  invalidated: false,
+  isFetching: false,
+  items: [], metadata: {}
+}, action) {
   switch(action.type) {
   case REQUEST_RESULTS:
     return assign({}, state, {
@@ -52,12 +67,14 @@ function result(state, action) {
   }
 }
 
-function results(state = initialState.results, action) {
+function resultsByAPI(state = {}, action) {
   switch(action.type) {
   case REQUEST_RESULTS:
-    return assign({}, state, { [action.meta]: result(state[action.meta], action) });
+    return assign({}, state, { [action.meta]: results(state[action.meta], action) });
   case RECEIVE_RESULTS:
-    return assign({}, state, { [action.meta]: result(state[action.meta], action) });
+    return assign({}, state, { [action.meta]: results(state[action.meta], action) });
+  case UPDATE_IS_ANY_FETCHING:
+    return assign({}, state, { _isAnyFetching: action.payload });
   default:
     return state;
   }
@@ -77,23 +94,13 @@ function notifications(state = {}, action) {
   }
 }
 
-function status(state = initialState.status, action) {
-  switch(action.type) {
-  case UPDATE_STATUS:
-    return assign({}, state, action.payload);
-  default:
-    return state;
-  }
-}
-
 const reducer = combineReducers({
   filters,
   form: formReducer,
   notifications,
   query,
-  results,
-  routing: routeReducer,
-  status
+  results: resultsByAPI,
+  routing: routeReducer
 });
 
 export default reducer;

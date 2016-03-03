@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { stringify } from 'querystring';
 import { updatePath } from 'redux-simple-router';
 
-import apis from '../apis';
 import { fetchResults } from '../actions/result';
 import Deck from './deck';
 import Filter from './filter';
@@ -43,37 +42,15 @@ function noMatch(results) {
   }
   return true;
 }
-
-function multipleMatches(results) {
-  let count = 0;
-  for (let api in results) {
-    let result = results[api];
-    if (results.isFetching || (result.metadata && result.metadata.total > 0)) {
-      count++;
-    }
-    if (count > 1) {
-      return true;
-    }
-  }
+function showLoading(filters, key=null) {
+  if (filters.isFetching) return true;
   return false;
-}
-
-function showLoading(results, key=null) {
-  if (key && results[key].isFetching) return true;
-  if (key && !results[key].isFetching) return false;
-
-  for (let api in results) {
-    let result = results[api];
-    if (!result.isFetching) {
-      return false;
-    }
-  }
-  return true;
 }
 
 var Search = React.createClass({
   displayName: 'Search',
   propTypes: {
+    apis: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     filters: PropTypes.object,
     location: PropTypes.object.isRequired,
@@ -94,14 +71,12 @@ var Search = React.createClass({
   },
   disableFiltering: function() {
     // Prevent rapid fire filtering.
-    const { results } = this.props;
-    for (let key in results) {
-      if (results[key].isFetching) return true;
-    }
+    const { filters } = this.props;
+    if (filters.isFetching) return true;
     return false;
   },
   fetch: function(props) {
-    const { dispatch, location, params } = props;
+    const { apis, dispatch, location, params } = props;
     const api = apis[params.api] || _.filter(apis, api => api.deckable);
     dispatch(fetchResults(location.query, api));
   },
@@ -111,7 +86,7 @@ var Search = React.createClass({
     dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
   },
   contentPane: function() {
-    const { location, params, results } = this.props;
+    const { apis, location, params, results } = this.props;
 
     let content = null;
 
@@ -125,7 +100,7 @@ var Search = React.createClass({
     }
 
     if (!params.api) {
-      content = <Deck query={ location.query } apis={ apis} results={ results } />;
+      content = <Deck query={ location.query } apis={ apis } results={ results } />;
     } else {
       let api = apis[params.api],
           result = results[api.uniqueId],
@@ -140,7 +115,7 @@ var Search = React.createClass({
     return <div id="mi-content-pane" key="content-pane">{ content }</div>;
   },
   leftPane: function() {
-    const { filters, location, params } = this.props;
+    const { apis, filters, location, params } = this.props;
     let pane = null;
     if (filters.isFetching || !_.isEmpty(filters.items)) {
       pane = (
@@ -152,12 +127,12 @@ var Search = React.createClass({
     return pane;
   },
   view: function() {
-    const { filters, location, params, results, window } = this.props;
+    const { apis, filters, location, params, results, window } = this.props;
     if (params.api && !apis.hasOwnProperty(params.api)) {
       return <div>Invalid api type.</div>;
     }
 
-    if (showLoading(results, params.api)) {
+    if (showLoading(filters, params.api)) {
       let spinnerMargin = { marginTop: 100 };
       return <div style={ spinnerMargin }><Spinner message="Searching..." /></div>;
     }
@@ -172,6 +147,7 @@ var Search = React.createClass({
     ];
   },
   render: function() {
+    console.log(this.props);
     const { location, onSubmit, notifications, params, results } = this.props;
     return (
       <div id="search">
@@ -190,7 +166,6 @@ var Search = React.createClass({
 
 function mapStateToProps(state) {
   const { filters, notifications, query, results } = state;
-
   return {
     filters,
     notifications,
@@ -199,4 +174,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Search);
+export default connect(
+  mapStateToProps
+)(Search);

@@ -15,6 +15,7 @@ import App from './js/containers/app';
 import Index from './js/containers/index';
 import Search from './js/containers/search';
 import configureStore from './js/store/configureStore';
+import apis from './js/apis';
 
 const history = createHistory({ });
 const store = configureStore();
@@ -24,7 +25,7 @@ syncReduxAndRouter(history, store);
 render(
   <Provider store={ store }>
     <Router history={ history }>
-      <Route component={ App }>
+      <Route component={ App } apis={ apis }>
         <Route path="/" component={ Index } />
         <Route path="search(/:api)" component={ Search } />
       </Route>

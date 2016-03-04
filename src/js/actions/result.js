@@ -111,10 +111,8 @@ function createFetch(api, dispatch, getState) {
 }
 
 export function fetchResults(query, apis) {
-  console.log(apis);
-  apis = _.isArray(apis) ? apis : [apis];
   return (dispatch, getState) => {
-    const fetches = apis.map(api => createFetch(api, dispatch, getState));
+    const fetches = _.map(apis, api => createFetch(api, dispatch, getState));
     const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
     if (updateFilter) dispatch(requestFilters());
 

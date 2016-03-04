@@ -25,7 +25,7 @@ syncReduxAndRouter(history, store);
 render(
   <Provider store={ store }>
     <Router history={ history }>
-      <Route component={ App } apis={ apis }>
+      <Route component={ App }>
         <Route path="/" component={ Index } />
         <Route path="search(/:api)" component={ Search } />
       </Route>

@@ -77,7 +77,7 @@ var Search = React.createClass({
   },
   fetch: function(props) {
     const { apis, dispatch, location, params } = props;
-    const api = apis[params.api] || _.filter(apis, api => api.deckable);
+    const api = params.api ? { [params.api]: apis[params.api] } : _.filter(apis, api => api.deckable);
     dispatch(fetchResults(location.query, api));
   },
   handleFilter: function(filters) {
@@ -170,7 +170,8 @@ function mapStateToProps(state) {
     filters,
     notifications,
     query,
-    results
+    results,
+    window
   };
 }
 

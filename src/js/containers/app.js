@@ -4,30 +4,27 @@ import { connect } from 'react-redux';
 import { updatePath } from 'redux-simple-router';
 import { stringify } from 'querystring';
 import { fetchResults } from '../actions/result';
+import { updateWindow } from '../actions/window';
+import apis from '../apis';
 
 var App = React.createClass({
   displayName: 'App',
   propTypes: {
     children: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    onResize: PropTypes.func.isRequired
   },
   getInitialState: function() {
     return {};
   },
   componentWillMount: function() {
-    this.handleResize({ currentTarget: window });
+    this.props.onResize({ currentTarget: window });
   },
   componentDidMount: function() {
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', this.props.onResize);
   },
   componentWillUnmount: function() {
-    window.removeEventListener('resize', this.handleResize);
-  },
-  handleResize: function(e) {
-    const { innerWidth, innerHeight } = e.currentTarget;
-    this.setState({
-      window: { innerWidth, innerHeight }
-    });
+    window.removeEventListener('resize', this.props.onResize);
   },
   render: function() {
     return React.cloneElement(this.props.children, this.props);
@@ -39,7 +36,7 @@ function mapStateToProps() {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { apis } = ownProps.route;
+  const _apis = apis;
   return {
     dispatch,
 
@@ -52,14 +49,15 @@ function mapDispatchToProps(dispatch, ownProps) {
     onPaging: () => {
 
     },
-    onResize: () => {
-
+    onResize: (e) => {
+      const { innerWidth, innerHeight } = e.currentTarget;
+      dispatch(updateWindow({ innerWidth, innerHeight }));
     },
     onSubmit: (values) => {
       let query = {
         q: values.q ? values.q : ''
       };
-      dispatch(fetchResults(query, apis));
+      dispatch(fetchResults(query, _apis));
       dispatch(updatePath(`/search?${stringify(query)}`));
     }
   };

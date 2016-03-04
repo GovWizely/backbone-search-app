@@ -8,6 +8,7 @@ import {
   UPDATE_IS_ANY_FETCHING,
   REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
 import { INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
+import { UPDATE_WINDOW } from './actions/window';
 
 function filters(state = {
   invalidated: false,
@@ -89,6 +90,15 @@ function notifications(state = {}, action) {
         type: action.error ? 'error' : 'info'
       }
     });
+  default:
+    return state;
+  }
+}
+
+function window(state = {}, action) {
+  switch(action.type) {
+  case UPDATE_WINDOW:
+    return assign({}, state, action.payload);
   default:
     return state;
   }

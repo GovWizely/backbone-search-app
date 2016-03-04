@@ -62,17 +62,8 @@ var Search = React.createClass({
     window: PropTypes.object
   },
   componentDidMount: function() {
-    this.fetch(this.props);
   },
   componentWillReceiveProps: function(nextProps) {
-    if (shouldFetch(this.props.location, nextProps.location)) {
-      this.fetch(nextProps);
-    }
-  },
-  fetch: function(props) {
-    const { apis, dispatch, location, params } = props;
-    const api = params.api ? { [params.api]: apis[params.api] } : _.filter(apis, api => api.deckable);
-    dispatch(fetchResults(location.query, api));
   },
   handleFilter: function(filters) {
     const { dispatch, location, params } = this.props;

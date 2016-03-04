@@ -43,7 +43,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     onFilter: () => {
 
     },
-    onLanded: () => {
+    onLoaded: () => {
 
     },
     onPaging: () => {
@@ -57,7 +57,11 @@ function mapDispatchToProps(dispatch, ownProps) {
       let query = {
         q: values.q ? values.q : ''
       };
-      dispatch(fetchResults(query, _apis));
+      let deckableApis = _.reduce(_apis, (output, api, uniqueId) => {
+        if (api.deckable) output[uniqueId] = api;
+        return output;
+      }, {});
+      dispatch(fetchResults(query, deckableApis));
       dispatch(updatePath(`/search?${stringify(query)}`));
     }
   };

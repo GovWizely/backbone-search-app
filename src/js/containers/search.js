@@ -69,12 +69,6 @@ var Search = React.createClass({
       this.fetch(nextProps);
     }
   },
-  disableFiltering: function() {
-    // Prevent rapid fire filtering.
-    const { filters } = this.props;
-    if (filters.isFetching) return true;
-    return false;
-  },
   fetch: function(props) {
     const { apis, dispatch, location, params } = props;
     const api = params.api ? { [params.api]: apis[params.api] } : _.filter(apis, api => api.deckable);
@@ -120,7 +114,7 @@ var Search = React.createClass({
     if (filters.isFetching || !_.isEmpty(filters.items)) {
       pane = (
         <div id="mi-left-pane" key="left-pane">
-          <Filter disabled={ this.disableFiltering() } filters={ filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
+          <Filter filters={ filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
         </div>
       );
     }
@@ -147,7 +141,6 @@ var Search = React.createClass({
     ];
   },
   render: function() {
-    console.log(this.props);
     const { location, onSubmit, notifications, params, results } = this.props;
     return (
       <div id="search">

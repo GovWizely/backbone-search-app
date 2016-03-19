@@ -2,10 +2,7 @@ import _ from 'lodash';
 import assign from 'object-assign';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { stringify } from 'querystring';
-import { updatePath } from 'redux-simple-router';
 
-import { fetchResults } from '../actions/result';
 import Deck from './deck';
 import Filter from './filter';
 import Result from './result';
@@ -14,23 +11,11 @@ import Form from '../components/form';
 import Notification from '../components/notification';
 import Spinner from '../components/spinner';
 
-function getFilterQuery(query, filter, filterState) {
-  let filterQuery = assign({}, query, {
-    [filter.name]: filter.items,
-    offset: 0
-  });
-  if (_.isEmpty(filter.items)) delete filterQuery[filter.name];
-
-  delete filterQuery.filter;
-  for (let key in filterState.items) {
-    if (filterQuery[key] && !_.isEmpty(filterQuery[key])) filterQuery.filter = true;
-  };
-  return filterQuery;
-}
-
-function shouldFetch(location, nextLocation) {
-  return (location.pathname !== nextLocation.pathname ||
-          location.search !== nextLocation.search);
+export function showDeck(options) {
+  return options.apis.length > 1 &&
+    _.filter(options.results, (results) => {
+      return !results.isFetching && results.items.length > 0;
+    }).length > 1;
 }
 
 function noMatch(results) {
@@ -53,66 +38,53 @@ var Search = React.createClass({
     apis: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     filters: PropTypes.object,
-    location: PropTypes.object.isRequired,
     notifications: PropTypes.object,
-    onSubmit: PropTypes.func,
+    onExpand: PropTypes.func.isRequired,
+    onFilter: PropTypes.func.isRequired,
+    onPaging: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     query: PropTypes.object,
     results: PropTypes.object,
+    selectedAPIs: PropTypes.array.isRequired,
     window: PropTypes.object
   },
-  componentDidMount: function() {
-  },
-  componentWillReceiveProps: function(nextProps) {
-  },
-  handleFilter: function(filters) {
-    const { dispatch, location, params } = this.props;
-    let query = getFilterQuery(location.query, filters, this.props.filters);
-    dispatch(updatePath(`${location.pathname}?${stringify(query)}`));
-  },
   contentPane: function() {
-    const { apis, location, params, results } = this.props;
-
+    const { apis, onPaging, onExpand, params, query, results, selectedAPIs } = this.props;
     let content = null;
-
-    if (!params.api && !multipleMatches(results)) {
-      for (let api in results) {
-        let result = results[api];
-        if (result.metadata && result.metadata.total > 0) {
-          params.api = api;
-        }
-      }
-    }
-
-    if (!params.api) {
-      content = <Deck query={ location.query } apis={ apis } results={ results } />;
+    if (showDeck({ apis: selectedAPIs, results })) {
+      let props = {
+        apis: selectedAPIs,
+        onExpand,
+        results
+      };
+      content = <Deck {...props} />;
     } else {
-      let api = apis[params.api],
-          result = results[api.uniqueId],
-          props = {
-            query: location.query,
-            api: apis[params.api],
-            result: results[api.uniqueId],
-            window
-          };
+      let props = {
+        api: selectedAPIs[0],
+        onPaging,
+        query,
+        result: results[selectedAPIs[0].uniqueId],
+        window
+      };
       content = <Result {...props} />;
     }
     return <div id="mi-content-pane" key="content-pane">{ content }</div>;
   },
   leftPane: function() {
-    const { apis, filters, location, params } = this.props;
+    const { apis, filters, onFilter, params, query } = this.props;
     let pane = null;
     if (filters.isFetching || !_.isEmpty(filters.items)) {
       pane = (
         <div id="mi-left-pane" key="left-pane">
-          <Filter filters={ filters } onChange={ this.handleFilter } query={ location.query } api={ apis[params.api] } />
+          <Filter filters={ filters } onChange={ onFilter } query={ query } api={ apis[params.api] } />
         </div>
       );
     }
     return pane;
   },
   view: function() {
-    const { apis, filters, location, params, results, window } = this.props;
+    const { apis, filters, params, results, window } = this.props;
     if (params.api && !apis.hasOwnProperty(params.api)) {
       return <div>Invalid api type.</div>;
     }
@@ -132,13 +104,13 @@ var Search = React.createClass({
     ];
   },
   render: function() {
-    const { location, onSubmit, notifications, params, results } = this.props;
+    const { onSubmit, notifications, params, query, results } = this.props;
     return (
       <div id="search">
         <Notification notifications={ notifications } />
         <Form
           expanded={ false }
-          query={ location.query }
+          query={ query }
           onSubmit={ onSubmit } />
         <div id="mi-main-pane">
           { this.view() }
@@ -149,12 +121,13 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { filters, notifications, query, results } = state;
+  const { filters, notifications, query, results, selectedAPIs } = state;
   return {
     filters,
     notifications,
     query,
     results,
+    selectedAPIs,
     window
   };
 }

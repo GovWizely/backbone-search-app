@@ -41,7 +41,7 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
   );
 }
 
-var Card = ({ isFetching, displayedItems, items, label, template, url }) => {
+var Card = ({ isFetching, displayedItems, items, label, onExpand, template, url }) => {
   return (
     <section className="mi-card">
       <header className="title" title={ label }>{ label }</header>
@@ -49,7 +49,7 @@ var Card = ({ isFetching, displayedItems, items, label, template, url }) => {
       { view({ isFetching, displayedItems, items, label, template, url }) }
 
       <footer>
-        <a href={ url }>See More { label }</a>
+        <a onClick={ onExpand }>See More { label }</a>
       </footer>
     </section>
   );
@@ -60,8 +60,7 @@ Card.propTypes = {
   isFetching: PropTypes.bool,
   items: PropTypes.array.isRequired,
   label: PropTypes.string,
-  template: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired
+  template: PropTypes.func.isRequired
 };
 
 Card.defaultProps = {

@@ -30,8 +30,6 @@ var Filter = React.createClass({
 
     if (!items) return null;
 
-    const values = parseFilterQuery(query, items);
-
     const checkboxTrees = _.map(items, function(filters, key) {
       return [
         <CheckboxTree
@@ -39,7 +37,7 @@ var Filter = React.createClass({
            key={ key } name={ key } label={ _.startCase(key) }
            items={ filters }
            onChange={ onChange }
-           values={ values[key] } />
+           values={ query[key] } />
       ];
     });
 

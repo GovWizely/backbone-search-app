@@ -1,10 +1,14 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { updatePath } from 'redux-simple-router';
+
 import { stringify } from 'querystring';
 import { fetchResults } from '../actions/result';
+import { updateQuery, replaceQuery } from '../actions/query';
+import { updatePath } from '../actions/path';
 import { updateWindow } from '../actions/window';
+import { selectAPIs } from '../actions/api';
+import { invalidateFilters } from '../actions/filter';
 import apis from '../apis';
 
 var App = React.createClass({
@@ -12,7 +16,10 @@ var App = React.createClass({
   propTypes: {
     children: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
-    onResize: PropTypes.func.isRequired
+    location: PropTypes.object.isRequired,
+    onLoaded: PropTypes.func.isRequired,
+    onResize: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired
   },
   getInitialState: function() {
     return {};
@@ -21,6 +28,8 @@ var App = React.createClass({
     this.props.onResize({ currentTarget: window });
   },
   componentDidMount: function() {
+    const { location, params, onLoaded } = this.props;
+    onLoaded({ api: params.api, query: location.query });
     window.addEventListener('resize', this.props.onResize);
   },
   componentWillUnmount: function() {
@@ -37,34 +46,49 @@ function mapStateToProps() {
 
 function mapDispatchToProps(dispatch, ownProps) {
   const _apis = apis;
+  let deckableAPIs = _.filter(_apis, (api) => api.deckable);
+
   return {
     dispatch,
-
-    onFilter: () => {
-
+    onExpand: (api, e) => {
+      e.preventDefault();
+      dispatch(selectAPIs(api));
+      dispatch(updatePath());
     },
-    onLoaded: () => {
-
+    onFilter: (filter) => {
+      dispatch(updateQuery({ [filter.name]: filter.items, offset: 0 }));
+      dispatch(fetchResults());
+      dispatch(updatePath());
     },
-    onPaging: () => {
-
+    onLoaded: (options) => {
+      let apis = _apis[options.api] ? _apis[options.api] : deckableAPIs;
+      dispatch(selectAPIs(apis));
+      dispatch(replaceQuery(options.query));
+      dispatch(invalidateFilters());
+      dispatch(fetchResults());
+    },
+    onPaging: (e) => {
+      e.preventDefault();
+      dispatch(updateQuery({ offset: e.target.dataset.offset }));
+      dispatch(fetchResults());
+      dispatch(updatePath());
     },
     onResize: (e) => {
       const { innerWidth, innerHeight } = e.currentTarget;
       dispatch(updateWindow({ innerWidth, innerHeight }));
     },
-    onSubmit: (values) => {
-      let query = {
-        q: values.q ? values.q : ''
-      };
-      let deckableApis = _.reduce(_apis, (output, api, uniqueId) => {
-        if (api.deckable) output[uniqueId] = api;
-        return output;
-      }, {});
-      dispatch(fetchResults(query, deckableApis));
-      dispatch(updatePath(`/search?${stringify(query)}`));
+    onSubmit: (query) => {
+      dispatch(selectAPIs(deckableAPIs));
+      dispatch(replaceQuery(query));
+      dispatch(invalidateFilters());
+      dispatch(fetchResults());
+      dispatch(updatePath());
     }
   };
+}
+
+function mergeProps(stateProps, dispatchProps, ownProps) {
+
 }
 
 export default connect(

@@ -2,13 +2,14 @@ import assign from 'object-assign';
 import { parse } from 'url';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
+import { routeReducer } from 'redux-simple-router';
 
 import {
-  UPDATE_IS_ANY_FETCHING,
   REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
 import { INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 import { UPDATE_WINDOW } from './actions/window';
+import { UPDATE_QUERY, REPLACE_QUERY } from './actions/query';
+import { SELECT_APIS } from './actions/api';
 
 function filters(state = {
   invalidated: false,
@@ -38,8 +39,10 @@ function filters(state = {
 
 function query(state = { q: '' }, action) {
   switch(action.type) {
-  case UPDATE_PATH:
-    return assign({}, state, parse(action.path, true).query);
+  case UPDATE_QUERY:
+    return assign({}, state, action.payload);
+  case REPLACE_QUERY:
+    return action.payload;
   default:
     return state;
   }
@@ -74,8 +77,6 @@ function resultsByAPI(state = {}, action) {
     return assign({}, state, { [action.meta]: results(state[action.meta], action) });
   case RECEIVE_RESULTS:
     return assign({}, state, { [action.meta]: results(state[action.meta], action) });
-  case UPDATE_IS_ANY_FETCHING:
-    return assign({}, state, { _isAnyFetching: action.payload });
   default:
     return state;
   }
@@ -104,13 +105,24 @@ function window(state = {}, action) {
   }
 }
 
+function selectedAPIs(state= {}, action) {
+  switch(action.type) {
+  case SELECT_APIS:
+    return action.payload;
+  default:
+    return state;
+  }
+}
+
 const reducer = combineReducers({
   filters,
   form: formReducer,
   notifications,
   query,
   results: resultsByAPI,
-  routing: routeReducer
+  routing: routeReducer,
+  selectedAPIs,
+  window
 });
 
 export default reducer;

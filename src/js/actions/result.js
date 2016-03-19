@@ -33,7 +33,7 @@ function consolidateFilters(responses) {
     commonAggregationKeys.forEach(key => {
       filters[key] = merge(filters[key], response.aggregations[key]);
     });
-  });
+ });
 
   return filters;
 }
@@ -59,13 +59,6 @@ function failureResults(api, e) {
     error: true,
     meta: api.uniqueId,
     payload: e
-  };
-}
-
-function updateIsAnyFetching(isAnyFetching) {
-  return {
-    type: UPDATE_IS_ANY_FETCHING,
-    payload: isAnyFetching
   };
 }
 
@@ -110,16 +103,17 @@ function createFetch(api, dispatch, getState) {
   };
 }
 
-export function fetchResults(query, apis) {
+export function fetchResults() {
   return (dispatch, getState) => {
-    const fetches = _.map(apis, api => createFetch(api, dispatch, getState));
-    const updateFilter = _.isEmpty(getState().filters.items) || !isFiltering(query);
-    if (updateFilter) dispatch(requestFilters());
+    const { selectedAPIs, filters, query } = getState();
+    const fetches = _.map(selectedAPIs, api => createFetch(api, dispatch, getState));
+
+    if (filters.invalidated) dispatch(requestFilters());
 
     return Promise
       .all(_.map(fetches, f => f(query)))
       .then(responses => {
-        if (updateFilter) {
+        if (filters.invalidated) {
           const filterableResponses = _(responses)
             .reject(o => _.isEmpty(o.aggregations))
             .reject(o => _.get(o, 'metadata.total') === 0)

@@ -11,9 +11,9 @@ var Result = React.createClass({
   displayName: 'Result',
   propTypes: {
     api: PropTypes.object,
+    onPaging: PropTypes.func.isRequired,
     query: PropTypes.object,
     result: PropTypes.object,
-    screen: PropTypes.string,
     window: PropTypes.object
   },
   displayedPages: function() {
@@ -23,7 +23,7 @@ var Result = React.createClass({
     return 5;
   },
   render: function() {
-    const { api, query, result, screen, window } = this.props;
+    const { api, onPaging, query, result, window } = this.props;
     if (result.isFetching || result.metadata.total === 0) return null;
 
     const _template = template(api.uniqueId).ResultItem;
@@ -42,8 +42,8 @@ var Result = React.createClass({
            displayedPages={ this.displayedPages() }
            items={ result.metadata.total }
            itemsOnPage={ 10 }
-           url={ `#/search/${api.pathname}` }
-           query={ query } />
+           onClick={ onPaging }
+         />
       </div>
     );
   }

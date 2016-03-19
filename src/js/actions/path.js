@@ -1,3 +1,4 @@
+import { omitBy, isEmpty } from 'lodash';
 import { stringify } from 'querystring';
 import { updatePath as _updatePath } from 'redux-simple-router';
 
@@ -7,6 +8,6 @@ export function updatePath() {
     let apiName = '';
     if (Object.keys(selectedAPIs).length === 1) apiName = Object.values(selectedAPIs)[0].uniqueId;
 
-    dispatch(_updatePath(`/search/${apiName}?${stringify(query)}`));
+    dispatch(_updatePath(`/search/${apiName}?${stringify(omitBy(query, isEmpty))}`));
   };
 }

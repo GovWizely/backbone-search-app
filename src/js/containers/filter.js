@@ -3,15 +3,6 @@ import React, { PropTypes } from 'react';
 import CheckboxTree from '../components/checkbox-tree';
 import Spinner from '../components/spinner';
 
-function parseFilterQuery(query, filters) {
-  let values = {};
-  _.map(filters, function(o, filter) {
-    values[filter] = query[filter] ? query[filter] : [];
-    if(!_.isArray(values[filter])) values[filter] = [values[filter]];
-  });
-  return values;
-}
-
 var Filter = React.createClass({
   displayName: 'Filter',
   propTypes: {

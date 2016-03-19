@@ -87,10 +87,6 @@ function mapDispatchToProps(dispatch, ownProps) {
   };
 }
 
-function mergeProps(stateProps, dispatchProps, ownProps) {
-
-}
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

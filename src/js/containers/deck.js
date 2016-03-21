@@ -8,19 +8,16 @@ import { template } from '../templates';
 var Deck = React.createClass({
   displayName: 'Deck',
   propTypes: {
-    apis: PropTypes.object.isRequired,
-    query: PropTypes.object.isRequired,
+    apis: PropTypes.array.isRequired,
+    onExpand: PropTypes.func.isRequired,
     results: PropTypes.object.isRequired
   },
   render: function() {
-    const { query, apis, results } = this.props;
+    const { apis, onExpand, results } = this.props;
     const children = _.compact(_.map(apis, function(api) {
-      const { deckable, displayName, fields, pathname, uniqueId } = api;
-      if (!deckable) return null;
-
+      const { displayName, fields, pathname, uniqueId } = api;
       const { isFetching, items } = results[uniqueId];
-      const _template = template(api.uniqueId).CardItem;
-      const url = `#/search/${pathname}?${stringify(query)}`;
+      const _template = template(uniqueId).CardItem;
       if (!isFetching && !items.length) return null;
 
       return (
@@ -31,7 +28,7 @@ var Deck = React.createClass({
            key={ uniqueId }
            label={ displayName }
            template={ _template }
-           url={ url } />
+           onExpand={ onExpand.bind(undefined, api) } />
       );
     }));
 

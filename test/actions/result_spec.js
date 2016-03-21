@@ -2,7 +2,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import nock from 'nock';
 import apis from '../../src/js/apis';
-import initialState from '../../src/js/initial-state';
 import { REQUEST_FILTERS, RECEIVE_FILTERS } from '../../src/js/actions/filter';
 import { fetchResults, REQUEST_RESULTS, RECEIVE_RESULTS } from '../../src/js/actions/result';
 import { mockArticlesAPI } from './mock/article';
@@ -32,7 +31,7 @@ describe('result', () => {
           { type: RECEIVE_RESULTS, meta: apis.uniqueId, payload: payload.article },
           { type: RECEIVE_FILTERS, payload: payload.filter }
         ];
-        const store = mockStore(initialState, expectedActions, done);
+        const store = mockStore({}, expectedActions, done);
         store.dispatch(fetchResults({ q: '' }, apis));
       });
     });
@@ -55,7 +54,7 @@ describe('result', () => {
           { type: RECEIVE_RESULTS, meta: multiApis[2].uniqueId, payload: payload.trade_lead },
           { type: RECEIVE_FILTERS, payload: payload.consolidated_filter }
         ];
-        const store = mockStore(initialState, expectedActions, done);
+        const store = mockStore({}, expectedActions, done);
         store.dispatch(fetchResults({ q: '' }, multiApis));
       });
     });

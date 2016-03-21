@@ -21,7 +21,7 @@ function getRange(currentPage, displayedPages, pages, pivot) {
   return _.range(head, tail);
 }
 
-var Pagination = ({ currentOffset, displayedPages, items, itemsOnPage, query, url }) => {
+var Pagination = ({ currentOffset, displayedPages, items, itemsOnPage, onClick, query, url }) => {
   const pages = Math.ceil(items / itemsOnPage),
         currentPage = Math.ceil(currentOffset / itemsOnPage),
         pivot = displayedPages / 2,
@@ -34,30 +34,30 @@ var Pagination = ({ currentOffset, displayedPages, items, itemsOnPage, query, ur
   const pageList = [
     currentPage !== 0 ? (
       <li key="first">
-        <a title="First Page" className="mi-icon mi-icon-angle-double-left" href={ href(url, query, 0) }></a>
+        <a title="First Page" className="mi-icon mi-icon-angle-double-left" data-offset="0" onClick={ onClick }></a>
       </li>) : null,
 
     currentPage !== 0 ? (
       <li key="prev">
-        <a title="Previous Page" className="mi-icon mi-icon-angle-left" href={ href(url, query, prevPage * itemsOnPage) }></a>
+        <a title="Previous Page" className="mi-icon mi-icon-angle-left" data-offset={ prevPage * itemsOnPage } onClick={ onClick }></a>
       </li>) : null,
 
     range.map(i => {
       const activeCSS = currentPage === i ? 'mi-active' : '';
       return (
         <li className={ activeCSS } key={ i }>
-          <a title={ `Page #${i + 1}`}href={ href(url, query, i * itemsOnPage )}>{ i + 1 }</a>
+          <a title={ `Page #${i + 1}`} data-offset={ i * itemsOnPage } onClick={ onClick }>{ i + 1 }</a>
         </li>
       );
     }),
 
     currentPage !== pages - 1 ? (
       <li key="next">
-        <a title="Next Page" className="mi-icon mi-icon-angle-right" href={ href(url, query, nextPage * itemsOnPage) }></a>
+        <a title="Next Page" className="mi-icon mi-icon-angle-right" data-offset={ nextPage * itemsOnPage } onClick={ onClick }></a>
       </li>) : null,
     currentPage !== pages - 1 ?(
       <li key="last">
-        <a title="Last Page" className="mi-icon mi-icon-angle-double-right" href={ href(url, query, (pages - 1) * itemsOnPage) }></a>
+        <a title="Last Page" className="mi-icon mi-icon-angle-double-right" data-offset={ (pages - 1) * itemsOnPage } onClick={ onClick }></a>
       </li>) : null
   ];
 
@@ -75,8 +75,7 @@ Pagination.propTypes = {
   displayedPages: PropTypes.number,
   items: PropTypes.number.isRequired,
   itemsOnPage: PropTypes.number,
-  query: PropTypes.object.isRequired,
-  url: PropTypes.string.isRequired
+  onClick: PropTypes.func.isRequired
 };
 
 Pagination.defaultProps = {

@@ -15,6 +15,7 @@ import App from './js/containers/app';
 import Index from './js/containers/index';
 import Search from './js/containers/search';
 import configureStore from './js/store/configureStore';
+import apis from './js/apis';
 
 const history = createHistory({ });
 const store = configureStore();

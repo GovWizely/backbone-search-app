@@ -77,6 +77,9 @@ function resultsByAPI(state = {}, action) {
     return assign({}, state, { [action.meta]: results(state[action.meta], action) });
   case RECEIVE_RESULTS:
     return assign({}, state, { [action.meta]: results(state[action.meta], action) });
+  case UPDATE_QUERY:
+  case REPLACE_QUERY:
+    return {};
   default:
     return state;
   }
@@ -119,7 +122,7 @@ const reducer = combineReducers({
   form: formReducer,
   notifications,
   query,
-  results: resultsByAPI,
+  resultsByAPI,
   routing: routeReducer,
   selectedAPIs,
   window

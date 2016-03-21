@@ -46,14 +46,17 @@ const deckable = true;
 module.exports = assign(
   {},
   defineTradeAPI('ita_faqs', {
+    deckable,
     displayName: 'Frequently Asked Questions',
-    deckable
+    shortName: 'FAQs'
   }),
   defineTradeAPI('trade_events', {
-    deckable
+    deckable,
+    shortName: 'Events'
   }),
   defineTradeAPI('trade_leads', {
-    deckable
+    deckable,
+    shortName: 'Leads'
   }),
   defineTradeAPI('consolidated_screening_list', {
   }),

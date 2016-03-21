@@ -32,7 +32,8 @@ html {
 }
 
 #mi-main-pane {
-  padding: 0;
+  border-top: 1px solid $border-color;
+  padding-top: 20px;
   margin: 0 auto;
   width: 96%;
 
@@ -63,7 +64,7 @@ html {
   }
 }
 
-#mi-left-pane + #mi-content-pane {
+#mi-left-pane + #mi-content-pane, #mi-bucket-list-container {
   @media screen and (min-width: $breakpoint-medium) {
     margin-left: 300px;
   }

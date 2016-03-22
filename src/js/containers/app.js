@@ -4,6 +4,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { stringify } from 'querystring';
+import {
+  invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../actions/query_expansion';
 import { fetchResults } from '../actions/result';
 import { updateQuery, replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
@@ -38,13 +40,14 @@ var App = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { notifications, query } = state;
+  const { notifications, query, queryExpansions } = state;
   let selectedAPIs = _.filter(apis, (api) => api.deckable);
   return {
     availableAPIs: apis,
     defaultAPIs: selectedAPIs,
     notifications,
     query,
+    queryExpansions,
     selectedAPIs,
     window: {}
   };
@@ -57,10 +60,14 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     onLoaded: ({ apiName, query }) => {
       let apis = availableAPIs[apiName] ? availableAPIs[apiName] : defaultAPIs;
-      dispatch(selectAPIs(apis));
       dispatch(replaceQuery(query));
+      dispatch(selectAPIs(apis));
+
       dispatch(invalidateFilters());
+      dispatch(invalidateQueryExpansions());
+
       dispatch(fetchResults());
+      dispatch(fetchQueryExpansionsIfNeeded(query));
     },
     onResize: (e) => {
       const { innerWidth, innerHeight } = e.currentTarget;
@@ -68,8 +75,13 @@ function mapDispatchToProps(dispatch, ownProps) {
     },
     onSubmit: (query) => {
       dispatch(replaceQuery(query));
+
       dispatch(invalidateFilters());
+      dispatch(invalidateQueryExpansions());
+
       dispatch(fetchResults());
+      dispatch(fetchQueryExpansionsIfNeeded(query));
+
       dispatch(updatePath());
     }
   };

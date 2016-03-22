@@ -19,7 +19,8 @@ const Index = React.createClass({
   render: function() {
     const props = {
       focused: true,
-      onSubmit: this.props.onSubmit };
+      onSubmit: this.props.onSubmit
+    };
     return (
       <div id="mi-index">
         <Form {...props} />

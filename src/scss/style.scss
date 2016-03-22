@@ -64,11 +64,18 @@ html {
   }
 }
 
-#mi-left-pane + #mi-content-pane, #mi-bucket-list-container {
+#mi-left-pane + #mi-content-pane,
+#mi-bucket-list-container,
+#mi-query-expansion-list-container {
   @media screen and (min-width: $breakpoint-medium) {
     margin-left: 300px;
   }
 }
+
+#mi-query-expansion-list-container {
+  min-height: 26px;
+}
+
 
 .mi-result {
   margin-bottom: 50px;

@@ -2,6 +2,14 @@ require('./styles/spinner.scss');
 
 import React, { PropTypes } from 'react';
 
+const Bounce = (
+  <div className="sk-bounce">
+    <div className="bounce1"></div>
+    <div className="bounce2"></div>
+    <div className="bounce3"></div>
+  </div>
+);
+
 const FoldingCube = (
   <div className="sk-folding-cube">
     <div className="sk-cube sk-cube1"></div>
@@ -28,21 +36,16 @@ const Circle = (
   </div>
 );
 
-var Spinner = ({ message }) => {
-  return (
-    <div>
-      { Circle }
-      <div className="uk-text-center" style={ { color: '#666' }}>{ message }</div>
-    </div>
-  );
-};
+function createSpinner(type) {
+  return ({ message='Loading...' }) => {
+    return (
+      <div>
+        { type }
+        <div className="uk-text-center" style={ { color: '#666' }}>{ message }</div>
+      </div>
+    );
+  };
+}
 
-Spinner.propTypes = {
-  message: PropTypes.string
-};
-
-Spinner.DefaultProps = {
-  message: 'Loading...'
-};
-
-export default Spinner;
+export const BounceSpinner = createSpinner(Bounce);
+export default createSpinner(Circle);

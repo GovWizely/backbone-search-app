@@ -19,7 +19,6 @@ var App = React.createClass({
   propTypes: {
     children: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    onLoaded: PropTypes.func.isRequired,
     onResize: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired
   },
@@ -27,8 +26,6 @@ var App = React.createClass({
     this.props.onResize({ currentTarget: window });
   },
   componentDidMount: function() {
-    const { location, params, onLoaded } = this.props;
-    if (location.path !== '') onLoaded({ apiName: params.api, query: location.query });
     window.addEventListener('resize', this.props.onResize);
   },
   componentWillUnmount: function() {
@@ -58,17 +55,6 @@ function mapDispatchToProps(dispatch, ownProps) {
         defaultAPIs = _.filter(apis, (api) => api.deckable);
 
   return {
-    onLoaded: ({ apiName, query }) => {
-      let apis = availableAPIs[apiName] ? availableAPIs[apiName] : defaultAPIs;
-      dispatch(replaceQuery(query));
-      dispatch(selectAPIs(apis));
-
-      dispatch(invalidateFilters());
-      dispatch(invalidateQueryExpansions());
-
-      dispatch(fetchResults());
-      dispatch(fetchQueryExpansionsIfNeeded(query));
-    },
     onResize: (e) => {
       const { innerWidth, innerHeight } = e.currentTarget;
       dispatch(updateWindow({ innerWidth, innerHeight }));

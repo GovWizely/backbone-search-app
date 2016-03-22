@@ -3,6 +3,8 @@ import assign from 'object-assign';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import {
+  invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../actions/query_expansion';
 import { fetchResults } from '../actions/result';
 import { invalidateFilters } from '../actions/filter';
 import { selectAPIs } from '../actions/api';
@@ -46,17 +48,26 @@ var Search = React.createClass({
     availableAPIs: PropTypes.object.isRequired,
     defaultAPIs: PropTypes.array.isRequired,
     filters: PropTypes.object,
+    location: PropTypes.object,
     notifications: PropTypes.object,
     onBucket: PropTypes.func.isRequired,
     onExpand: PropTypes.func.isRequired,
     onFilter: PropTypes.func.isRequired,
+    onLoaded: PropTypes.func.isRequired,
     onPaging: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     query: PropTypes.object,
+    queryExpansions: PropTypes.object,
     results: PropTypes.object,
     selectedAPIs: PropTypes.array.isRequired,
     window: PropTypes.object
+  },
+  componentDidMount: function() {
+    const { location, params, onLoaded } = this.props;
+    onLoaded({ apiName: params.api, query: location.query });
+
   },
   contentPane: function() {
     const { onPaging, onSelect, params, query, results, selectedAPIs } = this.props;
@@ -156,6 +167,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
+  const { availableAPIs, defaultAPIs } = ownProps;
   return {
     onBucket: (apis, e) => {
       e.preventDefault();
@@ -174,6 +186,17 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updateQuery({ [filter.name]: filter.items, offset: 0 }));
       dispatch(fetchResults());
       dispatch(updatePath());
+    },
+    onLoaded: ({ apiName, query }) => {
+      let apis = availableAPIs[apiName] ? availableAPIs[apiName] : defaultAPIs;
+      dispatch(replaceQuery(query));
+      dispatch(selectAPIs(apis));
+
+      dispatch(invalidateFilters());
+      dispatch(invalidateQueryExpansions());
+
+      dispatch(fetchResults());
+      dispatch(fetchQueryExpansionsIfNeeded(query));
     },
     onPaging: (e) => {
       e.preventDefault();

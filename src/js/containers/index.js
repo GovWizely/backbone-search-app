@@ -8,7 +8,7 @@ import { selectAPIs } from '../actions/api';
 const Index = React.createClass({
   displayName: 'Index',
   propTypes: {
-    defaultAPIs: PropTypes.object,
+    defaultAPIs: PropTypes.array.isRequired,
     dispatch: PropTypes.func,
     onSubmit: PropTypes.func
   },

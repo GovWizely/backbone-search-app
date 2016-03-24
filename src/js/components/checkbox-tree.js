@@ -12,7 +12,7 @@ function checkbox(item, options) {
         <input id={ item }
            type="checkbox" value={ item } readOnly disabled={ options.disabled }
            checked={ checked } aria-checked={ checked } />
-        <span> { item }</span>
+        <span>&nbsp; { item }</span>
       </label>
       { list(options.items[item], options) }
     </li>
@@ -102,7 +102,7 @@ var CheckboxTree = React.createClass({
   render: function() {
     if (_.isEmpty(this.props.items)) return null;
 
-    const { name, values } = this.props;
+    const { label, name, values } = this.props;
     const items = this.displayableItems();
     const { showAll, visible } = this.state;
     const options = assign({}, this.props, {
@@ -121,9 +121,11 @@ var CheckboxTree = React.createClass({
       <section className="mi-checkbox-tree" onChange={ this.handleClick }>
         <fieldset>
           <legend>
-            <a role="button" className={ hrefCSS } onClick={ this.toggleVisibility } href="#">{ this.props.label }</a>
+            <a role="button" onClick={ this.toggleVisibility } href="#">
+              <i className={ hrefCSS }></i>&nbsp; { label }
+            </a>
           </legend>
-            { view }
+          { view }
         </fieldset>
       </section>
     );

@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 import CheckboxTree from '../components/checkbox-tree';
-import Spinner from '../components/spinner';
 
 var Filter = React.createClass({
   displayName: 'Filter',

@@ -1,6 +1,6 @@
 @import "../../../scss/variable";
 
-.#{$module}card {
+.mi-card {
   display: block;
   float: left;
   margin: 0 auto;
@@ -33,7 +33,7 @@
     border-top: none;
   }
 
-  >.#{$module}content {
+ >.mi-content {
     border: 1px solid #eee;
     border-top: none;
     border-bottom: none;

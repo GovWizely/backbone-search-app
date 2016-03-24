@@ -20,18 +20,16 @@ $text-danger-color: $red-color;
 
 @import "bower_components/uikit/scss/core/variables";
 @import "bower_components/uikit/scss/core/base";
-@import "bower_components/uikit/scss/core/form";
 @import "bower_components/uikit/scss/core/button";
 @import "bower_components/uikit/scss/core/text";
-@import "bower_components/uikit/scss/core/panel";
 @import "bower_components/uikit/scss/core/utility";
-
-.uk-button {
-  border: none;
-  border-radius: 6px;
-}
 
 em {
   color: inherit;
   font-weight: bold;
+}
+
+img {
+  // value overriding in salesforce css
+  max-width: 90%;
 }

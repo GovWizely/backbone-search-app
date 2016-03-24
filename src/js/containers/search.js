@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import {
   invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../actions/query_expansion';
 import { fetchResults } from '../actions/result';
-import { invalidateFilters } from '../actions/filter';
+import { invalidateSiblingFilters, invalidateAllFilters } from '../actions/filter';
 import { selectAPIs } from '../actions/api';
 import { updatePath } from '../actions/path';
 import { updateQuery, replaceQuery } from '../actions/query';
@@ -96,7 +96,7 @@ var Search = React.createClass({
   leftPane: function() {
     const { filters, onFilter, params, query } = this.props;
     let pane = null;
-    if (filters.isFetching || !_.isEmpty(filters.items)) {
+    if (filters && !_.isEmpty(filters)) {
       pane = (
         <div id="mi-left-pane" key="left-pane">
           <Filter filters={ filters } onChange={ onFilter } query={ query } />
@@ -151,7 +151,7 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { filters, queryExpansions, resultsByAPI, selectedAPIs } = state;
+  const { filtersByAggregation, queryExpansions, resultsByAPI, selectedAPIs } = state;
   let results = {};
   for (let { uniqueId } of selectedAPIs) {
     results[uniqueId] = resultsByAPI[uniqueId] || {
@@ -163,7 +163,7 @@ function mapStateToProps(state) {
     };
   }
   return {
-    filters,
+    filters : filtersByAggregation,
     queryExpansions,
     results,
     selectedAPIs
@@ -176,7 +176,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     onBucket: (apis, e) => {
       e.preventDefault();
       dispatch(selectAPIs(apis));
-      dispatch(invalidateFilters());
+      dispatch(invalidateAllFilters());
       dispatch(fetchResults());
       dispatch(updatePath());
     },
@@ -187,6 +187,8 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updatePath());
     },
     onFilter: (filter) => {
+      dispatch(invalidateSiblingFilters(filter.name));
+
       dispatch(updateQuery({ [filter.name]: filter.items, offset: 0 }));
       dispatch(fetchResults());
       dispatch(updatePath());
@@ -196,7 +198,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(replaceQuery(query));
       dispatch(selectAPIs(apis));
 
-      dispatch(invalidateFilters());
+      dispatch(invalidateAllFilters());
       dispatch(invalidateQueryExpansions());
 
       dispatch(fetchResults());

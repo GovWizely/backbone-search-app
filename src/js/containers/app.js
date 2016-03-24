@@ -11,7 +11,7 @@ import { updateQuery, replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
 import { updateWindow } from '../actions/window';
 import { selectAPIs } from '../actions/api';
-import { invalidateFilters } from '../actions/filter';
+import { invalidateAllFilters } from '../actions/filter';
 import apis from '../apis';
 
 var App = React.createClass({
@@ -60,9 +60,10 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updateWindow({ innerWidth, innerHeight }));
     },
     onSubmit: (query) => {
+      console.log(query);
       dispatch(replaceQuery(query));
 
-      dispatch(invalidateFilters());
+      dispatch(invalidateAllFilters());
       dispatch(invalidateQueryExpansions());
 
       dispatch(fetchResults());

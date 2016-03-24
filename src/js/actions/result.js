@@ -8,7 +8,7 @@ import {
   formatAggregations, formatEndpoint, formatMetadata, formatParams,
   noAction
 } from '../utils/action-helper';
-import { requestFilters, receiveFilters } from './filter';
+import { computeFiltersByAggregation } from './filter';
 import { updateStatus } from './status';
 
 export const REQUEST_RESULTS = 'REQUEST_RESULTS';
@@ -101,21 +101,10 @@ export function fetchResults() {
     const { selectedAPIs, filters, query } = getState();
     const fetches = _.map(selectedAPIs, api => createFetch(api, dispatch, getState));
 
-    if (filters.invalidated) dispatch(requestFilters());
-
-    return Promise
-      .all(_.map(fetches, f => f(query)))
+    return Promise.all(_.map(fetches, f => f(query)))
       .then(responses => {
-        if (filters.invalidated) {
-          const filterableResponses = _(responses)
-            .reject(o => _.isEmpty(o.aggregations))
-            .reject(o => _.get(o, 'metadata.total') === 0)
-            .value();
-          const filters = consolidateFilters(filterableResponses);
-          dispatch(receiveFilters(filters));
-        }
+        dispatch(computeFiltersByAggregation(responses));
         return responses;
-      })
-      .catch(e => dispatch(failureResults('filter', e)));
+      });
   };
 }

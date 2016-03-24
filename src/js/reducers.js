@@ -1,3 +1,4 @@
+import { reduce } from 'lodash';
 import assign from 'object-assign';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
@@ -12,6 +13,17 @@ import { INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/
 import { UPDATE_WINDOW } from './actions/window';
 import { UPDATE_QUERY, REPLACE_QUERY } from './actions/query';
 import { SELECT_APIS } from './actions/api';
+
+function filtersByAggregation(state = {}, action) {
+  switch(action.type) {
+  case REQUEST_FILTERS:
+  case RECEIVE_FILTERS:
+  case INVALIDATE_FILTERS:
+    return assign({}, state, { [action.meta]: filters(state[action.meta], action) });
+  default:
+    return state;
+  }
+}
 
 function filters(state = {
   invalidated: false,
@@ -147,7 +159,7 @@ function window(state = {}, action) {
 }
 
 const reducer = combineReducers({
-  filters,
+  filtersByAggregation,
   form: formReducer,
   notifications,
   query,

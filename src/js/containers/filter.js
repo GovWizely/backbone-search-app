@@ -16,19 +16,18 @@ var Filter = React.createClass({
     };
   },
   render: function() {
-    const { disabled, filters: { isFetching, items }, onChange, query } = this.props;
+    const { disabled, filters, onChange, query } = this.props;
+    if (!filters || _.isEmpty(filters)) return null;
 
-    if (!items) return null;
-
-    const checkboxTrees = _.map(items, function(filters, key) {
-      return [
+    const checkboxTrees = _.map(filters, (filter, key) => {
+      return (
         <CheckboxTree
-           disabled={ disabled }
+           disabled={ filter.isFetching }
            key={ key } name={ key } label={ _.startCase(key) }
-           items={ filters }
+           items={ filter.items }
            onChange={ onChange }
-           values={ query[key] } />
-      ];
+           values={ Array.isArray(query[key]) ? query[key] : [query[key]] } />
+      );
     });
 
     return (

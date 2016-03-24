@@ -1,11 +1,20 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+
 import Form from '../components/form';
+import { selectAPIs } from '../actions/api';
+
 
 const Index = React.createClass({
   displayName: 'Index',
   propTypes: {
+    defaultAPIs: PropTypes.object,
+    dispatch: PropTypes.func,
     onSubmit: PropTypes.func
+  },
+  componentDidMount: function() {
+    const { dispatch, defaultAPIs } = this.props;
+    dispatch(selectAPIs(defaultAPIs));
   },
   render: function() {
     const props = {
@@ -19,9 +28,4 @@ const Index = React.createClass({
   }
 });
 
-
-function mapStateToProps(state) {
-  return {};
-}
-
-export default connect(mapStateToProps)(Index);
+export default connect()(Index);

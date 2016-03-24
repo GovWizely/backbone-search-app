@@ -11,16 +11,9 @@ import {
 import { requestFilters, receiveFilters } from './filter';
 import { updateStatus } from './status';
 
-export const UPDATE_IS_ANY_FETCHING = 'UPDATE_IS_ANY_FETCHING';
 export const REQUEST_RESULTS = 'REQUEST_RESULTS';
 export const RECEIVE_RESULTS = 'RECEIVE_RESULTS';
 export const FAILURE_RESULTS = 'FAILURE_RESULTS';
-
-function isFiltering(query) {
-  if (!query || !query.filter) return false;
-
-  return true;
-}
 
 function consolidateFilters(responses) {
   let filters = {};

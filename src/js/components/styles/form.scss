@@ -6,8 +6,6 @@ $form-focus-background: #f5fbfe !default;
 $form-focus-color: #444 !default;
 
 .mi-form {
-  margin-bottom: 20px;
-
   @media screen and (min-width: $breakpoint-medium) {
     display: table;
     padding: 24px 0px 12px 22px;

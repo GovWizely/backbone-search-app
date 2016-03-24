@@ -58,6 +58,9 @@ const ATTRIBUTES = {
     defaultValue: ['q'],
     type: AttributeTypes.array
   },
+  shortName: {
+    type: AttributeTypes.string
+  },
   transformParams: {
     isRequired: false,
     type: AttributeTypes.func

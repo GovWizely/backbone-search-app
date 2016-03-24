@@ -8,7 +8,7 @@ import { selectAPIs } from '../actions/api';
 const Index = React.createClass({
   displayName: 'Index',
   propTypes: {
-    defaultAPIs: PropTypes.object,
+    defaultAPIs: PropTypes.array.isRequired,
     dispatch: PropTypes.func,
     onSubmit: PropTypes.func
   },
@@ -19,7 +19,8 @@ const Index = React.createClass({
   render: function() {
     const props = {
       focused: true,
-      onSubmit: this.props.onSubmit };
+      onSubmit: this.props.onSubmit
+    };
     return (
       <div id="mi-index">
         <Form {...props} />

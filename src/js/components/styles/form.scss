@@ -8,7 +8,7 @@ $form-focus-color: #444 !default;
 .mi-form {
   @media screen and (min-width: $breakpoint-medium) {
     display: table;
-    padding: 24px 0px 12px 22px;
+    padding: 24px 0px 0px 22px;
     vertical-align: middle;
     width: 98%;
   }

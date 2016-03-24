@@ -9,11 +9,11 @@ var Deck = React.createClass({
   displayName: 'Deck',
   propTypes: {
     apis: PropTypes.array.isRequired,
-    onExpand: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired,
     results: PropTypes.object.isRequired
   },
   render: function() {
-    const { apis, onExpand, results } = this.props;
+    const { apis, onClick, results } = this.props;
     const children = _.compact(_.map(apis, function(api) {
       const { displayName, fields, pathname, uniqueId } = api;
       const { isFetching, items } = results[uniqueId];
@@ -28,7 +28,7 @@ var Deck = React.createClass({
            key={ uniqueId }
            label={ displayName }
            template={ _template }
-           onExpand={ onExpand.bind(undefined, api) } />
+           onClick={ onClick.bind(undefined, api) } />
       );
     }));
 

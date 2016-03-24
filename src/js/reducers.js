@@ -5,6 +5,9 @@ import { reducer as formReducer } from 'redux-form';
 import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
 
 import {
+  INVALIDATE_QUERY_EXPANSIONS,
+  REQUEST_QUERY_EXPANSIONS, RECEIVE_QUERY_EXPANSIONS } from './actions/query_expansion';
+import {
   REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
 import { INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 import { UPDATE_WINDOW } from './actions/window';
@@ -37,12 +40,52 @@ function filters(state = {
   }
 }
 
+function notifications(state = {}, action) {
+  switch(action.type) {
+  case FAILURE_RESULTS:
+    return assign({}, state, {
+      [action.meta]: {
+        payload: action.payload,
+        type: action.error ? 'error' : 'info'
+      }
+    });
+  default:
+    return state;
+  }
+}
+
 function query(state = { q: '' }, action) {
   switch(action.type) {
   case UPDATE_QUERY:
     return assign({}, state, action.payload);
   case REPLACE_QUERY:
     return action.payload;
+  default:
+    return state;
+  }
+}
+
+function queryExpansions(state = {
+  invalidated: false,
+  isFetching: false,
+  items: {}
+}, action) {
+  switch(action.type) {
+  case INVALIDATE_QUERY_EXPANSIONS:
+    return assign({}, state, {
+      invalidated: true
+    });
+  case REQUEST_QUERY_EXPANSIONS:
+    return assign({}, state, {
+      invalidated: false,
+      isFetching: true
+    });
+  case RECEIVE_QUERY_EXPANSIONS:
+    return assign({}, state, {
+      invalidated: false,
+      isFetching: false,
+      items: action.payload
+    }) ;
   default:
     return state;
   }
@@ -85,15 +128,11 @@ function resultsByAPI(state = {}, action) {
   }
 }
 
-function notifications(state = {}, action) {
+
+function selectedAPIs(state= [], action) {
   switch(action.type) {
-  case FAILURE_RESULTS:
-    return assign({}, state, {
-      [action.meta]: {
-        payload: action.payload,
-        type: action.error ? 'error' : 'info'
-      }
-    });
+  case SELECT_APIS:
+    return action.payload;
   default:
     return state;
   }
@@ -108,20 +147,12 @@ function window(state = {}, action) {
   }
 }
 
-function selectedAPIs(state= [], action) {
-  switch(action.type) {
-  case SELECT_APIS:
-    return action.payload;
-  default:
-    return state;
-  }
-}
-
 const reducer = combineReducers({
   filters,
   form: formReducer,
   notifications,
   query,
+  queryExpansions,
   resultsByAPI,
   routing: routeReducer,
   selectedAPIs,

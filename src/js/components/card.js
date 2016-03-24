@@ -41,7 +41,7 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
   );
 }
 
-var Card = ({ isFetching, displayedItems, items, label, onExpand, template, url }) => {
+var Card = ({ isFetching, displayedItems, items, label, onClick, template, url }) => {
   return (
     <section className="mi-card">
       <header className="title" title={ label }>{ label }</header>
@@ -49,7 +49,7 @@ var Card = ({ isFetching, displayedItems, items, label, onExpand, template, url 
       { view({ isFetching, displayedItems, items, label, template, url }) }
 
       <footer>
-        <a onClick={ onExpand }>See More { label }</a>
+        <a onClick={ onClick }>See More { label }</a>
       </footer>
     </section>
   );

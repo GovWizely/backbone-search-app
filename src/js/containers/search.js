@@ -1,3 +1,5 @@
+require('./search/styles/index.scss');
+
 import _ from 'lodash';
 import assign from 'object-assign';
 import React, { PropTypes } from 'react';
@@ -126,14 +128,16 @@ var Search = React.createClass({
   render: function() {
     const { availableAPIs, defaultAPIs, onBucket, onExpand, onSubmit, notifications, params, query, queryExpansions, results, selectedAPIs } = this.props;
     return (
-      <div id="search">
+      <div id="search" className="mi-search">
         <Notification notifications={ notifications } />
-        <Form
-           expanded={ false }
-           onSubmit={ onSubmit }
-           query={ query } />
-        <div id="mi-query-expansion-list-container">
-          <QueryExpansionList onClick={ onExpand } queryExpansions={ queryExpansions } />
+        <div className="mi-search__form-container">
+          <Form
+             expanded={ false }
+             onSubmit={ onSubmit }
+             query={ query } />
+          <div id="mi-query-expansion-list-container">
+            <QueryExpansionList onClick={ onExpand } queryExpansions={ queryExpansions } />
+          </div>
         </div>
         <div id="mi-bucket-list-container">
           <BucketList apis={ defaultAPIs } onClick={ onBucket } selectedAPIs={ selectedAPIs } />

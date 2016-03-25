@@ -1,7 +1,17 @@
+@import "./../../../../scss/variable";
+
 .mi-search {
 }
 
 .mi-search__form-container {
   background-color: #f1f1f1;
   border-bottom: 1px solid #666;
+}
+
+.mi-search__query-expansion-list-container {
+  min-height: 40px;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 300px;
+  }
 }

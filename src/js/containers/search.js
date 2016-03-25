@@ -135,7 +135,7 @@ var Search = React.createClass({
              expanded={ false }
              onSubmit={ onSubmit }
              query={ query } />
-          <div id="mi-query-expansion-list-container">
+          <div className="mi-search__query-expansion-list-container">
             <QueryExpansionList onClick={ onExpand } queryExpansions={ queryExpansions } />
           </div>
         </div>

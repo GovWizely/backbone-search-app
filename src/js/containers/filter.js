@@ -20,13 +20,14 @@ var Filter = React.createClass({
     if (!filters || _.isEmpty(filters)) return null;
 
     const checkboxTrees = _.map(filters, (filter, key) => {
+      const values = query[key] || [];
       return (
         <CheckboxTree
            disabled={ filter.isFetching }
            key={ key } name={ key } label={ _.startCase(key) }
            items={ filter.items }
            onChange={ onChange }
-           values={ Array.isArray(query[key]) ? query[key] : [query[key]] } />
+           values={ Array.isArray(values) ? values : [values] } />
       );
     });
 

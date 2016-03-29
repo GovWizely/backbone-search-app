@@ -22,7 +22,7 @@ function checkbox(item, options) {
 function list(items, options) {
   if (_.isEmpty(items)) return null;
   return (
-    <ul role="tree" className="list" >
+    <ul role="tree" className="list">
       { _.keys(items).map(item => checkbox(item, options)) }
     </ul>
   );
@@ -58,18 +58,54 @@ var CheckboxTree = React.createClass({
 
   getInitialState: function() {
     return {
+      flattenItems: null,
       visible: true,
-      showAll: false
+      showAll: false,
+      values: []
     };
   },
 
-  handleClick: function(e) {
-    const { name, values } = this.props;
-    const { target } = e;
-    let valueSet = new Set(values);
+  componentDidMount: function() {
+    this.onMount();
+  },
 
-    target.checked ? valueSet.add(target.value) : valueSet.delete(target.value);
-    this.props.onChange({ name: name, items: Array.from(valueSet) });
+  componentWillReceiveProps: function(nextProps) {
+    const flattenTree = (tree, output = []) => {
+      return _.reduce(tree, (output, item, key) => {
+        output = output.concat(key);
+        if (!_.isEmpty(item)) return flattenTree(item, output);
+        return output;
+      }, output);
+    };
+
+    if (!this.state.flattenItems ||
+        JSON.stringify(this.props.items) !== JSON.stringify(nextProps.items)) {
+      this.setState({
+        flattenItems: flattenTree(nextProps.items)
+      });
+    }
+  },
+
+  onMount: function() {
+    this.setState({
+      values: this.state.values.concat(this.props.defaultValues)
+    });
+  },
+
+  handleClick: function(e) {
+    const { checked, type, value } = e.target;
+    if (type !== 'checkbox') return;
+
+    const values = checked ?
+      _.concat(this.state.values, value) :
+      _.pull(this.state.values, value);
+
+    this.setState({
+      values: _.uniq(
+        _.pullAll(values, _.difference(values, this.state.flattenItems))
+      )
+    });
+    this.props.onChange({ name: this.props.name, values });
   },
 
   toggleVisibility: function(e) {
@@ -102,12 +138,11 @@ var CheckboxTree = React.createClass({
   render: function() {
     if (_.isEmpty(this.props.items)) return null;
 
-    const { label, name, values } = this.props;
+    const { label, name, onChange, values } = this.props;
     const items = this.displayableItems();
     const { showAll, visible } = this.state;
     const options = assign({}, this.props, {
-      values: new Set(values),
-      onClick: this.handleClick
+      values: new Set(this.state.values)
     });
     const hrefCSS = visible ? 'mi-icon mi-icon-angle-down' : 'mi-icon mi-icon-angle-right';
     const showAllText = showAll ? 'Less' : 'More';
@@ -118,7 +153,7 @@ var CheckboxTree = React.createClass({
     ) : null;
 
     return (
-      <section className="mi-checkbox-tree" onChange={ this.handleClick }>
+      <section className="mi-checkbox-tree" data-name={ name } onClick={ this.handleClick }>
         <fieldset>
           <legend>
             <a role="button" onClick={ this.toggleVisibility } href="#">

@@ -11,7 +11,7 @@ import { fetchResults } from '../actions/result';
 import { invalidateSiblingFilters, invalidateAllFilters } from '../actions/filter';
 import { selectAPIs } from '../actions/api';
 import { updatePath } from '../actions/path';
-import { updateQuery, replaceQuery } from '../actions/query';
+import { updateFilterQuery, updateQuery, replaceQuery } from '../actions/query';
 
 import Deck from './deck';
 import Filter from './filter';
@@ -186,10 +186,8 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(fetchResults());
       dispatch(updatePath());
     },
-    onFilter: (filter) => {
-      dispatch(invalidateSiblingFilters(filter.name));
-
-      dispatch(updateQuery({ [filter.name]: filter.items, offset: 0 }));
+    onFilter: ({ name, values }) => {
+      dispatch(updateQuery({ [name]: values }));
       dispatch(fetchResults());
       dispatch(updatePath());
     },

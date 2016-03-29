@@ -60,7 +60,6 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updateWindow({ innerWidth, innerHeight }));
     },
     onSubmit: (query) => {
-      console.log(query);
       dispatch(replaceQuery(query));
 
       dispatch(invalidateAllFilters());

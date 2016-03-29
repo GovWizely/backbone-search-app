@@ -30,9 +30,7 @@ function invalidateFilters(aggregation) {
 export function invalidateSiblingFilters(root) {
   return (dispatch, getState) => {
     each(getState().filtersByAggregation, (filters, key) => {
-      if (key !== root) {
-        dispatch(invalidateFilters(key));
-      }
+      if (key !== root) dispatch(invalidateFilters(key));
     });
   };
 }
@@ -87,20 +85,3 @@ export function computeFiltersByAggregation(responses) {
     );
   };
 }
-
-let filtersByAggregation = {
-  invalidated: false,
-  isFetching: false,
-  filters: {
-    countries: {
-      invalidated: false,
-      isFetching: false,
-      items: {}
-    },
-    industries: {
-      invalidated: false,
-      isFetching: false,
-      items: {}
-    }
-  }
-};

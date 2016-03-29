@@ -17,7 +17,7 @@ export const ita_zipcode_to_post = {
         <header>
           <a href={ url } dangerouslySetInnerHTML={ { __html: office_name } }></a>
         </header>
-        <p className="url"><a target="_blank" href={ url }>{ url }</a></p>
+        <p className="url"><a href={ url }>{ url }</a></p>
         <p dangerouslySetInnerHTML={ { __html: address } }></p>
       </article>
     );

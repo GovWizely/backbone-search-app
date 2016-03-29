@@ -9,7 +9,7 @@ export const business_service_providers = {
         <header>
           <a href={ company_website } dangerouslySetInnerHTML={ { __html: company_name } }></a>
         </header>
-        <p><a target="_blank" href={ company_website }>{ company_website }</a></p>
+        <p><a href={ company_website }>{ company_website }</a></p>
         <p dangerouslySetInnerHTML={ { __html: company_description } }></p>
       </article>
     );

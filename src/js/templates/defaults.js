@@ -7,7 +7,7 @@ export const defaults = {
         <header className="title">
           <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
         </header>
-        <p className="url"><a target="_blank" href={ url }>{ url }</a></p>
+        <p className="url"><a href={ url }>{ url }</a></p>
       </article>
     );
   },

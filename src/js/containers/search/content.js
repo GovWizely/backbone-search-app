@@ -33,7 +33,7 @@ function contentType(props) {
       reduce(selectedAPIs, (output, selectedAPI) => {
         if (!isEmpty(results[selectedAPI.uniqueId].items)) output += 1;
         return output;
-      }, 0).length > 1) return 'deck';
+      }, 0) > 1) return 'deck';
 
   return 'result';
 }

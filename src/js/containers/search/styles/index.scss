@@ -1,4 +1,6 @@
 @import "./../../../../scss/variable";
+@import "./filter";
+@import "./content";
 
 .mi-search {
 }
@@ -11,6 +13,23 @@
 .mi-search__query-expansion-list-container {
   min-height: 40px;
 
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 300px;
+  }
+}
+
+.mi-search__main-container {
+  border-top: 1px solid $border-color;
+  padding-top: 20px;
+  margin: 0 auto;
+  width: 96%;
+
+  @media screen and (min-width: $breakpoint-medium) {
+    margin-left: 27px;
+  }
+}
+
+.mi-search__filter-container + .mi-search__content-container {
   @media screen and (min-width: $breakpoint-medium) {
     margin-left: 300px;
   }

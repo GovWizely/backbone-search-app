@@ -1,48 +1,24 @@
-require('./search/styles/index.scss');
+require('./styles/index.scss');
 
-import _ from 'lodash';
-import assign from 'object-assign';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { findTemplate } from '../../templates';
 import {
-  invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../actions/query_expansion';
-import { fetchResults } from '../actions/result';
-import { invalidateSiblingFilters, invalidateAllFilters } from '../actions/filter';
-import { selectAPIs } from '../actions/api';
-import { updatePath } from '../actions/path';
-import { updateFilterQuery, updateQuery, replaceQuery } from '../actions/query';
+  invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../../actions/query_expansion';
+import { fetchResults } from '../../actions/result';
+import { invalidateSiblingFilters, invalidateAllFilters } from '../../actions/filter';
+import { selectAPIs } from '../../actions/api';
+import { updatePath } from '../../actions/path';
+import { clearFiltering, updateQuery, replaceQuery } from '../../actions/query';
 
-import Deck from './deck';
+import BucketList from './bucket_list';
+import Content from './content';
 import Filter from './filter';
-import Result from './result';
-import BucketList from './search/bucket_list';
-import QueryExpansionList from './search/query_expansion_list';
-
-import Form from '../components/form';
+import Form from './form';
 import Notification from '../components/notification';
-import Spinner from '../components/spinner';
-
-export function showDeck(options) {
-  return options.apis.length > 1 &&
-    _.filter(options.results, (results) => {
-      return !results.isFetching && results.items.length > 0;
-    }).length > 1;
-}
-
-function noMatch(results) {
-  for (let api in results) {
-    let result = results[api];
-    if (result.isFetching || (result.metadata && result.metadata.total > 0)) {
-      return false;
-    }
-  }
-  return true;
-}
-function showLoading(filters, key=null) {
-  if (filters.isFetching) return true;
-  return false;
-}
+import QueryExpansionList from './query_expansion_list';
+import Result from './result';
 
 var Search = React.createClass({
   displayName: 'Search',
@@ -69,81 +45,28 @@ var Search = React.createClass({
   componentDidMount: function() {
     const { location, params, onLoaded } = this.props;
     onLoaded({ apiName: params.api, query: location.query });
-
-  },
-  contentPane: function() {
-    const { onPaging, onSelect, params, query, results, selectedAPIs } = this.props;
-    let content = null;
-    if (showDeck({ apis: selectedAPIs, results })) {
-      let props = {
-        apis: selectedAPIs,
-        onClick: onSelect,
-        results
-      };
-      content = <Deck {...props} />;
-    } else {
-      let props = {
-        api: selectedAPIs[0],
-        onPaging,
-        query,
-        result: results[selectedAPIs[0].uniqueId],
-        window
-      };
-      content = <Result {...props} />;
-    }
-    return <div id="mi-content-pane" key="content-pane">{ content }</div>;
-  },
-  leftPane: function() {
-    const { filters, onFilter, params, query } = this.props;
-    let pane = null;
-    if (filters && !_.isEmpty(filters)) {
-      pane = (
-        <div id="mi-left-pane" key="left-pane">
-          <Filter filters={ filters } onChange={ onFilter } query={ query } />
-        </div>
-      );
-    }
-    return pane;
-  },
-  view: function() {
-    const { availableAPIs, filters, params, results, window } = this.props;
-    if (params.api && !availableAPIs.hasOwnProperty(params.api)) {
-      return <div>Invalid api type.</div>;
-    }
-
-    if (showLoading(filters, params.api)) {
-      let spinnerMargin = { marginTop: 100 };
-      return <div style={ spinnerMargin }><Spinner message="Searching..." /></div>;
-    }
-
-    if (noMatch(results)) {
-      return <div>Your search did not match any documents.</div>;
-    }
-
-    return [
-      this.leftPane(),
-      this.contentPane()
-    ];
   },
   render: function() {
-    const { availableAPIs, defaultAPIs, onBucket, onExpand, onSubmit, notifications, params, query, queryExpansions, results, selectedAPIs } = this.props;
+    const { defaultAPIs, filters, onBucket, onExpand, onFilter, onSelect, onSubmit, notifications, query, queryExpansions, results, selectedAPIs } = this.props;
     return (
       <div id="search" className="mi-search">
+
         <Notification notifications={ notifications } />
+
         <div className="mi-search__form-container">
-          <Form
-             expanded={ false }
-             onSubmit={ onSubmit }
-             query={ query } />
+          <Form onSubmit={ onSubmit } query={ query } />
           <div className="mi-search__query-expansion-list-container">
             <QueryExpansionList onClick={ onExpand } queryExpansions={ queryExpansions } />
           </div>
         </div>
+
         <div id="mi-bucket-list-container">
           <BucketList apis={ defaultAPIs } onClick={ onBucket } selectedAPIs={ selectedAPIs } />
         </div>
-        <div id="mi-main-pane">
-          { this.view() }
+
+        <div className="mi-search__main-container">
+          <Filter filters={ filters } onChange={ onFilter } query={ query } />
+          <Content { ...this.props } />
         </div>
       </div>
     );
@@ -151,7 +74,7 @@ var Search = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { filtersByAggregation, queryExpansions, resultsByAPI, selectedAPIs } = state;
+  const { filtersByAggregation, queryExpansions, resultsByAPI, selectedAPIs, window } = state;
   let results = {};
   for (let { uniqueId } of selectedAPIs) {
     results[uniqueId] = resultsByAPI[uniqueId] || {
@@ -164,9 +87,11 @@ function mapStateToProps(state) {
   }
   return {
     filters : filtersByAggregation,
+    findTemplate,
     queryExpansions,
     results,
-    selectedAPIs
+    selectedAPIs,
+    window
   };
 }
 
@@ -180,8 +105,16 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(fetchResults());
       dispatch(updatePath());
     },
+    onClearFilter: (e) => {
+      e.preventDefault();
+      dispatch(clearFiltering(e.target.dataset.filters || []));
+      dispatch(invalidateAllFilters());
+      dispatch(fetchResults());
+      dispatch(updatePath());
+    },
     onExpand: (query, e) => {
       e.preventDefault();
+      dispatch(invalidateAllFilters());
       dispatch(replaceQuery({ q: query }));
       dispatch(fetchResults());
       dispatch(updatePath());

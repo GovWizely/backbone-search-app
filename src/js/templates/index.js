@@ -20,7 +20,7 @@ export const TEMPLATES = assign(
   require('./trade_leads')
 );
 
-export function template(templateName) {
+export function findTemplate(templateName) {
   if (!TEMPLATES[templateName]) {
     return TEMPLATES.defaults;
   }

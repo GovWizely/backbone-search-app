@@ -39,9 +39,9 @@ const Circle = (
 function createSpinner(type) {
   return ({ message='Loading...' }) => {
     return (
-      <div>
+      <div className="mi-spinner">
         { type }
-        <div className="uk-text-center" style={ { color: '#666' }}>{ message }</div>
+        <div style={ { color: '#666', textAlign: 'center' } }>{ message }</div>
       </div>
     );
   };

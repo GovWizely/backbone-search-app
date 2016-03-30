@@ -1,4 +1,5 @@
-import { concat, keys, pull, reduce, isEmpty } from 'lodash';
+import assign from 'object-assign';
+import { concat, keys, omit, reduce, isEmpty } from 'lodash';
 
 import { invalidateAllFilters, invalidateSiblingFilters } from './filter';
 
@@ -26,31 +27,11 @@ export function replaceQuery(query) {
   };
 }
 
-function isFiltered(getState) {
-  const { filtersByAggregation, query } = getState();
-  const filterNames = keys(filtersByAggregation);
-  for (let filterName of filterNames) {
-    if (!isEmpty(query[filterName])) return true;
-  }
-  return false;
-}
-
-function isOutdated(getState) {
-  const { filtersByAggregation, query } = getState();
-  return false;
-}
-
-export function updateFilterQuery(item) {
+export function clearFiltering(filters = []) {
   return (dispatch, getState) => {
-    const { query } = getState();
-    let filterItems = query[item.name] || [];
-    filterItems = item.checked ?
-      concat(filterItems, item.value) :
-      pull(filterItems, item.value);
-    dispatch(updateQuery({ [item.name]: filterItems }));
+    const { filtersByAggregation, query } = getState();
+    if (isEmpty(filters)) filters = keys(filtersByAggregation);
 
-    isFiltered(getState) ?
-      dispatch(invalidateSiblingFilters(item.name)) :
-      dispatch(invalidateAllFilters());
+    dispatch(replaceQuery(assign({}, omit(query, filters))));
   };
 }

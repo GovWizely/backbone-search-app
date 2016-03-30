@@ -31,14 +31,14 @@ function consolidateFilters(responses) {
   return filters;
 }
 
-function requestResults(api) {
+export function requestResults(api) {
   return {
     type: REQUEST_RESULTS,
     meta: api.uniqueId
   };
 }
 
-function receiveResults(api, response) {
+export function receiveResults(api, response) {
   return {
     type: RECEIVE_RESULTS,
     meta: api.uniqueId,
@@ -46,7 +46,7 @@ function receiveResults(api, response) {
   };
 }
 
-function failureResults(api, e) {
+export function failureResults(api, e) {
   return {
     type: FAILURE_RESULTS,
     error: true,

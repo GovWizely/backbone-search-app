@@ -12,15 +12,16 @@ import { selectAPIs } from '../../actions/api';
 import { updatePath } from '../../actions/path';
 import { clearFiltering, updateQuery, replaceQuery } from '../../actions/query';
 
+import Notification from '../../components/notification';
+
 import BucketList from './bucket_list';
 import Content from './content';
 import Filter from './filter';
 import Form from './form';
-import Notification from '../components/notification';
 import QueryExpansionList from './query_expansion_list';
 import Result from './result';
 
-var Search = React.createClass({
+var Index = React.createClass({
   displayName: 'Search',
   propTypes: {
     availableAPIs: PropTypes.object.isRequired,
@@ -120,7 +121,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updatePath());
     },
     onFilter: ({ name, values }) => {
-      dispatch(updateQuery({ [name]: values }));
+      dispatch(updateQuery({ [name]: values, offset: 0 }));
       dispatch(fetchResults());
       dispatch(updatePath());
     },
@@ -152,4 +153,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Search);
+)(Index);

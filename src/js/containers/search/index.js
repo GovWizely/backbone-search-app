@@ -30,6 +30,7 @@ var Index = React.createClass({
     location: PropTypes.object,
     notifications: PropTypes.object,
     onBucket: PropTypes.func.isRequired,
+    onClearFilter: PropTypes.func.isRequired,
     onExpand: PropTypes.func.isRequired,
     onFilter: PropTypes.func.isRequired,
     onLoaded: PropTypes.func.isRequired,
@@ -48,7 +49,7 @@ var Index = React.createClass({
     onLoaded({ apiName: params.api, query: location.query });
   },
   render: function() {
-    const { defaultAPIs, filters, onBucket, onExpand, onFilter, onSelect, onSubmit, notifications, query, queryExpansions, results, selectedAPIs } = this.props;
+    const { defaultAPIs, filters, onBucket, onClearFilter, onExpand, onFilter, onSelect, onSubmit, notifications, query, queryExpansions, results, selectedAPIs } = this.props;
     return (
       <div id="search" className="mi-search">
 
@@ -66,7 +67,7 @@ var Index = React.createClass({
         </div>
 
         <div className="mi-search__main-container">
-          <Filter filters={ filters } onChange={ onFilter } query={ query } />
+          <Filter filters={ filters } onChange={ onFilter } onClear={ onClearFilter } query={ query } />
           <Content { ...this.props } />
         </div>
       </div>

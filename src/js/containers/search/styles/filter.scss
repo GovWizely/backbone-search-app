@@ -1,10 +1,5 @@
-.mi-search__filter {
+.mi-filter {
   display: none;
-
-  header {
-    font-size: 15px;
-    margin-bottom: 5px;
-  }
 
   .mi-checkbox-tree {
     border-bottom: 1px solid $border-color;
@@ -19,4 +14,13 @@
     position: relative;
     width: 267px;
   }
+}
+
+.mi-filter__header {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.mi-filter__header__clear {
+  font-size: 12px;
 }

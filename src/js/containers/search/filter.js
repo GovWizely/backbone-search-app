@@ -14,7 +14,7 @@ function noFilter(filters) {
   return true;
 }
 
-var Filter = ({ filters, onChange, query }) => {
+var Filter = ({ filters, onChange, onClear, query }) => {
   if (noFilter(filters)) return <noscript />;
 
   const checkboxTrees = map(filters, (filter, key) => {
@@ -30,8 +30,11 @@ var Filter = ({ filters, onChange, query }) => {
 
   return (
     <div className="mi-search__filter-container">
-      <div className="mi-search__filter">
-        <header>Filter Results</header>
+      <div className="mi-filter">
+        <header className="mi-filter__header">
+          Filter Results
+          &nbsp;<a className="mi-filter__header__clear" onClick={ onClear }>[Clear All]</a>
+        </header>
         { checkboxTrees }
       </div>
     </div>

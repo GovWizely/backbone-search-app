@@ -52,8 +52,6 @@ describe('actions/queryExpansion', () => {
           .then(done)
           .catch(done);
       });
-
     });
   });
-
 });

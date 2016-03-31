@@ -1,4 +1,4 @@
-import { intersection, isEmpty, keys, reduce } from 'lodash';
+import { find, intersection, isEmpty, keys, pickBy, reduce } from 'lodash';
 import React, { PropTypes } from 'react';
 
 import Deck from './deck';
@@ -50,13 +50,16 @@ var Content = (props) => {
     break;
 
   case 'result':
+    const uniqueId = keys(pickBy(results, (result) => !isEmpty(result.items)))[0];
+    const result = results[uniqueId];
+    const selectedAPI = find(selectedAPIs, (api) => api.uniqueId === uniqueId);
     content = (
       <Result
-         api={ selectedAPIs[0] }
+         api={ selectedAPI }
          findTemplate={ findTemplate }
          onPaging={ onPaging }
          query={ query }
-         result={ results[selectedAPIs[0].uniqueId] }
+         result={ result }
          window={ window } />
     );
     break;

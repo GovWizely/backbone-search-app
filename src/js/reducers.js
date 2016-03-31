@@ -140,7 +140,7 @@ function resultsByAPI(state = {}, action) {
 }
 
 
-function selectedAPIs(state= [], action) {
+function selectedAPIs(state=[], action) {
   switch(action.type) {
   case SELECT_APIS:
     return action.payload;

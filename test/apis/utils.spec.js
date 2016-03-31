@@ -26,11 +26,15 @@ describe('apis/utils', ()=> {
 
     it('should create a new API object with overridden attributes', () => {
       const customAttributes = {
+        aggregations: { countries: { type: 'array' }, industries: { type: 'tree' } },
         deckable: false,
         displayName: 'Excellent',
         endpoint,
         pathname: 'excellent',
         permittedParams: ['o'],
+        shortName: 'Excel',
+        transformParams: (params) => params,
+        transformResponse: (response) => response,
         uniqueId: 'excellent'
       };
       const api = defineAPI('example', customAttributes);

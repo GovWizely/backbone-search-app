@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { get, isEmpty, map, reject } from 'lodash';
 import fetch from 'isomorphic-fetch';
 import merge from 'deepmerge';
 import Url from 'url';
@@ -9,27 +9,10 @@ import {
   noAction
 } from '../utils/action-helper';
 import { computeFiltersByAggregation } from './filter';
-import { updateStatus } from './status';
 
 export const REQUEST_RESULTS = 'REQUEST_RESULTS';
 export const RECEIVE_RESULTS = 'RECEIVE_RESULTS';
 export const FAILURE_RESULTS = 'FAILURE_RESULTS';
-
-function consolidateFilters(responses) {
-  let filters = {};
-  const aggregationKeys = responses.map(response => Object.keys(response.aggregations));
-  const commonAggregationKeys = _.intersection(...aggregationKeys);
-  commonAggregationKeys.forEach(key => {
-    filters[key] = {};
-  });
-  responses.forEach(response => {
-    commonAggregationKeys.forEach(key => {
-      filters[key] = merge(filters[key], response.aggregations[key]);
-    });
- });
-
-  return filters;
-}
 
 export function requestResults(api) {
   return {
@@ -79,14 +62,17 @@ function postprocess(api, json) {
 
 function createFetch(api, dispatch, getState) {
   return function(query) {
-    if (_.get(getState().results, [api.uniqueId, 'isFetching'])) {
+    if (get(getState().results, [api.uniqueId, 'isFetching'])) {
       dispatch(noAction());
       return null;
     }
     let params = preprocess(api, query);
     dispatch(requestResults(api));
     return fetch(formatEndpoint(api.endpoint, params))
-      .then(response => response.json())
+      .then(response => {
+        if (response.status !== 200) throw new Error('Bad response from server');
+        return response.json();
+      })
       .then(json => {
         const data = postprocess(api, json);
         dispatch(receiveResults(api, data));
@@ -98,12 +84,13 @@ function createFetch(api, dispatch, getState) {
 
 export function fetchResults() {
   return (dispatch, getState) => {
-    const { selectedAPIs, filters, query } = getState();
-    const fetches = _.map(selectedAPIs, api => createFetch(api, dispatch, getState));
+    const { selectedAPIs, query } = getState();
+    const fetches = map(selectedAPIs, api => createFetch(api, dispatch, getState));
 
-    return Promise.all(_.map(fetches, f => f(query)))
+    return Promise.all(map(fetches, f => f(query)))
+      .then(responses => reject(responses, (response) => response.error))
       .then(responses => {
-        dispatch(computeFiltersByAggregation(responses));
+        if (!isEmpty(responses)) dispatch(computeFiltersByAggregation(responses));
         return responses;
       });
   };

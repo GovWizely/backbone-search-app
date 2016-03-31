@@ -72,7 +72,7 @@
     "istanbul": "^0.4.1",
     "jsdom": "^8.2.0",
     "mocha": "^2.4.5",
-    "nock": "^3.6.0",
+    "nock": "^7.7.2",
     "node-sass": "^3.4.2",
     "object-assign": "^4.0.1",
     "purifycss-webpack-plugin": "^2.0.3",

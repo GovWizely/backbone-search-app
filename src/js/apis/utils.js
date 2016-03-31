@@ -15,7 +15,7 @@ function createTypeChecker(expectedType) {
 
     let actualType = typeof value;
     if (Array.isArray(value)) actualType = 'array';
-    if (actualType === expectedType) return null;
+    if (actualType === expectedType) return false;
 
     throw new Error(
       `Invalid \`${attrName}\` of type \`${actualType}\` ` +

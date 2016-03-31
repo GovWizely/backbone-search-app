@@ -42,23 +42,27 @@ describe('actions/filter', () => {
     expect(actions.invalidateFilters(aggregation)).to.eql(expectedAction);
   });
 
-  it('should create multiple actions to invalidate all filters', () => {
-    const expectedActions = [
-      { type: actions.INVALIDATE_FILTERS, meta: 'countries' },
-      { type: actions.INVALIDATE_FILTERS, meta: 'industries' }
-    ];
-    const store = mockStore(state);
-    store.dispatch(actions.invalidateAllFilters());
-    expect(store.getActions()).to.eql(expectedActions);
+  describe('#invalidateAllFilters', () => {
+    it('should create multiple actions to invalidate all filters', () => {
+      const expectedActions = [
+        { type: actions.INVALIDATE_FILTERS, meta: 'countries' },
+        { type: actions.INVALIDATE_FILTERS, meta: 'industries' }
+      ];
+      const store = mockStore(state);
+      store.dispatch(actions.invalidateAllFilters());
+      expect(store.getActions()).to.eql(expectedActions);
+    });
   });
 
-  it('should create multiple actions to invalidate all but the specified filter', () => {
-    const expectedActions = [
-      { type: actions.INVALIDATE_FILTERS, meta: 'industries' }
-    ];
-    const store = mockStore(state);
-    store.dispatch(actions.invalidateSiblingFilters('countries'));
-    expect(store.getActions()).to.eql(expectedActions);
+  describe('#invalidateSiblingFilters', () => {
+    it('should create multiple actions to invalidate all but the specified filter', () => {
+      const expectedActions = [
+        { type: actions.INVALIDATE_FILTERS, meta: 'industries' }
+      ];
+      const store = mockStore(state);
+      store.dispatch(actions.invalidateSiblingFilters('countries'));
+      expect(store.getActions()).to.eql(expectedActions);
+    });
   });
 
   describe('#computeFiltersByAggregation', () => {

@@ -1,11 +1,10 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import nock from 'nock';
 import { expect } from 'chai';
 
 import * as actions from '../../src/js/actions';
 
-const mockStore = configureMockStore([thunk ]);
+const mockStore = configureMockStore([thunk]);
 const state = {
   filtersByAggregation: {
     countries: {},

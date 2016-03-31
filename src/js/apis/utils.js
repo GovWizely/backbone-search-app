@@ -75,10 +75,10 @@ const ATTRIBUTES = {
   }
 };
 
-let uniqueIds = [];
+let uniqueIds = {};
 export function defineAPI(uniqueId, attributes) {
   if (attributes.disabled) return null;
-  if (uniqueIds.indexOf(uniqueId)> 0) {
+  if (uniqueIds[uniqueId]) {
     throw new Error(
       `Duplicated API found: \`${uniqueId}\``
     );
@@ -108,6 +108,10 @@ export function defineAPI(uniqueId, attributes) {
     if (typeMismatched) return typeMismatched;
   }
 
-  uniqueIds.push(uniqueId);
+  uniqueIds[uniqueId] = true;
   return { [uniqueId]: config };
+}
+
+export function resetUniqueIds() {
+  uniqueIds = {};
 }

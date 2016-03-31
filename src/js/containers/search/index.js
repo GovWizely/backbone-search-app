@@ -10,7 +10,7 @@ import { fetchResults } from '../../actions/result';
 import { invalidateSiblingFilters, invalidateAllFilters } from '../../actions/filter';
 import { selectAPIs } from '../../actions/api';
 import { updatePath } from '../../actions/path';
-import { clearFiltering, updateQuery, replaceQuery } from '../../actions/query';
+import { clearFiltering, updateFiltering, updateQuery, replaceQuery } from '../../actions/query';
 
 import Notification from '../../components/notification';
 
@@ -121,7 +121,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updatePath());
     },
     onFilter: ({ name, values }) => {
-      dispatch(updateQuery({ [name]: values, offset: 0 }));
+      dispatch(updateFiltering(name, values));
       dispatch(fetchResults());
       dispatch(updatePath());
     },

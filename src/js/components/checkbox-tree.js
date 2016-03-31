@@ -31,6 +31,7 @@ function list(items, options) {
 var CheckboxTree = React.createClass({
   displayName: 'CheckboxTree',
   propTypes: {
+    defaultValues: PropTypes.array,
     disabled: PropTypes.bool,
     itemCssClass: PropTypes.string,
     itemLimit: PropTypes.number,
@@ -40,19 +41,18 @@ var CheckboxTree = React.createClass({
     maxHeight: PropTypes.number,
     name: PropTypes.string.isRequired,
     nested: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
-    values: PropTypes.array
+    onChange: PropTypes.func.isRequired
   },
   getDefaultProps: function() {
     return {
+      defaultValues: [],
       listCssClass: 'list-group',
       itemCssClass: 'list-group-item mi-checkbox',
       itemLimit: 5,
       items: {},
       label: 'Untitled',
       maxHeight: 180,
-      nested: false,
-      values: []
+      nested: false
     };
   },
 
@@ -138,7 +138,7 @@ var CheckboxTree = React.createClass({
   render: function() {
     if (_.isEmpty(this.props.items)) return null;
 
-    const { label, name, onChange, values } = this.props;
+    const { disabled, label, name, onChange } = this.props;
     const items = this.displayableItems();
     const { showAll, visible } = this.state;
     const options = assign({}, this.props, {
@@ -153,7 +153,7 @@ var CheckboxTree = React.createClass({
     ) : null;
 
     return (
-      <section className="mi-checkbox-tree" data-name={ name } onClick={ this.handleClick }>
+      <section className="mi-checkbox-tree" data-name={ name } data-disabled={ disabled } onClick={ this.handleClick }>
         <fieldset>
           <legend>
             <a role="button" onClick={ this.toggleVisibility } href="#">

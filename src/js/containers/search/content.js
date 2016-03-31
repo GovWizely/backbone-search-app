@@ -1,5 +1,5 @@
 import { intersection, isEmpty, keys, reduce } from 'lodash';
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Deck from './deck';
 import Result from './result';
@@ -39,7 +39,7 @@ function contentType(props) {
 }
 
 var Content = (props) => {
-  const { filters, findTemplate, onClearFilter, onPaging, onSelect, query, results, selectedAPIs, window } = props;
+  const { findTemplate, onPaging, onSelect, query, results, selectedAPIs, window } = props;
 
   let content = null;
   switch(contentType(props)) {
@@ -67,8 +67,7 @@ var Content = (props) => {
 
   case 'noResult':
   default:
-    let actionable = intersection(keys(filters), keys(query)).length > 0;
-    content = <NoResult actionable={ actionable } keyword={ query.q } onClick={ onClearFilter } />;
+    content = <NoResult keyword={ query.q } />;
     break;
   }
 
@@ -79,6 +78,16 @@ var Content = (props) => {
       </div>
     </div>
   );
+};
+
+Content.propTypes = {
+  findTemplate: PropTypes.func.isRequired,
+  onPaging: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  query: PropTypes.object.isRequired,
+  results: PropTypes.object.isRequired,
+  selectedAPIs: PropTypes.array.isRequired,
+  window: PropTypes.object.isRequired
 };
 
 export default Content;

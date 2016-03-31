@@ -10,7 +10,8 @@
                 "mocha": true
 	},
 	"plugins": [
-		"react"
+		"react",
+                "mocha"
 	],
 	"rules": {
 		"curly": [2, "multi-line"],

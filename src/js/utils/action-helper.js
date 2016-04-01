@@ -16,16 +16,16 @@ export function formatAggregations(aggregations, formats) {
   for (let key in formats) {
     let format = formats[key];
     let aggregation = aggregations[format.field || key];
-    switch(format.type) {
-    case 'array':
-      output[key] = reduceArray(aggregation);
-      break;
-    case 'tree':
-      output[key] = parseAsTree(aggregation);
-      break;
-    default:
-      console.log(`Error: Invalid aggregations type ${format.type}.`);
-    };
+    switch (format.type) {
+      case 'array':
+        output[key] = reduceArray(aggregation);
+        break;
+      case 'tree':
+        output[key] = parseAsTree(aggregation);
+        break;
+      default:
+        console.log(`Error: Invalid aggregations type ${format.type}.`);
+    }
   }
   return output;
 }

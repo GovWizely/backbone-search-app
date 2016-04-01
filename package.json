@@ -52,6 +52,7 @@
     "chai": "^3.5.0",
     "css-loader": "^0.23.1",
     "eslint": "^2.5.3",
+    "eslint-config-airbnb": "^6.2.0",
     "eslint-plugin-flowtype": "^2.2.2",
     "eslint-plugin-mocha": "^2.0.0",
     "eslint-plugin-react": "^4.2.3",

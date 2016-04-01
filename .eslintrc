@@ -1,4 +1,5 @@
 {
+        "extends": "airbnb",
         "parser": "babel-eslint",
         "ecmaFeatures": {
                 "jsx": true,
@@ -14,6 +15,7 @@
                 "mocha"
 	],
 	"rules": {
+                "comma-dangle": 0,
 		"curly": [2, "multi-line"],
 		"jsx-quotes": 1,
 		"no-shadow": 0,

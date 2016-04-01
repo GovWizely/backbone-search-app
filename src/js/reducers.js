@@ -1,8 +1,7 @@
-import { reduce } from 'lodash';
 import assign from 'object-assign';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { routeReducer, UPDATE_PATH } from 'redux-simple-router';
+import { routeReducer } from 'redux-simple-router';
 
 import {
   INVALIDATE_QUERY_EXPANSIONS,

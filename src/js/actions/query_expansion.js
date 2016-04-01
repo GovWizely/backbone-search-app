@@ -2,6 +2,8 @@ import assign from 'object-assign';
 import fetch from 'isomorphic-fetch';
 import { stringify } from 'querystring';
 
+import { formatParams } from '../utils/action-helper';
+
 export const INVALIDATE_QUERY_EXPANSIONS = 'INVALIDATE_QUERY_EXPANSION';
 export const REQUEST_QUERY_EXPANSIONS = 'REQUEST_QUERY_EXPANSIONS';
 export const RECEIVE_QUERY_EXPANSIONS = 'RECEIVE_QUERY_EXPANSIONS';
@@ -31,8 +33,10 @@ function receiveQueryExpansions(json) {
 }
 
 function fetchQueryExpansions(query) {
-  const params = assign({}, defaultParams, query);
+  const params = assign({}, defaultParams, formatParams(query, ['q']));
   return (dispatch) => {
+    if (!params.q) return Promise.resolve();
+
     dispatch(requestQueryExpansions());
     return fetch(`${endpoint}?${stringify(params)}`)
       .then(response => response.json())

@@ -1,6 +1,10 @@
 @import "../../../scss/variable";
 
 .mi-checkbox-tree {
+  &[data-disabled=true] {
+    color: #999;
+  }
+
   .list-group-item {
     margin-top: 0;
     border: 0;

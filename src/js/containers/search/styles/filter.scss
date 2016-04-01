@@ -1,0 +1,26 @@
+.mi-filter {
+  display: none;
+
+  .mi-checkbox-tree {
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 12px;
+  }
+
+  @media screen and (min-width: $breakpoint-medium) {
+    border-right: 1px solid $border-color;
+    display: inline-block;
+    float: left;
+    left: 0;
+    position: relative;
+    width: 267px;
+  }
+}
+
+.mi-filter__header {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.mi-filter__header__clear {
+  font-size: 12px;
+}

@@ -13,23 +13,13 @@ import { UPDATE_WINDOW } from './actions/window';
 import { UPDATE_QUERY, REPLACE_QUERY } from './actions/query';
 import { SELECT_APIS } from './actions/api';
 
-function filtersByAggregation(state = {}, action) {
-  switch(action.type) {
-  case REQUEST_FILTERS:
-  case RECEIVE_FILTERS:
-  case INVALIDATE_FILTERS:
-    return assign({}, state, { [action.meta]: filters(state[action.meta], action) });
-  default:
-    return state;
-  }
-}
 
 function filters(state = {
   invalidated: false,
   isFetching: false,
   items: {}
 }, action) {
-  switch(action.type) {
+  switch (action.type) {
   case REQUEST_FILTERS:
     return assign({}, state, {
       isFetching: true,
@@ -50,8 +40,19 @@ function filters(state = {
   }
 }
 
+function filtersByAggregation(state = {}, action) {
+  switch (action.type) {
+  case REQUEST_FILTERS:
+  case RECEIVE_FILTERS:
+  case INVALIDATE_FILTERS:
+    return assign({}, state, { [action.meta]: filters(state[action.meta], action) });
+  default:
+    return state;
+  }
+}
+
 function notifications(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
   case FAILURE_RESULTS:
     return assign({}, state, {
       [action.meta]: {
@@ -65,7 +66,7 @@ function notifications(state = {}, action) {
 }
 
 function query(state = { q: '' }, action) {
-  switch(action.type) {
+  switch (action.type) {
   case UPDATE_QUERY:
     return assign({}, state, action.payload);
   case REPLACE_QUERY:
@@ -80,7 +81,7 @@ function queryExpansions(state = {
   isFetching: false,
   items: {}
 }, action) {
-  switch(action.type) {
+  switch (action.type) {
   case INVALIDATE_QUERY_EXPANSIONS:
     return assign({}, state, {
       invalidated: true
@@ -95,7 +96,7 @@ function queryExpansions(state = {
       invalidated: false,
       isFetching: false,
       items: action.payload
-    }) ;
+    });
   default:
     return state;
   }
@@ -107,7 +108,7 @@ function results(state = {
   isFetching: false,
   items: [], metadata: {}
 }, action) {
-  switch(action.type) {
+  switch (action.type) {
   case REQUEST_RESULTS:
     return assign({}, state, {
       isFetching: true
@@ -125,7 +126,7 @@ function results(state = {
 }
 
 function resultsByAPI(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
   case REQUEST_RESULTS:
     return assign({}, state, { [action.meta]: results(state[action.meta], action) });
   case RECEIVE_RESULTS:
@@ -139,8 +140,8 @@ function resultsByAPI(state = {}, action) {
 }
 
 
-function selectedAPIs(state=[], action) {
-  switch(action.type) {
+function selectedAPIs(state = [], action) {
+  switch (action.type) {
   case SELECT_APIS:
     return action.payload;
   default:
@@ -149,7 +150,7 @@ function selectedAPIs(state=[], action) {
 }
 
 function window(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
   case UPDATE_WINDOW:
     return assign({}, state, action.payload);
   default:

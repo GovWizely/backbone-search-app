@@ -1,4 +1,4 @@
-import { isEmpty, keys, omitBy, values  } from 'lodash';
+import { isEmpty, keys, omitBy, values } from 'lodash';
 import { stringify } from 'querystring';
 import { updatePath as _updatePath } from 'redux-simple-router';
 

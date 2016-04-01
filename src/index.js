@@ -1,5 +1,3 @@
-'use strict';
-
 require('./scss/style.scss');
 require('./scss/animate.min.css');
 require('babel-polyfill');

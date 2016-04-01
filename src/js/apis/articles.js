@@ -1,6 +1,8 @@
+import assign from 'object-assign';
 import { defineAPI } from './utils.js';
 
-function transformParams(params) {
+function transformParams(_params) {
+  const params = assign({}, _params);
   if (params.offset && (params.offset < 0 || params.offset > 999) ) {
     params.offset = 0;
   }

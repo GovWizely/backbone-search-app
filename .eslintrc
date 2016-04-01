@@ -17,6 +17,7 @@
   "rules": {
     "comma-dangle": [2, "never"],
     "indent": [2, 2],
+    "quote-props": [2, "consistent-as-needed"],
     "react/sort-prop-types": 1
   }
 }

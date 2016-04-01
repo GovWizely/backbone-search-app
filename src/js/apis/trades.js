@@ -3,20 +3,25 @@ import * as taxonomy from '../utils/taxonomy';
 import { defineAPI } from './utils';
 
 function transformParams(params) {
-  if (params.countries) {
-    params.countries = taxonomy.countryToAbbr(params.countries);
-  }
-  return params;
+  if (!params.countries) return params;
+
+  return assign({}, params, {
+    countries: taxonomy.countryToAbbr(params.countries)
+  });
 }
 
 function transformResponse(response) {
-  if (!response.aggregations) { return response; }
+  if (!response.aggregations || !response.aggregations.countries) return response;
 
-  for (let i in response.aggregations.countries) {
-    response.aggregations.countries[i].key =
-      taxonomy.abbrToCountry(response.aggregations.countries[i].key);
+  const countries = [];
+  for (const country of response.aggregations.countries) {
+    countries.push({ key: taxonomy.abbrToCountry(country.key) });
   }
-  return response;
+  return assign(
+    {}, response, {
+      aggregations: assign({}, response.aggregations, { countries })
+    }
+  );
 }
 
 function endpoint(path) {
@@ -24,7 +29,7 @@ function endpoint(path) {
   return `https://api.trade.gov/${path}/search?api_key=${tradeAPIKey}`;
 }
 
-function defineTradeAPI(key, attributes={}) {
+function defineTradeAPI(key, attributes = {}) {
   const tradeAPI = {
     aggregations: {
       countries: { type: 'array' },
@@ -40,7 +45,6 @@ function defineTradeAPI(key, attributes={}) {
   return defineAPI(key, assign({}, tradeAPI, attributes));
 }
 
-const disabled = true;
 const deckable = true;
 
 module.exports = assign(

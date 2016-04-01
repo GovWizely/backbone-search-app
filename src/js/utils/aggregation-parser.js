@@ -1,25 +1,15 @@
-import _ from 'lodash';
+import { map, reduce, set } from 'lodash';
 
 export function parseAsTree(records) {
-  var results = {};
-  var subdivide = function (array, items) {
-    var key = array.shift();
-    items[key] = items[key] || {};
-
-    if (array.length) { return subdivide(array, items[key]); }
-
-    return items;
-  };
-  _.each(records, function (record) {
-    var array = record.key.substring(1).split('/');
-    subdivide(array, results);
-  });
-  return results;
+  return reduce(records, (output, record) => {
+    const path = record.key.substring(1).replace(/\//g, '.');
+    return set(output, path, {});
+  }, {});
 }
 
 export function parse(records) {
-  return _.map(records, function (record) {
-    var array = record.key.substring(1).split('/');
+  return map(records, (record) => {
+    const array = record.key.substring(1).split('/');
     return { key: array[array.length - 1], doc_count: record.doc_count };
   });
 }

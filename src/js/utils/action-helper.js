@@ -1,4 +1,4 @@
-import { get, reduce } from 'lodash';
+import { get, pick, reduce } from 'lodash';
 import assign from 'object-assign';
 import Url from 'url';
 import { parseAsTree } from '../utils/aggregation-parser';
@@ -27,16 +27,16 @@ export function formatAggregations(aggregations, formats) {
 }
 
 export function formatMetadata(json, formats) {
-  let metadata = {};
-  for (let field of formats) {
-    metadata[field] = get(json, field);
-  }
-  return metadata;
+  return reduce(
+    formats,
+    (output, format) => assign({}, output, { [format]: json[format] }),
+    {}
+  );
 }
 
 export function formatParams(query, permittedParams) {
-  let params = _.pick(query, permittedParams);
-  for (let key in params) {
+  const params = pick(query, permittedParams);
+  for (const key in params) {
     if (Array.isArray(params[key])) params[key] = params[key].join(',');
   }
   return params;

@@ -1,4 +1,4 @@
-import { find, intersection, isEmpty, keys, pickBy, reduce } from 'lodash';
+import { isEmpty, reduce } from 'lodash';
 import React, { PropTypes } from 'react';
 
 import Deck from './deck';
@@ -6,9 +6,9 @@ import Result from './result';
 import NoResult from './no_result';
 import Spinner from '../../components/spinner';
 
-function verticalAlignMiddle(component, height=400) {
+function verticalAlignMiddle(component, height = 400) {
   return (
-    <div className="uk-vertical-align" style={ { height: height }}>
+    <div className="uk-vertical-align" style={ { height }}>
       <div className="uk-vertical-align-middle" style={ { width: '100%' } }>
         { component }
       </div>
@@ -20,47 +20,49 @@ function contentType(props) {
   const { results, selectedAPIs } = props;
 
   // wait for all the responses to be returned before showing any result.
-  for (let selectedAPI of selectedAPIs) {
-    if (results[selectedAPI.uniqueId].isFetching) return 'loading';
+  for (const { uniqueId } of selectedAPIs) {
+    if (results[uniqueId].isFetching) return { type: 'loading' };
   }
 
-  // no result if no results is not empty.
-  if (!reduce(selectedAPIs, (output, selectedAPI) => {
-    return output || !isEmpty(results[selectedAPI.uniqueId].items);
-  }, false)) return 'noResult';
+  const matchedAPIs = reduce(selectedAPIs, (output, selectedAPI) => {
+    const matched = !isEmpty(results[selectedAPI.uniqueId].items);
+    return matched ? output.concat(selectedAPI) : output;
+  }, []);
 
-  if (selectedAPIs.length > 1 &&
-      reduce(selectedAPIs, (output, selectedAPI) => {
-        if (!isEmpty(results[selectedAPI.uniqueId].items)) output += 1;
-        return output;
-      }, 0) > 1) return 'deck';
+  if (matchedAPIs.length === 0) return { type: 'noResult' };
 
-  return 'result';
+  if (selectedAPIs.length > 1 && matchedAPIs.length > 0) {
+    return { type: 'deck', matchedAPIs };
+  }
+
+  return { type: 'result', matchedAPIs };
 }
 
-var Content = (props) => {
-  const { findTemplate, onPaging, onSelect, query, results, selectedAPIs, window } = props;
-
+const Content = ({ findTemplate, onPaging, onSelect, query, results, selectedAPIs, window }) => {
   let content = null;
-  switch(contentType(props)) {
+  const { type, matchedAPIs } = contentType({ results, selectedAPIs });
+  switch (type) {
   case 'deck':
     content = (
-      <Deck apis={ selectedAPIs } findTemplate={ findTemplate } onClick={ onSelect } results={ results } />
+      <Deck
+        apis={ matchedAPIs }
+        findTemplate={ findTemplate }
+        onClick={ onSelect }
+        results={ results }
+      />
     );
     break;
 
   case 'result':
-    const uniqueId = keys(pickBy(results, (result) => !isEmpty(result.items)))[0];
-    const result = results[uniqueId];
-    const selectedAPI = find(selectedAPIs, (api) => api.uniqueId === uniqueId);
     content = (
       <Result
-         api={ selectedAPI }
-         findTemplate={ findTemplate }
-         onPaging={ onPaging }
-         query={ query }
-         result={ result }
-         window={ window } />
+        api={ matchedAPIs[0] }
+        findTemplate={ findTemplate }
+        onPaging={ onPaging }
+        query={ query }
+        result={ results[matchedAPIs[0].uniqueId] }
+        window={ window }
+      />
     );
     break;
 
@@ -70,7 +72,7 @@ var Content = (props) => {
 
   case 'noResult':
   default:
-    content = <NoResult keyword={ query.q } />;
+    content = <NoResult />;
     break;
   }
 

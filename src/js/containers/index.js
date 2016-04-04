@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Form from '../components/form';
 import { selectAPIs } from '../actions/api';
 
-
 class Index extends React.Component {
   componentDidMount() {
     const { dispatch, defaultAPIs } = this.props;

@@ -64,13 +64,6 @@ html {
   }
 }
 
-#mi-left-pane + #mi-content-pane,
-#mi-bucket-list-container {
-  @media screen and (min-width: $breakpoint-medium) {
-    margin-left: 300px;
-  }
-}
-
 .mi-result {
   margin-bottom: 50px;
 }

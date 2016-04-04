@@ -1,26 +1,28 @@
 import { compact, map } from 'lodash';
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Card from '../../components/card';
 
-var Deck = ({ apis, findTemplate, onClick, results, visible }) => {
+const Deck = ({ apis, findTemplate, onClick, results }) => {
   const cards = compact(map(apis, (api) => {
-    const { displayName, fields, pathname, uniqueId } = api;
+    const { displayName, uniqueId } = api;
     if (!results[uniqueId]) return null;
 
     const { isFetching, items } = results[uniqueId];
     if (!isFetching && !items.length) return null;
 
     const template = findTemplate(uniqueId).CardItem;
+    const _onClick = onClick.bind(undefined, api);
     return (
       <Card
-         id={ uniqueId }
-         isFetching={ isFetching }
-         items={ items }
-         key={ uniqueId }
-         label={ displayName }
-         template={ template }
-         onClick={ onClick.bind(undefined, api) } />
+        id={ uniqueId }
+        isFetching={ isFetching }
+        items={ items }
+        key={ uniqueId }
+        label={ displayName }
+        template={ template }
+        onClick={ _onClick }
+      />
     );
   }));
 
@@ -31,6 +33,13 @@ var Deck = ({ apis, findTemplate, onClick, results, visible }) => {
       </div>
     </div>
   );
+};
+
+Deck.propTypes = {
+  apis: PropTypes.object.isRequired,
+  findTemplate: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  results: PropTypes.object.isRequired
 };
 
 export default Deck;

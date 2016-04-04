@@ -45,7 +45,7 @@ class Index extends React.Component {
           </div>
         </div>
 
-        <div id="mi-bucket-list-container">
+        <div className="mi-search__bucket-list-container">
           <BucketList apis={ defaultAPIs } onClick={ onBucket } selectedAPIs={ selectedAPIs } />
         </div>
 

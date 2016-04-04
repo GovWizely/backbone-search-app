@@ -1,5 +1,7 @@
 require('./styles/index.scss');
 
+import assign from 'object-assign';
+import { reduce } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -7,7 +9,7 @@ import { findTemplate } from '../../templates';
 import {
   invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../../actions/query_expansion';
 import { fetchResults } from '../../actions/result';
-import { invalidateSiblingFilters, invalidateAllFilters } from '../../actions/filter';
+import { invalidateAllFilters } from '../../actions/filter';
 import { selectAPIs } from '../../actions/api';
 import { updatePath } from '../../actions/path';
 import { clearFiltering, updateFiltering, updateQuery, replaceQuery } from '../../actions/query';
@@ -19,37 +21,18 @@ import Content from './content';
 import Filter from './filter';
 import Form from './form';
 import QueryExpansionList from './query_expansion_list';
-import Result from './result';
 
-var Index = React.createClass({
-  displayName: 'Search',
-  propTypes: {
-    availableAPIs: PropTypes.object.isRequired,
-    defaultAPIs: PropTypes.array.isRequired,
-    filters: PropTypes.object,
-    location: PropTypes.object,
-    notifications: PropTypes.object,
-    onBucket: PropTypes.func.isRequired,
-    onClearFilter: PropTypes.func.isRequired,
-    onExpand: PropTypes.func.isRequired,
-    onFilter: PropTypes.func.isRequired,
-    onLoaded: PropTypes.func.isRequired,
-    onPaging: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    query: PropTypes.object,
-    queryExpansions: PropTypes.object,
-    results: PropTypes.object,
-    selectedAPIs: PropTypes.array.isRequired,
-    window: PropTypes.object
-  },
-  componentDidMount: function() {
+class Index extends React.Component {
+  componentDidMount() {
     const { location, params, onLoaded } = this.props;
     onLoaded({ apiName: params.api, query: location.query });
-  },
-  render: function() {
-    const { defaultAPIs, filters, onBucket, onClearFilter, onExpand, onFilter, onSelect, onSubmit, notifications, query, queryExpansions, results, selectedAPIs } = this.props;
+  }
+  render() {
+    const {
+      defaultAPIs, filters,
+      onBucket, onClearFilter, onExpand, onFilter, onPaging, onSelect, onSubmit,
+      notifications, query, queryExpansions, results, selectedAPIs
+    } = this.props;
     return (
       <div id="search" className="mi-search">
 
@@ -67,28 +50,58 @@ var Index = React.createClass({
         </div>
 
         <div className="mi-search__main-container">
-          <Filter filters={ filters } onChange={ onFilter } onClear={ onClearFilter } query={ query } />
-          <Content { ...this.props } />
+          <Filter
+            filters={ filters }
+            onChange={ onFilter } onClear={ onClearFilter }
+            query={ query }
+          />
+          <Content
+            findTemplate={ findTemplate }
+            onPaging={ onPaging } onSelect={ onSelect }
+            query={ query } results={ results } selectedAPIs={ selectedAPIs }
+            window={ window }
+          />
         </div>
       </div>
     );
   }
-});
+}
+
+Index.propTypes = {
+  availableAPIs: PropTypes.object.isRequired,
+  defaultAPIs: PropTypes.array.isRequired,
+  filters: PropTypes.object,
+  location: PropTypes.object,
+  notifications: PropTypes.object,
+  onBucket: PropTypes.func.isRequired,
+  onClearFilter: PropTypes.func.isRequired,
+  onExpand: PropTypes.func.isRequired,
+  onFilter: PropTypes.func.isRequired,
+  onLoaded: PropTypes.func.isRequired,
+  onPaging: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired,
+  query: PropTypes.object,
+  queryExpansions: PropTypes.object,
+  results: PropTypes.object,
+  selectedAPIs: PropTypes.array.isRequired,
+  window: PropTypes.object
+};
 
 function mapStateToProps(state) {
   const { filtersByAggregation, queryExpansions, resultsByAPI, selectedAPIs, window } = state;
-  let results = {};
-  for (let { uniqueId } of selectedAPIs) {
-    results[uniqueId] = resultsByAPI[uniqueId] || {
-      aggregations: {},
-      invalidated: false,
-      isFetching: true,
-      items: [],
-      metadata: {}
-    };
-  }
+
+  const results = reduce(
+    selectedAPIs, (output, { uniqueId }) =>
+      assign(output, {
+        [uniqueId]: resultsByAPI[uniqueId] || {
+          aggregations: {}, items: [], metadata: {}, invalidated: false, isFetching: true
+        }
+      }), {});
+
   return {
-    filters : filtersByAggregation,
+    filters: filtersByAggregation,
     findTemplate,
     queryExpansions,
     results,
@@ -127,7 +140,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updatePath());
     },
     onLoaded: ({ apiName, query }) => {
-      let apis = availableAPIs[apiName] ? availableAPIs[apiName] : defaultAPIs;
+      const apis = availableAPIs[apiName] ? availableAPIs[apiName] : defaultAPIs;
       dispatch(replaceQuery(query));
       dispatch(selectAPIs(apis));
 

@@ -2,7 +2,7 @@ require('./styles/trade_leads.scss');
 
 import React from 'react';
 
-const href = (id => `https://success.export.gov/tradelead?id=${id}`);
+const href = (id) => `https://success.export.gov/tradelead?id=${id}`;
 
 export const trade_leads = {
   ResultItem: ({ id, title, description, url }) => {

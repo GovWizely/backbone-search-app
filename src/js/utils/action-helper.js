@@ -1,12 +1,14 @@
-import { get, pick, reduce } from 'lodash';
+import { pick, reduce } from 'lodash';
 import assign from 'object-assign';
 import Url from 'url';
 import { parseAsTree } from '../utils/aggregation-parser';
 
 function reduceArray(array) {
-  return reduce(array, (output, element) => {
-    return assign({}, output, { [element.key]: {} });
-  }, {});
+  return reduce(
+    array,
+    (output, element) => assign({}, output, { [element.key]: {} }),
+    {}
+  );
 }
 
 export function formatAggregations(aggregations, formats) {

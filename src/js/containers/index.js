@@ -5,28 +5,23 @@ import Form from '../components/form';
 import { selectAPIs } from '../actions/api';
 
 
-const Index = React.createClass({
-  displayName: 'Index',
-  propTypes: {
-    defaultAPIs: PropTypes.array.isRequired,
-    dispatch: PropTypes.func,
-    onSubmit: PropTypes.func
-  },
-  componentDidMount: function() {
+class Index extends React.Component {
+  componentDidMount() {
     const { dispatch, defaultAPIs } = this.props;
     dispatch(selectAPIs(defaultAPIs));
-  },
-  render: function() {
-    const props = {
-      focused: true,
-      onSubmit: this.props.onSubmit
-    };
+  }
+  render() {
     return (
       <div id="mi-index">
-        <Form {...props} />
+        <Form focused onSubmit={ this.props.onSubmit } />
       </div>
     );
   }
-});
+}
+Index.propTypes = {
+  defaultAPIs: PropTypes.array.isRequired,
+  dispatch: PropTypes.func,
+  onSubmit: PropTypes.func
+};
 
 export default connect()(Index);

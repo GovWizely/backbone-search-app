@@ -29,6 +29,4 @@ function createSpinner(type) {
 }
 const CircleSpinner = createSpinner(Circle);
 
-export {
-  CircleSpinner
-};
+export default CircleSpinner;

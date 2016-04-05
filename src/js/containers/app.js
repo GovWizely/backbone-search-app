@@ -11,7 +11,7 @@ import { updateWindow } from '../actions/window';
 import { invalidateAllFilters } from '../actions/filter';
 import apis from '../apis';
 
-class App extends React.component {
+class App extends React.Component {
   componentWillMount() {
     this.props.onResize({ currentTarget: window });
   }

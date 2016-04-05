@@ -36,7 +36,7 @@ const Deck = ({ apis, findTemplate, onClick, results }) => {
 };
 
 Deck.propTypes = {
-  apis: PropTypes.object.isRequired,
+  apis: PropTypes.array.isRequired,
   findTemplate: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   results: PropTypes.object.isRequired

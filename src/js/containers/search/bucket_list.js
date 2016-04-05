@@ -23,7 +23,7 @@ class Bucket extends React.Component {
 }
 
 Bucket.propTypes = {
-  apis: PropTypes.object.isRequired,
+  apis: PropTypes.any.isRequired,
   isActive: PropTypes.bool,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
@@ -34,6 +34,7 @@ const BucketList = ({ apis, onClick, selectedAPIs }) => {
     const isActive = selectedAPIs.length === 1 && selectedAPIs[0].uniqueId === api.uniqueId;
     return (
       <Bucket
+        key={ api.uniqueId }
         apis={ api }
         isActive={ isActive }
         label={ api.shortName || api.displayName }
@@ -41,7 +42,7 @@ const BucketList = ({ apis, onClick, selectedAPIs }) => {
       />
     );
   });
-  buckets.unshift(<Bucket apis={ apis } label={ 'All' } onClick={ onClick } />);
+  buckets.unshift(<Bucket key="All" apis={ apis } label={ 'All' } onClick={ onClick } />);
 
   return (
     <ul className="mi-bucket-list">
@@ -51,7 +52,7 @@ const BucketList = ({ apis, onClick, selectedAPIs }) => {
 };
 
 BucketList.propTypes = {
-  apis: PropTypes.object.isRequired,
+  apis: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
   selectedAPIs: PropTypes.array.isRequired
 };

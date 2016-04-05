@@ -3,13 +3,13 @@ require('./styles/notification.scss');
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 
-var Notification = ({ notifications, onClick }) => {
+const Notification = ({ notifications }) => {
   if (Object.keys(notifications).length === 0) {
     return <span style={ { display: 'none' } }></span>;
   }
 
   const items = _.map(notifications, (notification, api) => {
-    const css = notification.type == 'error' ? 'mi-error' : 'mi-info';
+    const css = notification.type === 'error' ? 'mi-error' : 'mi-info';
     return <li className={ css } key={ api }>{ api } { notification.payload.message }</li>;
   });
   return (
@@ -24,10 +24,8 @@ var Notification = ({ notifications, onClick }) => {
 };
 
 Notification.propTypes = {
+  notifications: PropTypes.object,
   onClick: PropTypes.func
-};
-
-Notification.defaultProps = {
 };
 
 export default Notification;

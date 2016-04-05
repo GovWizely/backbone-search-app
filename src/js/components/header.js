@@ -2,14 +2,12 @@ require('./styles/header.scss');
 
 import React from 'react';
 
-var Header = () => {
-  return (
-    <header className="mi-header">
-      <a href="#">
-        Market Intelligence Search <span className="mi-header-version">beta</span>
-      </a>
-    </header>
-  );
-};
+const Header = () => (
+  <header className="mi-header">
+    <a href="#">
+      Market Intelligence Search <span className="mi-header--version">beta</span>
+    </a>
+  </header>
+);
 
 export default Header;

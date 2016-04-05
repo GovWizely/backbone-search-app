@@ -8,6 +8,7 @@
 .mi-search__form-container {
   background-color: #f1f1f1;
   border-bottom: 1px solid #E5E5E5;
+  padding-top: 24px;
 }
 
 .mi-search__query-expansion-list-container {
@@ -38,5 +39,36 @@
 .mi-search__bucket-list-container {
   @media screen and (min-width: $breakpoint-medium) {
     margin-left: 300px;
+  }
+}
+
+.mi-search__form-container {
+  .mi-form {
+    max-width: 640px;
+  }
+
+  @media screen and (min-width: $breakpoint-medium) {
+    .mi-form {
+      margin-left: 294px;
+    }
+
+    .mi-form__input {
+      font-size: 13px;
+      height: 34px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 4px 6px;
+    }
+
+    .mi-form__submit {
+      width: 34px;
+    }
+
+    .mi-form__submit__button {
+      font-size: 14px;
+      height: 34px;
+      line-height: 1.5;
+      padding: 0 12px;
+    }
   }
 }

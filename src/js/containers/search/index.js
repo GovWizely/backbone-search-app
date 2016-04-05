@@ -113,8 +113,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch, ownProps) {
   const { availableAPIs, defaultAPIs } = ownProps;
   return {
-    onBucket: (apis, e) => {
-      e.preventDefault();
+    onBucket: (apis) => {
       dispatch(selectAPIs(apis));
       dispatch(invalidateAllFilters());
       dispatch(fetchResults());

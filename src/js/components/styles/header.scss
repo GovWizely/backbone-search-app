@@ -11,7 +11,7 @@
     text-decoration: none;
   }
 
-  .mi-header-version {
+  .mi-header--version {
     color: $blue-color;
     font-size: 13px;
     font-weight: 700;
@@ -26,35 +26,5 @@
     margin-bottom: 0;
     white-space: nowrap;
     width: inherit;
-  }
-}
-
-.mi-form-expanded {
-  .mi-header {
-    text-align: center;
-    font-weight: 700;
-    line-height: 50px;
-    vertical-align:middle;
-    padding-bottom: 36px;
-    font-size: 22px;
-
-    @media screen and (min-width: $breakpoint-medium) {
-      font-size: 45px;
-    }
-  }
-
-  .mi-header-version {
-    font-size: 13px;
-
-    @media screen and (min-width: $breakpoint-medium) {
-      font-size: 20px;
-    }
-  }
-
-}
-
-.mi-form-condensed {
-  .mi-header {
-    display: none;
   }
 }

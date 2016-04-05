@@ -36,31 +36,36 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
 
   return (
     <div className="mi-content">
-      <ResultList displayedItems={ displayedItems } items={ items } template={ template } options={ options } />
+      <ResultList
+        displayedItems={ displayedItems }
+        items={ items }
+        template={ template }
+        options={ options }
+      />
     </div>
   );
 }
 
-var Card = ({ isFetching, displayedItems, items, label, onClick, template, url }) => {
-  return (
-    <section className="mi-card">
-      <header className="title" title={ label }>{ label }</header>
+const Card = ({ isFetching, displayedItems, items, label, onClick, template, url }) => (
+  <section className="mi-card">
+    <header className="title" title={ label }>{ label }</header>
 
-      { view({ isFetching, displayedItems, items, label, template, url }) }
+    { view({ isFetching, displayedItems, items, label, template, url }) }
 
-      <footer>
-        <a onClick={ onClick }>See More { label }</a>
-      </footer>
-    </section>
-  );
-};
+    <footer>
+      <a onClick={ onClick }>See More { label }</a>
+    </footer>
+  </section>
+);
 
 Card.propTypes = {
   displayedItems: PropTypes.number,
   isFetching: PropTypes.bool,
   items: PropTypes.array.isRequired,
   label: PropTypes.string,
-  template: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  template: PropTypes.func.isRequired,
+  url: PropTypes.string.isRequired
 };
 
 Card.defaultProps = {

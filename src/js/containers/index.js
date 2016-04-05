@@ -1,7 +1,10 @@
+require('./index.scss');
+
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Form from '../components/form';
+import Header from '../components/header';
 import { selectAPIs } from '../actions/api';
 
 class Index extends React.Component {
@@ -11,8 +14,13 @@ class Index extends React.Component {
   }
   render() {
     return (
-      <div id="mi-index">
-        <Form focused onSubmit={ this.props.onSubmit } />
+      <div className="mi-index">
+        <div className="mi-index__header-container">
+          <Header />
+        </div>
+        <div className="mi-index__form-container">
+          <Form focused onSubmit={ this.props.onSubmit } />
+        </div>
       </div>
     );
   }

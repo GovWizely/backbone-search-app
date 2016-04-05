@@ -8,7 +8,8 @@ class Bucket extends React.Component {
     super();
     this._onClick = this._onClick.bind(this);
   }
-  _onClick() {
+  _onClick(e) {
+    e.preventDefault();
     const { onClick, apis } = this.props;
     onClick(apis);
   }

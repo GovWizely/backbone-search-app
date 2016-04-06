@@ -7,7 +7,7 @@ const Form = ({ fields, focused, handleSubmit }) => {
   return (
     <form className="mi-form" onSubmit={ handleSubmit }>
       <input
-        className="mi-form__input"
+        className="mi-form__field"
         autoFocus={ focused }
         type="text"
         placeholder="Keyword"

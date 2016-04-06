@@ -73,8 +73,7 @@ Card.propTypes = {
   items: PropTypes.array.isRequired,
   label: PropTypes.string,
   onClick: PropTypes.func.isRequired,
-  template: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired
+  template: PropTypes.func.isRequired
 };
 
 Card.defaultProps = {

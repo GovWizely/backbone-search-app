@@ -1,8 +1,8 @@
 require('./styles/spinner.scss');
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-const Circle = (
+const Circle = () => (
   <div className="sk-circle">
     <div className="sk-circle1 sk-child"></div>
     <div className="sk-circle2 sk-child"></div>
@@ -19,14 +19,19 @@ const Circle = (
   </div>
 );
 
-function createSpinner(type) {
-  return ({ message = 'Loading...' }) => (
-    <div className="mi-spinner">
-      { type }
-      <div style={ { color: '#666', textAlign: 'center' } }>{ message }</div>
-    </div>
-  );
-}
-const CircleSpinner = createSpinner(Circle);
+const Spinner = ({ children, message }) => (
+  <div className="mi-spinner">
+    { children }
+    <div style={ { color: '#666', textAlign: 'center' } }>{ message }</div>
+  </div>
+);
+Spinner.propTypes = {
+  children: PropTypes.func,
+  message: PropTypes.string
+};
+Spinner.defaultProps = {
+  message: 'Loading...'
+};
 
+const CircleSpinner = () => <Spinner><Circle /></Spinner>;
 export default CircleSpinner;

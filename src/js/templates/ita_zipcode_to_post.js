@@ -1,4 +1,4 @@
-require('./styles/ita_zipcode_to_post.scss');
+//require('./styles/ita_zipcode_to_post.scss');
 
 import React from 'react';
 

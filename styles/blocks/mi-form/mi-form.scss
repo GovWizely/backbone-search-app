@@ -1,0 +1,57 @@
+@import "../../mixins";
+
+.mi-form {
+  border-collapse: collapse;
+  display: table;
+  font-size: 16px;
+  margin: 0 auto;
+  width: 96%;
+  max-width: 640px;
+
+  @include desktop {
+    margin: 0;
+  }
+
+  &__field {
+    border: 1px solid #ccc;
+    border-radius: $border-radius;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-sizing: border-box;
+    color: #444;
+    display: table-cell;
+    float: left;
+    font-size: 18px;
+    height: 46px;
+    line-height: 1.5;
+    padding: 10px 16px;
+    width: 100%;
+    vertical-align: top;
+
+    &:focus {
+      border-color: #99baca;
+      outline: 0;
+      background: #f5fbfe;
+      color: #444;
+    }
+  }
+
+  &__submit {
+    display: table-cell;
+    margin: 0;
+    vertical-align: middle;
+    width: 48px;
+
+    button {
+      background-color: $blue-color;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      color: #FFF;
+      font-size: 18px;
+      height: 46px;
+      line-height: 46px;
+      margin-left: -1px;
+      padding: 0 16px;
+    }
+  }
+}

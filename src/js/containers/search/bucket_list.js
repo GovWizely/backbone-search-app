@@ -1,5 +1,3 @@
-require('./styles/bucket_list.scss');
-
 import { map } from 'lodash';
 import React, { PropTypes } from 'react';
 
@@ -15,8 +13,11 @@ class Bucket extends React.Component {
   }
   render() {
     const { isActive, label } = this.props;
+    const className = isActive ?
+      'mi-bucket-list__item mi-bucket-list__item--active' :
+      'mi-bucket-list__item';
     return (
-      <li className={ isActive ? 'active' : '' }>
+      <li className={ className }>
         <a onClick={ this._onClick }>{ label }</a>
       </li>
     );

@@ -1,4 +1,4 @@
-require('./styles/business_service_providers.scss');
+//require('./styles/business_service_providers.scss');
 
 import React from 'react';
 

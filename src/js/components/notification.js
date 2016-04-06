@@ -1,5 +1,3 @@
-require('./styles/notification.scss');
-
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 

@@ -1,4 +1,4 @@
-require('./styles/ita_taxonomies.scss');
+//require('./styles/ita_taxonomies.scss');
 
 import React from 'react';
 

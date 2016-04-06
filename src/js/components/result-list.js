@@ -1,5 +1,3 @@
-require('./styles/result_list.scss');
-
 import React, { PropTypes } from 'react';
 
 const ResultList = ({ displayedItems, items, template, options }) => {

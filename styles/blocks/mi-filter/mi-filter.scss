@@ -1,0 +1,15 @@
+.mi-filter {
+  &__header {
+    font-size: 15px;
+    margin-bottom: 5px;
+
+    &__link {
+      font-size: 12px;
+    }
+  }
+
+  .mi-checkbox-tree {
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 12px;
+  }
+}

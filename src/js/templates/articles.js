@@ -1,5 +1,3 @@
-require('./styles/articles.scss');
-
 import React from 'react';
 
 export const articles = {

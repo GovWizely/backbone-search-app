@@ -1,4 +1,4 @@
-require('./styles/templates.scss');
+//require('./styles/templates.scss');
 
 import assign from 'object-assign';
 

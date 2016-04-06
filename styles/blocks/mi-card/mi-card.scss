@@ -1,4 +1,4 @@
-$breapoint-medium: 768px;
+@import "../../mixins";
 
 .mi-card {
   display: block;
@@ -7,14 +7,14 @@ $breapoint-medium: 768px;
   position: relative;
   width: 100%;
 
-  @media screen and (min-width: $breakpoint-medium) {
+  @include desktop {
     margin: 14px 0 16px 14px;
     min-width: 414px;
     max-width: 460px;
     width: 44%;
   }
 
-  >header {
+  &__header {
     background-color: #5377af;
     color: #FFF;
     font-size: 16px;
@@ -23,7 +23,7 @@ $breapoint-medium: 768px;
     text-align: center;
   }
 
-  >footer {
+  &__footer {
     background-color: #FFF;
     font-size: 14px;
     font-weight: 900;
@@ -33,7 +33,7 @@ $breapoint-medium: 768px;
     border-top: none;
   }
 
- >.mi-content {
+  &__content {
     border: 1px solid #eee;
     border-top: none;
     border-bottom: none;
@@ -41,12 +41,12 @@ $breapoint-medium: 768px;
     padding-top: 12px;
     z-index: 1001;
 
-    @media screen and (min-width: $breakpoint-medium) {
+    @include desktop {
       padding: 12px;
     }
   }
 
-  .no-match {
+  &__no-match {
     color: #444;
     width: 100%;
     text-align: center;
@@ -56,8 +56,5 @@ $breapoint-medium: 768px;
     i {
       font-size: 48px;
     }
-  }
-  p {
-    margin: 0;
   }
 }

@@ -1,5 +1,3 @@
-require('./styles/index.scss');
-
 import assign from 'object-assign';
 import { reduce } from 'lodash';
 import React, { PropTypes } from 'react';

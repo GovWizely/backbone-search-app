@@ -1,5 +1,3 @@
-require('./styles/pagination.scss');
-
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
 

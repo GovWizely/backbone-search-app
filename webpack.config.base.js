@@ -1,5 +1,5 @@
 var path = require('path');
-var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -15,18 +15,15 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel',
       include: path.join(__dirname, 'src')
-    },{
-      test: /\.css$/,
-      loaders: ['style', 'css']
-    },{
-      test: /\.scss$/,
-      loaders: ['style', 'css', 'sass']
-    },{
+    }, {
       test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: 'file'
-    },{
+    }, {
       test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: 'url?limit=10000&minetype=application/font-woff'
+    }, {
+      test: /\.scss$/i,
+      loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
     }]
   }
 };

@@ -1,4 +1,4 @@
-require('./styles/trade_leads.scss');
+//require('./styles/trade_leads.scss');
 
 import React from 'react';
 

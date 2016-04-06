@@ -1,4 +1,4 @@
-require('./styles/ita_faqs.scss');
+//require('./styles/ita_faqs.scss');
 
 import React from 'react';
 

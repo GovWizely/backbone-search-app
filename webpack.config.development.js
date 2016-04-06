@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var assign = require('object-assign');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var base = require('./webpack.config.base');
 
@@ -17,6 +18,7 @@ module.exports = assign({}, base, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new ExtractTextPlugin('app.css'),
     new HtmlWebpackPlugin({ template: base.index }),
     definePlugin
   ]

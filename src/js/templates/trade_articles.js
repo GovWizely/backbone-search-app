@@ -1,4 +1,4 @@
-require('./styles/trade_articles.scss');
+//require('./styles/trade_articles.scss');
 
 import React from 'react';
 

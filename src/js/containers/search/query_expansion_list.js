@@ -1,5 +1,3 @@
-require('./styles/query_expansion_list.scss');
-
 import { isEmpty, keys, map } from 'lodash';
 import React, { PropTypes } from 'react';
 

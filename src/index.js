@@ -1,5 +1,4 @@
-require('./scss/style.scss');
-require('./scss/animate.min.css');
+require('../styles/app.scss');
 require('babel-polyfill');
 require('es6-promise').polyfill();
 

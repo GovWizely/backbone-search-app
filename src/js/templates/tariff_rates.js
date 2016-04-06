@@ -1,4 +1,4 @@
-require('./styles/tariff_rates.scss');
+//require('./styles/tariff_rates.scss');
 
 import React from 'react';
 

@@ -1,4 +1,4 @@
-require('./styles/market_research_library.scss');
+//require('./styles/market_research_library.scss');
 
 import React from 'react';
 

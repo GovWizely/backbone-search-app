@@ -1,0 +1,78 @@
+@import "../../mixins";
+
+.mi-search {
+  &__bucket-list-container {
+    @include desktop {
+      margin-left: 300px;
+    }
+  }
+
+  &__deck-container {
+    @include desktop {
+      border-right: 1px solid $border-color;
+      display: block;
+      float: left;
+      position: relative;
+      width: 267px;
+    }
+  }
+
+  &__filter-container + &__content-container {
+    @include desktop {
+      margin-left: 300px;
+    }
+  }
+
+  &__form-container {
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #E5E5E5;
+    padding-top: 24px;
+
+    .mi-form {
+      max-width: 640px;
+
+      @include desktop {
+        margin-left: 294px;
+
+        &__field {
+          font-size: 13px;
+          height: 34px;
+          line-height: 1.5;
+          margin: 0;
+          padding: 4px 6px;
+        }
+
+        &__submit {
+          width: 34px;
+
+        }
+
+        &__submit__button {
+          font-size: 14px;
+          height: 34px;
+          line-height: 1.5;
+          padding: 0 12px;
+        }
+      }
+    }
+  }
+
+  &__main-container {
+    border-top: 1px solid $border-color;
+    padding-top: 20px;
+    margin: 0 auto;
+    width: 96%;
+
+    @include desktop {
+      margin-left: 27px;
+    }
+  }
+
+  &__query-expansion-list-container {
+    min-height: 40px;
+
+    @include desktop {
+      margin-left: 300px;
+    }
+  }
+}

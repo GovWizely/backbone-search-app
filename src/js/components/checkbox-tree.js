@@ -1,5 +1,3 @@
-require('./styles/checkbox_tree.scss');
-
 import {
   concat, difference, includes, isEmpty,
   keys, map, pick, pull, pullAll, reduce, take, uniq

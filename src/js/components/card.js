@@ -1,12 +1,10 @@
-require('./styles/card.scss');
-
 import React, { PropTypes } from 'react';
 import ResultList from './result-list';
 import Spinner from './spinner';
 
 function noMatch(label) {
   return (
-    <div className="no-match">
+    <div className="mi-card__no-match">
       <i className="mi-icon mi-icon-warning"></i>
       <br />
       No matching result found for
@@ -19,7 +17,7 @@ function noMatch(label) {
 function verticalAlignMiddle(component) {
   const style = { width: '100%' };
   return (
-    <div className="mi-content uk-vertical-align">
+    <div className="mi-card__content uk-vertical-align">
       <div className="uk-vertical-align-middle" style={ style }>
         { component }
       </div>

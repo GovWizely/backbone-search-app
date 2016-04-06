@@ -122,11 +122,16 @@ class CheckboxTree extends React.Component {
     const hrefCSS = visible ? 'mi-icon mi-icon-angle-down' : 'mi-icon mi-icon-angle-right';
 
     const view = visible ? (
-      <div name={ name }>{ list(visibleItems, options) } { this.showAllLink() }</div>
+      <div>{ list(visibleItems, options) } { this.showAllLink() }</div>
     ) : null;
 
     return (
-      <section className="mi-checkbox-tree" data-name={ name } data-disabled={ disabled } onClick={ this.handleClick }>
+      <section
+        className="mi-checkbox-tree"
+        data-name={ name }
+        data-disabled={ disabled }
+        onClick={ this.handleClick }
+      >
         <fieldset>
           <legend>
             <a role="button" onClick={ this.toggleVisibility } href="#">
@@ -164,6 +169,5 @@ CheckboxTree.defaultProps = {
   maxHeight: 180,
   nested: false
 };
-
 
 export default CheckboxTree;

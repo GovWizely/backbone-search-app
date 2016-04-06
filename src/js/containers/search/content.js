@@ -31,9 +31,7 @@ function contentType(props) {
 
   if (matchedAPIs.length === 0) return { type: 'noResult' };
 
-  if (selectedAPIs.length > 1 && matchedAPIs.length > 0) {
-    return { type: 'deck', matchedAPIs };
-  }
+  if (selectedAPIs.length > 1 && matchedAPIs.length > 1) return { type: 'deck', matchedAPIs };
 
   return { type: 'result', matchedAPIs };
 }

@@ -43,7 +43,15 @@ const BucketList = ({ apis, onClick, selectedAPIs }) => {
       />
     );
   });
-  buckets.unshift(<Bucket key="All" apis={ apis } label={ 'All' } onClick={ onClick } />);
+  buckets.unshift(
+    <Bucket
+      key="All"
+      apis={ apis }
+      isActive={ selectedAPIs.length > 1 }
+      label={ 'All' }
+      onClick={ onClick }
+    />
+  );
 
   return (
     <ul className="mi-bucket-list">

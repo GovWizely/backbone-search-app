@@ -97,6 +97,20 @@ class CheckboxTree extends React.Component {
     this.setState({ showAll: !this.state.showAll });
   }
 
+  showAllLink() {
+    const { showAll } = this.state;
+    const { itemLimit, items } = this.props;
+    const showAllText = showAll ? 'Less' : 'More';
+
+    if (keys(items).length <= itemLimit) return null;
+
+    return (
+      <a href="#" onClick={ this.toggleShowAll } className="see-more">
+        + See { showAllText }
+      </a>
+    );
+  }
+
   render() {
     if (isEmpty(this.props.items)) return null;
 
@@ -106,11 +120,9 @@ class CheckboxTree extends React.Component {
     const options = assign({}, this.props, { values });
 
     const hrefCSS = visible ? 'mi-icon mi-icon-angle-down' : 'mi-icon mi-icon-angle-right';
-    const showAllText = showAll ? 'Less' : 'More';
-    const showAllLink = keys(items).length > itemLimit ? <a href="#" onClick={ this.toggleShowAll } className="see-more">+ See { showAllText }</a> : null;
 
     const view = visible ? (
-      <div name={ name }>{ list(visibleItems, options) } { showAllLink }</div>
+      <div name={ name }>{ list(visibleItems, options) } { this.showAllLink() }</div>
     ) : null;
 
     return (

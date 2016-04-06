@@ -2,35 +2,57 @@ require('./styles/checkbox_tree.scss');
 
 import {
   concat, difference, includes, isEmpty,
-  keys, pick, pull, pullAll, reduce, take, uniq
+  keys, map, pick, pull, pullAll, reduce, take, uniq
 } from 'lodash';
 import React, { PropTypes } from 'react';
-import assign from 'object-assign';
 
-function checkbox(item, options) {
-  let checked = includes(options.values, item);
-  return (
-    <li role="treeitem" className="list-item" key={ item }>
-      <label htmlFor={ item }>
-        <input id={ item }
-          type="checkbox" value={ item } readOnly disabled={ options.disabled }
-          checked={ checked } aria-checked={ checked }
-        />
-        <span>&nbsp; { item }</span>
-      </label>
-      { list(options.items[item], options) }
-    </li>
-  );
-}
+const Checkbox = ({ checked, disabled, item, nestedList }) => (
+  <li role="treeitem" className="list-item" key={ item }>
+    <label htmlFor={ item }>
+      <input
+        id={ item }
+        type="checkbox" value={ item } readOnly disabled={ disabled }
+        checked={ checked } aria-checked={ checked }
+      />
+      <span>&nbsp; { item }</span>
+    </label>
+    { nestedList }
+  </li>
+);
+Checkbox.propTypes = {
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool,
+  item: PropTypes.string.isRequired,
+  nestedList: PropTypes.object
+};
 
-function list(items, options) {
-  if (isEmpty(items)) return null;
+const List = ({ items, disabled, values }) => {
+  if (isEmpty(items)) return <noscript />;
+
+  const checkboxes = map(keys(items), (item) => {
+    const nestedList =
+      items[item] ?
+        <List items={ items[item] } disabled={ disabled } values={ values } /> : null;
+    const checked = includes(values, item);
+    return (
+      <Checkbox
+        key={ item }
+        item={ item }
+        checked={ checked }
+        disabled={ disabled }
+        nestedList={ nestedList }
+      />
+    );
+  });
   return (
-    <ul role="tree" className="list">
-      { keys(items).map(item => checkbox(item, options)) }
-    </ul>
+    <ul role="tree" className="list">{ checkboxes }</ul>
   );
-}
+};
+List.propTypes = {
+  disabled: PropTypes.bool,
+  items: PropTypes.object.isRequired,
+  values: PropTypes.array
+};
 
 class CheckboxTree extends React.Component {
   constructor() {
@@ -42,6 +64,8 @@ class CheckboxTree extends React.Component {
       values: []
     };
     this.handleClick = this.handleClick.bind(this);
+    this.toggleShowAll = this.toggleShowAll.bind(this);
+    this.toggleCollapse = this.toggleCollapse.bind(this);
   }
 
   componentDidMount() {
@@ -87,7 +111,7 @@ class CheckboxTree extends React.Component {
     this.props.onChange({ name: this.props.name, values });
   }
 
-  toggleVisibility(e) {
+  toggleCollapse(e) {
     e.preventDefault();
     this.setState({ visible: !this.state.visible });
   }
@@ -117,12 +141,13 @@ class CheckboxTree extends React.Component {
     const { showAll, values, visible } = this.state;
     const { disabled, itemLimit, items, label, name } = this.props;
     const visibleItems = showAll ? items : pick(items, take(keys(items), itemLimit));
-    const options = assign({}, this.props, { values });
-
     const hrefCSS = visible ? 'mi-icon mi-icon-angle-down' : 'mi-icon mi-icon-angle-right';
 
     const view = visible ? (
-      <div>{ list(visibleItems, options) } { this.showAllLink() }</div>
+      <div>
+        <List disabled={ disabled } items={ visibleItems } values={ values } />
+        { this.showAllLink() }
+      </div>
     ) : null;
 
     return (
@@ -134,7 +159,7 @@ class CheckboxTree extends React.Component {
       >
         <fieldset>
           <legend>
-            <a role="button" onClick={ this.toggleVisibility } href="#">
+            <a role="button" onClick={ this.toggleCollapse } href="#">
               <i className={ hrefCSS }></i>&nbsp; { label }
             </a>
           </legend>
@@ -148,11 +173,9 @@ class CheckboxTree extends React.Component {
 CheckboxTree.propTypes = {
   defaultValues: PropTypes.array,
   disabled: PropTypes.bool,
-  itemCssClass: PropTypes.string,
   itemLimit: PropTypes.number,
   items: PropTypes.object.isRequired,
   label: PropTypes.string,
-  listCssClass: PropTypes.string,
   maxHeight: PropTypes.number,
   name: PropTypes.string.isRequired,
   nested: PropTypes.bool,
@@ -161,8 +184,6 @@ CheckboxTree.propTypes = {
 
 CheckboxTree.defaultProps = {
   defaultValues: [],
-  listCssClass: 'list-group',
-  itemCssClass: 'list-group-item mi-checkbox',
   itemLimit: 5,
   items: {},
   label: 'Untitled',

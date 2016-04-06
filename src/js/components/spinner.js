@@ -20,7 +20,7 @@ const Circle = (
 );
 
 function createSpinner(type) {
-  return ({ message='Loading...' }) => (
+  return ({ message = 'Loading...' }) => (
     <div className="mi-spinner">
       { type }
       <div style={ { color: '#666', textAlign: 'center' } }>{ message }</div>

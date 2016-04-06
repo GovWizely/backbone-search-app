@@ -121,7 +121,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     },
     onClearFilter: (e) => {
       e.preventDefault();
-      dispatch(clearFiltering(e.target.dataset.filters || []));
+      dispatch(clearFiltering(e.target.dataset.filters));
       dispatch(invalidateAllFilters());
       dispatch(fetchResults());
       dispatch(updatePath());

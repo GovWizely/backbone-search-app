@@ -27,30 +27,54 @@ const Pagination = ({ currentOffset, displayedPages, items, itemsOnPage, onClick
   const pageList = [
     currentPage !== 0 ? (
       <li key="first">
-        <a title="First Page" className="mi-icon mi-icon-angle-double-left" data-offset="0" onClick={ onClick }></a>
+        <a
+          title="First Page"
+          className="mi-icon mi-icon-angle-double-left"
+          data-offset="0"
+          onClick={ onClick }
+        ></a>
       </li>) : null,
 
     currentPage !== 0 ? (
       <li key="prev">
-        <a title="Previous Page" className="mi-icon mi-icon-angle-left" data-offset={ prevPage * itemsOnPage } onClick={ onClick }></a>
+        <a
+          title="Previous Page"
+          className="mi-icon mi-icon-angle-left"
+          data-offset={ prevPage * itemsOnPage }
+          onClick={ onClick }
+        ></a>
       </li>) : null,
 
     range.map(i => {
       const activeCSS = currentPage === i ? 'mi-active' : '';
       return (
         <li className={ activeCSS } key={ i }>
-          <a title={ `Page #${i + 1}`} data-offset={ i * itemsOnPage } onClick={ onClick }>{ i + 1 }</a>
+          <a
+            title={ `Page #${i + 1}`}
+            data-offset={ i * itemsOnPage }
+            onClick={ onClick }
+          >{ i + 1 }</a>
         </li>
       );
     }),
 
     currentPage !== pages - 1 ? (
       <li key="next">
-        <a title="Next Page" className="mi-icon mi-icon-angle-right" data-offset={ nextPage * itemsOnPage } onClick={ onClick }></a>
+        <a
+          title="Next Page"
+          className="mi-icon mi-icon-angle-right"
+          data-offset={ nextPage * itemsOnPage }
+          onClick={ onClick }
+        ></a>
       </li>) : null,
     currentPage !== pages - 1 ? (
       <li key="last">
-        <a title="Last Page" className="mi-icon mi-icon-angle-double-right" data-offset={ (pages - 1) * itemsOnPage } onClick={ onClick }></a>
+        <a
+          title="Last Page"
+          className="mi-icon mi-icon-angle-double-right"
+          data-offset={ (pages - 1) * itemsOnPage }
+          onClick={ onClick }
+        ></a>
       </li>) : null
   ];
 

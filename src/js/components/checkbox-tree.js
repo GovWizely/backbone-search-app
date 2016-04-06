@@ -1,17 +1,21 @@
 require('./styles/checkbox_tree.scss');
 
-import _ from 'lodash';
+import {
+  concat, difference, includes, isEmpty,
+  keys, pick, pull, pullAll, reduce, take, uniq
+} from 'lodash';
 import React, { PropTypes } from 'react';
 import assign from 'object-assign';
 
 function checkbox(item, options) {
-  let checked = options.values.has(item);
+  let checked = includes(options.values, item);
   return (
     <li role="treeitem" className="list-item" key={ item }>
       <label htmlFor={ item }>
         <input id={ item }
-           type="checkbox" value={ item } readOnly disabled={ options.disabled }
-           checked={ checked } aria-checked={ checked } />
+          type="checkbox" value={ item } readOnly disabled={ options.disabled }
+          checked={ checked } aria-checked={ checked }
+        />
         <span>&nbsp; { item }</span>
       </label>
       { list(options.items[item], options) }
@@ -20,63 +24,38 @@ function checkbox(item, options) {
 }
 
 function list(items, options) {
-  if (_.isEmpty(items)) return null;
+  if (isEmpty(items)) return null;
   return (
     <ul role="tree" className="list">
-      { _.keys(items).map(item => checkbox(item, options)) }
+      { keys(items).map(item => checkbox(item, options)) }
     </ul>
   );
 }
 
-var CheckboxTree = React.createClass({
-  displayName: 'CheckboxTree',
-  propTypes: {
-    defaultValues: PropTypes.array,
-    disabled: PropTypes.bool,
-    itemCssClass: PropTypes.string,
-    itemLimit: PropTypes.number,
-    items: PropTypes.object.isRequired,
-    label: PropTypes.string,
-    listCssClass: PropTypes.string,
-    maxHeight: PropTypes.number,
-    name: PropTypes.string.isRequired,
-    nested: PropTypes.bool,
-    onChange: PropTypes.func.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      defaultValues: [],
-      listCssClass: 'list-group',
-      itemCssClass: 'list-group-item mi-checkbox',
-      itemLimit: 5,
-      items: {},
-      label: 'Untitled',
-      maxHeight: 180,
-      nested: false
-    };
-  },
-
-  getInitialState: function() {
-    return {
+class CheckboxTree extends React.Component {
+  constructor() {
+    super();
+    this.state = {
       flattenItems: null,
       visible: true,
       showAll: false,
       values: []
     };
-  },
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.onMount();
-  },
+  }
 
-  componentWillReceiveProps: function(nextProps) {
-    const flattenTree = (tree, output = []) => {
-      return _.reduce(tree, (output, item, key) => {
-        output = output.concat(key);
-        if (!_.isEmpty(item)) return flattenTree(item, output);
-        return output;
-      }, output);
-    };
+  componentWillReceiveProps(nextProps) {
+    const flattenTree = (tree, output = []) => (
+      reduce(tree, (_output, item, key) => {
+        const out = _output.concat(key);
+        if (!isEmpty(item)) return flattenTree(item, out);
+        return out;
+      }, output)
+    );
 
     if (!this.state.flattenItems ||
         JSON.stringify(this.props.items) !== JSON.stringify(nextProps.items)) {
@@ -84,72 +63,54 @@ var CheckboxTree = React.createClass({
         flattenItems: flattenTree(nextProps.items)
       });
     }
-  },
+  }
 
-  onMount: function() {
+  onMount() {
     this.setState({
       values: this.state.values.concat(this.props.defaultValues)
     });
-  },
+  }
 
-  handleClick: function(e) {
+  handleClick(e) {
     const { checked, type, value } = e.target;
     if (type !== 'checkbox') return;
 
     const values = checked ?
-      _.concat(this.state.values, value) :
-      _.pull(this.state.values, value);
+      concat(this.state.values, value) :
+      pull(this.state.values, value);
 
     this.setState({
-      values: _.uniq(
-        _.pullAll(values, _.difference(values, this.state.flattenItems))
+      values: uniq(
+        pullAll(values, difference(values, this.state.flattenItems))
       )
     });
     this.props.onChange({ name: this.props.name, values });
-  },
+  }
 
-  toggleVisibility: function(e) {
+  toggleVisibility(e) {
     e.preventDefault();
     this.setState({ visible: !this.state.visible });
-  },
+  }
 
-  toggleShowAll: function(e) {
+  toggleShowAll(e) {
     e.preventDefault();
     this.setState({ showAll: !this.state.showAll });
-  },
+  }
 
-  displayableItems: function() {
-    if (this.state.showAll) return this.props.items;
+  render() {
+    if (isEmpty(this.props.items)) return null;
 
-    let i = 0;
-    let items = {};
-    for (var key in this.props.items) {
-      if (typeof this.props.items[key] == 'object') {
-        items[key] = assign(this.props.items[key]);
-      } else {
-        items[key] = this.props.items[key];
-      }
-      i++;
-      if (i >= this.props.itemLimit) break;
-    }
-    return items;
-  },
+    const { showAll, values, visible } = this.state;
+    const { disabled, itemLimit, items, label, name } = this.props;
+    const visibleItems = showAll ? items : pick(items, take(keys(items), itemLimit));
+    const options = assign({}, this.props, { values });
 
-  render: function() {
-    if (_.isEmpty(this.props.items)) return null;
-
-    const { disabled, label, name, onChange } = this.props;
-    const items = this.displayableItems();
-    const { showAll, visible } = this.state;
-    const options = assign({}, this.props, {
-      values: new Set(this.state.values)
-    });
     const hrefCSS = visible ? 'mi-icon mi-icon-angle-down' : 'mi-icon mi-icon-angle-right';
     const showAllText = showAll ? 'Less' : 'More';
-    const showAllLink = Object.keys(this.props.items).length > this.props.itemLimit ? <a href="#" onClick={ this.toggleShowAll } className="see-more">+ See { showAllText }</a> : null;
+    const showAllLink = keys(items).length > itemLimit ? <a href="#" onClick={ this.toggleShowAll } className="see-more">+ See { showAllText }</a> : null;
 
-    const view = visible ?  (
-      <div name={ name }>{ list(items, options) } { showAllLink }</div>
+    const view = visible ? (
+      <div name={ name }>{ list(visibleItems, options) } { showAllLink }</div>
     ) : null;
 
     return (
@@ -165,6 +126,32 @@ var CheckboxTree = React.createClass({
       </section>
     );
   }
-});
+}
+
+CheckboxTree.propTypes = {
+  defaultValues: PropTypes.array,
+  disabled: PropTypes.bool,
+  itemCssClass: PropTypes.string,
+  itemLimit: PropTypes.number,
+  items: PropTypes.object.isRequired,
+  label: PropTypes.string,
+  listCssClass: PropTypes.string,
+  maxHeight: PropTypes.number,
+  name: PropTypes.string.isRequired,
+  nested: PropTypes.bool,
+  onChange: PropTypes.func.isRequired
+};
+
+CheckboxTree.defaultProps = {
+  defaultValues: [],
+  listCssClass: 'list-group',
+  itemCssClass: 'list-group-item mi-checkbox',
+  itemLimit: 5,
+  items: {},
+  label: 'Untitled',
+  maxHeight: 180,
+  nested: false
+};
+
 
 export default CheckboxTree;

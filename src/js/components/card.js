@@ -27,12 +27,10 @@ function verticalAlignMiddle(component) {
   );
 }
 
-function view({ isFetching, items, displayedItems, template, url, label }) {
+const View = ({ displayedItems, isFetching, items, label, template }) => {
   if (isFetching) return verticalAlignMiddle(<Spinner message="Retrieving information..." />);
 
   if (!items.length) return verticalAlignMiddle(noMatch(label));
-
-  const options = { url };
 
   return (
     <div className="mi-content">
@@ -40,24 +38,35 @@ function view({ isFetching, items, displayedItems, template, url, label }) {
         displayedItems={ displayedItems }
         items={ items }
         template={ template }
-        options={ options }
       />
     </div>
   );
-}
+};
+View.propTypes = {
+  displayedItems: PropTypes.number,
+  isFetching: PropTypes.bool,
+  items: PropTypes.array.isRequired,
+  label: PropTypes.string,
+  template: PropTypes.func.isRequired
+};
 
-const Card = ({ isFetching, displayedItems, items, label, onClick, template, url }) => (
+const Card = ({ isFetching, displayedItems, items, label, onClick, template }) => (
   <section className="mi-card">
     <header className="title" title={ label }>{ label }</header>
 
-    { view({ isFetching, displayedItems, items, label, template, url }) }
+    <View
+      displayedItems={ displayedItems }
+      isFetching={ isFetching }
+      items={ items }
+      label={ label }
+      template={ template }
+    />
 
     <footer>
       <a onClick={ onClick }>See More { label }</a>
     </footer>
   </section>
 );
-
 Card.propTypes = {
   displayedItems: PropTypes.number,
   isFetching: PropTypes.bool,

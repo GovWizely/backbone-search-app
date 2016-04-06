@@ -2,11 +2,12 @@ require('./styles/result_list.scss');
 
 import React, { PropTypes } from 'react';
 
-var ResultList = ({ displayedItems, items, template, options }) => {
+const ResultList = ({ displayedItems, items, template, options }) => {
   const slicedItems = displayedItems < 0 ? items : items.slice(0, displayedItems);
-  const resultItems = slicedItems.map((item, index) => {
-    return <li key={ index }>{ template(item, options) }</li>;
-  });
+  const resultItems = slicedItems.map((item, index) => (
+    <li key={ index }>{ template(item, options) }</li>
+  ));
+
   return (
     <ul className="mi-result-list">
       { resultItems }

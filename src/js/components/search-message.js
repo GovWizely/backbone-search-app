@@ -8,7 +8,8 @@ const SearchMessage = ({ apiName, keyword, total }) => {
   const count = <strong className="uk-text-danger">{ total }</strong>;
   const message =
     `${pluralize('result', total)} from the ${apiName} were found ${(_.isEmpty(keyword) ? '.' : ' for')}`;
-  const query = _.isEmpty(keyword) ? null : <strong className="uk-text-danger">{ keyword }.</strong>;
+  const query =
+    _.isEmpty(keyword) ? null : <strong className="uk-text-danger">{ keyword }.</strong>;
 
   return (
     <div className="mi-search-message">

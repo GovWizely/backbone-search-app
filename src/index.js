@@ -1,5 +1,3 @@
-'use strict';
-
 require('./scss/style.scss');
 require('./scss/animate.min.css');
 require('babel-polyfill');
@@ -8,15 +6,14 @@ require('es6-promise').polyfill();
 import React from 'react';
 import { render } from 'react-dom';
 import { createHashHistory as createHistory } from 'history';
-import { IndexRoute, Router, Route } from 'react-router';
+import { Router, Route } from 'react-router';
 import { Provider } from 'react-redux';
-import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
+import { syncReduxAndRouter } from 'redux-simple-router';
 
 import App from './js/containers/app';
 import Index from './js/containers/index';
 import Search from './js/containers/search';
 import configureStore from './js/store/configureStore';
-import apis from './js/apis';
 
 const history = createHistory({ });
 const store = configureStore();

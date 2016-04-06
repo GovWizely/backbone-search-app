@@ -1,5 +1,5 @@
 import assign from 'object-assign';
-import { concat, intersection, keys, omit, reduce, isEmpty } from 'lodash';
+import { intersection, keys, omit, isEmpty } from 'lodash';
 
 import { invalidateAllFilters, invalidateSiblingFilters } from './filter';
 
@@ -20,12 +20,12 @@ export function replaceQuery(query) {
   };
 }
 
-export function clearFiltering(filters = []) {
+export function clearFiltering(filters = null) {
   return (dispatch, getState) => {
     const { filtersByAggregation, query } = getState();
-    if (isEmpty(filters)) filters = keys(filtersByAggregation);
+    const _filters = filters || keys(filtersByAggregation);
 
-    dispatch(replaceQuery(assign({}, omit(query, filters))));
+    dispatch(replaceQuery(assign({}, omit(query, _filters))));
   };
 }
 

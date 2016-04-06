@@ -1,0 +1,36 @@
+@import "../../scss/variable";
+
+.mi-index {
+  padding: 15% 0 0 0;
+}
+
+.mi-index__header-container {
+  .mi-header {
+    text-align: center;
+    font-weight: 700;
+    line-height: 50px;
+    vertical-align:middle;
+    padding-bottom: 36px;
+    font-size: 22px;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      font-size: 45px;
+    }
+  }
+
+  .mi-header--version {
+    font-size: 13px;
+
+    @media screen and (min-width: $breakpoint-medium) {
+      font-size: 20px;
+    }
+  }
+}
+
+.mi-index__form-container {
+  display: block;
+  .mi-form {
+    margin: 0 auto;
+    max-width: 720px;
+  }
+}

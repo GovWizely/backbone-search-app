@@ -2,24 +2,7 @@ require('./styles/spinner.scss');
 
 import React, { PropTypes } from 'react';
 
-const Bounce = (
-  <div className="sk-bounce">
-    <div className="bounce1"></div>
-    <div className="bounce2"></div>
-    <div className="bounce3"></div>
-  </div>
-);
-
-const FoldingCube = (
-  <div className="sk-folding-cube">
-    <div className="sk-cube sk-cube1"></div>
-    <div className="sk-cube sk-cube2"></div>
-    <div className="sk-cube sk-cube4"></div>
-    <div className="sk-cube sk-cube3"></div>
-  </div>
-);
-
-const Circle = (
+const Circle = () => (
   <div className="sk-circle">
     <div className="sk-circle1 sk-child"></div>
     <div className="sk-circle2 sk-child"></div>
@@ -36,16 +19,19 @@ const Circle = (
   </div>
 );
 
-function createSpinner(type) {
-  return ({ message='Loading...' }) => {
-    return (
-      <div className="mi-spinner">
-        { type }
-        <div style={ { color: '#666', textAlign: 'center' } }>{ message }</div>
-      </div>
-    );
-  };
-}
+const Spinner = ({ children, message }) => (
+  <div className="mi-spinner">
+    { children }
+    <div style={ { color: '#666', textAlign: 'center' } }>{ message }</div>
+  </div>
+);
+Spinner.propTypes = {
+  children: PropTypes.func,
+  message: PropTypes.string
+};
+Spinner.defaultProps = {
+  message: 'Loading...'
+};
 
-export const BounceSpinner = createSpinner(Bounce);
-export default createSpinner(Circle);
+const CircleSpinner = () => <Spinner><Circle /></Spinner>;
+export default CircleSpinner;

@@ -1,44 +1,40 @@
-import _ from 'lodash';
-import assign from 'object-assign';
+import { filter } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { stringify } from 'querystring';
 import {
   invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../actions/query_expansion';
 import { fetchResults } from '../actions/result';
-import { updateQuery, replaceQuery } from '../actions/query';
+import { replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
 import { updateWindow } from '../actions/window';
-import { selectAPIs } from '../actions/api';
 import { invalidateAllFilters } from '../actions/filter';
 import apis from '../apis';
 
-var App = React.createClass({
-  displayName: 'App',
-  propTypes: {
-    children: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    onResize: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
-  },
-  componentWillMount: function() {
+class App extends React.Component {
+  componentWillMount() {
     this.props.onResize({ currentTarget: window });
-  },
-  componentDidMount: function() {
+  }
+  componentDidMount() {
     window.addEventListener('resize', this.props.onResize);
-  },
-  componentWillUnmount: function() {
+  }
+  componentWillUnmount() {
     window.removeEventListener('resize', this.props.onResize);
-  },
-  render: function() {
+  }
+  render() {
     return React.cloneElement(this.props.children, this.props);
   }
-});
+}
+App.propTypes = {
+  children: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  onResize: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired
+};
 
 function mapStateToProps(state) {
   const { notifications, query, queryExpansions } = state;
-  let selectedAPIs = _.filter(apis, (api) => api.deckable);
+  const selectedAPIs = filter(apis, (api) => api.deckable);
   return {
     availableAPIs: apis,
     defaultAPIs: selectedAPIs,
@@ -50,10 +46,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
-  const availableAPIs = apis,
-        defaultAPIs = _.filter(apis, (api) => api.deckable);
-
+function mapDispatchToProps(dispatch) {
   return {
     onResize: (e) => {
       const { innerWidth, innerHeight } = e.currentTarget;

@@ -10,7 +10,6 @@ html {
 #main {
   font-size: 14px;
   font-family: $font-family-base;
-  padding-top: 5%;
   padding-bottom: 80px;
 
   @media screen and (min-width: $breakpoint-medium) {
@@ -18,7 +17,7 @@ html {
   }
 }
 
-#mi-index {
+.mi-index {
   margin-bottom: 200px;
 }
 
@@ -29,48 +28,4 @@ html {
     display: block;
     margin-bottom: 20px;
   }
-}
-
-#mi-main-pane {
-  border-top: 1px solid $border-color;
-  padding-top: 20px;
-  margin: 0 auto;
-  width: 96%;
-
-  @media screen and (min-width: $breakpoint-medium) {
-    margin-left: 27px;
-  }
-}
-
-#mi-left-pane {
-  display: none;
-
-  header {
-    font-size: 15px;
-    margin-bottom: 5px;
-  }
-
-  @media screen and (min-width: $breakpoint-medium) {
-    display: block;
-    float: left;
-    position: relative;
-    width: 267px;
-    border-right: 1px solid $border-color;
-  }
-
-  .mi-checkbox-tree {
-    border-bottom: 1px solid $border-color;
-    margin-bottom: 12px;
-  }
-}
-
-#mi-left-pane + #mi-content-pane,
-#mi-bucket-list-container {
-  @media screen and (min-width: $breakpoint-medium) {
-    margin-left: 300px;
-  }
-}
-
-.mi-result {
-  margin-bottom: 50px;
 }

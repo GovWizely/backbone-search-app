@@ -10,28 +10,38 @@ function displayablePages(innerWidth) {
   return 5;
 }
 
-var Result = ({ api, findTemplate, onPaging, query, result, window }) => {
+const Result = ({ api, findTemplate, onPaging, query, result, window }) => {
   if (result.isFetching || result.metadata.total === 0) return <noscript />;
 
   const template = findTemplate(api.uniqueId).ResultItem;
   return (
     <div className="mi-search__result">
       <Message
-         apiName={ api.displayName }
-         keyword={ query.q }
-         total={ result.metadata.total } />
+        apiName={ api.displayName }
+        keyword={ query.q }
+        total={ result.metadata.total }
+      />
 
       <ResultList items={ result.items } template={ template } />
 
       <Pagination
-         currentOffset={ result.metadata.offset }
-         displayedPages={ displayablePages(window.innerWidth) }
-         items={ result.metadata.total }
-         itemsOnPage={ 10 }
-         onClick={ onPaging }
-         />
+        currentOffset={ result.metadata.offset }
+        displayedPages={ displayablePages(window.innerWidth) }
+        items={ result.metadata.total }
+        itemsOnPage={ 10 }
+        onClick={ onPaging }
+      />
     </div>
   );
+};
+
+Result.propTypes = {
+  api: PropTypes.object.isRequired,
+  findTemplate: PropTypes.func.isRequired,
+  onPaging: PropTypes.func.isRequired,
+  query: PropTypes.object.isRequired,
+  result: PropTypes.object.isRequired,
+  window: PropTypes.object.isRequired
 };
 
 export default Result;

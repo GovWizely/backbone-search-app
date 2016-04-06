@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { compact, each, isEmpty, keys, map, reduce } from 'lodash';
+import { compact, isEmpty, keys, map, reduce } from 'lodash';
 
 export const REQUEST_FILTERS = 'REQUEST_FILTERS';
 export const RECEIVE_FILTERS = 'RECEIVE_FILTERS';
@@ -28,29 +28,25 @@ export function invalidateFilters(aggregation) {
 }
 
 export function invalidateSiblingFilters(root) {
-  return (dispatch, getState) => {
-    return compact(map(getState().filtersByAggregation, (filters, key) => {
+  return (dispatch, getState) =>
+    compact(map(getState().filtersByAggregation, (filters, key) => {
       if (key === root) return null;
       return dispatch(invalidateFilters(key));
     }));
-  };
 }
 
 export function invalidateAllFilters() {
-  return (dispatch, getState) => {
-    return map(getState().filtersByAggregation, (filters, key) => {
-      return dispatch(invalidateFilters(key));
-    });
-  };
+  return (dispatch, getState) =>
+    map(getState().filtersByAggregation, (filters, key) => dispatch(invalidateFilters(key)));
 }
 
 function computeFilters(responses, aggregation) {
   return (dispatch) => {
     dispatch(requestFilters(aggregation));
-    const filters = reduce(responses, (output, response) => {
-      output = merge(output, response.aggregations[aggregation] || {});
-      return output;
-    }, {});
+    const filters = reduce(
+      responses,
+      (output, response) => merge(output, response.aggregations[aggregation] || {}),
+      {});
     dispatch(receiveFilters(aggregation, filters));
   };
 }
@@ -74,15 +70,19 @@ function computeFiltersIfNeeded(responses, aggregation) {
 }
 
 export function computeFiltersByAggregation(responses) {
-  return (dispatch, getState) => {
-    const aggregations = Array.from(reduce(responses, (output, response) => {
-      output = new Set([...output, ...keys(response.aggregations)]);
-      return output;
-    }, new Set()));
+  return (dispatch) => {
+    const aggregations = Array.from(
+      reduce(
+        responses,
+        (output, response) => new Set([...output, ...keys(response.aggregations)]),
+        new Set()
+      )
+    );
     return Promise.all(
-      map(aggregations, (aggregation) => {
-        return dispatch(computeFiltersIfNeeded(responses, aggregation));
-      })
+      map(
+        aggregations,
+        (aggregation) => dispatch(computeFiltersIfNeeded(responses, aggregation))
+      )
     );
   };
 }

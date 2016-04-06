@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import * as helper from '../test_helper';
 import { countryToAbbr } from '../../src/js/utils/taxonomy';
 
 describe('taxonomy', () => {

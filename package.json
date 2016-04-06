@@ -52,6 +52,7 @@
     "chai": "^3.5.0",
     "css-loader": "^0.23.1",
     "eslint": "^2.5.3",
+    "eslint-config-airbnb": "^6.2.0",
     "eslint-plugin-flowtype": "^2.2.2",
     "eslint-plugin-mocha": "^2.0.0",
     "eslint-plugin-react": "^4.2.3",
@@ -101,7 +102,7 @@
     "build:webpack": "NODE_ENV=production webpack --config webpack.config.production.js",
     "clean": "rimraf dist",
     "lint": "eslint src",
-    "test": "NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
+    "test": "NODE_ENV=test mocha --compilers js:test/babel.js --recursive --require ./test/test_helper.js",
     "test:watch": "npm test -- --watch",
     "start": "node dev.js"
   }

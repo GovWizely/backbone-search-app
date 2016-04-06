@@ -1,20 +1,39 @@
 require('./styles/query_expansion_list.scss');
 
 import { isEmpty, keys, map } from 'lodash';
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-var QueryExpansion = ({ onClick, queryExpansions }) => {
+class QueryExpansionTerm extends React.Component {
+  constructor() {
+    super();
+    this._onClick = this._onClick.bind(this);
+  }
+  _onClick(e) {
+    e.preventDefault();
+    this.props.onClick(this.props.value);
+  }
+  render() {
+    const { label } = this.props;
+    return (
+      <li><a onClick={ this._onClick }>{ label }</a></li>
+    );
+  }
+}
+
+QueryExpansionTerm.propTypes = {
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired
+};
+
+const QueryExpansion = ({ onClick, queryExpansions }) => {
   const { invalidated, isFetching, items } = queryExpansions;
-  if (isFetching || !items) return <noscript />;
+  if (invalidated || isFetching || !items) return <noscript />;
 
   let terms = map(items.world_regions, (region) => {
-    const key = keys(region)[0],
-          value = region[key];
-    return (
-      <li key={ key }>
-        <a onClick={ onClick.bind(undefined, value) }>{ key }</a>
-      </li>
-    );
+    const key = keys(region)[0];
+    const value = region[key];
+    return <QueryExpansionTerm key={ key } label={ key } onClick={ onClick } value={ value } />;
   });
 
   if (isEmpty(terms)) return <noscript />;
@@ -25,6 +44,11 @@ var QueryExpansion = ({ onClick, queryExpansions }) => {
       </ul>
     </div>
   );
+};
+
+QueryExpansion.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  queryExpansions: PropTypes.object.isRequired
 };
 
 export default QueryExpansion;

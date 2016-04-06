@@ -5,15 +5,7 @@ $form-focus-border: #99baca !default;
 $form-focus-background: #f5fbfe !default;
 $form-focus-color: #444 !default;
 
-.mi-form {
-  @media screen and (min-width: $breakpoint-medium) {
-    display: table;
-    padding: 24px 0px 0px 22px;
-    vertical-align: middle;
-    width: 98%;
-  }
-
-  form {
+  .mi-form {
     border-collapse: collapse;
     display: table;
     font-size: 16px;
@@ -26,16 +18,7 @@ $form-focus-color: #444 !default;
     }
   }
 
-  .mi-header-container {
-    @media screen and (min-width: $breakpoint-medium) {
-      display: table-cell;
-      padding-right: 22px;
-      vertical-align: middle;
-      width: 250px;
-    }
-  }
-
-  #mi-input {
+  .mi-form__field {
     border: 1px solid #ccc;
     border-radius: $border-radius;
     border-top-right-radius: 0;
@@ -59,13 +42,13 @@ $form-focus-color: #444 !default;
     }
   }
 
-  #mi-submit {
+  .mi-form__submit {
     display: table-cell;
     margin: 0;
     vertical-align: middle;
     width: 48px;
 
-    >button {
+    .mi-form__submit__button {
       background-color: $blue-color;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
@@ -78,45 +61,3 @@ $form-focus-color: #444 !default;
     }
 
   }
-
-  &.mi-form-expanded {
-    display: block;
-    padding: 15% 0 0 0;
-
-    form {
-      margin: 0 auto;
-      max-width: 720px;
-      min-width: 0;
-    }
-
-    .mi-header-container {
-      display: block;
-      padding-right: 0;
-      width: 100%;
-    }
-  }
-
-
-  @media screen and (min-width: $breakpoint-medium) {
-    &.mi-form-condensed {
-      #mi-input {
-        font-size: 13px;
-        height: 34px;
-        line-height: 1.5;
-        margin: 0;
-        padding: 4px 6px;
-      }
-
-      #mi-submit {
-        width: 34px;
-
-        >button {
-          font-size: 14px;
-          height: 34px;
-          line-height: 1.5;
-          padding: 0 12px;
-        }
-      }
-    }
-  }
-}

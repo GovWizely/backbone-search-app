@@ -1,14 +1,7 @@
 require('./styles/pagination.scss');
 
 import _ from 'lodash';
-import assign from 'object-assign';
-import { stringify } from 'querystring';
 import React, { PropTypes } from 'react';
-
-function href(pathname, query, offset) {
-  const params = assign({}, query, { offset });
-  return `${pathname}?${stringify(params)}`;
-}
 
 function getRange(currentPage, displayedPages, pages, pivot) {
   const head = Math.ceil(
@@ -21,43 +14,67 @@ function getRange(currentPage, displayedPages, pages, pivot) {
   return _.range(head, tail);
 }
 
-var Pagination = ({ currentOffset, displayedPages, items, itemsOnPage, onClick, query, url }) => {
-  const pages = Math.ceil(items / itemsOnPage),
-        currentPage = Math.ceil(currentOffset / itemsOnPage),
-        pivot = displayedPages / 2,
-        nextPage = currentPage + 1,
-        prevPage = currentPage - 1;
-  if (pages <= 1) return <span />;
+const Pagination = ({ currentOffset, displayedPages, items, itemsOnPage, onClick }) => {
+  const pages = Math.ceil(items / itemsOnPage);
+  const currentPage = Math.ceil(currentOffset / itemsOnPage);
+  const pivot = displayedPages / 2;
+  const nextPage = currentPage + 1;
+  const prevPage = currentPage - 1;
+  if (pages <= 1) return <noscript />;
 
   const range = getRange(currentPage, displayedPages, pages, pivot);
 
   const pageList = [
     currentPage !== 0 ? (
       <li key="first">
-        <a title="First Page" className="mi-icon mi-icon-angle-double-left" data-offset="0" onClick={ onClick }></a>
+        <a
+          title="First Page"
+          className="mi-icon mi-icon-angle-double-left"
+          data-offset="0"
+          onClick={ onClick }
+        ></a>
       </li>) : null,
 
     currentPage !== 0 ? (
       <li key="prev">
-        <a title="Previous Page" className="mi-icon mi-icon-angle-left" data-offset={ prevPage * itemsOnPage } onClick={ onClick }></a>
+        <a
+          title="Previous Page"
+          className="mi-icon mi-icon-angle-left"
+          data-offset={ prevPage * itemsOnPage }
+          onClick={ onClick }
+        ></a>
       </li>) : null,
 
     range.map(i => {
       const activeCSS = currentPage === i ? 'mi-active' : '';
       return (
         <li className={ activeCSS } key={ i }>
-          <a title={ `Page #${i + 1}`} data-offset={ i * itemsOnPage } onClick={ onClick }>{ i + 1 }</a>
+          <a
+            title={ `Page #${i + 1}`}
+            data-offset={ i * itemsOnPage }
+            onClick={ onClick }
+          >{ i + 1 }</a>
         </li>
       );
     }),
 
     currentPage !== pages - 1 ? (
       <li key="next">
-        <a title="Next Page" className="mi-icon mi-icon-angle-right" data-offset={ nextPage * itemsOnPage } onClick={ onClick }></a>
+        <a
+          title="Next Page"
+          className="mi-icon mi-icon-angle-right"
+          data-offset={ nextPage * itemsOnPage }
+          onClick={ onClick }
+        ></a>
       </li>) : null,
-    currentPage !== pages - 1 ?(
+    currentPage !== pages - 1 ? (
       <li key="last">
-        <a title="Last Page" className="mi-icon mi-icon-angle-double-right" data-offset={ (pages - 1) * itemsOnPage } onClick={ onClick }></a>
+        <a
+          title="Last Page"
+          className="mi-icon mi-icon-angle-double-right"
+          data-offset={ (pages - 1) * itemsOnPage }
+          onClick={ onClick }
+        ></a>
       </li>) : null
   ];
 

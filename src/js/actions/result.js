@@ -1,8 +1,5 @@
 import { get, isEmpty, map, reject } from 'lodash';
 import fetch from 'isomorphic-fetch';
-import merge from 'deepmerge';
-import Url from 'url';
-import { stringify } from 'querystring';
 
 import {
   formatAggregations, formatEndpoint, formatMetadata, formatParams,
@@ -51,8 +48,8 @@ function preprocess(api, query) {
   return params;
 }
 
-function postprocess(api, json) {
-  json = api.transformResponse ? api.transformResponse(json) : json;
+function postprocess(api, _json) {
+  const json = api.transformResponse ? api.transformResponse(_json) : _json;
   return {
     aggregations: formatAggregations(json.aggregations, api.aggregations),
     metadata: json.metadata || formatMetadata(json, api.metadata),
@@ -61,12 +58,12 @@ function postprocess(api, json) {
 }
 
 function createFetch(api, dispatch, getState) {
-  return function(query) {
+  return (query) => {
     if (get(getState().results, [api.uniqueId, 'isFetching'])) {
       dispatch(noAction());
       return null;
     }
-    let params = preprocess(api, query);
+    const params = preprocess(api, query);
     dispatch(requestResults(api));
     return fetch(formatEndpoint(api.endpoint, params))
       .then(response => {

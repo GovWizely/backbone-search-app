@@ -1,7 +1,6 @@
 import { expect } from 'chai';
-import * as helper from '../test_helper';
 
-import { extract, parse, parseAsTree } from '../../src/js/utils/aggregation-parser';
+import { parse, parseAsTree } from '../../src/js/utils/aggregation-parser';
 
 describe('aggregation-parser', () => {
   const records = [
@@ -24,8 +23,8 @@ describe('aggregation-parser', () => {
     it('split by "/" and return structure all elements as a tree', () => {
       expect(parseAsTree(records)).to.eql({
         'Aerospace and Defense': {
-          'Aviation': {
-            'Aircraft and Aircraft Parts' : {}
+          Aviation: {
+            'Aircraft and Aircraft Parts': {}
           }
         }
       });

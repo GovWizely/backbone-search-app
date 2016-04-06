@@ -21,8 +21,6 @@ export const TEMPLATES = assign(
 );
 
 export function findTemplate(templateName) {
-  if (!TEMPLATES[templateName]) {
-    return TEMPLATES.defaults;
-  }
+  if (!TEMPLATES[templateName]) return TEMPLATES.defaults;
   return TEMPLATES[templateName];
 }

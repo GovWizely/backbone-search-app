@@ -1,32 +1,34 @@
+require('./index.scss');
+
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Form from '../components/form';
+import Header from '../components/header';
 import { selectAPIs } from '../actions/api';
 
-
-const Index = React.createClass({
-  displayName: 'Index',
-  propTypes: {
-    defaultAPIs: PropTypes.array.isRequired,
-    dispatch: PropTypes.func,
-    onSubmit: PropTypes.func
-  },
-  componentDidMount: function() {
+class Index extends React.Component {
+  componentDidMount() {
     const { dispatch, defaultAPIs } = this.props;
     dispatch(selectAPIs(defaultAPIs));
-  },
-  render: function() {
-    const props = {
-      focused: true,
-      onSubmit: this.props.onSubmit
-    };
+  }
+  render() {
     return (
-      <div id="mi-index">
-        <Form {...props} />
+      <div className="mi-index">
+        <div className="mi-index__header-container">
+          <Header />
+        </div>
+        <div className="mi-index__form-container">
+          <Form focused onSubmit={ this.props.onSubmit } />
+        </div>
       </div>
     );
   }
-});
+}
+Index.propTypes = {
+  defaultAPIs: PropTypes.array.isRequired,
+  dispatch: PropTypes.func,
+  onSubmit: PropTypes.func
+};
 
 export default connect()(Index);

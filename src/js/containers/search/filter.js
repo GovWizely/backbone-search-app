@@ -1,31 +1,34 @@
-import { each, isEmpty, map, reduce, startCase } from 'lodash';
-import React from 'react';
+import { isEmpty, map, reduce, startCase } from 'lodash';
+import React, { PropTypes } from 'react';
 
 import CheckboxTree from '../../components/checkbox-tree';
-import Spinner from '../../components/spinner';
-function noFilter(filters) {
-  if (!reduce(filters, (output, filter) => {
-    return output || !filter.invalidated;
-  }, false)) return true;
 
-  for (let name in filters) {
+function noFilter(filters) {
+  const allInvalidated = !reduce(
+    filters,
+    (output, filter) => output || !filter.invalidated,
+    false);
+  if (allInvalidated) return true;
+
+  for (const name in filters) {
     if (!isEmpty(filters[name].items)) return false;
   }
   return true;
 }
 
-var Filter = ({ filters, onChange, onClear, query }) => {
+const Filter = ({ filters, onChange, onClear, query }) => {
   if (noFilter(filters)) return <noscript />;
 
   const checkboxTrees = map(filters, (filter, key) => {
-    let values = query[key] || [];
+    const values = query[key] || [];
 
     return (
       <CheckboxTree
-         key={ key } name={ key } label={ startCase(key) }
-         items={ filter.items } disabled={ filter.invalidated || filter.isFetching }
-         onChange={ onChange }
-         defaultValues={ Array.isArray(values) ? values : [values] } />
+        key={ key } name={ key } label={ startCase(key) }
+        items={ filter.items } disabled={ filter.invalidated || filter.isFetching }
+        onChange={ onChange }
+        defaultValues={ Array.isArray(values) ? values : [values] }
+      />
     );
   });
 
@@ -40,6 +43,13 @@ var Filter = ({ filters, onChange, onClear, query }) => {
       </div>
     </div>
   );
+};
+
+Filter.propTypes = {
+  filters: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
+  query: PropTypes.object.isRequired
 };
 
 export default Filter;

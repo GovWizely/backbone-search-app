@@ -1,5 +1,4 @@
 import assign from 'object-assign';
-import path from 'path';
 import { isUndefined, snakeCase, startCase } from 'lodash';
 
 function verbatim(value) {
@@ -12,7 +11,6 @@ function createAnyTypeChecker() {
 
 function createTypeChecker(expectedType) {
   return (key, attrName, value) => {
-
     let actualType = typeof value;
     if (Array.isArray(value)) actualType = 'array';
     if (actualType === expectedType) return false;
@@ -83,10 +81,12 @@ export function defineAPI(uniqueId, attributes) {
       `Duplicated API found: \`${uniqueId}\``
     );
   }
-  let config = assign({}, attributes);
+  const config = assign({}, attributes);
 
-  for (let attrName in ATTRIBUTES) {
-    let attr = ATTRIBUTES[attrName];
+  for (const attrName in ATTRIBUTES) {
+    if (!{}.hasOwnProperty.call(ATTRIBUTES, attrName)) continue;
+
+    const attr = ATTRIBUTES[attrName];
 
     if (attr.isRequired && !config[attrName]) {
       throw new Error(
@@ -104,7 +104,7 @@ export function defineAPI(uniqueId, attributes) {
       }
     }
 
-    let typeMismatched = attr.type(uniqueId, attrName, config[attrName]);
+    const typeMismatched = attr.type(uniqueId, attrName, config[attrName]);
     if (typeMismatched) return typeMismatched;
   }
 

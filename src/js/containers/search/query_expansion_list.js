@@ -8,13 +8,14 @@ class QueryExpansionTerm extends React.Component {
     super();
     this._onClick = this._onClick.bind(this);
   }
-  _onClick() {
+  _onClick(e) {
+    e.preventDefault();
     this.props.onClick(this.props.value);
   }
   render() {
     const { label } = this.props;
     return (
-      <li><a onClick={ this.onClick }>{ label }</a></li>
+      <li><a onClick={ this._onClick }>{ label }</a></li>
     );
   }
 }

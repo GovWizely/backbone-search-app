@@ -126,8 +126,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(fetchResults());
       dispatch(updatePath());
     },
-    onExpand: (query, e) => {
-      e.preventDefault();
+    onExpand: (query) => {
       dispatch(invalidateAllFilters());
       dispatch(replaceQuery({ q: query }));
       dispatch(fetchResults());

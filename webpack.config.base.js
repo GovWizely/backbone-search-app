@@ -9,7 +9,6 @@ module.exports = {
   index: path.join(__dirname, 'index.html'),
   output: {
     path: path.join(__dirname, 'dist'),
-//    publicPath: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
   module: {

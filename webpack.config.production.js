@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var assign = require('object-assign');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var base = require('./webpack.config.base');
 
@@ -20,6 +21,7 @@ module.exports = assign({}, base, {
         warnings: false
       }
     }),
+    new ExtractTextPlugin('app.css'),
     new HtmlWebpackPlugin({ template: base.index })
   ]
 });

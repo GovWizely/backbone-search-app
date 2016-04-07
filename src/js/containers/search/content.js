@@ -6,16 +6,6 @@ import Result from './result';
 import NoResult from './no_result';
 import Spinner from '../../components/spinner';
 
-function verticalAlignMiddle(component, height = 400) {
-  return (
-    <div className="uk-vertical-align" style={ { height }}>
-      <div className="uk-vertical-align-middle" style={ { width: '100%' } }>
-        { component }
-      </div>
-    </div>
-  );
-}
-
 function contentType(props) {
   const { results, selectedAPIs } = props;
 

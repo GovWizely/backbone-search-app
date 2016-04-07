@@ -115,6 +115,7 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     onBucket: (apis) => {
       dispatch(selectAPIs(apis));
+      dispatch(updateQuery({ offset: 0 }));
       dispatch(invalidateAllFilters());
       dispatch(fetchResults());
       dispatch(updatePath());

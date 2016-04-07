@@ -1,8 +1,23 @@
 # Styles
 
-## [uikit](http://getuikit.com/)
+Naming convention of classes are loosely based on [BEM](https://en.bem.info/).
 
-uikit is used as the base for styling, customization of uikit can be done by editing `src/scss/_uikit.scss`.
+```css
+    // Base CSS for Header component
+    .mi-header { ... }
+    .mi-header__title { ... }
+    .mi-header__version { ... }
+
+    // Customize CSS for Header component in Index container
+    .mi-index {
+      ...
+      .mi-header {
+        font-size: 25px;
+        ...
+      }
+      ...
+    }
+```
 
 ## React Components
 

@@ -5,7 +5,7 @@ import {
 import React, { PropTypes } from 'react';
 
 const Checkbox = ({ checked, disabled, item, nestedList }) => (
-  <li role="treeitem" className="list-item" key={ item }>
+  <li role="treeitem" className="mi-checkbox-tree__list__item" key={ item }>
     <label htmlFor={ item }>
       <input
         id={ item }
@@ -43,7 +43,7 @@ const List = ({ items, disabled, values }) => {
     );
   });
   return (
-    <ul role="tree" className="list">{ checkboxes }</ul>
+    <ul role="tree" className="mi-checkbox-tree__list">{ checkboxes }</ul>
   );
 };
 List.propTypes = {
@@ -127,7 +127,7 @@ class CheckboxTree extends React.Component {
     if (keys(items).length <= itemLimit) return null;
 
     return (
-      <a href="#" onClick={ this.toggleShowAll } className="see-more">
+      <a href="#" onClick={ this.toggleShowAll } className="mi-checkbox-tree__expand">
         + See { showAllText }
       </a>
     );
@@ -155,8 +155,8 @@ class CheckboxTree extends React.Component {
         data-disabled={ disabled }
         onClick={ this.handleClick }
       >
-        <fieldset>
-          <legend>
+        <fieldset className="mi-checkbox-tree__fieldset">
+          <legend className="mi-checkbox-tree__header">
             <a role="button" onClick={ this.toggleCollapse } href="#">
               <i className={ hrefCSS }></i>&nbsp; { label }
             </a>

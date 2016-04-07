@@ -101,7 +101,6 @@
   "scripts": {
     "build": "npm run clean && npm run build:webpack",
     "build:webpack": "NODE_ENV=production webpack --config webpack.config.production.js",
-    "build:sass": "node-sass --output-style expanded styles/app.scss dist/app.css",
     "clean": "rimraf dist",
     "lint": "eslint src",
     "test": "NODE_ENV=test mocha --compilers js:test/babel.js --recursive --require ./test/test_helper.js",

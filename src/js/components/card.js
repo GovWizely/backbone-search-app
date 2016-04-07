@@ -50,7 +50,7 @@ View.propTypes = {
 
 const Card = ({ isFetching, displayedItems, items, label, onClick, template }) => (
   <section className="mi-card">
-    <header className="title" title={ label }>{ label }</header>
+    <header className="mi-card__header" title={ label }>{ label }</header>
 
     <View
       displayedItems={ displayedItems }
@@ -60,7 +60,7 @@ const Card = ({ isFetching, displayedItems, items, label, onClick, template }) =
       template={ template }
     />
 
-    <footer>
+    <footer className="mi-card__footer">
       <a onClick={ onClick }>See More { label }</a>
     </footer>
   </section>

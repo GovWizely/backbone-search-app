@@ -7,7 +7,7 @@
     }
   }
 
-  &__deck-container {
+  &__deck-container, &__filter-container {
     @include desktop {
       border-right: 1px solid $border-color;
       display: block;

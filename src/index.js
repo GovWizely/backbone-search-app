@@ -28,5 +28,5 @@ render(
       </Route>
     </Router>
   </Provider>,
-  document.getElementById('main')
+  document.getElementById('mi-app')
 );

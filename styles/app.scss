@@ -2,5 +2,13 @@
 @import "mixins";
 @import "variables";
 @import "blocks/mi-bucket-list/mi-bucket-list";
+@import "blocks/mi-checkbox-tree/mi-checkbox-tree";
+@import "blocks/mi-card/mi-card";
 @import "blocks/mi-form/mi-form";
 @import "blocks/mi-search/mi-search";
+
+
+#mi-app {
+  font-family: $lato;
+  margin: 0;
+}

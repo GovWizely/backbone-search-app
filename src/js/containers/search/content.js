@@ -65,7 +65,11 @@ const Content = ({ findTemplate, onPaging, onSelect, query, results, selectedAPI
     break;
 
   case 'loading':
-    content = verticalAlignMiddle(<Spinner />);
+    content = (
+      <div className="mi-search__spinner-container">
+        <Spinner />
+      </div>
+    );
     break;
 
   case 'noResult':
@@ -74,13 +78,7 @@ const Content = ({ findTemplate, onPaging, onSelect, query, results, selectedAPI
     break;
   }
 
-  return (
-    <div className="mi-search__content-container">
-      <div className="mi-search__content">
-        { content }
-      </div>
-    </div>
-  );
+  return content;
 };
 
 Content.propTypes = {

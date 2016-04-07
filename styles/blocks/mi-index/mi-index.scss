@@ -1,0 +1,35 @@
+.mi-index {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+
+  .mi-index__header-container {
+    padding-top: 100px;
+    padding-bottom: 36px;
+
+    .mi-header {
+      &__title {
+        font-size: 22px;
+      }
+    }
+
+    @include desktop {
+      padding-top: 220px;
+
+      .mi-header {
+        &__title {
+          font-size: 45px;
+        }
+        &__version {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .mi-index__form-container {
+    .mi-form {
+      max-width: 720px;
+    }
+  }
+}

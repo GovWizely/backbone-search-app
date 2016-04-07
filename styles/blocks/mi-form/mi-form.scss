@@ -1,5 +1,3 @@
-@import "../../mixins";
-
 .mi-form {
   border-collapse: collapse;
   display: table;
@@ -8,15 +6,8 @@
   width: 96%;
   max-width: 640px;
 
-  @include desktop {
-    margin: 0;
-  }
-
   &__field {
     border: 1px solid #ccc;
-    border-radius: $border-radius;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     box-sizing: border-box;
     color: #444;
     display: table-cell;
@@ -44,14 +35,19 @@
 
     button {
       background-color: $blue-color;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      border: none;
+      box-sizing: border-box;
       color: #FFF;
       font-size: 18px;
       height: 46px;
       line-height: 46px;
       margin-left: -1px;
       padding: 0 16px;
+      text-align: center;
+      text-decoration: none;
+      vertical-align: middle;
+
+      @include appearance(none);
     }
   }
 }

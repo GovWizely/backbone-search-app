@@ -1,0 +1,35 @@
+.mi-pagination {
+  @include user-select(none);
+
+  &__item {
+    display: inline;
+
+    a {
+      position: relative;
+      float: left;
+      padding: 6px 12px;
+      color: #337ab7;
+      background-color: #FFF;
+      border: 1px solid #DDD;
+      text-decoration: none;
+      line-height: 1.428571429;
+      margin-left: -1px;
+    }
+
+    &:first-child > a {
+      margin-left: 0;
+      @include border-left-radius($border-radius);
+    }
+
+    &:last-child > a {
+      @include border-right-radius($border-radius);
+    }
+
+    &--active {
+      a {
+        background-color: #337ab7;
+        color: #FFF;
+      }
+    }
+  }
+}

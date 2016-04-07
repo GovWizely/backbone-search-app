@@ -7,7 +7,7 @@ const ResultList = ({ displayedItems, items, template, options }) => {
   ));
 
   return (
-    <ul className="mi-result-list">
+    <ul className="mi-result">
       { resultItems }
     </ul>
   );

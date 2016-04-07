@@ -1,19 +1,4 @@
-@import "../../mixins";
-
 .mi-card {
-  display: block;
-  float: left;
-  margin: 0 auto;
-  position: relative;
-  width: 100%;
-
-  @include desktop {
-    margin: 14px 0 16px 14px;
-    min-width: 414px;
-    max-width: 460px;
-    width: 44%;
-  }
-
   &__header {
     background-color: #5377af;
     color: #FFF;
@@ -29,25 +14,22 @@
     font-weight: 900;
     padding: 10px 2px;
     text-align: center;
-    border: 1px solid #eee;
-    border-top: none;
+  }
+
+  &__box {
+    border: 1px solid #EEE;
+    border-top: 0;
   }
 
   &__content {
-    border: 1px solid #eee;
-    border-top: none;
-    border-bottom: none;
     height: 550px;
-    padding-top: 12px;
+    padding: 14px 12px;
     z-index: 1001;
-
-    @include desktop {
-      padding: 12px;
-    }
   }
 
   &__item {
     height: 97px;
+    padding: 4px 12px;
     overflow: hidden;
 
     header {
@@ -62,6 +44,7 @@
       font-size: 14px;
       line-height: 21px;
       max-height: 42px;
+      margin: 0;
       overflow: hidden;
     }
   }

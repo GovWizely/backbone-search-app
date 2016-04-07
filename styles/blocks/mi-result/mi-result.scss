@@ -1,0 +1,33 @@
+.mi-result {
+  padding-left: 5px;
+
+  >:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  >li {
+    list-style-type: none;
+    margin-bottom: 6px;
+  }
+
+  &__item {
+    padding: 4px 12px;
+
+    a {
+      color: #A92525;
+    }
+
+    header {
+      font-size: 22px;
+      line-height: 33px;
+
+      a {
+        color: #226DAF;
+      }
+    }
+
+    p {
+      margin : 15px 0;
+    }
+  }
+}

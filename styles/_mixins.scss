@@ -8,3 +8,9 @@ $breakpoint-xlarge: 1220px !default;
     @content;
   }
 }
+
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  @include transform(translateY(-50%));
+}

@@ -16,21 +16,27 @@ const Result = ({ api, findTemplate, onPaging, query, result, window }) => {
   const template = findTemplate(api.uniqueId).ResultItem;
   return (
     <div className="mi-search__result">
-      <Message
-        apiName={ api.displayName }
-        keyword={ query.q }
-        total={ result.metadata.total }
-      />
+      <div className="mi-search__search-message-container">
+        <Message
+          apiName={ api.displayName }
+          keyword={ query.q }
+          total={ result.metadata.total }
+        />
+      </div>
 
-      <ResultList items={ result.items } template={ template } />
+      <div className="mi-search__result-list-container">
+        <ResultList items={ result.items } template={ template } />
+      </div>
 
-      <Pagination
-        currentOffset={ result.metadata.offset }
-        displayedPages={ displayablePages(window.innerWidth) }
-        items={ result.metadata.total }
-        itemsOnPage={ 10 }
-        onClick={ onPaging }
-      />
+      <div className="mi-search__pagination-container">
+        <Pagination
+          currentOffset={ result.metadata.offset }
+          displayedPages={ displayablePages(window.innerWidth) }
+          items={ result.metadata.total }
+          itemsOnPage={ 10 }
+          onClick={ onPaging }
+        />
+      </div>
     </div>
   );
 };

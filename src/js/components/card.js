@@ -31,7 +31,7 @@ const View = ({ displayedItems, isFetching, items, label, template }) => {
   if (!items.length) return verticalAlignMiddle(noMatch(label));
 
   return (
-    <div className="mi-content">
+    <div className="mi-card__content">
       <ResultList
         displayedItems={ displayedItems }
         items={ items }
@@ -52,17 +52,19 @@ const Card = ({ isFetching, displayedItems, items, label, onClick, template }) =
   <section className="mi-card">
     <header className="mi-card__header" title={ label }>{ label }</header>
 
-    <View
-      displayedItems={ displayedItems }
-      isFetching={ isFetching }
-      items={ items }
-      label={ label }
-      template={ template }
-    />
+    <div className="mi-card__box">
+      <View
+        displayedItems={ displayedItems }
+        isFetching={ isFetching }
+        items={ items }
+        label={ label }
+        template={ template }
+      />
 
-    <footer className="mi-card__footer">
-      <a onClick={ onClick }>See More { label }</a>
-    </footer>
+      <footer className="mi-card__footer">
+        <a onClick={ onClick }>See More { label }</a>
+      </footer>
+    </div>
   </section>
 );
 Card.propTypes = {

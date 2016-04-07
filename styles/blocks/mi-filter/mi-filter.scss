@@ -1,9 +1,12 @@
 .mi-filter {
+  @include user-select(none);
+
   &__header {
     font-size: 15px;
     margin-bottom: 5px;
 
-    &__link {
+    a {
+      color: $blue-color;
       font-size: 12px;
     }
   }

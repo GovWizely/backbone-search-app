@@ -1,13 +1,32 @@
-@import "../../mixins";
-
 .mi-search {
+  padding-bottom: 60px;
+
   &__bucket-list-container {
     @include desktop {
       margin-left: 300px;
     }
   }
 
-  &__deck-container, &__filter-container {
+  &__content-container {
+  }
+
+  &__deck-container {
+    .mi-card {
+      margin-bottom: 16px;
+
+      @include desktop {
+        float: left;
+        margin: 14px 0 16px 14px;
+        min-width: 414px;
+        max-width: 460px;
+        width: 44%;
+      }
+    }
+  }
+
+  &__filter-container {
+    display: none;
+
     @include desktop {
       border-right: 1px solid $border-color;
       display: block;
@@ -44,7 +63,6 @@
 
         &__submit {
           width: 34px;
-
         }
 
         &__submit__button {
@@ -58,13 +76,29 @@
   }
 
   &__main-container {
+
     border-top: 1px solid $border-color;
     padding-top: 20px;
     margin: 0 auto;
     width: 96%;
 
+    @include clearfix;
     @include desktop {
       margin-left: 27px;
+    }
+  }
+
+  &__pagination-container {
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 0;
+
+    @include desktop {
+      padding-left: 0;
+    }
+
+    ul {
+      padding: 0;
     }
   }
 
@@ -73,6 +107,28 @@
 
     @include desktop {
       margin-left: 300px;
+    }
+  }
+
+  &__result-list-container {
+    @include desktop {
+      margin-top: 20px;
+    }
+  }
+
+  &__search-message-container {
+    display: none;
+
+    @include desktop {
+      display: block;
+    }
+  }
+
+  &__spinner-container {
+    height: 350px;
+
+    .mi-spinner {
+      @include vertical-align();
     }
   }
 }

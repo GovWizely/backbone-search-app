@@ -18,7 +18,7 @@ class Bucket extends React.Component {
       'mi-bucket-list__item';
     return (
       <li className={ className }>
-        <a onClick={ this._onClick }>{ label }</a>
+        <a className="mi-bucket-list__item__link" onClick={ this._onClick }>{ label }</a>
       </li>
     );
   }

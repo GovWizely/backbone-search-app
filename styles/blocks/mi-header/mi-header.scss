@@ -1,0 +1,12 @@
+.mi-header {
+  font-weight: 700;
+
+  &__title {
+    color: $header-color;
+  }
+
+  &__version {
+    color: $blue-color;
+    margin-left: 8px;
+  }
+}

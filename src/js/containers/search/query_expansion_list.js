@@ -13,7 +13,9 @@ class QueryExpansionTerm extends React.Component {
   render() {
     const { label } = this.props;
     return (
-      <li><a onClick={ this._onClick }>{ label }</a></li>
+      <li className="mi-query-expansion__list__item">
+        <a onClick={ this._onClick }>{ label }</a>
+      </li>
     );
   }
 }
@@ -36,8 +38,8 @@ const QueryExpansion = ({ onClick, queryExpansions }) => {
 
   if (isEmpty(terms)) return <noscript />;
   return (
-    <div className="animated fadeIn">Expand Search To:
-      <ul className="mi-query-expansion-list">
+    <div className="mi-query-expansion">Expand Search To:
+      <ul className="mi-query-expansion__list">
         { terms }
       </ul>
     </div>

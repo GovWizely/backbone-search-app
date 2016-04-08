@@ -104,9 +104,13 @@
 
   &__query-expansion-list-container {
     min-height: 40px;
-
     @include desktop {
-      margin-left: 300px;
+      margin-left: 294px;
+    }
+
+    .mi-query-expansion {
+      margin: 0;
+      padding: 10px 0 10px 0;
     }
   }
 

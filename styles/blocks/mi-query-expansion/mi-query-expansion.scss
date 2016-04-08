@@ -1,0 +1,12 @@
+.mi-query-expansion {
+  &__list {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+
+    &__item {
+      display: inline-block;
+      padding-left: 12px;
+    }
+  }
+}

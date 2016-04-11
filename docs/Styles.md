@@ -19,11 +19,9 @@ Naming convention of classes are loosely based on [BEM](https://en.bem.info/).
     }
 ```
 
-## React Components
+## [Blocks](/styles/blocks)
 
-Every React component has its own stylesheet of the same name in `src/scss/components`, and its own CSS class, to reduce the possibility of being overridden.
-
-To include a new React component CSS class into the build, edit `src/scss/style.scss`.
+Every block is prefixed with a `mi-` to avoid conflicts for CSS class names. Every React container and component has its own CSS block.
 
 ## Icon Fonts
 

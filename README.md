@@ -6,17 +6,16 @@ This is a [React](https://facebook.github.io/react/)+[Redux](http://redux.js.org
 
 1. Install `node`. (Follow this [guide](https://nodejs.org/en/download/package-manager/).)
 
-2. Install `bower`, `gulp` and `eslint`:
+2. Install `gulp` and `eslint`:
 
 ```sh
-  $ npm install --global bower gulp eslint
+  $ npm install --global gulp eslint
 ```
 
 3. Prepare the project:
 
 ```sh
   $ npm install
-  $ bower install
 ```
 
 4. Launching the development server:

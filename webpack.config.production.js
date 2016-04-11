@@ -7,6 +7,7 @@ var base = require('./webpack.config.base');
 module.exports = assign({}, base, {
   devtool: 'source-map',
   entry: [
+    'babel-polyfill',
     './src/index'
   ],
   plugins: [

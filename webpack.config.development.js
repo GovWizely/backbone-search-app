@@ -12,6 +12,7 @@ var definePlugin = new webpack.DefinePlugin({
 module.exports = assign({}, base, {
   devtool: 'cheap-module-eval-source-map',
   entry: [
+    'babel-polyfill',
     'webpack-hot-middleware/client',
     './src/index'
   ],

@@ -11,9 +11,8 @@ module.exports = {
     'babel-polyfill',
     './src/index'
   ],
-  index: path.join(__dirname, 'index.html'),
   output: {
-    path: path.join(__dirname, 'dist', 'production'),
+    path: path.join(__dirname, 'dist', 'staging'),
     filename: 'bundle.js'
   },
   plugins: [
@@ -22,8 +21,8 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
         'TRADE_API': {
-          KEY: JSON.stringify('hSLqwdFz1U25N3ZrWpLB-Ld4'),
-          HOST: JSON.stringify('https://api.trade.gov')
+          KEY: JSON.stringify('0ooVzDG3pxt0azCL9uUBMYLS'),
+          HOST: JSON.stringify('https://api.govwizely.com')
         }
       }
     }),

@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
 
@@ -5,8 +6,7 @@ module.exports = function(config) {
   var app = express();
   var compiler = webpack(config);
   app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
+    noInfo: true
   }));
 
   app.use(require('webpack-hot-middleware')(compiler));

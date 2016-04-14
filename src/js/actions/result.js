@@ -67,7 +67,6 @@ function createFetch(api, dispatch, getState) {
     dispatch(requestResults(api));
     return fetch(formatEndpoint(api.endpoint, params))
       .then(response => {
-        if (response.status !== 200) throw new Error('Bad response from server');
         return response.json();
       })
       .then(json => {

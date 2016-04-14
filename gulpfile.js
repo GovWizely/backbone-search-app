@@ -3,39 +3,60 @@ var gulp = require('gulp'),
     path = require('path'),
     webpack = require('webpack-stream');
 
+function build(stage) {
+  var config = require('./webpack.config.' + stage);
+  const envs = env.set({
+    NODE_ENV: stage
+  });
+  return gulp.src(config.entry)
+    .pipe(envs)
+    .pipe(webpack(config))
+    .pipe(gulp.dest(config.output.path));
+}
+
+function clean(cb, stage) {
+  var rimraf = require('rimraf');
+  var config = require('./webpack.config.' + stage);
+  rimraf(config.output.path, cb);
+}
+
 gulp.task('start', function() {
   var devServer = require('./task/server');
   var config = require('./webpack.config.development');
   devServer(config);
 });
 
-gulp.task('build', ['clean'], function() {
-  var config = require('./webpack.config.production');
-  const envs = env.set({
-    NODE_ENV: 'production'
-  });
-  return gulp.src(config.entry)
-    .pipe(envs)
-    .pipe(webpack(config))
-    .pipe(gulp.dest(config.output.path));
+gulp.task('build', ['build:staging', 'build:production']);
+
+gulp.task('build:production', ['clean:production'], function() {
+  return build('production');
 });
 
-gulp.task('clean', function(cb) {
-  var rimraf = require('rimraf');
-  var config = require('./webpack.config.production');
-  rimraf(config.output.path, cb);
+gulp.task('clean:production', function(cb) {
+  return clean(cb, 'staging');
 });
 
-gulp.task('deploy', ['build'], function() {
+gulp.task('build:staging', ['clean:staging'], function() {
+  return build('staging');
+});
+
+gulp.task('clean:staging', function(cb) {
+  return clean(cb, 'staging');
+});
+
+gulp.task('github', function() {
+  return gulp.src(path.join(__dirname, 'public', 'index.html'))
+    .pipe(gulp.dest(path.join(__dirname, 'dist')));
+});
+
+gulp.task('deploy', ['build', 'github'], function() {
   var ghPages = require('gulp-gh-pages');
-  var config = require('./webpack.config.production');
-  return gulp.src(path.join(config.output.path, '**/*'))
+  return gulp.src(path.join(__dirname, 'dist', '**/*'))
     .pipe(ghPages());
 });
 
 gulp.task('lint', function() {
   var eslint = require('gulp-eslint');
-  var config = require('./webpack.config.base');
   return gulp.src(path.join(__dirname, 'src/**/*.js'))
     .pipe(eslint())
     .pipe(eslint.format())

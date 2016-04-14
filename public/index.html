@@ -1,8 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
+  <head>
+    <title>Market Intelligence Search App</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:400&subset=latin,latin-ext">
+
+    <style type="text/css">
+     body {
+       font-family: 'Lato', san-serif;
+       padding-top: 4em;
+       text-align: center;
+     }
+     header {
+       font-size: 45px;
+       margin: 0 auto;
+       width: 530px;
+     }
+     .wrapper {
+       margin: 0 auto;
+       text-align: center;
+       width: 300px;
+     }
+     a {
+       display: block;
+       margin: 40px;
+       padding: 20px;
+       text-decoration: none;
+     }
+
+     a.staging {
+       background-color: #EAB88F;
+       color: #333;
+     }
+
+     a.staging:hover{
+       background-color: #B37D51;
+       color: #333;
+     }
+
+     a.production {
+       background-color: #C2E087;
+       color: #444;
+     }
+
+     a.production:hover {
+       background-color: #75923C;
+       color: #444;
+     }
+    </style>
+  </head>
   <body>
-    <a href="staging/">Staging</a>
-    <a href="production/">Production</a>
+    <header>Market Intelligence Search</header>
+    <div class="wrapper">
+
+      <a class="staging" href="staging/">Staging</a>
+      <a class="production" href="production/">Production</a>
+    </div>
   </body>
 </html>

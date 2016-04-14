@@ -1,4 +1,4 @@
-import { filter } from 'lodash';
+import { filter, omit } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -22,7 +22,7 @@ class App extends React.Component {
     window.removeEventListener('resize', this.props.onResize);
   }
   render() {
-    return React.cloneElement(this.props.children, this.props);
+    return React.cloneElement(this.props.children, omit(this.props, ['children']));
   }
 }
 App.propTypes = {

@@ -1,11 +1,10 @@
-require('./styles/header.scss');
-
 import React from 'react';
 
 const Header = () => (
   <header className="mi-header">
     <a href="#">
-      Market Intelligence Search <span className="mi-header--version">beta</span>
+      <span className="mi-header__title">Market Intelligence Search</span>
+      <span className="mi-header__version">beta</span>
     </a>
   </header>
 );

@@ -37,7 +37,7 @@ const Filter = ({ filters, onChange, onClear, query }) => {
       <div className="mi-filter">
         <header className="mi-filter__header">
           Filter Results
-          &nbsp;<a className="mi-filter__header__clear" onClick={ onClear }>[Clear All]</a>
+          &nbsp;<a className="mi-filter__header__link" onClick={ onClear }>[Clear All]</a>
         </header>
         { checkboxTrees }
       </div>

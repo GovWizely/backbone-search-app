@@ -1,22 +1,21 @@
 # Market Intelligence Search App
 
-This is a React+Flux front-end JS app which provides a search UI to export.gov's Market Intelligence API.
+This is a [React](https://facebook.github.io/react/)+[Redux](http://redux.js.org/) front-end JS app which provides a search UI to export.gov's Market Intelligence API.
 
 ## Getting Started
 
 1. Install `node`. (Follow this [guide](https://nodejs.org/en/download/package-manager/).)
 
-2. Install `bower`, `gulp` and `eslint`:
+2. Install `gulp` and `eslint`:
 
 ```sh
-  $ npm install --global bower gulp eslint
+  $ npm install --global gulp eslint
 ```
 
 3. Prepare the project:
 
 ```sh
   $ npm install
-  $ bower install
 ```
 
 4. Launching the development server:

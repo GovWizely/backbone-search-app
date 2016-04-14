@@ -28,9 +28,7 @@ const Deck = ({ apis, findTemplate, onClick, results }) => {
 
   return (
     <div className="mi-search__deck-container">
-      <div className="mi-deck">
-        { cards }
-      </div>
+      { cards }
     </div>
   );
 };

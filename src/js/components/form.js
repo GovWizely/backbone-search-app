@@ -1,5 +1,3 @@
-require('./styles/form.scss');
-
 import React, { PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 

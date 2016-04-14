@@ -1,0 +1,16 @@
+$breakpoint-small: 480px !default;
+$breakpoint-medium: 768px !default;
+$breakpoint-large: 960px !default;
+$breakpoint-xlarge: 1220px !default;
+
+@mixin desktop {
+  @media screen and (min-width: $breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  @include transform(translateY(-50%));
+}

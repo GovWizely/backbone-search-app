@@ -6,16 +6,6 @@ import Result from './result';
 import NoResult from './no_result';
 import Spinner from '../../components/spinner';
 
-function verticalAlignMiddle(component, height = 400) {
-  return (
-    <div className="uk-vertical-align" style={ { height }}>
-      <div className="uk-vertical-align-middle" style={ { width: '100%' } }>
-        { component }
-      </div>
-    </div>
-  );
-}
-
 function contentType(props) {
   const { results, selectedAPIs } = props;
 
@@ -65,7 +55,11 @@ const Content = ({ findTemplate, onPaging, onSelect, query, results, selectedAPI
     break;
 
   case 'loading':
-    content = verticalAlignMiddle(<Spinner />);
+    content = (
+      <div className="mi-search__spinner-container">
+        <Spinner />
+      </div>
+    );
     break;
 
   case 'noResult':
@@ -74,13 +68,7 @@ const Content = ({ findTemplate, onPaging, onSelect, query, results, selectedAPI
     break;
   }
 
-  return (
-    <div className="mi-search__content-container">
-      <div className="mi-search__content">
-        { content }
-      </div>
-    </div>
-  );
+  return content;
 };
 
 Content.propTypes = {

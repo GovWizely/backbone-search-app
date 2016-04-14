@@ -25,8 +25,8 @@ function transformResponse(response) {
 }
 
 function endpoint(path) {
-  const tradeAPIKey = 'hSLqwdFz1U25N3ZrWpLB-Ld4';
-  return `https://api.trade.gov/${path}/search?api_key=${tradeAPIKey}`;
+  const { KEY: tradeAPIKey, HOST: tradeAPIHost } = process.env.TRADE_API;
+  return `${tradeAPIHost}/${path}/search?api_key=${tradeAPIKey}`;
 }
 
 function defineTradeAPI(key, attributes = {}) {
@@ -80,5 +80,9 @@ module.exports = assign(
   }),
   defineTradeAPI('de_minimis', {
     endpoint: endpoint('v1/de_minimis')
+  }),
+  defineTradeAPI('tpp_rates', {
+    deckable,
+    endpoint: endpoint('v1/tpp_rates')
   })
 );

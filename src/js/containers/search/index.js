@@ -1,5 +1,3 @@
-require('./styles/index.scss');
-
 import assign from 'object-assign';
 import { reduce } from 'lodash';
 import React, { PropTypes } from 'react';
@@ -55,12 +53,14 @@ class Index extends React.Component {
             onChange={ onFilter } onClear={ onClearFilter }
             query={ query }
           />
-          <Content
-            findTemplate={ findTemplate }
-            onPaging={ onPaging } onSelect={ onSelect }
-            query={ query } results={ results } selectedAPIs={ selectedAPIs }
-            window={ window }
-          />
+          <div className="mi-search__content-container">
+            <Content
+              findTemplate={ findTemplate }
+              onPaging={ onPaging } onSelect={ onSelect }
+              query={ query } results={ results } selectedAPIs={ selectedAPIs }
+              window={ window }
+            />
+          </div>
         </div>
       </div>
     );
@@ -115,6 +115,7 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     onBucket: (apis) => {
       dispatch(selectAPIs(apis));
+      dispatch(updateQuery({ offset: 0 }));
       dispatch(invalidateAllFilters());
       dispatch(fetchResults());
       dispatch(updatePath());

@@ -1,5 +1,3 @@
-require('./styles/spinner.scss');
-
 import React, { PropTypes } from 'react';
 
 const Circle = () => (
@@ -26,7 +24,7 @@ const Spinner = ({ children, message }) => (
   </div>
 );
 Spinner.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.object,
   message: PropTypes.string
 };
 Spinner.defaultProps = {

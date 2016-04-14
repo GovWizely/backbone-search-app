@@ -1,14 +1,27 @@
 # Styles
 
-## [uikit](http://getuikit.com/)
+Naming convention of classes are loosely based on [BEM](https://en.bem.info/).
 
-uikit is used as the base for styling, customization of uikit can be done by editing `src/scss/_uikit.scss`.
+```css
+    // Base CSS for Header component
+    .mi-header { ... }
+    .mi-header__title { ... }
+    .mi-header__version { ... }
 
-## React Components
+    // Customize CSS for Header component in Index container
+    .mi-index {
+      ...
+      .mi-header {
+        font-size: 25px;
+        ...
+      }
+      ...
+    }
+```
 
-Every React component has its own stylesheet of the same name in `src/scss/components`, and its own CSS class, to reduce the possibility of being overridden.
+## [Blocks](/styles/blocks)
 
-To include a new React component CSS class into the build, edit `src/scss/style.scss`.
+Every block is prefixed with a `mi-` to avoid conflicts for CSS class names. Every React container and component has its own CSS block.
 
 ## Icon Fonts
 

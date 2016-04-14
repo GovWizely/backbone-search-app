@@ -1,5 +1,3 @@
-require('./styles/result_list.scss');
-
 import React, { PropTypes } from 'react';
 
 const ResultList = ({ displayedItems, items, template, options }) => {
@@ -9,7 +7,7 @@ const ResultList = ({ displayedItems, items, template, options }) => {
   ));
 
   return (
-    <ul className="mi-result-list">
+    <ul className="mi-result">
       { resultItems }
     </ul>
   );

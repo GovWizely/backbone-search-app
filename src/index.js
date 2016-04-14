@@ -1,6 +1,4 @@
-require('./scss/style.scss');
-require('./scss/animate.min.css');
-require('babel-polyfill');
+require('../styles/app.scss');
 require('es6-promise').polyfill();
 
 import React from 'react';
@@ -29,5 +27,5 @@ render(
       </Route>
     </Router>
   </Provider>,
-  document.getElementById('main')
+  document.getElementById('mi-app')
 );

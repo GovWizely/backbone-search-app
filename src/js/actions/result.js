@@ -66,10 +66,7 @@ function createFetch(api, dispatch, getState) {
     const params = preprocess(api, query);
     dispatch(requestResults(api));
     return fetch(formatEndpoint(api.endpoint, params))
-      .then(response => {
-        if (response.status !== 200) throw new Error('Bad response from server');
-        return response.json();
-      })
+      .then(response => response.json())
       .then(json => {
         const data = postprocess(api, json);
         dispatch(receiveResults(api, data));

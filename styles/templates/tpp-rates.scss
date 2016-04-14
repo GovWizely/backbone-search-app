@@ -1,0 +1,12 @@
+.mi-tpp-rates {
+  &__annual-rates {
+    border-collapse: collapse;
+    th, td {
+      border: 1px solid #ddd;
+      padding: 7px;
+    }
+    &__label {
+      font-weight: bold;
+    }
+  }
+}

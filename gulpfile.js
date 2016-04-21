@@ -55,6 +55,18 @@ gulp.task('deploy', ['build', 'github'], function() {
     .pipe(ghPages());
 });
 
+gulp.task('deploy:staging', ['build:staging', 'github'], function() {
+  var ghPages = require('gulp-gh-pages');
+  return gulp.src(path.join(__dirname, 'dist', '**/*'))
+    .pipe(ghPages());
+});
+
+gulp.task('deploy:production', ['build:production', 'github'], function() {
+  var ghPages = require('gulp-gh-pages');
+  return gulp.src(path.join(__dirname, 'dist', '**/*'))
+    .pipe(ghPages());
+});
+
 gulp.task('lint', function() {
   var eslint = require('gulp-eslint');
   return gulp.src(path.join(__dirname, 'src/**/*.js'))

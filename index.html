@@ -11,4 +11,15 @@
   <body style="height: 100%; margin: 0">
     <section id="mi-app" class="mi-app"></section>
   </body>
+  <script type="text/javascript">
+   var options = {
+     apis: {
+       articles: true,
+       trade_events: true,
+       trade_leads: true,
+       ita_faqs: true
+     }
+   };
+   MarketIntelligenceSearchApp.render('mi-app', options);
+  </script>
 </html>

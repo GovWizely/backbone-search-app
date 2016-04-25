@@ -5,6 +5,7 @@ import * as actions from '../src/js/actions';
 describe('reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).to.eql({
+      apis: {},
       filtersByAggregation: {},
       form: {},
       notifications: {},
@@ -17,9 +18,10 @@ describe('reducer', () => {
       resultsByAPI: {},
       routing: {
         changeId: 1,
-        path: "blank"
+        path: 'blank'
       },
       selectedAPIs: [],
+      ui: {},
       window: {}
     });
   });
@@ -31,7 +33,7 @@ describe('reducer', () => {
         meta: 'countries'
       }).filtersByAggregation).to.eql({
         countries: {
-        invalidated: false,
+          invalidated: false,
           isFetching: true,
           items: {}
         }
@@ -162,7 +164,7 @@ describe('reducer', () => {
   });
 
   it('should handle SELECT_APIS', () => {
-    const payload = [{ uniqueId: 'articles' }];
+    const payload = ['uniqueId'];
     expect(reducer(undefined, {
       type: actions.SELECT_APIS, payload
     }).selectedAPIs).to.eql(payload);

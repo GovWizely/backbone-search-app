@@ -1,4 +1,5 @@
 import assign from 'object-assign';
+import { reduce } from 'lodash';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { routeReducer } from 'redux-simple-router';
@@ -13,6 +14,9 @@ import { UPDATE_WINDOW } from './actions/window';
 import { UPDATE_QUERY, REPLACE_QUERY } from './actions/query';
 import { SELECT_APIS } from './actions/api';
 
+function apis(state = {}) {
+  return state;
+}
 
 function filters(state = {
   invalidated: false,
@@ -149,6 +153,10 @@ function selectedAPIs(state = [], action) {
   }
 }
 
+function ui(state = {}) {
+  return state;
+}
+
 function window(state = {}, action) {
   switch (action.type) {
   case UPDATE_WINDOW:
@@ -159,6 +167,7 @@ function window(state = {}, action) {
 }
 
 const reducer = combineReducers({
+  apis,
   filtersByAggregation,
   form: formReducer,
   notifications,
@@ -167,6 +176,7 @@ const reducer = combineReducers({
   resultsByAPI,
   routing: routeReducer,
   selectedAPIs,
+  ui,
   window
 });
 

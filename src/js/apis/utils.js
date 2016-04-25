@@ -13,7 +13,7 @@ function createTypeChecker(expectedType) {
   return (key, attrName, value) => {
     let actualType = typeof value;
     if (Array.isArray(value)) actualType = 'array';
-    if (actualType === expectedType) return false;
+    if (actualType === expectedType) return;
 
     throw new Error(
       `Invalid \`${attrName}\` of type \`${actualType}\` ` +

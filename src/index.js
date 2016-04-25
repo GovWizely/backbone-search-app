@@ -4,28 +4,22 @@ require('es6-promise').polyfill();
 import React from 'react';
 import { render } from 'react-dom';
 import { createHashHistory as createHistory } from 'history';
-import { Router, Route } from 'react-router';
-import { Provider } from 'react-redux';
 import { syncReduxAndRouter } from 'redux-simple-router';
-
-import App from './js/containers/app';
-import Index from './js/containers/index';
-import Search from './js/containers/search';
 import configureStore from './js/store/configureStore';
+import Root from './js/containers/Root';
 
-const history = createHistory({ });
-const store = configureStore();
+function renderToElement(elementId, options) {
+  const history = createHistory({ });
+  const store = configureStore(options);
 
-syncReduxAndRouter(history, store);
+  syncReduxAndRouter(history, store);
+  render(
+    <Root history={history} store={store} />,
+    document.getElementById(elementId)
+  );
+}
 
-render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Route component={App}>
-        <Route path="/" component={Index} />
-        <Route path="search(/:api)" component={Search} />
-      </Route>
-    </Router>
-  </Provider>,
-  document.getElementById('mi-app')
-);
+export default renderToElement;
+window.MarketIntelligenceSearchApp = {
+  render: renderToElement
+};

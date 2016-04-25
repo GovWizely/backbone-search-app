@@ -19,9 +19,9 @@ const Page = ({ className, isActive, isVisible, label, offset, onClick, title })
     'mi-pagination__item mi-pagination__item--active' :
     'mi-pagination__item';
   return (
-    <li className={ itemClassName }>
-      <a className={ className } data-offset={ offset } onClick={ onClick } title={ title }>
-        { label }
+    <li className={itemClassName}>
+      <a className={className} data-offset={offset} onClick={onClick} title={title}>
+        {label}
       </a>
     </li>
   );
@@ -55,52 +55,52 @@ const Pagination = ({ currentOffset, displayedPages, items, itemsOnPage, onClick
     <Page
       key="first"
       className="mi-icon mi-icon-angle-double-left"
-      isVisible={ currentPage !== 0 }
-      offset={ 0 }
-      onClick={ onClick }
+      isVisible={currentPage !== 0}
+      offset={0}
+      onClick={onClick}
       title="First Page"
     />,
     <Page
       key="prev"
       className="mi-icon mi-icon-angle-left"
-      isVisible={ currentPage !== 0 }
-      offset={ prevPage * itemsOnPage }
-      onClick={ onClick }
+      isVisible={currentPage !== 0}
+      offset={prevPage * itemsOnPage}
+      onClick={onClick}
       title="Previous Page"
     />,
 
     map(pageRange, (index) => (
       <Page
-        key={ index }
-        isActive={ currentPage === index }
-        label={ `${index + 1}` }
-        offset={ index * itemsOnPage }
-        onClick={ onClick }
-        title={ `Page #${index + 1}` }
+        key={index}
+        isActive={currentPage === index}
+        label={`${index + 1}`}
+        offset={index * itemsOnPage}
+        onClick={onClick}
+        title={`Page #${index + 1}`}
       />
     )),
 
     <Page
       key="next"
       className="mi-icon mi-icon-angle-right"
-      isVisible={ currentPage !== pages - 1 }
-      offset={ nextPage * itemsOnPage }
-      onClick={ onClick }
+      isVisible={currentPage !== pages - 1}
+      offset={nextPage * itemsOnPage}
+      onClick={onClick}
       title="Next Page"
     />,
     <Page
       key="last"
       className="mi-icon mi-icon-angle-double-right"
-      isVisible={ currentPage !== pages - 1 }
-      offset={ (pages - 1) * itemsOnPage }
-      onClick={ onClick }
+      isVisible={currentPage !== pages - 1}
+      offset={(pages - 1) * itemsOnPage}
+      onClick={onClick}
       title="Last Page"
     />
   ];
 
   return (
     <ul className="mi-pagination">
-      { pageList }
+      {pageList}
     </ul>
   );
 };

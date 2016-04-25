@@ -5,16 +5,16 @@ import {
 import React, { PropTypes } from 'react';
 
 const Checkbox = ({ checked, disabled, item, nestedList }) => (
-  <li role="treeitem" className="mi-checkbox-tree__list__item" key={ item }>
-    <label htmlFor={ item }>
+  <li role="treeitem" className="mi-checkbox-tree__list__item" key={item}>
+    <label htmlFor={item}>
       <input
-        id={ item }
-        type="checkbox" value={ item } readOnly disabled={ disabled }
-        checked={ checked } aria-checked={ checked }
+        id={item}
+        type="checkbox" value={item} readOnly disabled={disabled}
+        checked={checked} aria-checked={checked}
       />
-      <span>&nbsp; { item }</span>
+      <span>&nbsp; {item}</span>
     </label>
-    { nestedList }
+    {nestedList}
   </li>
 );
 Checkbox.propTypes = {
@@ -30,20 +30,20 @@ const List = ({ items, disabled, values }) => {
   const checkboxes = map(keys(items), (item) => {
     const nestedList =
       items[item] ?
-        <List items={ items[item] } disabled={ disabled } values={ values } /> : null;
+        <List items={items[item]} disabled={disabled} values={values} /> : null;
     const checked = includes(values, item);
     return (
       <Checkbox
-        key={ item }
-        item={ item }
-        checked={ checked }
-        disabled={ disabled }
-        nestedList={ nestedList }
+        key={item}
+        item={item}
+        checked={checked}
+        disabled={disabled}
+        nestedList={nestedList}
       />
     );
   });
   return (
-    <ul role="tree" className="mi-checkbox-tree__list">{ checkboxes }</ul>
+    <ul role="tree" className="mi-checkbox-tree__list">{checkboxes}</ul>
   );
 };
 List.propTypes = {
@@ -127,8 +127,8 @@ class CheckboxTree extends React.Component {
     if (keys(items).length <= itemLimit) return null;
 
     return (
-      <a href="#" onClick={ this.toggleShowAll } className="mi-checkbox-tree__expand">
-        + See { showAllText }
+      <a href="#" onClick={this.toggleShowAll} className="mi-checkbox-tree__expand">
+        + See {showAllText}
       </a>
     );
   }
@@ -143,25 +143,25 @@ class CheckboxTree extends React.Component {
 
     const view = visible ? (
       <div>
-        <List disabled={ disabled } items={ visibleItems } values={ values } />
-        { this.showAllLink() }
+        <List disabled={disabled} items={visibleItems} values={values} />
+        {this.showAllLink()}
       </div>
     ) : null;
 
     return (
       <section
         className="mi-checkbox-tree"
-        data-name={ name }
-        data-disabled={ disabled }
-        onClick={ this.handleClick }
+        data-name={name}
+        data-disabled={disabled}
+        onClick={this.handleClick}
       >
         <fieldset className="mi-checkbox-tree__fieldset">
           <legend className="mi-checkbox-tree__header">
-            <a role="button" onClick={ this.toggleCollapse } href="#">
-              <i className={ hrefCSS }></i>&nbsp; { label }
+            <a role="button" onClick={this.toggleCollapse} href="#">
+              <i className={hrefCSS}></i>&nbsp; {label}
             </a>
           </legend>
-          { view }
+          {view}
         </fieldset>
       </section>
     );

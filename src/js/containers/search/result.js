@@ -18,23 +18,23 @@ const Result = ({ api, findTemplate, onPaging, query, result, window }) => {
     <div className="mi-search__result">
       <div className="mi-search__search-message-container">
         <Message
-          apiName={ api.displayName }
-          keyword={ query.q }
-          total={ result.metadata.total }
+          apiName={api.displayName}
+          keyword={query.q}
+          total={result.metadata.total}
         />
       </div>
 
       <div className="mi-search__result-list-container">
-        <ResultList items={ result.items } template={ template } />
+        <ResultList items={result.items} template={template} />
       </div>
 
       <div className="mi-search__pagination-container">
         <Pagination
-          currentOffset={ result.metadata.offset }
-          displayedPages={ displayablePages(window.innerWidth) }
-          items={ result.metadata.total }
-          itemsOnPage={ 10 }
-          onClick={ onPaging }
+          currentOffset={result.metadata.offset}
+          displayedPages={displayablePages(window.innerWidth)}
+          items={result.metadata.total}
+          itemsOnPage={10}
+          onClick={onPaging}
         />
       </div>
     </div>

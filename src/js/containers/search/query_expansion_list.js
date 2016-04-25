@@ -14,7 +14,7 @@ class QueryExpansionTerm extends React.Component {
     const { label } = this.props;
     return (
       <li className="mi-query-expansion__list__item">
-        <a onClick={ this._onClick }>{ label }</a>
+        <a onClick={this._onClick}>{label}</a>
       </li>
     );
   }
@@ -33,14 +33,14 @@ const QueryExpansion = ({ onClick, queryExpansions }) => {
   let terms = map(items.world_regions, (region) => {
     const key = keys(region)[0];
     const value = region[key];
-    return <QueryExpansionTerm key={ key } label={ key } onClick={ onClick } value={ value } />;
+    return <QueryExpansionTerm key={key} label={key} onClick={onClick} value={value} />;
   });
 
   if (isEmpty(terms)) return <noscript />;
   return (
     <div className="mi-query-expansion">Expand Search To:
       <ul className="mi-query-expansion__list">
-        { terms }
+        {terms}
       </ul>
     </div>
   );

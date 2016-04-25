@@ -17,7 +17,7 @@ class Index extends React.Component {
           <Header />
         </div>
         <div className="mi-index__form-container">
-          <Form focused onSubmit={ this.props.onSubmit } />
+          <Form focused onSubmit={this.props.onSubmit} />
         </div>
       </div>
     );

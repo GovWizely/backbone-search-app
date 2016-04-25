@@ -6,19 +6,19 @@ const Card = ({ isFetching, displayedItems, items, label, onClick, template }) =
 
   return (
     <section className="mi-card">
-      <header className="mi-card__header" title={ label }>{ label }</header>
+      <header className="mi-card__header" title={label}>{label}</header>
 
       <div className="mi-card__box">
         <div className="mi-card__content">
           <ResultList
-            displayedItems={ displayedItems }
-            items={ items }
-            template={ template }
+            displayedItems={displayedItems}
+            items={items}
+            template={template}
           />
         </div>
 
         <footer className="mi-card__footer">
-          <a onClick={ onClick }>See More { label }</a>
+          <a onClick={onClick}>See More {label}</a>
         </footer>
       </div>
     </section>

@@ -8,6 +8,7 @@ export const ita_faqs = {
       <header>
         <a href={ url } dangerouslySetInnerHTML={ { __html: question } }></a>
       </header>
+      <p><a href={ url }>{ url }</a></p>
       <p dangerouslySetInnerHTML={ { __html: answer } }></p>
     </article>
   ),

@@ -16,7 +16,9 @@
   ],
   "rules": {
     "comma-dangle": [2, "never"],
+    "global-require": 0,
     "indent": [2, 2],
+    "no-underscore-dangle": 0,
     "quote-props": [2, "consistent-as-needed"],
     "react/sort-prop-types": 1
   }

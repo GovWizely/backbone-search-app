@@ -1,5 +1,5 @@
 import assign from 'object-assign';
-import { isUndefined, snakeCase, startCase } from 'lodash';
+import { forEach, isUndefined, snakeCase, startCase } from 'lodash';
 
 function verbatim(value) {
   return value;
@@ -83,10 +83,8 @@ export function defineAPI(uniqueId, attributes) {
   }
   const config = assign({}, attributes);
 
-  for (const attrName in ATTRIBUTES) {
-    if (!{}.hasOwnProperty.call(ATTRIBUTES, attrName)) continue;
-
-    const attr = ATTRIBUTES[attrName];
+  forEach(ATTRIBUTES, (attr, attrName) => {
+    if (!{}.hasOwnProperty.call(ATTRIBUTES, attrName)) return;
 
     if (attr.isRequired && !config[attrName]) {
       throw new Error(
@@ -100,13 +98,12 @@ export function defineAPI(uniqueId, attributes) {
       } else if (!isUndefined(attr.defaultValue)) {
         config[attrName] = attr.defaultValue;
       } else {
-        continue;
+        return;
       }
     }
 
-    const typeMismatched = attr.type(uniqueId, attrName, config[attrName]);
-    if (typeMismatched) return typeMismatched;
-  }
+    attr.type(uniqueId, attrName, config[attrName]);
+  });
 
   uniqueIds[uniqueId] = true;
   return { [uniqueId]: config };

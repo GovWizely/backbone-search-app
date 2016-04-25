@@ -96,8 +96,8 @@
   },
   "scripts": {
     "build": "npm run clean:staging && npm run clean:production && npm run build:webpack",
-    "build:production": "NODE_ENV=production webpack --config webpack.config.production.js",
-    "build:staging": "NODE_ENV=staging webpack --config webpack.config.staging.js",
+    "build:production": "NODE_ENV=production webpack --config webpack.config/production.js",
+    "build:staging": "NODE_ENV=staging webpack --config webpack.config/staging.js",
     "clean:production": "rimraf dist/production",
     "clean:staging": "rimraf dist/production",
     "clean:development": "rimraf dist/production",

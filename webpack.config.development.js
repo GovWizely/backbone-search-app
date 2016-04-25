@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-var assign = require('object-assign');
 var bourbon = require('node-bourbon').includePaths;
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 

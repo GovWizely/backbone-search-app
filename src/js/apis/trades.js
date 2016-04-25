@@ -82,7 +82,6 @@ module.exports = assign(
     endpoint: endpoint('v1/de_minimis')
   }),
   defineTradeAPI('tpp_rates', {
-    deckable,
     endpoint: endpoint('v1/tpp_rates')
   })
 );

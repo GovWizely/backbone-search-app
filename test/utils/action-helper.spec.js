@@ -53,7 +53,7 @@ describe('action-helper', () => {
   describe('#formatParams', () => {
     it('should format params successfully', () => {
       const permittedParams = ['q', 'countries'];
-      const params = { q: 'test', countries: [1, 2, 3, 4], invalid: 'test' };
+      const params = { q: 'test', countries: [1, 2, 3, 4] };
       expect(helpers.formatParams(params, permittedParams)).to.eql({
         q: 'test', countries: '1,2,3,4'
       });
@@ -67,6 +67,16 @@ describe('action-helper', () => {
       expect(helpers.formatEndpoint(endpoint, params)).to.eql(
         'http://www.example.com/?q=test&countries=1&countries=2&countries=3&countries=4'
       );
+    });
+  });
+
+  describe('#permitParams', () => {
+    it('should remove unpermitted params successfully', () => {
+      const permittedParams = ['q', 'countries'];
+      const params = { q: 'test', countries: [1, 2, 3, 4], invalid: 'test' };
+      expect(helpers.permitParams(params, permittedParams)).to.eql({
+        q: 'test', countries: [1, 2, 3, 4]
+      });
     });
   });
 

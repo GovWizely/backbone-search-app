@@ -68,8 +68,8 @@ class Index extends React.Component {
 }
 
 Index.propTypes = {
-  availableAPIs: PropTypes.object.isRequired,
   defaultAPIs: PropTypes.array.isRequired,
+  enabledAPIs: PropTypes.object.isRequired,
   filters: PropTypes.object,
   location: PropTypes.object,
   notifications: PropTypes.object,
@@ -111,7 +111,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { availableAPIs, defaultAPIs } = ownProps;
+  const { defaultAPIs, enabledAPIs } = ownProps;
   return {
     onBucket: (apis) => {
       dispatch(selectAPIs(apis));
@@ -139,7 +139,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updatePath());
     },
     onLoaded: ({ apiName, query }) => {
-      const apis = availableAPIs[apiName] ? availableAPIs[apiName] : defaultAPIs;
+      const apis = enabledAPIs[apiName] ? enabledAPIs[apiName] : defaultAPIs;
       dispatch(replaceQuery(query));
       dispatch(selectAPIs(apis));
 

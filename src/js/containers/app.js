@@ -9,7 +9,7 @@ import { replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
 import { updateWindow } from '../actions/window';
 import { invalidateAllFilters } from '../actions/filter';
-import apis from '../apis';
+import { enableAPIs } from '../apis';
 
 class App extends React.Component {
   componentWillMount() {
@@ -33,14 +33,14 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { notifications, query, queryExpansions } = state;
-  const selectedAPIs = filter(apis, (api) => api.deckable);
+  const { apis, notifications, query } = state;
+  const enabledAPIs = enableAPIs(apis);
+  const selectedAPIs = filter(enabledAPIs, (api) => api.deckable);
   return {
-    availableAPIs: apis,
+    enabledAPIs,
     defaultAPIs: selectedAPIs,
     notifications,
     query,
-    queryExpansions,
     selectedAPIs,
     window: {}
   };

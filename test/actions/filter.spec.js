@@ -13,7 +13,7 @@ const state = {
 };
 
 const aggregation = 'countries';
-const payload = {  };
+const payload = { };
 
 describe('actions/filter', () => {
   it('should create an action to request filters', () => {
@@ -118,7 +118,7 @@ describe('actions/filter', () => {
       const expectedActions = [
         { type: actions.REQUEST_FILTERS, meta: 'industries' },
         { type: actions.RECEIVE_FILTERS, meta: 'industries',
-          payload: { v: {}, w: {}, x: {}, y: {}, z: {} }},
+          payload: { v: {}, w: {}, x: {}, y: {}, z: {} } },
       ];
       store.dispatch(actions.computeFiltersByAggregation(responses));
       expect(store.getActions()).to.eql(expectedActions);

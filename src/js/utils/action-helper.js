@@ -1,4 +1,4 @@
-import { pick, reduce } from 'lodash';
+import { forEach, pick, reduce } from 'lodash';
 import assign from 'object-assign';
 import Url from 'url';
 import { parseAsTree } from '../utils/aggregation-parser';
@@ -36,11 +36,15 @@ export function formatMetadata(json, formats) {
   );
 }
 
-export function formatParams(query, permittedParams) {
-  const params = pick(query, permittedParams);
-  for (const key in params) {
+export function permitParams(query, permittedParams) {
+  return pick(query, permittedParams);
+}
+
+export function formatParams(query) {
+  const params = query || {};
+  forEach(params, (value, key) => {
     if (Array.isArray(params[key])) params[key] = params[key].join(',');
-  }
+  });
   return params;
 }
 

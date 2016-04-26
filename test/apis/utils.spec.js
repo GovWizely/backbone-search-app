@@ -2,14 +2,14 @@ import { expect } from 'chai';
 
 import { defineAPI, resetUniqueIds } from '../../src/js/apis/utils';
 
-describe('apis/utils', ()=> {
+describe('apis/utils', () => {
   describe('#defineAPI', () => {
     afterEach(() => {
       resetUniqueIds();
     });
     const endpoint = 'http://www.example.com';
     it('should create a new API object', () => {
-      const api =  defineAPI('example', {
+      const api = defineAPI('example', {
         endpoint: 'http://www.example.com'
       });
       expect(api).to.eql({

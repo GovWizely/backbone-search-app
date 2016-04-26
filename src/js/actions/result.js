@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 
 import {
   formatAggregations, formatEndpoint, formatMetadata, formatParams,
-  noAction
+  noAction, permitParams
 } from '../utils/action-helper';
 import { computeFiltersByAggregation } from './filter';
 
@@ -36,13 +36,16 @@ export function failureResults(api, e) {
 }
 
 function preprocess(api, query) {
-  let params = {};
-  if (query) {
-    params = formatParams(query, api.permittedParams);
-  }
+  let params = query || {};
+
+  params = formatParams(params);
+
   if (api.transformParams) {
     params = api.transformParams(params);
   }
+
+  params = permitParams(params, api.permittedParams);
+
   if (!params.q) params.q = '';
 
   return params;

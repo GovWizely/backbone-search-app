@@ -6,7 +6,7 @@ describe('taxonomy', () => {
 
   describe('#country', () => {
     it('return abbreviations of countries', () => {
-      expect(countryToAbbr(names)).to.eql('ZM,ZW,US,GB');
+      expect(countryToAbbr(names)).to.eql('GB,US,ZM,ZW');
     });
   });
 });

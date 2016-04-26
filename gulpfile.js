@@ -44,12 +44,27 @@ gulp.task('clean:staging', function(cb) {
   return clean(cb, 'staging');
 });
 
+
+gulp.task('build:tpp_rates', ['clean:tpp_rates'], function() {
+  return build('tpp_rates');
+});
+
+gulp.task('clean:tpp_rates', function(cb) {
+  return clean(cb, 'tpp_rates');
+});
+
 gulp.task('github', function() {
   return gulp.src(path.join(__dirname, 'public', 'index.html'))
     .pipe(gulp.dest(path.join(__dirname, 'dist')));
 });
 
 gulp.task('deploy', ['build', 'github'], function() {
+  var ghPages = require('gulp-gh-pages');
+  return gulp.src(path.join(__dirname, 'dist', '**/*'))
+    .pipe(ghPages());
+});
+
+gulp.task('deploy:tpp_rates', ['build:tpp_rates', 'github'], function() {
   var ghPages = require('gulp-gh-pages');
   return gulp.src(path.join(__dirname, 'dist', '**/*'))
     .pipe(ghPages());

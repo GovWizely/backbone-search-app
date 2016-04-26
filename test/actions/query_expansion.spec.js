@@ -29,11 +29,11 @@ describe('actions/queryExpansion', () => {
         .get(`?api_key=${apiKey}&q=test`)
         .reply(200, { query_expansion: payload });
 
-      const expectedActions  = [
+      const expectedActions = [
         { type: actions.REQUEST_QUERY_EXPANSIONS },
         { type: actions.RECEIVE_QUERY_EXPANSIONS, payload }
       ];
-      const store = mockStore({ queryExpansions: { invalidated: true }});
+      const store = mockStore({ queryExpansions: { invalidated: true } });
       store.dispatch(actions.fetchQueryExpansionsIfNeeded({ q: 'test' }))
         .then(() => {
           expect(store.getActions()).to.eql(expectedActions);
@@ -44,7 +44,7 @@ describe('actions/queryExpansion', () => {
 
     context('if no keyword is specified', (done) => {
       it('should return without dispatching any action', () => {
-        const store = mockStore({ queryExpansions: { invalidated: true }});
+        const store = mockStore({ queryExpansions: { invalidated: true } });
         store.dispatch(actions.fetchQueryExpansionsIfNeeded({}))
           .then(() => {
             expect(store.getActions()).to.eql([]);

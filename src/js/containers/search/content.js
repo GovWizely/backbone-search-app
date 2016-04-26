@@ -33,10 +33,10 @@ const Content = ({ findTemplate, onPaging, onSelect, query, results, selectedAPI
   case 'deck':
     content = (
       <Deck
-        apis={matchedAPIs}
-        findTemplate={findTemplate}
-        onClick={onSelect}
-        results={results}
+        apis={ matchedAPIs }
+        findTemplate={ findTemplate }
+        onClick={ onSelect }
+        results={ results }
       />
     );
     break;
@@ -44,12 +44,12 @@ const Content = ({ findTemplate, onPaging, onSelect, query, results, selectedAPI
   case 'result':
     content = (
       <Result
-        api={matchedAPIs[0]}
-        findTemplate={findTemplate}
-        onPaging={onPaging}
-        query={query}
-        result={results[matchedAPIs[0].uniqueId]}
-        window={window}
+        api={ matchedAPIs[0] }
+        findTemplate={ findTemplate }
+        onPaging={ onPaging }
+        query={ query }
+        result={ results[matchedAPIs[0].uniqueId] }
+        window={ window }
       />
     );
     break;

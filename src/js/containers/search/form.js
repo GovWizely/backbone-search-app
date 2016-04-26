@@ -5,9 +5,9 @@ import ComponentForm from '../../components/form';
 const Form = ({ onSubmit, query }) => (
   <div className="mi-search__form">
     <ComponentForm
-      expanded={false}
-      onSubmit={onSubmit}
-      query={query}
+      expanded={ false }
+      onSubmit={ onSubmit }
+      query={ query }
     />
   </div>
 );

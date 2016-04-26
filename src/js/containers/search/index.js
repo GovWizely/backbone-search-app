@@ -34,31 +34,31 @@ class Index extends React.Component {
     return (
       <div id="search" className="mi-search">
 
-        <Notification notifications={notifications} />
+        <Notification notifications={ notifications } />
 
         <div className="mi-search__form-container">
-          <Form onSubmit={onSubmit} query={query} />
+          <Form onSubmit={ onSubmit } query={ query } />
           <div className="mi-search__query-expansion-list-container">
-            <QueryExpansionList onClick={onExpand} queryExpansions={queryExpansions} />
+            <QueryExpansionList onClick={ onExpand } queryExpansions={ queryExpansions } />
           </div>
         </div>
 
         <div className="mi-search__bucket-list-container">
-          <BucketList apis={defaultAPIs} onClick={onBucket} selectedAPIs={selectedAPIs} />
+          <BucketList apis={ defaultAPIs } onClick={ onBucket } selectedAPIs={ selectedAPIs } />
         </div>
 
         <div className="mi-search__main-container">
           <Filter
-            filters={filters}
-            onChange={onFilter} onClear={onClearFilter}
-            query={query}
+            filters={ filters }
+            onChange={ onFilter } onClear={ onClearFilter }
+            query={ query }
           />
           <div className="mi-search__content-container">
             <Content
-              findTemplate={findTemplate}
-              onPaging={onPaging} onSelect={onSelect}
-              query={query} results={results} selectedAPIs={selectedAPIs}
-              window={window}
+              findTemplate={ findTemplate }
+              onPaging={ onPaging } onSelect={ onSelect }
+              query={ query } results={ results } selectedAPIs={ selectedAPIs }
+              window={ window }
             />
           </div>
         </div>

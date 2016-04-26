@@ -6,22 +6,22 @@ const SearchMessage = ({ apiName, keyword, total }) => {
   if (total === null) return null;
 
   const message = [
-    <strong key="total" className="mi-search-message__count">{total} </strong>,
+    <strong key="total" className="mi-search-message__count">{ total } </strong>,
 
     <span key="message">
-      {pluralize('result', total)} from
-      the {apiName} were found
-      {isEmpty(keyword) ? '.' : ' for '}
+      { pluralize('result', total) } from
+      the { apiName } were found
+      { isEmpty(keyword) ? '.' : ' for ' }
     </span>,
 
     isEmpty(keyword) ?
       null :
-      <strong key="keyword" className="mi-search-message__keyword">{keyword}.</strong>
+      <strong key="keyword" className="mi-search-message__keyword">{ keyword }.</strong>
   ];
 
   return (
     <div className="mi-search-message">
-      {message}
+      { message }
     </div>
   );
 };

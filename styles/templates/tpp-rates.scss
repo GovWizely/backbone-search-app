@@ -1,6 +1,10 @@
 .mi-tpp-rates {
   position: relative;
 
+  &__header {
+    margin-right: 70px;
+  }
+
   &__annual-rates {
     border-collapse: collapse;
     th, td {

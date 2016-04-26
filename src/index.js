@@ -14,7 +14,7 @@ function renderToElement(elementId, options) {
 
   syncReduxAndRouter(history, store);
   render(
-    <Root history={history} store={store} />,
+    <Root history={ history } store={ store } />,
     document.getElementById(elementId)
   );
 }

@@ -15,20 +15,20 @@ const Deck = ({ apis, findTemplate, onClick, results }) => {
     const _onClick = onClick.bind(undefined, api);
     return (
       <Card
-        id={uniqueId}
-        isFetching={isFetching}
-        items={items}
-        key={uniqueId}
-        label={displayName}
-        template={template}
-        onClick={_onClick}
+        id={ uniqueId }
+        isFetching={ isFetching }
+        items={ items }
+        key={ uniqueId }
+        label={ displayName }
+        template={ template }
+        onClick={ _onClick }
       />
     );
   }));
 
   return (
     <div className="mi-search__deck-container">
-      {cards}
+      { cards }
     </div>
   );
 };

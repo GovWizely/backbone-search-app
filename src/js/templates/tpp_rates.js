@@ -51,7 +51,7 @@ class TPPRates extends React.Component {
     const expanderText = showRates ? 'Collapse' : 'Expand';
     return (
       <article className="mi-tpp-rates mi-result__item">
-        <header>
+        <header className="mi-tpp-rates__header">
           { subheading_description }
         </header>
         <p>HS Code: { tariff_line }</p>

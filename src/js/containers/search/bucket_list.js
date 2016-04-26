@@ -17,8 +17,8 @@ class Bucket extends React.Component {
       'mi-bucket-list__item mi-bucket-list__item--active' :
       'mi-bucket-list__item';
     return (
-      <li className={className}>
-        <a className="mi-bucket-list__item__link" onClick={this._onClick}>{label}</a>
+      <li className={ className }>
+        <a className="mi-bucket-list__item__link" onClick={ this._onClick }>{ label }</a>
       </li>
     );
   }
@@ -38,27 +38,27 @@ const BucketList = ({ apis, onClick, selectedAPIs }) => {
     const isActive = selectedAPIs.length === 1 && selectedAPIs[0].uniqueId === api.uniqueId;
     return (
       <Bucket
-        key={api.uniqueId}
-        apis={api}
-        isActive={isActive}
-        label={api.shortName || api.displayName}
-        onClick={onClick}
+        key={ api.uniqueId }
+        apis={ api }
+        isActive={ isActive }
+        label={ api.shortName || api.displayName }
+        onClick={ onClick }
       />
     );
   });
   buckets.unshift(
     <Bucket
       key="All"
-      apis={apis}
-      isActive={selectedAPIs.length > 1}
-      label={'All'}
-      onClick={onClick}
+      apis={ apis }
+      isActive={ selectedAPIs.length > 1 }
+      label={ 'All' }
+      onClick={ onClick }
     />
   );
 
   return (
     <ul className="mi-bucket-list">
-      {buckets}
+      { buckets }
     </ul>
   );
 };

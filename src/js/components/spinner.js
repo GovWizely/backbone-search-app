@@ -19,8 +19,8 @@ const Circle = () => (
 
 const Spinner = ({ children, message }) => (
   <div className="mi-spinner">
-    {children}
-    <div style={{ color: '#666', textAlign: 'center' }}>{message}</div>
+    { children }
+    <div style={ { color: '#666', textAlign: 'center' } }>{ message }</div>
   </div>
 );
 Spinner.propTypes = {

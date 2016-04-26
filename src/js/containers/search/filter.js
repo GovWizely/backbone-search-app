@@ -22,10 +22,10 @@ const Filter = ({ filters, onChange, onClear, query }) => {
 
     return (
       <CheckboxTree
-        key={key} name={key} label={startCase(key)}
-        items={filter.items} disabled={filter.invalidated || filter.isFetching}
-        onChange={onChange}
-        defaultValues={Array.isArray(values) ? values : [values]}
+        key={ key } name={ key } label={ startCase(key) }
+        items={ filter.items } disabled={ filter.invalidated || filter.isFetching }
+        onChange={ onChange }
+        defaultValues={ Array.isArray(values) ? values : [values] }
       />
     );
   });
@@ -35,9 +35,9 @@ const Filter = ({ filters, onChange, onClear, query }) => {
       <div className="mi-filter">
         <header className="mi-filter__header">
           Filter Results
-          &nbsp;<a className="mi-filter__header__link" onClick={onClear}>[Clear All]</a>
+          &nbsp;<a className="mi-filter__header__link" onClick={ onClear }>[Clear All]</a>
         </header>
-        {checkboxTrees}
+        { checkboxTrees }
       </div>
     </div>
   );

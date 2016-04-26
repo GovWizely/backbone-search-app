@@ -11,6 +11,6 @@ export function selectAPIs(apis) {
 export function enableAPIs(apis) {
   return {
     type: ENABLE_APIS,
-    payload: {}
+    payload: Array.isArray(apis) ? apis : [apis]
   };
 }

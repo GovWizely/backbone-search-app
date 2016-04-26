@@ -68,27 +68,7 @@ describe('actions/result', () => {
       { type: actions.REQUEST_FILTERS, meta: 'countries' },
       { type: actions.RECEIVE_FILTERS, meta: 'countries', payload: {} },
       { type: actions.REQUEST_FILTERS, meta: 'industries' },
-      { type: actions.RECEIVE_FILTERS, meta: 'industries', payload: {} },
-    ];
-    const store = mockStore(state);
-
-    store.dispatch(actions.fetchResults())
-      .then(() => {
-        expect(store.getActions()).to.eql(expectedActions);
-      })
-      .then(done)
-      .catch(done);
-  });
-
-  it('create FAILURE_RESULTS on error occurred when fetching results', (done) => {
-    nock(api.endpoint)
-      .get('?q=1')
-      .reply(400, payload);
-
-    const expectedActions = [
-      { type: actions.REQUEST_RESULTS, meta: api.uniqueId },
-      { type: actions.FAILURE_RESULTS, error: true,
-        meta: api.uniqueId, payload: new Error('Bad response from server') }
+      { type: actions.RECEIVE_FILTERS, meta: 'industries', payload: {} }
     ];
     const store = mockStore(state);
 

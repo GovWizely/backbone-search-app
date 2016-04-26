@@ -24,6 +24,25 @@ function transformResponse(response) {
   );
 }
 
+function tppRatesTransformParams(params) {
+  if (!params.partners) return params;
+
+  return assign({}, params, {
+    sources: taxonomy.countryToAbbr(params.partners)
+  });
+}
+
+function tppRatesTransformResponse(response) {
+  if (response.results.length === 0) return response;
+
+  const partners = [];
+  for (const { source } of response.sources_used) {
+    const country = source.slice(0, -10);
+    if (country) partners.push({ key: country });
+  }
+  return assign({}, response, { aggregations: { partners } });
+}
+
 function endpoint(path) {
   const { KEY: tradeAPIKey, HOST: tradeAPIHost } = process.env.TRADE_API;
   return `${tradeAPIHost}/${path}/search?api_key=${tradeAPIKey}`;
@@ -82,7 +101,13 @@ module.exports = assign(
     endpoint: endpoint('v1/de_minimis')
   }),
   defineTradeAPI('tpp_rates', {
+    aggregations: {
+      partners: { type: 'array' }
+    },
     deckable,
-    endpoint: endpoint('v1/tpp_rates')
+    endpoint: endpoint('v1/tpp_rates'),
+    permittedParams: ['q', 'sources', 'start_date', 'end_date', 'size', 'offset'],
+    transformParams: tppRatesTransformParams,
+    transformResponse: tppRatesTransformResponse
   })
 );

@@ -32,7 +32,7 @@ const definitions = {
   BV: 'Bouvet Island',
   BR: 'Brazil',
   IO: 'British Indian Ocean Territory',
-  BN: 'Brunei Darussalam',
+  BN: ['Brunei Darussalam', 'Brunei'],
   BG: 'Bulgaria',
   BF: 'Burkina Faso',
   BI: 'Burundi',
@@ -237,7 +237,7 @@ const definitions = {
   UZ: 'Uzbekistan',
   VU: 'Vanuatu',
   VE: 'Venezuela',
-  VN: 'Viet Nam',
+  VN: ['Viet Nam', 'Vietnam'],
   VG: 'Virgin Islands, British',
   VI: 'Virgin Islands, U.S.',
   WF: 'Wallis And Futuna',
@@ -246,10 +246,14 @@ const definitions = {
   ZM: 'Zambia',
   ZW: 'Zimbabwe'
 };
-const abbreviations = _.invert(definitions);
 
 export function countryToAbbr(names) {
-  return _(abbreviations).pick(names.split(',')).values().value().join(',');
+  const splittedNames = names.split(',');
+  return _(definitions).reduce((output, value, key) => {
+    const values = _.isArray(value) ? value : [value];
+    if (_.intersection(values, splittedNames).length > 0) output.push(key);
+    return output;
+  }, []).join(',');
 }
 
 export function abbrToCountry(abbrs) {

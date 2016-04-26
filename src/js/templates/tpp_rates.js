@@ -34,7 +34,9 @@ class TPPRates extends React.Component {
     return nextState.showRates !== this.state.showRates;
   }
 
-  onClick() {
+  onClick(e) {
+    e.preventDefault();
+
     this.setState({ showRates: !this.state.showRates });
   }
 
@@ -45,15 +47,16 @@ class TPPRates extends React.Component {
     const { showRates } = this.state;
     const expanderClass = `mi-icon mi-icon-${ showRates ? 'angle-up' : 'angle-down' }`;
     return (
-      <article className="mi-tpp-rates mi-result__item" onClick={ this.onClick }>
+      <article className="mi-tpp-rates mi-result__item">
         <header>
-          { tariff_line } { subheading_description }
+          { subheading_description }
         </header>
+        <p>HS Code: { tariff_line }</p>
         <p>Staging Basket: { staging_basket }</p>
         <p>Rule of Origin: { rule_text }</p>
         <AnnualRates annualRates={ annual_rates } baseRate={ base_rate } showRates={ showRates }/>
-        <div className="mi-tpp-rates__expander">
-          <i className={ expanderClass }></i>
+        <div aria-role="button" className="mi-tpp-rates__expander" onClick={ this.onClick }>
+          Expand
         </div>
       </article>
     );

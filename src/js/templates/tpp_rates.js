@@ -30,13 +30,16 @@ class TPPRates extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({ showRates: this.props.showRates || false });
+  }
+
   showComponentUpdate(nextProps, nextState) {
     return nextState.showRates !== this.state.showRates;
   }
 
   onClick(e) {
     e.preventDefault();
-
     this.setState({ showRates: !this.state.showRates });
   }
 
@@ -45,7 +48,7 @@ class TPPRates extends React.Component {
       annual_rates, base_rate, rule_text, subheading_description, staging_basket, tariff_line
     } = this.props;
     const { showRates } = this.state;
-    const expanderClass = `mi-icon mi-icon-${ showRates ? 'angle-up' : 'angle-down' }`;
+    const expanderText = showRates ? 'Collapse' : 'Expand';
     return (
       <article className="mi-tpp-rates mi-result__item">
         <header>
@@ -56,7 +59,7 @@ class TPPRates extends React.Component {
         <p>Rule of Origin: { rule_text }</p>
         <AnnualRates annualRates={ annual_rates } baseRate={ base_rate } showRates={ showRates }/>
         <div aria-role="button" className="mi-tpp-rates__expander" onClick={ this.onClick }>
-          Expand
+          { expanderText }
         </div>
       </article>
     );
@@ -64,8 +67,8 @@ class TPPRates extends React.Component {
 }
 
 export const tpp_rates = {
-  ResultItem: (props) => (
-    <TPPRates { ...props } />
+  ResultItem: (props, options = {}) => (
+    <TPPRates { ...props } showRates={ options.showRates } />
   ),
   CardItem: ({ id, subheading_description, tariff_line }) => (
     <article className="mi-tpp-rates mi-card__item">
@@ -73,5 +76,8 @@ export const tpp_rates = {
         { tariff_line } { subheading_description }
       </header>
     </article>
-  )
+  ),
+  getOptions: (props) => ({
+    showRates: props.result.metadata.total === 1
+  })
 };

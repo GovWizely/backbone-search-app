@@ -1,10 +1,6 @@
 .mi-tpp-rates {
   cursor: pointer;
 
-  &:hover {
-    background-color: #EAEAEA;
-  }
-
   &__annual-rates {
     border-collapse: collapse;
     th, td {
@@ -13,6 +9,20 @@
     }
     &__label {
       font-weight: bold;
+    }
+  }
+
+  &__expander {
+    background-color: #D8E2EC;
+    margin-top: 9px;
+    text-align: center;
+    width: 100%;
+  }
+
+  &:hover {
+    .mi-tpp-rates__expander {
+      background-color: #015ba7;
+      color: #EEE;
     }
   }
 }

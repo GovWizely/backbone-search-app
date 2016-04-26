@@ -43,7 +43,7 @@ class TPPRates extends React.Component {
       annual_rates, base_rate, rule_text, subheading_description, staging_basket, tariff_line
     } = this.props;
     const { showRates } = this.state;
-
+    const expanderClass = `mi-icon mi-icon-${ showRates ? 'angle-up' : 'angle-down' }`;
     return (
       <article className="mi-tpp-rates mi-result__item" onClick={ this.onClick }>
         <header>
@@ -52,6 +52,9 @@ class TPPRates extends React.Component {
         <p>Staging Basket: { staging_basket }</p>
         <p>Rule of Origin: { rule_text }</p>
         <AnnualRates annualRates={ annual_rates } baseRate={ base_rate } showRates={ showRates }/>
+        <div className="mi-tpp-rates__expander">
+          <i className={ expanderClass }></i>
+        </div>
       </article>
     );
   }

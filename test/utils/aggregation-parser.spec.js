@@ -14,7 +14,7 @@ describe('aggregation-parser', () => {
       expect(parse(records)).to.eql([
         { key: 'Aerospace and Defense', doc_count: 1 },
         { key: 'Aviation', doc_count: 1 },
-        { key: 'Aircraft and Aircraft Parts', doc_count: 1  }
+        { key: 'Aircraft and Aircraft Parts', doc_count: 1 }
       ]);
     });
   });

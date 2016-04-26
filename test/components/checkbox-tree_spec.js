@@ -3,7 +3,7 @@ import TestUtils from 'react-addons-test-utils';
 import { expect } from 'chai';
 import CheckboxTree from '../../src/js/components/checkbox-tree';
 
-function setup(items={}) {
+function setup(items = {}) {
   let props = {
     itemCssClass: 'cssClass',
     itemLimit: 1,

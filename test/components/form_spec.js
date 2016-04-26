@@ -3,9 +3,9 @@ import TestUtils from 'react-addons-test-utils';
 import { expect } from 'chai';
 import { Form } from '../../src/js/components/form';
 
-function setup(expanded=true) {
+function setup(expanded = true) {
   let renderer = TestUtils.createRenderer(),
-      props = { fields: { q: {} }, expanded, handleSubmit: e => e };
+    props = { fields: { q: {} }, expanded, handleSubmit: e => e };
   renderer.render(<Form {...props} />);
   let output = renderer.getRenderOutput();
 

@@ -19,7 +19,7 @@ describe('components/ResultList', () => {
       { id: 3, url: 'http://www.example.com', title: 'article#3', snippet: 'Lorem Ipsum' }
     ];
     const component = renderIntoDocument(
-      <ResultList fields={ fields} items={ items }/>
+      <ResultList fields={ fields } items={ items } />
     );
 
     const resultsDOM = scryRenderedDOMComponentsWithTag(component, 'article');

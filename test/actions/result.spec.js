@@ -4,7 +4,7 @@ import nock from 'nock';
 import { expect } from 'chai';
 
 import * as actions from '../../src/js/actions';
-import { default as apis } from '../../src/js/apis';
+import { allAPIs as apis } from '../../src/js/apis';
 
 const api = apis.articles;
 const payload = {
@@ -88,7 +88,7 @@ describe('actions/result', () => {
     const expectedActions = [
       { type: actions.REQUEST_RESULTS, meta: api.uniqueId },
       { type: actions.FAILURE_RESULTS, error: true,
-        meta: api.uniqueId,payload: new Error('Bad response from server') }
+        meta: api.uniqueId, payload: new Error('Bad response from server') }
     ];
     const store = mockStore(state);
 

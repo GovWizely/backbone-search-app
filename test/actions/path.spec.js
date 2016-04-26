@@ -15,7 +15,7 @@ describe('actions/path', () => {
     const expectedActions = [
       { avoidRouterUpdate: false,
         type: '@@router/UPDATE_PATH',
-        path: "/search/example?q=test&countries=example" }
+        path: '/search/example?q=test&countries=example' }
     ];
     store.dispatch(actions.updatePath());
     expect(store.getActions()).to.eql(expectedActions);

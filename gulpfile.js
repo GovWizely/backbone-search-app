@@ -56,31 +56,31 @@ gulp.task('clean:tpp_rates', function(cb) {
 gulp.task('github', function() {
   gulp.src(path.join(__dirname, 'public', 'index.html'))
     .pipe(gulp.dest(path.join(__dirname, 'dist')));
-  gulp.src(path.join(__dirname, '.gitignore'))
+  return gulp.src(path.join(__dirname, '.gitignore'), { dot: true })
     .pipe(gulp.dest(path.join(__dirname, 'dist')));
 });
 
 gulp.task('deploy', ['build', 'github'], function() {
   var ghPages = require('gulp-gh-pages');
-  return gulp.src(path.join(__dirname, 'dist', '**/*'))
+  return gulp.src(path.join(__dirname, 'dist', '**/*'), { dot: true })
     .pipe(ghPages());
 });
 
 gulp.task('deploy:tpp_rates', ['build:tpp_rates', 'github'], function() {
   var ghPages = require('gulp-gh-pages');
-  return gulp.src(path.join(__dirname, 'dist', '**/*'))
+  return gulp.src(path.join(__dirname, 'dist', '**/*'), { dot: true })
     .pipe(ghPages());
 });
 
 gulp.task('deploy:staging', ['build:staging', 'github'], function() {
   var ghPages = require('gulp-gh-pages');
-  return gulp.src(path.join(__dirname, 'dist', '**/*'))
+  return gulp.src(path.join(__dirname, 'dist', '**/*'), { dot: true })
     .pipe(ghPages());
 });
 
 gulp.task('deploy:production', ['build:production', 'github'], function() {
   var ghPages = require('gulp-gh-pages');
-  return gulp.src(path.join(__dirname, 'dist', '**/*'))
+  return gulp.src(path.join(__dirname, 'dist', '**/*'), { dot: true })
     .pipe(ghPages());
 });
 

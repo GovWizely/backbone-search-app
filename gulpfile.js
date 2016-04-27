@@ -54,7 +54,9 @@ gulp.task('clean:tpp_rates', function(cb) {
 });
 
 gulp.task('github', function() {
-  return gulp.src(path.join(__dirname, 'public', 'index.html'))
+  gulp.src(path.join(__dirname, 'public', 'index.html'))
+    .pipe(gulp.dest(path.join(__dirname, 'dist')));
+  gulp.src(path.join(__dirname, '.gitignore'))
     .pipe(gulp.dest(path.join(__dirname, 'dist')));
 });
 

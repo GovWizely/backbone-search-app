@@ -9,13 +9,33 @@ function transformParams(_params) {
   return params;
 }
 
-module.exports = defineAPI('articles', {
-  aggregations: {
-    countries: { type: 'array' },
-    industries: { type: 'tree' }
-  },
-  displayName: 'Market Intelligence',
-  endpoint: 'https://intrasearch.export.gov/v1/articles/search',
-  permittedParams: ['q', 'countries', 'industries', 'topics', 'trade_regions', 'offset'],
-  transformParams
-});
+function endpoint(path) {
+  const { host } = process.env.apis.articles;
+  return `${host}/${path}/search`;
+}
+
+module.exports = assign(
+  {},
+  defineAPI('articles', {
+    aggregations: {
+      countries: { type: 'array' },
+      industries: { type: 'tree' }
+    },
+    displayName: 'Market Intelligence',
+    endpoint: endpoint('market_intelligence_articles'),
+    permittedParams: ['q', 'countries', 'industries', 'topics', 'trade_regions', 'offset'],
+    transformParams
+  }),
+  defineAPI('how_to_articles', {
+    aggregations: {
+      countries: { type: 'array' },
+      industries: { type: 'tree' }
+    },
+    displayName: 'How To',
+    endpoint: endpoint('how_to_articles'),
+    permittedParams: [
+      'q', 'countries', 'industries', 'topics', 'trade_regions', 'world_regions', 'offset'
+    ],
+    transformParams
+  })
+);

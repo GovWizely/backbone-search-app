@@ -5,9 +5,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function createWebpackConfig(env, options) {
-  var dirname = __dirname,
-      tradeAPIKey = JSON.stringify(options.tradeAPIKey),
-      tradeAPIHost = JSON.stringify(options.tradeAPIHost);
+  var dirname = __dirname;
+
   return {
     devtool: 'source-map',
     entry: [
@@ -24,9 +23,7 @@ function createWebpackConfig(env, options) {
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify(env),
-          'TRADE_API': {
-            KEY: tradeAPIKey, HOST: tradeAPIHost
-          }
+          apis: options.apis
         }
       }),
       new webpack.optimize.UglifyJsPlugin({

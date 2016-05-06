@@ -44,8 +44,8 @@ function tppRatesTransformResponse(response) {
 }
 
 function endpoint(path) {
-  const { KEY: tradeAPIKey, HOST: tradeAPIHost } = process.env.TRADE_API;
-  return `${tradeAPIHost}/${path}/search?api_key=${tradeAPIKey}`;
+  const { host, key } = process.env.apis.trade;
+  return `${host}/${path}/search?api_key=${key}`;
 }
 
 function defineTradeAPI(key, attributes = {}) {
@@ -68,7 +68,7 @@ const deckable = true;
 
 module.exports = assign(
   {},
-  defineTradeAPI('ita_faqs', {
+  defineTradeAPI('ita_faqs', { // Replace by `How To` in articles API
     deckable,
     displayName: 'Frequently Asked Questions',
     shortName: 'FAQs'

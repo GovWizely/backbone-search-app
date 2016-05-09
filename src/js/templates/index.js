@@ -7,6 +7,7 @@ export const TEMPLATES = assign(
   require('./business_service_providers'),
   require('./consolidated_screening_list'),
   require('./de_minimis'),
+  require('./how_to_articles'),
   require('./ita_faqs'),
   require('./ita_office_locations'),
   require('./ita_taxonomies'),

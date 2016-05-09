@@ -21,9 +21,14 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
-        TRADE_API: {
-          KEY: JSON.stringify('0ooVzDG3pxt0azCL9uUBMYLS'),
-          HOST: JSON.stringify('https://api.govwizely.com')
+        apis: {
+          articles: {
+            host: JSON.stringify('https://intrasearch.govwizely.com/v1')
+          },
+          trade: {
+            host: JSON.stringify('https://api.govwizely.com'),
+            key: JSON.stringify('0ooVzDG3pxt0azCL9uUBMYLS')
+          }
         }
       }
     }),

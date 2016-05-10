@@ -32,7 +32,7 @@ module.exports = assign(
       industries: { type: 'tree' }
     },
     displayName: 'How To Export',
-    endpoint: endpoint('how_to_articles'),
+    endpoint: endpoint('how_to_export_articles'),
     permittedParams: [
       'q', 'countries', 'industries', 'topics', 'trade_regions', 'world_regions', 'offset'
     ],

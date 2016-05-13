@@ -1,4 +1,5 @@
 import React from 'react';
+import { truncate } from './utils';
 
 const href = (id) => `https://success.export.gov/tradeevent?id=${id}`;
 
@@ -9,7 +10,7 @@ export const trade_events = {
         <a href={ href(id) } dangerouslySetInnerHTML={ { __html: event_name } }></a>
       </header>
       <p className="url"><a href={ href(id) }>{ href(id) }</a></p>
-      <p className="snippet" dangerouslySetInnerHTML={ { __html: description } }></p>
+      <p className="snippet">{ truncate(description, 60) }</p>
     </article>
   ),
   CardItem: ({ id, event_name, event_type, start_date, end_date, start_time, end_time, description }) => (

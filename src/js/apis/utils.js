@@ -34,7 +34,6 @@ function createTypeChecker(expectedType) {
   };
 }
 
-
 const AttributeTypes = {
   any: createAnyTypeChecker(),
   array: createTypeChecker('array'),

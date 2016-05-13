@@ -1,4 +1,13 @@
 .mi-card {
+  &--horizontal {
+    .mi-card {
+      @include desktop {
+        &__content {
+          height: auto;
+        }
+      }
+    }
+  }
   &__header {
     background-color: #5377af;
     color: #FFF;
@@ -60,5 +69,4 @@
       font-size: 48px;
     }
   }
-
 }

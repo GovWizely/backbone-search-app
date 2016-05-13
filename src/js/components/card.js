@@ -1,11 +1,16 @@
 import React, { PropTypes } from 'react';
 import ResultList from './result-list';
+import DisplayMode from '../enums/DisplayMode';
 
-const Card = ({ isFetching, displayedItems, items, label, onClick, template }) => {
+const Card = ({ displayMode, displayedItems, isFetching, items, label, onClick, template }) => {
   if (isFetching || !items.length) return <noscript />;
 
+  const modifier = (
+    displayMode === DisplayMode.CARD_HORIZONTAL ? 'mi-card mi-card--horizontal' : 'mi-card mi-card--vertical'
+  );
+
   return (
-    <section className="mi-card">
+    <section className={ modifier }>
       <header className="mi-card__header" title={ label }>{ label }</header>
 
       <div className="mi-card__box">
@@ -24,7 +29,9 @@ const Card = ({ isFetching, displayedItems, items, label, onClick, template }) =
     </section>
   );
 };
+
 Card.propTypes = {
+  displayMode: PropTypes.string,
   displayedItems: PropTypes.number,
   isFetching: PropTypes.bool,
   items: PropTypes.array.isRequired,

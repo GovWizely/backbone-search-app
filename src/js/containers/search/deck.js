@@ -5,7 +5,7 @@ import Card from '../../components/card';
 
 const Deck = ({ apis, findTemplate, onClick, results }) => {
   const cards = compact(map(apis, (api) => {
-    const { displayName, uniqueId } = api;
+    const { displayMode, displayName, uniqueId } = api;
     if (!results[uniqueId]) return null;
 
     const { isFetching, items } = results[uniqueId];
@@ -15,6 +15,7 @@ const Deck = ({ apis, findTemplate, onClick, results }) => {
     const _onClick = onClick.bind(undefined, api);
     return (
       <Card
+        displayMode={ displayMode }
         id={ uniqueId }
         isFetching={ isFetching }
         items={ items }

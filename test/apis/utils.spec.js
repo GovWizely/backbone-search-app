@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 
 import { defineAPI, resetUniqueIds } from '../../src/js/apis/utils';
+import DisplayMode from '../../src/js/enums/DisplayMode';
 
 describe('apis/utils', () => {
   describe('#defineAPI', () => {
@@ -15,6 +16,7 @@ describe('apis/utils', () => {
       expect(api).to.eql({
         example: {
           deckable: true,
+          displayMode: DisplayMode.NONE,
           displayName: 'Example',
           endpoint,
           pathname: 'example',
@@ -28,6 +30,7 @@ describe('apis/utils', () => {
       const customAttributes = {
         aggregations: { countries: { type: 'array' }, industries: { type: 'tree' } },
         deckable: false,
+        displayMode: DisplayMode.HORIZONTAL_CARD,
         displayName: 'Excellent',
         endpoint,
         pathname: 'excellent',
@@ -57,6 +60,11 @@ describe('apis/utils', () => {
       defineAPI('example', { endpoint });
       const fn = () => defineAPI('example', { endpoint });
       expect(fn).to.throw(Error, /Duplicated API found: /);
+    });
+
+    it('should throw error when invalid displayMode value is provided', () => {
+      const fn = () => defineAPI('example', { displayMode: 1 });
+      expect(fn).to.throw(Error, /Invalid value/);
     });
   });
 });

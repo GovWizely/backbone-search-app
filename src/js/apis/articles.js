@@ -1,5 +1,6 @@
 import assign from 'object-assign';
 import { defineAPI } from './utils.js';
+import DisplayMode from '../enums/DisplayMode';
 
 function transformParams(_params) {
   const params = assign({}, _params);
@@ -9,33 +10,45 @@ function transformParams(_params) {
   return params;
 }
 
+function webDocumentTransformParams(_params) {
+  return assign(transformParams(_params), { domains: 'success.export.gov' });
+}
+
 function endpoint(path) {
   const { host } = process.env.apis.articles;
   return `${host}/${path}/search`;
 }
 
-module.exports = assign(
-  {},
-  defineAPI('articles', {
+function defineArticleAPI(key, attributes = {}) {
+  const articleAPI = {
     aggregations: {
       countries: { type: 'array' },
       industries: { type: 'tree' }
     },
-    displayName: 'Market Intelligence',
-    endpoint: endpoint('market_intelligence_articles'),
-    permittedParams: ['q', 'countries', 'industries', 'topics', 'trade_regions', 'offset'],
-    transformParams
-  }),
-  defineAPI('how_to_articles', {
-    aggregations: {
-      countries: { type: 'array' },
-      industries: { type: 'tree' }
-    },
-    displayName: 'How To Export',
-    endpoint: endpoint('how_to_export_articles'),
+    endpoint: endpoint(key),
     permittedParams: [
-      'q', 'countries', 'industries', 'topics', 'trade_regions', 'world_regions', 'offset'
+      'q', 'countries', 'industries', 'topics',
+      'trade_regions', 'world_regions', 'offset', 'limit'
     ],
     transformParams
+  };
+  return defineAPI(key, assign({}, articleAPI, attributes));
+}
+
+module.exports = assign(
+  {},
+  defineArticleAPI('articles', {
+    displayName: 'Market Intelligence',
+    endpoint: endpoint('market_intelligence_articles')
+  }),
+  defineArticleAPI('how_to_articles', {
+    displayName: 'How To Export',
+    endpoint: endpoint('how_to_export_articles')
+  }),
+  defineArticleAPI('web_documents', {
+    displayMode: DisplayMode.CARD_HORIZONTAL,
+    displayName: 'Recommended',
+    permittedParams: ['q', 'domains', 'offset', 'limit'],
+    transformParams: webDocumentTransformParams
   })
 );

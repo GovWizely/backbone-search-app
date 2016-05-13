@@ -6,7 +6,9 @@ const Card = ({ displayMode, displayedItems, isFetching, items, label, onClick, 
   if (isFetching || !items.length) return <noscript />;
 
   const modifier = (
-    displayMode === DisplayMode.CARD_HORIZONTAL ? 'mi-card mi-card--horizontal' : 'mi-card mi-card--vertical'
+    displayMode === DisplayMode.CARD_HORIZONTAL ?
+      'mi-card mi-card--horizontal' :
+      'mi-card mi-card--vertical'
   );
 
   return (

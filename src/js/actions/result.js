@@ -1,11 +1,13 @@
 import { get, isEmpty, map, reject } from 'lodash';
 import fetch from 'isomorphic-fetch';
+import invariant from 'invariant';
 
 import {
   formatAggregations, formatEndpoint, formatMetadata, formatParams,
   noAction, permitParams
 } from '../utils/action-helper';
 import { computeFiltersByAggregation } from './filter';
+import { addNotification } from './notification';
 
 export const REQUEST_RESULTS = 'REQUEST_RESULTS';
 export const RECEIVE_RESULTS = 'RECEIVE_RESULTS';
@@ -69,13 +71,19 @@ function createFetch(api, dispatch, getState) {
     const params = preprocess(api, query);
     dispatch(requestResults(api));
     return fetch(formatEndpoint(api.endpoint, params))
-      .then(response => response.json())
+      .then(response => {
+        invariant(response.status === 200, response.statusText);
+        return response.json();
+      })
       .then(json => {
         const data = postprocess(api, json);
         dispatch(receiveResults(api, data));
         return data;
       })
-      .catch(e => dispatch(failureResults(api, e)));
+      .catch(e => {
+        dispatch(addNotification(`${api.uniqueId}: ${e}`, 'error'));
+        return dispatch(failureResults(api, e));
+      });
   };
 }
 

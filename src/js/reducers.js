@@ -12,6 +12,7 @@ import { INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/
 import { UPDATE_WINDOW } from './actions/window';
 import { UPDATE_QUERY, REPLACE_QUERY } from './actions/query';
 import { SELECT_APIS } from './actions/api';
+import { ADD_NOTIFICATION, DISMISS_NOTIFICATION } from './actions/notification';
 
 function apis(state = {}) {
   return state;
@@ -54,17 +55,16 @@ function filtersByAggregation(state = {}, action) {
   }
 }
 
-function notifications(state = {}, action) {
+function notifications(state = [], action) {
+  const _state = assign([], state);
   switch (action.type) {
-  case FAILURE_RESULTS:
-    return assign({}, state, {
-      [action.meta]: {
-        payload: action.payload,
-        type: action.error ? 'error' : 'info'
-      }
-    });
+  case ADD_NOTIFICATION:
+    return _state.concat(action.payload);
+  case DISMISS_NOTIFICATION:
+    _state.splice(action.payload, 1);
+    return _state;
   default:
-    return state;
+    return _state;
   }
 }
 
@@ -123,6 +123,10 @@ function results(state = {
       metadata: action.payload.metadata,
       aggregations: action.payload.aggregations
     });
+  case FAILURE_RESULTS:
+    return assign({}, state, {
+      isFetching: false
+    });
   default:
     return state;
   }
@@ -131,8 +135,8 @@ function results(state = {
 function resultsByAPI(state = {}, action) {
   switch (action.type) {
   case REQUEST_RESULTS:
-    return assign({}, state, { [action.meta]: results(state[action.meta], action) });
   case RECEIVE_RESULTS:
+  case FAILURE_RESULTS:
     return assign({}, state, { [action.meta]: results(state[action.meta], action) });
   case UPDATE_QUERY:
   case REPLACE_QUERY:
@@ -141,7 +145,6 @@ function resultsByAPI(state = {}, action) {
     return state;
   }
 }
-
 
 function selectedAPIs(state = [], action) {
   switch (action.type) {

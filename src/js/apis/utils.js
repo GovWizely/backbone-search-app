@@ -1,6 +1,7 @@
 import assign from 'object-assign';
 import { forEach, isUndefined, snakeCase, startCase } from 'lodash';
 import DisplayMode from '../enums/DisplayMode';
+import invariant from 'invariant';
 
 function verbatim(value) {
   return value;
@@ -18,6 +19,24 @@ function createEnumTypeChecker(enums) {
       `Invalid value \`${value}\` for \`${attrName}\` ` +
       `specified in API \`${key}\`.`
     );
+  };
+}
+
+function createObjectTypeChecker(structure) {
+  /*
+   const structure = {
+     header: createTypeChecker('string'),
+     mode: createTypeChecker('string'),
+     footer: createTypeChecker('string')
+   }
+   */
+  return (key, attrName, object) => {
+    forEach(object, (value, objectKey) => {
+      invariant(
+        !isUndefined(structure[objectKey]),
+        `Unrecognized option \`${objectKey}\` for \`${attrName}\``);
+      structure[objectKey](key, `${attrName}.${objectKey}`, value);
+    });
   };
 }
 
@@ -41,13 +60,21 @@ const AttributeTypes = {
   func: createTypeChecker('function'),
   number: createTypeChecker('number'),
   object: createTypeChecker('object'),
-  string: createTypeChecker('string'),
-  displayMode: createEnumTypeChecker(DisplayMode)
+  string: createTypeChecker('string')
 };
 
 const ATTRIBUTES = {
   aggregations: {
     type: AttributeTypes.object
+  },
+  card: {
+    defaultValue: {},
+    type: createObjectTypeChecker({
+      count: AttributeTypes.number,
+      header: AttributeTypes.string,
+      footer: AttributeTypes.string,
+      mode: AttributeTypes.string
+    })
   },
   deckable: {
     defaultValue: true,
@@ -55,7 +82,7 @@ const ATTRIBUTES = {
   },
   displayMode: {
     defaultValue: DisplayMode.NONE,
-    type: AttributeTypes.displayMode
+    type: createEnumTypeChecker(DisplayMode)
   },
   displayName: {
     derive: startCase,

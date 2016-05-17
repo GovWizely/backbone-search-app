@@ -1,6 +1,5 @@
 import assign from 'object-assign';
 import { defineAPI } from './utils.js';
-import DisplayMode from '../enums/DisplayMode';
 
 function transformParams(_params) {
   const params = assign({}, _params);
@@ -46,8 +45,12 @@ module.exports = assign(
     endpoint: endpoint('how_to_export_articles')
   }),
   defineArticleAPI('web_documents', {
-    displayMode: DisplayMode.CARD_HORIZONTAL,
-    displayName: 'Recommended',
+    card: {
+      count: 3,
+      footer: 'See More',
+      header: 'Recommended',
+      mode: 'horizontal'
+    },
     permittedParams: ['q', 'domains', 'offset', 'limit'],
     transformParams: webDocumentTransformParams
   })

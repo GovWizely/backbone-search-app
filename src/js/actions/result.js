@@ -81,7 +81,7 @@ function createFetch(api, dispatch, getState) {
         return data;
       })
       .catch(e => {
-        dispatch(addNotification(`${api.uniqueId}: ${e}`, 'error'));
+        dispatch(addNotification(`${api.uniqueId}: ${e.message}`, 'error'));
         return dispatch(failureResults(api, e));
       });
   };

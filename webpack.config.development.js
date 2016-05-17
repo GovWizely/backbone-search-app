@@ -27,7 +27,7 @@ module.exports = {
           },
           trade: {
             host: JSON.stringify('https://api.govwizely.com'),
-            key: JSON.stringify('0ooVzDG3pxt0azCL9uUBMYLS')
+            key: JSON.stringify('Z48wSr3E3nNN4itDUvE4Clje')
           }
         }
       }

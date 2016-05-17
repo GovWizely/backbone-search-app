@@ -1,6 +1,6 @@
 var createWebpackConfig = require('./webpack.config.helper.js').createWebpackConfig;
 
 module.exports = createWebpackConfig('tpp_rates', {
-  tradeAPIKey: '0ooVzDG3pxt0azCL9uUBMYLS',
+  tradeAPIKey: 'Z48wSr3E3nNN4itDUvE4Clje',
   tradeAPIHost: 'https://api.govwizely.com'
 });

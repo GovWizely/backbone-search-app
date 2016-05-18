@@ -1,6 +1,5 @@
 import assign from 'object-assign';
 import { forEach, isUndefined, snakeCase, startCase } from 'lodash';
-import DisplayMode from '../enums/DisplayMode';
 import invariant from 'invariant';
 
 function verbatim(value) {
@@ -9,17 +8,6 @@ function verbatim(value) {
 
 function createAnyTypeChecker() {
   return () => true;
-}
-
-function createEnumTypeChecker(enums) {
-  return (key, attrName, value) => {
-    if (enums[value]) return;
-
-    throw new Error(
-      `Invalid value \`${value}\` for \`${attrName}\` ` +
-      `specified in API \`${key}\`.`
-    );
-  };
 }
 
 function createObjectTypeChecker(structure) {
@@ -67,6 +55,10 @@ const ATTRIBUTES = {
   aggregations: {
     type: AttributeTypes.object
   },
+  async: {
+    defaultValue: false,
+    type: AttributeTypes.bool
+  },
   bucket: {
     defaultValue: { enable: true },
     type: createObjectTypeChecker({
@@ -82,14 +74,6 @@ const ATTRIBUTES = {
       footer: AttributeTypes.string,
       mode: AttributeTypes.string
     })
-  },
-  deckable: {
-    defaultValue: true,
-    type: AttributeTypes.bool
-  },
-  displayMode: {
-    defaultValue: DisplayMode.NONE,
-    type: createEnumTypeChecker(DisplayMode)
   },
   displayName: {
     derive: startCase,

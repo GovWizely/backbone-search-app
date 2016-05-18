@@ -7,8 +7,8 @@ import { selectAPIs } from '../actions/api';
 
 class Index extends React.Component {
   componentDidMount() {
-    const { dispatch, defaultAPIs } = this.props;
-    dispatch(selectAPIs(defaultAPIs));
+    const { dispatch, enabledAPIs } = this.props;
+    dispatch(selectAPIs(enabledAPIs));
   }
   render() {
     return (
@@ -24,8 +24,8 @@ class Index extends React.Component {
   }
 }
 Index.propTypes = {
-  defaultAPIs: PropTypes.array.isRequired,
   dispatch: PropTypes.func,
+  enabledAPIs: PropTypes.array.isRequired,
   onSubmit: PropTypes.func
 };
 

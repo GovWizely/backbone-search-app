@@ -126,10 +126,6 @@ function selectedAPIs(state = [], action) {
   }
 }
 
-function ui(state = {}) {
-  return state;
-}
-
 function window(state = {}, action) {
   switch (action.type) {
   case UPDATE_WINDOW:
@@ -148,7 +144,6 @@ const reducer = combineReducers({
   resultsByAPI,
   routing: routeReducer,
   selectedAPIs,
-  ui,
   window
 });
 

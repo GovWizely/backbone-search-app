@@ -20,16 +20,7 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-        apis: {
-          articles: {
-            host: JSON.stringify('https://intrasearch.govwizely.com/v1')
-          },
-          trade: {
-            host: JSON.stringify('https://api.govwizely.com'),
-            key: JSON.stringify('Z48wSr3E3nNN4itDUvE4Clje')
-          }
-        }
+        NODE_ENV: JSON.stringify('development')
       }
     }),
     new HtmlWebpackPlugin({ template: path.join(__dirname, 'index.html') })

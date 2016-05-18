@@ -1,4 +1,4 @@
-import { filter, omit } from 'lodash';
+import { omit } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -33,13 +33,11 @@ App.propTypes = {
 function mapStateToProps(state) {
   const { apis, notifications, query } = state;
   const enabledAPIs = enableAPIs(apis);
-  const selectedAPIs = filter(enabledAPIs, (api) => api.deckable);
   return {
     enabledAPIs,
-    defaultAPIs: selectedAPIs,
     notifications,
     query,
-    selectedAPIs,
+    selectedAPIs: enabledAPIs,
     window: {}
   };
 }

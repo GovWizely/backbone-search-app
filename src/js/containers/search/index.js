@@ -1,5 +1,5 @@
 import assign from 'object-assign';
-import { reduce } from 'lodash';
+import { filter, reduce } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -25,7 +25,7 @@ class Index extends React.Component {
   }
   render() {
     const {
-      defaultAPIs, filters,
+      enabledAPIs, filters,
       onBucket, onClearFilter, onDismissNotification,
       onExpand, onFilter, onPaging, onSelect, onSubmit,
       notifications, query, results, selectedAPIs
@@ -43,7 +43,7 @@ class Index extends React.Component {
         </div>
 
         <div className="mi-search__bucket-list-container">
-          <BucketList apis={ defaultAPIs } onClick={ onBucket } selectedAPIs={ selectedAPIs } />
+          <BucketList apis={ enabledAPIs } onClick={ onBucket } selectedAPIs={ selectedAPIs } />
         </div>
 
         <div className="mi-search__main-container">
@@ -67,8 +67,7 @@ class Index extends React.Component {
 }
 
 Index.propTypes = {
-  defaultAPIs: PropTypes.array.isRequired,
-  enabledAPIs: PropTypes.object.isRequired,
+  enabledAPIs: PropTypes.array.isRequired,
   filters: PropTypes.object,
   location: PropTypes.object,
   notifications: PropTypes.array,
@@ -111,7 +110,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-  const { defaultAPIs, enabledAPIs } = ownProps;
+  const { enabledAPIs } = ownProps;
   return {
     onBucket: (apis) => {
       dispatch(selectAPIs(apis));
@@ -143,13 +142,16 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updatePath());
     },
     onLoaded: ({ apiName, query }) => {
-      if (!query.q) return;
-
-      const apis = enabledAPIs[apiName] ? enabledAPIs[apiName] : defaultAPIs;
+      const apis = apiName ? filter(enabledAPIs, { uniqueId: apiName }) : enabledAPIs;
       dispatch(replaceQuery(query));
-      dispatch(selectAPIs(apis));
-      dispatch(invalidateAllFilters());
-      dispatch(fetchResults());
+
+      if (query.q) {
+        dispatch(selectAPIs(apis));
+        dispatch(invalidateAllFilters());
+        dispatch(fetchResults());
+      } else {
+        dispatch(updatePath());
+      }
     },
     onPaging: (e) => {
       e.preventDefault();

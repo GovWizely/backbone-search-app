@@ -1,5 +1,6 @@
 import assign from 'object-assign';
-import { defineAPI } from './utils.js';
+import { defineAPI } from './utils';
+import { articles } from './config';
 
 function transformParams(_params) {
   const params = assign({}, _params);
@@ -14,7 +15,7 @@ function webDocumentTransformParams(_params) {
 }
 
 function endpoint(path) {
-  const { host } = process.env.apis.articles;
+  const { host } = articles;
   return `${host}/${path}/search`;
 }
 

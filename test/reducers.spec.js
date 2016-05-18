@@ -8,20 +8,14 @@ describe('reducer', () => {
       apis: {},
       filtersByAggregation: {},
       form: {},
-      notifications: {},
+      notifications: [],
       query: { q: '' },
-      queryExpansions: {
-        invalidated: false,
-        isFetching: false,
-        items: {}
-      },
       resultsByAPI: {},
       routing: {
         changeId: 1,
         path: 'blank'
       },
       selectedAPIs: [],
-      ui: {},
       window: {}
     });
   });

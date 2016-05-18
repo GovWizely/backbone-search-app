@@ -1,6 +1,7 @@
 import assign from 'object-assign';
 import * as taxonomy from '../utils/taxonomy';
 import { defineAPI } from './utils';
+import { trade } from './config';
 
 function transformParams(params) {
   if (!params.countries) return params;
@@ -48,7 +49,7 @@ function queryExpansionTransformResponse(response) {
 }
 
 function endpoint(path) {
-  const { host, key } = process.env.apis.trade;
+  const { host, key } = trade;
   return `${host}/${path}?api_key=${key}`;
 }
 
@@ -58,7 +59,6 @@ function defineTradeAPI(key, attributes = {}) {
       countries: { type: 'array' },
       industries: { type: 'tree' }
     },
-    deckable: false,
     endpoint: endpoint(`${key}/search`),
     metadata: ['total', 'offset', 'sources_used', 'search_performed_at'],
     permittedParams: ['q', 'countries', 'industries', 'start_date', 'end_date', 'size', 'offset'],
@@ -68,21 +68,16 @@ function defineTradeAPI(key, attributes = {}) {
   return defineAPI(key, assign({}, tradeAPI, attributes));
 }
 
-const deckable = true;
-
 module.exports = assign(
   {},
   defineTradeAPI('ita_faqs', { // Replace by `How To` in articles API
-    deckable,
     displayName: 'Frequently Asked Questions',
     shortName: 'FAQs'
   }),
   defineTradeAPI('trade_events', {
-    deckable,
     shortName: 'Events'
   }),
   defineTradeAPI('trade_leads', {
-    deckable,
     shortName: 'Leads'
   }),
   defineTradeAPI('consolidated_screening_list', {
@@ -115,6 +110,7 @@ module.exports = assign(
   }),
   defineTradeAPI('query_expansion', {
     aggregations: {},
+    async: true,
     bucket: { enable: false },
     card: { enable: false },
     endpoint: endpoint('ita_taxonomies/query_expansion'),

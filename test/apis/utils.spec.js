@@ -14,13 +14,13 @@ describe('apis/utils', () => {
       });
       expect(api).to.eql({
         example: {
+          async: false,
           bucket: {
             enable: true
           },
           card: {
             enable: true
           },
-          deckable: true,
           displayName: 'Example',
           endpoint,
           pathname: 'example',
@@ -32,8 +32,14 @@ describe('apis/utils', () => {
 
     it('should create a new API object with overridden attributes', () => {
       const customAttributes = {
+        async: true,
         aggregations: { countries: { type: 'array' }, industries: { type: 'tree' } },
-        deckable: false,
+        bucket: {
+          enable: false
+        },
+        card: {
+          enable: false
+        },
         displayName: 'Excellent',
         endpoint,
         pathname: 'excellent',

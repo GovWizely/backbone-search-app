@@ -21,7 +21,7 @@ describe('apis/articles', () => {
 
   it('.permittedParams should be defined', () => {
     expect(articles.permittedParams).to.eql([
-      'q', 'countries', 'industries', 'topics', 'trade_regions', 'offset'
+      'q', 'countries', 'industries', 'topics', 'trade_regions', 'world_regions', 'offset', 'limit'
     ]);
   });
 

@@ -62,18 +62,13 @@ describe('reducer', () => {
     });
   });
 
-  it('should handle FAILURE_RESULTS', () => {
+  it('should handle ADD_NOTIFICATION', () => {
     expect(reducer(undefined, {
-      type: actions.FAILURE_RESULTS,
-      meta: 'articles',
-      error: true,
-      payload: { error: 'error' }
-    }).notifications).to.eql({
-      articles: {
-        payload: { error: 'error' },
-        type: 'error'
-      }
-    });
+      type: actions.ADD_NOTIFICATION,
+      payload: { text: 'message', type: 'error' }
+    }).notifications).to.eql([
+      { text: 'message', type: 'error' }
+    ]);
   });
 
   const queryState = { q: '', countries: [1, 2, 3], industries: [1, 2, 3] };

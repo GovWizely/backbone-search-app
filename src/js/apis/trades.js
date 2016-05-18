@@ -43,9 +43,13 @@ function tppRatesTransformResponse(response) {
   return assign({}, response, { aggregations: { partners } });
 }
 
+function queryExpansionTransformResponse(response) {
+  return { results: response.query_expansion.world_regions };
+}
+
 function endpoint(path) {
   const { host, key } = process.env.apis.trade;
-  return `${host}/${path}/search?api_key=${key}`;
+  return `${host}/${path}?api_key=${key}`;
 }
 
 function defineTradeAPI(key, attributes = {}) {
@@ -55,7 +59,7 @@ function defineTradeAPI(key, attributes = {}) {
       industries: { type: 'tree' }
     },
     deckable: false,
-    endpoint: endpoint(key),
+    endpoint: endpoint(`${key}/search`),
     metadata: ['total', 'offset', 'sources_used', 'search_performed_at'],
     permittedParams: ['q', 'countries', 'industries', 'start_date', 'end_date', 'size', 'offset'],
     transformParams,
@@ -104,10 +108,17 @@ module.exports = assign(
     aggregations: {
       partners: { type: 'array' }
     },
-    deckable,
     endpoint: endpoint('v1/tpp_rates'),
     permittedParams: ['q', 'sources', 'start_date', 'end_date', 'size', 'offset'],
     transformParams: tppRatesTransformParams,
     transformResponse: tppRatesTransformResponse
+  }),
+  defineTradeAPI('query_expansion', {
+    aggregations: {},
+    bucket: { enable: false },
+    card: { enable: false },
+    endpoint: endpoint('ita_taxonomies/query_expansion'),
+    permittedParams: ['q'],
+    transformResponse: queryExpansionTransformResponse
   })
 );

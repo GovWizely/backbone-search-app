@@ -67,10 +67,17 @@ const ATTRIBUTES = {
   aggregations: {
     type: AttributeTypes.object
   },
+  bucket: {
+    defaultValue: { enable: true },
+    type: createObjectTypeChecker({
+      enable: AttributeTypes.bool
+    })
+  },
   card: {
-    defaultValue: {},
+    defaultValue: { enable: true },
     type: createObjectTypeChecker({
       count: AttributeTypes.number,
+      enable: AttributeTypes.bool,
       header: AttributeTypes.string,
       footer: AttributeTypes.string,
       mode: AttributeTypes.string

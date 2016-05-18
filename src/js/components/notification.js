@@ -26,7 +26,7 @@ const Notification = ({ notifications, onDismiss }) => {
 };
 
 Notification.propTypes = {
-  notifications: PropTypes.object,
+  notifications: PropTypes.array,
   onDismiss: PropTypes.func
 };
 

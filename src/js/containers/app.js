@@ -2,8 +2,6 @@ import { filter, omit } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../actions/query_expansion';
 import { fetchResults } from '../actions/result';
 import { replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
@@ -54,13 +52,11 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: (query) => {
       dispatch(replaceQuery(query));
+      if (query.q) {
+        dispatch(invalidateAllFilters());
 
-      dispatch(invalidateAllFilters());
-      dispatch(invalidateQueryExpansions());
-
-      dispatch(fetchResults());
-      dispatch(fetchQueryExpansionsIfNeeded(query));
-
+        dispatch(fetchResults());
+      }
       dispatch(updatePath());
     }
   };

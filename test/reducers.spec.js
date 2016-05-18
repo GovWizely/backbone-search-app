@@ -97,37 +97,6 @@ describe('reducer', () => {
     }).query).to.eql({ q: 'test' });
   });
 
-  it('should handle INVALIDATE_QUERY_EXPANSIONS', () => {
-    expect(reducer(undefined, {
-      type: actions.INVALIDATE_QUERY_EXPANSIONS
-    }).queryExpansions).to.eql({
-      invalidated: true,
-      isFetching: false,
-      items: {}
-    });
-  });
-
-  it('should handle REQUEST_QUERY_EXPANSIONS', () => {
-    expect(reducer(undefined, {
-      type: actions.REQUEST_QUERY_EXPANSIONS
-    }).queryExpansions).to.eql({
-      invalidated: false,
-      isFetching: true,
-      items: {}
-    });
-  });
-
-  it('should handle RECEIVE_QUERY_EXPANSIONS', () => {
-    expect(reducer(undefined, {
-      type: actions.RECEIVE_QUERY_EXPANSIONS,
-      payload: { a: [], b: [], c: [] }
-    }).queryExpansions).to.eql({
-      invalidated: false,
-      isFetching: false,
-      items: { a: [], b: [], c: [] }
-    });
-  });
-
   it('should handle REQUEST_RESULTS', () => {
     expect(reducer(undefined, {
       type: actions.REQUEST_RESULTS,

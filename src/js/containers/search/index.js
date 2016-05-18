@@ -4,8 +4,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { findTemplate } from '../../templates';
-import {
-  invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../../actions/query_expansion';
 import { fetchResults } from '../../actions/result';
 import { invalidateAllFilters } from '../../actions/filter';
 import { selectAPIs } from '../../actions/api';
@@ -30,7 +28,7 @@ class Index extends React.Component {
       defaultAPIs, filters,
       onBucket, onClearFilter, onDismissNotification,
       onExpand, onFilter, onPaging, onSelect, onSubmit,
-      notifications, query, queryExpansions, results, selectedAPIs
+      notifications, query, results, selectedAPIs
     } = this.props;
     return (
       <div id="search" className="mi-search">
@@ -40,7 +38,7 @@ class Index extends React.Component {
         <div className="mi-search__form-container">
           <Form onSubmit={ onSubmit } query={ query } />
           <div className="mi-search__query-expansion-list-container">
-            <QueryExpansionList onClick={ onExpand } queryExpansions={ queryExpansions } />
+            <QueryExpansionList onClick={ onExpand } queryExpansions={ results.query_expansion } />
           </div>
         </div>
 
@@ -73,7 +71,7 @@ Index.propTypes = {
   enabledAPIs: PropTypes.object.isRequired,
   filters: PropTypes.object,
   location: PropTypes.object,
-  notifications: PropTypes.object,
+  notifications: PropTypes.array,
   onBucket: PropTypes.func.isRequired,
   onClearFilter: PropTypes.func.isRequired,
   onDismissNotification: PropTypes.func.isRequired,
@@ -145,15 +143,13 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updatePath());
     },
     onLoaded: ({ apiName, query }) => {
+      if (!query.q) return;
+
       const apis = enabledAPIs[apiName] ? enabledAPIs[apiName] : defaultAPIs;
       dispatch(replaceQuery(query));
       dispatch(selectAPIs(apis));
-
       dispatch(invalidateAllFilters());
-      dispatch(invalidateQueryExpansions());
-
       dispatch(fetchResults());
-      dispatch(fetchQueryExpansionsIfNeeded(query));
     },
     onPaging: (e) => {
       e.preventDefault();

@@ -6,7 +6,6 @@ module.exports = assign(
   require('./filter'),
   require('./path'),
   require('./query'),
-  require('./query_expansion'),
   require('./result'),
   require('./window')
 );

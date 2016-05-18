@@ -27,16 +27,18 @@ QueryExpansionTerm.propTypes = {
 };
 
 const QueryExpansion = ({ onClick, queryExpansions }) => {
-  const { invalidated, isFetching, items } = queryExpansions;
-  if (invalidated || isFetching || !items) return <noscript />;
+  if (!queryExpansions) return null;
 
-  let terms = map(items.world_regions, (region) => {
+  const { invalidated, isFetching, items } = queryExpansions;
+  if (invalidated || isFetching || !items) return null;
+
+  let terms = map(items, (region) => {
     const key = keys(region)[0];
     const value = region[key];
     return <QueryExpansionTerm key={ key } label={ key } onClick={ onClick } value={ value } />;
   });
 
-  if (isEmpty(terms)) return <noscript />;
+  if (isEmpty(terms)) return null;
   return (
     <div className="mi-query-expansion">Expand Search To:
       <ul className="mi-query-expansion__list">
@@ -48,7 +50,7 @@ const QueryExpansion = ({ onClick, queryExpansions }) => {
 
 QueryExpansion.propTypes = {
   onClick: PropTypes.func.isRequired,
-  queryExpansions: PropTypes.object.isRequired
+  queryExpansions: PropTypes.object
 };
 
 export default QueryExpansion;

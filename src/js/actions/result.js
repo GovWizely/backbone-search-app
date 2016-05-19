@@ -7,7 +7,7 @@ import {
   noAction, permitParams
 } from '../utils/action-helper';
 import { computeFiltersByAggregation } from './filter';
-import { addNotification } from './notification';
+import { notify } from './notification';
 
 export const REQUEST_RESULTS = 'REQUEST_RESULTS';
 export const RECEIVE_RESULTS = 'RECEIVE_RESULTS';
@@ -79,7 +79,7 @@ function createFetch(api, dispatch, getState) {
         return data;
       })
       .catch(e => {
-        dispatch(addNotification(`${api.uniqueId}: ${e.message}`, 'error'));
+        dispatch(notify({ text: `${api.uniqueId}: ${e.message}`, status: 'error' }));
         return dispatch(failureResults(api, e));
       });
   };

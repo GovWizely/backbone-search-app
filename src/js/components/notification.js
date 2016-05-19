@@ -2,19 +2,18 @@ import { map } from 'lodash';
 import React, { PropTypes } from 'react';
 
 const Notification = ({ notifications, onDismiss }) => {
-  if (Object.keys(notifications).length === 0) {
-    return null;
-  }
+  if (Object.keys(notifications).length === 0) return null;
 
-  const items = map(notifications, (notification, index) => {
+  const items = map(notifications, (notification) => {
+    const { id, status, text } = notification;
     const css = 'mi-notification__item '.concat(
-      notification.type === 'error' ?
+      status === 'error' ?
         'mi-notification__item--error' :
         'mi-notification__item--info'
     );
     return (
-      <li onClick={ onDismiss } className={ css } key={ index } data-index={ index }>
-        { notification.text }
+      <li onClick={ onDismiss } className={ css } key={ id } data-id={ id }>
+        { text }
       </li>
     );
   });

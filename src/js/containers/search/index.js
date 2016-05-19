@@ -9,8 +9,6 @@ import { invalidateAllFilters } from '../../actions/filter';
 import { selectAPIs } from '../../actions/api';
 import { updatePath } from '../../actions/path';
 import { clearFiltering, updateFiltering, updateQuery, replaceQuery } from '../../actions/query';
-import { dismissNotification } from '../../actions/notification';
-import Notification from '../../components/notification';
 
 import BucketList from './bucket_list';
 import Content from './content';
@@ -32,9 +30,6 @@ class Index extends React.Component {
     } = this.props;
     return (
       <div id="search" className="mi-search">
-
-        <Notification notifications={ notifications } onDismiss={ onDismissNotification } />
-
         <div className="mi-search__form-container">
           <Form onSubmit={ onSubmit } query={ query } />
           <div className="mi-search__query-expansion-list-container">
@@ -125,10 +120,6 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(invalidateAllFilters());
       dispatch(fetchResults());
       dispatch(updatePath());
-    },
-    onDismissNotification: (e) => {
-      e.preventDefault();
-      dispatch(dismissNotification(parseInt(e.target.dataset.index, 10)));
     },
     onExpand: (query) => {
       dispatch(invalidateAllFilters());

@@ -2,12 +2,14 @@ import { omit } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import { notify, dismissNotification } from '../actions/notification';
 import { fetchResults } from '../actions/result';
 import { replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
 import { updateWindow } from '../actions/window';
 import { invalidateAllFilters } from '../actions/filter';
 import { enableAPIs } from '../apis';
+import Notification from '../components/notification';
 
 class App extends React.Component {
   componentWillMount() {
@@ -20,7 +22,13 @@ class App extends React.Component {
     window.removeEventListener('resize', this.props.onResize);
   }
   render() {
-    return React.cloneElement(this.props.children, omit(this.props, ['children']));
+    const { notifications, onDismissNotification } = this.props;
+    return (
+      <div>
+        <Notification notifications={ notifications } onDismiss={ onDismissNotification } />
+        { React.cloneElement(this.props.children, omit(this.props, ['children'])) }
+      </div>
+    );
   }
 }
 App.propTypes = {
@@ -44,6 +52,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    onDismissNotification: (e) => {
+      e.preventDefault();
+      dispatch(dismissNotification(e.target.dataset.id));
+    },
     onResize: (e) => {
       const { innerWidth, innerHeight } = e.currentTarget;
       dispatch(updateWindow({ innerWidth, innerHeight }));
@@ -54,6 +66,8 @@ function mapDispatchToProps(dispatch) {
         dispatch(invalidateAllFilters());
 
         dispatch(fetchResults());
+      } else {
+        dispatch(notify({ text: 'Keyword required.', status: 'info', id: 'keyword_required' }));
       }
       dispatch(updatePath());
     }

@@ -1,3 +1,4 @@
+import { reject } from 'lodash';
 import assign from 'object-assign';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
@@ -58,8 +59,7 @@ function notifications(state = [], action) {
   case ADD_NOTIFICATION:
     return _state.concat(action.payload);
   case DISMISS_NOTIFICATION:
-    _state.splice(action.payload, 1);
-    return _state;
+    return reject(state, { id: action.payload });
   default:
     return _state;
   }

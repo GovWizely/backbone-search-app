@@ -48,6 +48,7 @@ module.exports = assign(
   defineArticleAPI('web_documents', {
     card: {
       count: 3,
+      enable: true,
       footer: 'See More',
       header: 'Recommended',
       mode: 'horizontal'

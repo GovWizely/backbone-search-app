@@ -7,7 +7,7 @@ const Deck = ({ apis, findTemplate, onClick, results }) => {
   const cards = compact(map(apis, (api) => {
     const { card, displayName, uniqueId } = api;
 
-    if (!results[uniqueId] || !card.enable) return null;
+    if (!results[uniqueId] || card.enable === false) return null;
 
     const { isFetching, items } = results[uniqueId];
     if (!isFetching && !items.length) return null;

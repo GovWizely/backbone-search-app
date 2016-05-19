@@ -41,11 +41,9 @@ function preprocess(api, query) {
   let params = query || {};
 
   params = formatParams(params);
-
   if (api.transformParams) {
     params = api.transformParams(params);
   }
-
   params = permitParams(params, api.permittedParams);
 
   if (!params.q) params.q = '';

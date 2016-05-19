@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { findTemplate } from '../../templates';
 import { fetchResults } from '../../actions/result';
 import { invalidateAllFilters } from '../../actions/filter';
+import { notify } from '../../actions/notification';
 import { selectAPIs } from '../../actions/api';
 import { updatePath } from '../../actions/path';
 import { clearFiltering, updateFiltering, updateQuery, replaceQuery } from '../../actions/query';
@@ -23,10 +24,8 @@ class Index extends React.Component {
   }
   render() {
     const {
-      enabledAPIs, filters,
-      onBucket, onClearFilter, onDismissNotification,
-      onExpand, onFilter, onPaging, onSelect, onSubmit,
-      notifications, query, results, selectedAPIs
+      enabledAPIs, filters, onBucket, onClearFilter, onExpand, onFilter,
+      onPaging, onSelect, onSubmit, query, results, selectedAPIs
     } = this.props;
     return (
       <div id="search" className="mi-search">
@@ -141,6 +140,7 @@ function mapDispatchToProps(dispatch, ownProps) {
         dispatch(invalidateAllFilters());
         dispatch(fetchResults());
       } else {
+        dispatch(notify({ text: 'Keyword required.', status: 'info', id: 'keyword_required' }));
         dispatch(updatePath());
       }
     },

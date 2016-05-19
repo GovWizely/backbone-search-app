@@ -34,6 +34,8 @@ class App extends React.Component {
 App.propTypes = {
   children: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  notifications: PropTypes.array,
+  onDismissNotification: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired
 };
@@ -63,8 +65,8 @@ function mapDispatchToProps(dispatch) {
     onSubmit: (query) => {
       dispatch(replaceQuery(query));
       if (query.q) {
+        dispatch(dismissNotification('keyword_required'));
         dispatch(invalidateAllFilters());
-
         dispatch(fetchResults());
       } else {
         dispatch(notify({ text: 'Keyword required.', status: 'info', id: 'keyword_required' }));

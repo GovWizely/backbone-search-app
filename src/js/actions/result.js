@@ -1,4 +1,4 @@
-import { get, isEmpty, map, reject } from 'lodash';
+import { at, compact, get, isEmpty, map, reject } from 'lodash';
 import fetch from 'isomorphic-fetch';
 import invariant from 'invariant';
 
@@ -61,12 +61,13 @@ function postprocess(api, _json) {
 }
 
 function createFetch(api, dispatch, getState) {
-  return (query) => {
+  return () => {
     if (get(getState().results, [api.uniqueId, 'isFetching'])) {
       dispatch(noAction());
       return null;
     }
-    const params = preprocess(api, query);
+
+    const params = preprocess(api, getState().query);
     dispatch(requestResults(api));
     return fetch(formatEndpoint(api.endpoint, params))
       .then(response => {
@@ -85,12 +86,22 @@ function createFetch(api, dispatch, getState) {
   };
 }
 
+function createFetchIfNeeded(api, dispatch, getState) {
+  const { query } = getState();
+
+  if (compact(at(query, api.requiredParams)).length === 0) return null;
+
+  return createFetch(api, dispatch, getState);
+}
+
 export function fetchResults() {
   return (dispatch, getState) => {
-    const { selectedAPIs, query } = getState();
-    const fetches = map(selectedAPIs, api => createFetch(api, dispatch, getState));
+    const { selectedAPIs } = getState();
+    const fetches = compact(map(selectedAPIs, api => createFetchIfNeeded(api, dispatch, getState)));
 
-    return Promise.all(map(fetches, f => f(query)))
+    if (fetches.length === 0) return dispatch(noAction());
+
+    return Promise.all(map(fetches, f => f()))
       .then(responses => reject(responses, (response) => response.error))
       .then(responses => {
         if (!isEmpty(responses)) dispatch(computeFiltersByAggregation(responses));

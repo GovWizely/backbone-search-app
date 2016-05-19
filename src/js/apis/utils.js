@@ -91,6 +91,10 @@ const ATTRIBUTES = {
     defaultValue: ['q'],
     type: AttributeTypes.array
   },
+  requiredParams: {
+    defaultValue: ['q'],
+    type: AttributeTypes.array
+  },
   shortName: {
     type: AttributeTypes.string
   },

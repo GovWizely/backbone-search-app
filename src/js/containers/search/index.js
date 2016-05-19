@@ -16,6 +16,7 @@ import Content from './content';
 import Filter from './filter';
 import Form from './form';
 import QueryExpansionList from './query_expansion_list';
+import QueryPrompt from './query_prompt';
 
 class Index extends React.Component {
   componentDidMount() {
@@ -31,8 +32,9 @@ class Index extends React.Component {
       <div id="search" className="mi-search">
         <div className="mi-search__form-container">
           <Form onSubmit={ onSubmit } query={ query } />
-          <div className="mi-search__query-expansion-list-container">
+          <div className="mi-search__form-hint-container">
             <QueryExpansionList onClick={ onExpand } queryExpansions={ results.query_expansion } />
+            <QueryPrompt q={ query.q } />
           </div>
         </div>
 
@@ -134,15 +136,9 @@ function mapDispatchToProps(dispatch, ownProps) {
     onLoaded: ({ apiName, query }) => {
       const apis = apiName ? filter(enabledAPIs, { uniqueId: apiName }) : enabledAPIs;
       dispatch(replaceQuery(query));
-
-      if (query.q) {
-        dispatch(selectAPIs(apis));
-        dispatch(invalidateAllFilters());
-        dispatch(fetchResults());
-      } else {
-        dispatch(notify({ text: 'Keyword required.', status: 'info', id: 'keyword_required' }));
-        dispatch(updatePath());
-      }
+      dispatch(selectAPIs(apis));
+      dispatch(invalidateAllFilters());
+      dispatch(fetchResults());
     },
     onPaging: (e) => {
       e.preventDefault();

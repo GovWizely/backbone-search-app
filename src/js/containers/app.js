@@ -2,7 +2,7 @@ import { omit } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { notify, dismissNotification } from '../actions/notification';
+import { dismissNotification } from '../actions/notification';
 import { fetchResults } from '../actions/result';
 import { replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
@@ -52,6 +52,7 @@ function mapStateToProps(state) {
   };
 }
 
+
 function mapDispatchToProps(dispatch) {
   return {
     onDismissNotification: (e) => {
@@ -64,13 +65,8 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: (query) => {
       dispatch(replaceQuery(query));
-      if (query.q) {
-        dispatch(dismissNotification('keyword_required'));
-        dispatch(invalidateAllFilters());
-        dispatch(fetchResults());
-      } else {
-        dispatch(notify({ text: 'Keyword required.', status: 'info', id: 'keyword_required' }));
-      }
+      dispatch(invalidateAllFilters());
+      dispatch(fetchResults());
       dispatch(updatePath());
     }
   };

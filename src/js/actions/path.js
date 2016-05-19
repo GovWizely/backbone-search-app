@@ -8,10 +8,6 @@ export function updatePath() {
     let apiName = '';
     if (keys(selectedAPIs).length === 1) apiName = values(selectedAPIs)[0].uniqueId;
 
-    if (query.q) {
-      dispatch(_updatePath(`/search/${apiName}?${stringify(omitBy(query, isEmpty))}`));
-    } else {
-      dispatch(_updatePath('/'));
-    }
+    return dispatch(_updatePath(`/search/${apiName}?${stringify(omitBy(query, isEmpty))}`));
   };
 }

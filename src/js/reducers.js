@@ -1,7 +1,7 @@
 import { reject } from 'lodash';
 import assign from 'object-assign';
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
+import { reducer as form } from 'redux-form';
 import { routeReducer } from 'redux-simple-router';
 
 import {
@@ -138,7 +138,7 @@ function window(state = {}, action) {
 const reducer = combineReducers({
   apis,
   filtersByAggregation,
-  form: formReducer,
+  form,
   notifications,
   query,
   resultsByAPI,

@@ -28,6 +28,7 @@ class Index extends React.Component {
       enabledAPIs, filters, onBucket, onClearFilter, onExpand, onFilter,
       onPaging, onSelect, onSubmit, query, results, selectedAPIs
     } = this.props;
+
     return (
       <div id="search" className="mi-search">
         <div className="mi-search__form-container">
@@ -87,19 +88,11 @@ Index.propTypes = {
 function mapStateToProps(state) {
   const { filtersByAggregation, queryExpansions, resultsByAPI, selectedAPIs, window } = state;
 
-  const results = reduce(
-    selectedAPIs, (output, { uniqueId }) =>
-      assign(output, {
-        [uniqueId]: resultsByAPI[uniqueId] || {
-          aggregations: {}, items: [], metadata: {}, invalidated: false, isFetching: true
-        }
-      }), {});
-
   return {
     filters: filtersByAggregation,
     findTemplate,
     queryExpansions,
-    results,
+    results: resultsByAPI,
     selectedAPIs,
     window
   };

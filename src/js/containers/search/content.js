@@ -6,8 +6,8 @@ import Result from './result';
 import NoResult from './no_result';
 import Spinner from '../../components/spinner';
 
-function contentType(props) {
-  const { results, selectedAPIs } = props;
+function contentType({ results, selectedAPIs }) {
+  if (isEmpty(results)) return { type: 'blank' };
 
   // wait for all the responses to be returned before showing any result.
   for (const { async, uniqueId } of selectedAPIs) {
@@ -63,9 +63,11 @@ const Content = ({ findTemplate, onPaging, onSelect, query, results, selectedAPI
     break;
 
   case 'noResult':
-  default:
     content = <NoResult />;
     break;
+
+  default:
+    content = null;
   }
 
   return content;

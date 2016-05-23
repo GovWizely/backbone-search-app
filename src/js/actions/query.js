@@ -7,9 +7,7 @@ export const UPDATE_QUERY = 'UPDATE_QUERY';
 export const REPLACE_QUERY = 'REPLACE_QUERY';
 
 function trimQ(_query) {
-  return assign({}, _query, {
-    q: _query.q && _query.q.trim()
-  });
+  return assign({}, _query, _query.q ? { q: _query.q.trim() } : {});
 }
 
 export function updateQuery(query) {

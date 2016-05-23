@@ -1,12 +1,10 @@
-import assign from 'object-assign';
-import { filter, reduce } from 'lodash';
+import { filter } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { findTemplate } from '../../templates';
 import { fetchResults } from '../../actions/result';
 import { invalidateAllFilters } from '../../actions/filter';
-import { notify } from '../../actions/notification';
 import { selectAPIs } from '../../actions/api';
 import { updatePath } from '../../actions/path';
 import { clearFiltering, updateFiltering, updateQuery, replaceQuery } from '../../actions/query';

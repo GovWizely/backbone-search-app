@@ -18,8 +18,9 @@ import QueryPrompt from './query_prompt';
 
 class Index extends React.Component {
   componentDidMount() {
-    const { location, params, onLoaded } = this.props;
+    const { history, location, params, onHistoryPopped, onLoaded } = this.props;
     onLoaded({ apiName: params.api, query: location.query });
+    history.listen(onHistoryPopped.bind(undefined, onLoaded));
   }
   render() {
     const {
@@ -98,6 +99,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch, ownProps) {
   const { enabledAPIs } = ownProps;
+
   return {
     onBucket: (apis) => {
       dispatch(selectAPIs(apis));
@@ -127,10 +129,16 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     },
+    onHistoryPopped: (handle, _, { location, params }) => {
+      if (location.action !== 'POP') return;
+      handle({ apiName: params.api, query: location.query });
+    },
     onLoaded: ({ apiName, query }) => {
       const apis = apiName ? filter(enabledAPIs, { uniqueId: apiName }) : enabledAPIs;
       dispatch(replaceQuery(query));
       dispatch(selectAPIs(apis));
+      dispatch(invalidateAllFilters());
+      dispatch(invalidateAllResults());
       dispatch(fetchResultsByAPI());
     },
     onPaging: (e) => {

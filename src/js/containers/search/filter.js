@@ -18,14 +18,12 @@ const Filter = ({ filters, onChange, onClear, query }) => {
   if (noFilter(filters)) return <noscript />;
 
   const checkboxTrees = map(filters, (filter, key) => {
-    if (filter.invalidated) return null;
-
     const values = query[key] || [];
 
     return (
       <CheckboxTree
         key={ key } name={ key } label={ startCase(key) }
-        items={ filter.items } disabled={ filter.invalidated || filter.isFetching }
+        items={ filter.items } disabled={ filter.isFetching || filter.invalidated }
         onChange={ onChange }
         defaultValues={ Array.isArray(values) ? values : [values] }
       />

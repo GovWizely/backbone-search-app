@@ -16,13 +16,15 @@ class App extends React.Component {
     this.props.onResize({ currentTarget: window });
   }
   componentDidMount() {
-    window.addEventListener('resize', this.props.onResize);
+    const { onResize } = this.props;
+    window.addEventListener('resize', onResize);
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.props.onResize);
   }
   render() {
     const { notifications, onDismissNotification } = this.props;
+
     return (
       <div>
         <Notification notifications={ notifications } onDismiss={ onDismissNotification } />

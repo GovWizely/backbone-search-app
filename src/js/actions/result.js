@@ -3,8 +3,7 @@ import fetch from 'isomorphic-fetch';
 import invariant from 'invariant';
 
 import {
-  formatAggregations, formatEndpoint, formatMetadata, formatParams,
-  noAction, permitParams
+  formatAggregations, formatEndpoint, formatMetadata, formatParams, permitParams
 } from '../utils/action-helper';
 import { computeFiltersByAggregation } from './filter';
 import { notify } from './notification';
@@ -105,7 +104,7 @@ function shouldFetchResults(state, api) {
 
 function fetchResultsIfNeeded(api) {
   return (dispatch, getState) => {
-    if (!shouldFetchResults(getState(), api)) return dispatch(noAction());
+    if (!shouldFetchResults(getState(), api)) return Promise.resolve();
 
     return dispatch(fetchResults(api));
   };

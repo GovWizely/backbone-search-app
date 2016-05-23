@@ -1,4 +1,4 @@
-import { isEmpty, map, pick, reduce } from 'lodash';
+import { isEmpty, reduce } from 'lodash';
 import React, { PropTypes } from 'react';
 
 import Deck from './deck';
@@ -11,7 +11,7 @@ function contentType({ results, selectedAPIs }) {
 
   // wait for all the responses to be returned before showing any result.
   for (const { async, uniqueId } of selectedAPIs) {
-    if (results[uniqueId].isFetching && !async) return { type: 'loading' };
+    if (!results[uniqueId] || results[uniqueId].isFetching && !async) return { type: 'loading' };
   }
 
   const matchedAPIs = reduce(selectedAPIs, (output, selectedAPI) => {

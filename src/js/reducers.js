@@ -2,7 +2,7 @@ import { reject } from 'lodash';
 import assign from 'object-assign';
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
-import { routeReducer } from 'redux-simple-router';
+import { routerReducer } from 'react-router-redux';
 
 import {
   REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS, INVALIDATE_RESULTS } from './actions/result';
@@ -48,9 +48,6 @@ function filtersByAggregation(state = {}, action) {
   case RECEIVE_FILTERS:
   case INVALIDATE_FILTERS:
     return assign({}, state, { [action.meta]: filters(state[action.meta], action) });
-  case UPDATE_QUERY:
-  case REPLACE_QUERY:
-    return {};
   default:
     return state;
   }
@@ -150,7 +147,7 @@ const reducer = combineReducers({
   notifications,
   query,
   resultsByAPI,
-  routing: routeReducer,
+  routing: routerReducer,
   selectedAPIs,
   window
 });

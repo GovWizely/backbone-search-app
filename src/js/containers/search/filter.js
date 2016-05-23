@@ -18,6 +18,8 @@ const Filter = ({ filters, onChange, onClear, query }) => {
   if (noFilter(filters)) return <noscript />;
 
   const checkboxTrees = map(filters, (filter, key) => {
+    if (filter.invalidated) return null;
+
     const values = query[key] || [];
 
     return (

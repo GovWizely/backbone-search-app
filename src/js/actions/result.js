@@ -93,11 +93,11 @@ function shouldFetchResults(state, api) {
   const result = get(state.resultsByAPI, api.uniqueId);
   const { query } = state;
 
+  if (compact(at(query, api.requiredParams)).length === 0) return false;
+
   if (!result || isEmpty(result)) {
     return true;
   } else if (result.isFetching) {
-    return false;
-  } else if (compact(at(query, api.requiredParams)).length === 0) {
     return false;
   }
   return result.invalidated;

@@ -42,7 +42,6 @@ export function updateFiltering(name, values) {
     } else {
       dispatch(updateQuery({ [name]: values, offset: 0 }));
     }
-
     const { filtersByAggregation, query } = getState();
     if (intersection(keys(filtersByAggregation), keys(query)).length === 0) {
       dispatch(invalidateAllFilters());

@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { compact, isEmpty, keys, map, pick, reduce, uniq } from 'lodash';
+import { compact, isEmpty, keys, map, pickBy, reduce, uniq } from 'lodash';
 
 export const REQUEST_FILTERS = 'REQUEST_FILTERS';
 export const RECEIVE_FILTERS = 'RECEIVE_FILTERS';
@@ -42,7 +42,10 @@ export function invalidateAllFilters() {
 
 function selectedResults(state) {
   const { resultsByAPI: results, selectedAPIs } = state;
-  return pick(results, map(selectedAPIs, 'uniqueId'));
+  const uniqueIds = map(selectedAPIs, 'uniqueId');
+  return pickBy(
+    results, (result, uniqueId) => !result.invalidated && uniqueIds.includes(uniqueId)
+  );
 }
 
 function computeFilters(aggregation) {

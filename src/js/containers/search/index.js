@@ -65,6 +65,7 @@ class Index extends React.Component {
 Index.propTypes = {
   enabledAPIs: PropTypes.array.isRequired,
   filters: PropTypes.object,
+  history: PropTypes.object,
   location: PropTypes.object,
   notifications: PropTypes.array,
   onBucket: PropTypes.func.isRequired,
@@ -72,6 +73,7 @@ Index.propTypes = {
   onDismissNotification: PropTypes.func.isRequired,
   onExpand: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired,
+  onHistoryPopped: PropTypes.func.isRequired,
   onLoaded: PropTypes.func.isRequired,
   onPaging: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,

@@ -4,7 +4,9 @@ const QueryPrompt = ({ q }) => {
   if (q) return null;
 
   return (
-    <div>Please enter a search term in the box above.</div>
+    <div className="mi-query-prompt">
+      Please enter a search term in the box above.
+    </div>
   );
 };
 

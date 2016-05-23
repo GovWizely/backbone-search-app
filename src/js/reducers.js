@@ -5,7 +5,7 @@ import { reducer as form } from 'redux-form';
 import { routeReducer } from 'redux-simple-router';
 
 import {
-  REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS } from './actions/result';
+  REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS, INVALIDATE_RESULTS } from './actions/result';
 import { INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS } from './actions/filter';
 import { UPDATE_WINDOW } from './actions/window';
 import { UPDATE_QUERY, REPLACE_QUERY } from './actions/query';
@@ -48,6 +48,9 @@ function filtersByAggregation(state = {}, action) {
   case RECEIVE_FILTERS:
   case INVALIDATE_FILTERS:
     return assign({}, state, { [action.meta]: filters(state[action.meta], action) });
+  case UPDATE_QUERY:
+  case REPLACE_QUERY:
+    return {};
   default:
     return state;
   }
@@ -85,10 +88,12 @@ function results(state = {
   switch (action.type) {
   case REQUEST_RESULTS:
     return assign({}, state, {
+      invalidated: false,
       isFetching: true
     });
   case RECEIVE_RESULTS:
     return assign({}, state, {
+      invalidated: false,
       isFetching: false,
       items: action.payload.results,
       metadata: action.payload.metadata,
@@ -96,7 +101,12 @@ function results(state = {
     });
   case FAILURE_RESULTS:
     return assign({}, state, {
+      invalidated: false,
       isFetching: false
+    });
+  case INVALIDATE_RESULTS:
+    return assign({}, state, {
+      invalidated: true
     });
   default:
     return state;
@@ -108,10 +118,8 @@ function resultsByAPI(state = {}, action) {
   case REQUEST_RESULTS:
   case RECEIVE_RESULTS:
   case FAILURE_RESULTS:
+  case INVALIDATE_RESULTS:
     return assign({}, state, { [action.meta]: results(state[action.meta], action) });
-  case UPDATE_QUERY:
-  case REPLACE_QUERY:
-    return {};
   default:
     return state;
   }

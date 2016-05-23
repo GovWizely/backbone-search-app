@@ -1,9 +1,9 @@
-import { filter } from 'lodash';
+import { filter, isEqual } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { findTemplate } from '../../templates';
-import { fetchResults } from '../../actions/result';
+import { fetchResultsByAPI, invalidateAllResults } from '../../actions/result';
 import { invalidateAllFilters } from '../../actions/filter';
 import { selectAPIs } from '../../actions/api';
 import { updatePath } from '../../actions/path';
@@ -103,44 +103,52 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(selectAPIs(apis));
       dispatch(updateQuery({ offset: 0 }));
       dispatch(invalidateAllFilters());
-      dispatch(fetchResults());
+      dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     },
     onClearFilter: (e) => {
       e.preventDefault();
       dispatch(clearFiltering(e.target.dataset.filters));
+      dispatch(invalidateAllResults());
       dispatch(invalidateAllFilters());
-      dispatch(fetchResults());
+      dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     },
     onExpand: (query) => {
-      dispatch(invalidateAllFilters());
       dispatch(replaceQuery({ q: query }));
-      dispatch(fetchResults());
+      dispatch(invalidateAllResults());
+      dispatch(invalidateAllFilters());
+      dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     },
     onFilter: ({ name, values }) => {
       dispatch(updateFiltering(name, values));
-      dispatch(fetchResults());
+      dispatch(invalidateAllResults());
+      dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     },
     onLoaded: ({ apiName, query }) => {
       const apis = apiName ? filter(enabledAPIs, { uniqueId: apiName }) : enabledAPIs;
       dispatch(replaceQuery(query));
       dispatch(selectAPIs(apis));
-      dispatch(invalidateAllFilters());
-      dispatch(fetchResults());
+      dispatch(fetchResultsByAPI());
     },
     onPaging: (e) => {
       e.preventDefault();
       dispatch(updateQuery({ offset: e.target.dataset.offset }));
-      dispatch(fetchResults());
+      dispatch(invalidateAllResults());
+      dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     },
     onSelect: (api, e) => {
       e.preventDefault();
       dispatch(selectAPIs(api));
+      dispatch(invalidateAllFilters());
+      dispatch(fetchResultsByAPI());
       dispatch(updatePath());
+    },
+    onSubmit: (query) => {
+      if (!isEqual(query, ownProps.query)) ownProps.onSubmit(query);
     }
   };
 }

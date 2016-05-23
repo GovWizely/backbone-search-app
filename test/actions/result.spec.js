@@ -34,7 +34,7 @@ describe('actions/result', () => {
       type: actions.REQUEST_RESULTS,
       meta: api.uniqueId
     };
-    expect(actions.requestResults(api)).to.eql(expectedAction);
+    expect(actions.requestResults(api.uniqueId)).to.eql(expectedAction);
   });
 
 
@@ -44,7 +44,7 @@ describe('actions/result', () => {
       meta: api.uniqueId,
       payload
     };
-    expect(actions.receiveResults(api, payload)).to.eql(expectedAction);
+    expect(actions.receiveResults(api.uniqueId, payload)).to.eql(expectedAction);
   });
 
   it('should create an action to indicate failure when requesting results', () => {
@@ -54,7 +54,7 @@ describe('actions/result', () => {
       meta: api.uniqueId,
       payload
     };
-    expect(actions.failureResults(api, payload)).to.eql(expectedAction);
+    expect(actions.failureResults(api.uniqueId, payload)).to.eql(expectedAction);
   });
 
   it('create RECEIVE_RESULTS when results have been received', (done) => {
@@ -64,15 +64,11 @@ describe('actions/result', () => {
 
     const expectedActions = [
       { type: actions.REQUEST_RESULTS, meta: api.uniqueId },
-      { type: actions.RECEIVE_RESULTS, meta: api.uniqueId, payload },
-      { type: actions.REQUEST_FILTERS, meta: 'countries' },
-      { type: actions.RECEIVE_FILTERS, meta: 'countries', payload: {} },
-      { type: actions.REQUEST_FILTERS, meta: 'industries' },
-      { type: actions.RECEIVE_FILTERS, meta: 'industries', payload: {} }
+      { type: actions.RECEIVE_RESULTS, meta: api.uniqueId, payload }
     ];
     const store = mockStore(state);
 
-    store.dispatch(actions.fetchResults())
+    store.dispatch(actions.fetchResultsByAPI())
       .then(() => {
         expect(store.getActions()).to.eql(expectedActions);
       })

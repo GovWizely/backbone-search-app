@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { compact, isEmpty, keys, map, reduce } from 'lodash';
+import { compact, isEmpty, keys, map, pick, reduce, uniq } from 'lodash';
 
 export const REQUEST_FILTERS = 'REQUEST_FILTERS';
 export const RECEIVE_FILTERS = 'RECEIVE_FILTERS';
@@ -40,12 +40,18 @@ export function invalidateAllFilters() {
     map(getState().filtersByAggregation, (filters, key) => dispatch(invalidateFilters(key)));
 }
 
-function computeFilters(responses, aggregation) {
-  return (dispatch) => {
+function selectedResults(state) {
+  const { resultsByAPI: results, selectedAPIs } = state;
+  return pick(results, map(selectedAPIs, 'uniqueId'));
+}
+
+function computeFilters(aggregation) {
+  return (dispatch, getState) => {
+    const results = selectedResults(getState());
     dispatch(requestFilters(aggregation));
     const filters = reduce(
-      responses,
-      (output, response) => merge(output, response.aggregations[aggregation] || {}),
+      results,
+      (output, result) => merge(output, result.aggregations[aggregation] || {}),
       {});
     dispatch(receiveFilters(aggregation, filters));
   };
@@ -53,7 +59,7 @@ function computeFilters(responses, aggregation) {
 
 function shouldComputeFilters(state, aggregation) {
   const filters = state.filtersByAggregation[aggregation];
-  if (!filters || isEmpty(filters) || isEmpty(filters.items)) {
+  if (!filters || isEmpty(filters)) {
     return true;
   } else if (filters.isFetching) {
     return false;
@@ -61,27 +67,29 @@ function shouldComputeFilters(state, aggregation) {
   return filters.invalidated;
 }
 
-function computeFiltersIfNeeded(responses, aggregation) {
+function computeFiltersIfNeeded(aggregation) {
   return (dispatch, getState) => {
     if (!shouldComputeFilters(getState(), aggregation)) return Promise.resolve();
 
-    return dispatch(computeFilters(responses, aggregation));
+    return dispatch(computeFilters(aggregation));
   };
 }
 
-export function computeFiltersByAggregation(responses) {
-  return (dispatch) => {
-    const aggregations = Array.from(
+export function computeFiltersByAggregation() {
+  return (dispatch, getState) => {
+    const results = selectedResults(getState());
+
+    const aggregations = uniq(
       reduce(
-        responses,
-        (output, response) => new Set([...output, ...keys(response.aggregations)]),
-        new Set()
-      )
-    );
+        results,
+        (output, result) => output.concat(keys(result.aggregations)),
+        []
+      ));
+
     return Promise.all(
       map(
         aggregations,
-        (aggregation) => dispatch(computeFiltersIfNeeded(responses, aggregation))
+        (aggregation) => dispatch(computeFiltersIfNeeded(aggregation))
       )
     );
   };

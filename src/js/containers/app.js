@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { dismissNotification } from '../actions/notification';
-import { fetchResults } from '../actions/result';
+import { fetchResultsByAPI, invalidateAllResults } from '../actions/result';
 import { replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
 import { updateWindow } from '../actions/window';
@@ -65,8 +65,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: (query) => {
       dispatch(replaceQuery(query));
+      dispatch(invalidateAllResults());
       dispatch(invalidateAllFilters());
-      dispatch(fetchResults());
+      dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     }
   };

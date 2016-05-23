@@ -53,6 +53,7 @@ module.exports = assign(
       header: 'Recommended',
       mode: 'horizontal'
     },
+    displayName: 'Recommended',
     permittedParams: ['q', 'domains', 'offset', 'limit'],
     transformParams: webDocumentTransformParams
   })

@@ -25,6 +25,7 @@ describe('apis/utils', () => {
           endpoint,
           pathname: 'example',
           permittedParams: ['q'],
+          requiredParams: ['q'],
           uniqueId: 'example'
         }
       });
@@ -44,6 +45,7 @@ describe('apis/utils', () => {
         endpoint,
         pathname: 'excellent',
         permittedParams: ['o'],
+        requiredParams: ['o'],
         shortName: 'Excel',
         transformParams: (params) => params,
         transformResponse: (response) => response,

@@ -1,4 +1,4 @@
-import { at, compact, get, isEmpty, map, reject } from 'lodash';
+import { at, compact, get, isEmpty, map } from 'lodash';
 import fetch from 'isomorphic-fetch';
 import invariant from 'invariant';
 
@@ -12,28 +12,36 @@ import { notify } from './notification';
 export const REQUEST_RESULTS = 'REQUEST_RESULTS';
 export const RECEIVE_RESULTS = 'RECEIVE_RESULTS';
 export const FAILURE_RESULTS = 'FAILURE_RESULTS';
+export const INVALIDATE_RESULTS = 'INVALIDATE_RESULTS';
 
-export function requestResults(api) {
+export function requestResults(uniqueId) {
   return {
     type: REQUEST_RESULTS,
-    meta: api.uniqueId
+    meta: uniqueId
   };
 }
 
-export function receiveResults(api, response) {
+export function receiveResults(uniqueId, response) {
   return {
     type: RECEIVE_RESULTS,
-    meta: api.uniqueId,
+    meta: uniqueId,
     payload: response
   };
 }
 
-export function failureResults(api, e) {
+export function failureResults(uniqueId, e) {
   return {
     type: FAILURE_RESULTS,
     error: true,
-    meta: api.uniqueId,
+    meta: uniqueId,
     payload: e
+  };
+}
+
+export function invalidateResults(uniqueId) {
+  return {
+    type: INVALIDATE_RESULTS,
+    meta: uniqueId
   };
 }
 
@@ -60,15 +68,10 @@ function postprocess(api, _json) {
   };
 }
 
-function createFetch(api, dispatch, getState) {
-  return () => {
-    if (get(getState().results, [api.uniqueId, 'isFetching'])) {
-      dispatch(noAction());
-      return null;
-    }
-
+function fetchResults(api) {
+  return (dispatch, getState) => {
+    dispatch(requestResults(api.uniqueId));
     const params = preprocess(api, getState().query);
-    dispatch(requestResults(api));
     return fetch(formatEndpoint(api.endpoint, params))
       .then(response => {
         invariant(response.status === 200, response.statusText);
@@ -76,36 +79,54 @@ function createFetch(api, dispatch, getState) {
       })
       .then(json => {
         const data = postprocess(api, json);
-        dispatch(receiveResults(api, data));
+        dispatch(receiveResults(api.uniqueId, data));
         return data;
       })
       .catch(e => {
         dispatch(notify({ text: `${api.uniqueId}: ${e.message}`, status: 'error' }));
-        return dispatch(failureResults(api, e));
+        return dispatch(failureResults(api.uniqueId, e));
       });
   };
 }
 
-function createFetchIfNeeded(api, dispatch, getState) {
-  const { query } = getState();
+function shouldFetchResults(state, api) {
+  const result = get(state.resultsByAPI, api.uniqueId);
+  const { query } = state;
 
-  if (compact(at(query, api.requiredParams)).length === 0) return null;
-
-  return createFetch(api, dispatch, getState);
+  if (!result || isEmpty(result)) {
+    return true;
+  } else if (result.isFetching) {
+    return false;
+  } else if (compact(at(query, api.requiredParams)).length === 0) {
+    return false;
+  }
+  return result.invalidated;
 }
 
-export function fetchResults() {
+function fetchResultsIfNeeded(api) {
+  return (dispatch, getState) => {
+    if (!shouldFetchResults(getState(), api)) return dispatch(noAction());
+
+    return dispatch(fetchResults(api));
+  };
+}
+
+export function fetchResultsByAPI() {
   return (dispatch, getState) => {
     const { selectedAPIs } = getState();
-    const fetches = compact(map(selectedAPIs, api => createFetchIfNeeded(api, dispatch, getState)));
 
-    if (fetches.length === 0) return dispatch(noAction());
+    return Promise.all(
+      map(selectedAPIs, (api) => dispatch(fetchResultsIfNeeded(api)))
+    ).then(() => dispatch(computeFiltersByAggregation()));
+  };
+}
 
-    return Promise.all(map(fetches, f => f()))
-      .then(responses => reject(responses, (response) => response.error))
-      .then(responses => {
-        if (!isEmpty(responses)) dispatch(computeFiltersByAggregation(responses));
-        return responses;
-      });
+export function invalidateAllResults() {
+  return (dispatch, getState) => {
+    const { resultsByAPI: results } = getState();
+
+    return Promise.all(
+      map(results, (result, uniqueId) => dispatch(invalidateResults(uniqueId)))
+    );
   };
 }

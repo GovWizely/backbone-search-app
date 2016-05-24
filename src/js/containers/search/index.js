@@ -1,6 +1,7 @@
 import { filter, isEqual } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import { findTemplate } from '../../templates';
 import { fetchResultsByAPI, invalidateAllResults } from '../../actions/result';
@@ -18,9 +19,9 @@ import QueryPrompt from './query_prompt';
 
 class Index extends React.Component {
   componentDidMount() {
-    const { history, location, params, onHistoryPopped, onLoaded } = this.props;
+    const { location, params, onRouted, onLoaded, router } = this.props;
     onLoaded({ apiName: params.api, query: location.query });
-    history.listen(onHistoryPopped.bind(undefined, onLoaded));
+    router.listen(onRouted.bind(undefined, onLoaded));
   }
   render() {
     const {
@@ -65,7 +66,6 @@ class Index extends React.Component {
 Index.propTypes = {
   enabledAPIs: PropTypes.array.isRequired,
   filters: PropTypes.object,
-  history: PropTypes.object,
   location: PropTypes.object,
   notifications: PropTypes.array,
   onBucket: PropTypes.func.isRequired,
@@ -73,35 +73,36 @@ Index.propTypes = {
   onDismissNotification: PropTypes.func.isRequired,
   onExpand: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired,
-  onHistoryPopped: PropTypes.func.isRequired,
   onLoaded: PropTypes.func.isRequired,
   onPaging: PropTypes.func.isRequired,
+  onRouted: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired,
   query: PropTypes.object,
   queryExpansions: PropTypes.object,
   results: PropTypes.object,
+  router: PropTypes.object,
   selectedAPIs: PropTypes.array.isRequired,
   window: PropTypes.object
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, { router }) {
   const { filtersByAggregation, queryExpansions, resultsByAPI, selectedAPIs, window } = state;
-
   return {
     filters: filtersByAggregation,
     findTemplate,
     queryExpansions,
     results: resultsByAPI,
+    router,
     selectedAPIs,
     window
   };
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
-  const { enabledAPIs } = ownProps;
-
+function mapDispatchToProps(
+  dispatch, { enabledAPIs, onSubmit, params, query: currentQuery }
+) {
   return {
     onBucket: (apis) => {
       dispatch(selectAPIs(apis));
@@ -131,10 +132,6 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     },
-    onHistoryPopped: (handle, _, { location, params }) => {
-      if (location.action !== 'POP') return;
-      handle({ apiName: params.api, query: location.query });
-    },
     onLoaded: ({ apiName, query }) => {
       const apis = apiName ? filter(enabledAPIs, { uniqueId: apiName }) : enabledAPIs;
       dispatch(replaceQuery(query));
@@ -150,6 +147,12 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     },
+    onRouted: (handle, location) => {
+      if (location.action !== 'POP') return;
+      const apiName = location.pathname.split('/')[2] || undefined;
+      console.log(apiName);
+      handle({ apiName, query: location.query });
+    },
     onSelect: (api, e) => {
       e.preventDefault();
       dispatch(selectAPIs(api));
@@ -158,12 +161,12 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(updatePath());
     },
     onSubmit: (query) => {
-      if (!isEqual(query, ownProps.query)) ownProps.onSubmit(query);
+      if (!isEqual(query, currentQuery)) onSubmit(query);
     }
   };
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Index);
+)(Index));

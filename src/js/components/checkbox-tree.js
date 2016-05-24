@@ -24,14 +24,18 @@ Checkbox.propTypes = {
   nestedList: PropTypes.object
 };
 
-const List = ({ items, disabled, values }) => {
+const List = ({ inheritedChecked = false, items, disabled, values }) => {
   if (isEmpty(items)) return <noscript />;
 
   const checkboxes = map(keys(items), (item) => {
-    const nestedList =
-      items[item] ?
-        <List items={ items[item] } disabled={ disabled } values={ values } /> : null;
-    const checked = includes(values, item);
+    const checked = inheritedChecked || includes(values, item);
+    const nestedList = items[item] ?
+      <List
+        items={ items[item] }
+        inheritedChecked={ checked }
+        disabled={ disabled }
+        values={ values }
+      /> : null;
     return (
       <Checkbox
         key={ item }
@@ -48,6 +52,7 @@ const List = ({ items, disabled, values }) => {
 };
 List.propTypes = {
   disabled: PropTypes.bool,
+  inheritedChecked: PropTypes.bool,
   items: PropTypes.object.isRequired,
   values: PropTypes.array
 };

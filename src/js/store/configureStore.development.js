@@ -11,7 +11,7 @@ export default function configureStore(initialState, history) {
     applyMiddleware(
       routerMiddleware(history),
       thunkMiddleware,
-      loggerMiddleware // Must be the last middleware to be included.
+//      loggerMiddleware // Must be the last middleware to be included.
     )
   ));
 }

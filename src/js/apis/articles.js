@@ -23,7 +23,8 @@ function defineArticleAPI(key, attributes = {}) {
   const articleAPI = {
     aggregations: {
       countries: { type: 'array' },
-      industries: { type: 'tree' }
+      industries: { type: 'tree' },
+      topics: { type: 'tree' }
     },
     endpoint: endpoint(key),
     permittedParams: [

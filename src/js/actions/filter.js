@@ -4,6 +4,7 @@ import { compact, isEmpty, keys, map, pickBy, reduce, uniq } from 'lodash';
 export const REQUEST_FILTERS = 'REQUEST_FILTERS';
 export const RECEIVE_FILTERS = 'RECEIVE_FILTERS';
 export const INVALIDATE_FILTERS = 'INVALIDATE_FILTERS';
+export const INVALIDATE_ALL_FILTERS = 'INVALIDATE_ALL_FILTERS';
 
 export function requestFilters(aggregation) {
   return {
@@ -56,7 +57,7 @@ function computeFilters(aggregation) {
       results,
       (output, result) => merge(output, result.aggregations[aggregation] || {}),
       {});
-    dispatch(receiveFilters(aggregation, filters));
+    return dispatch(receiveFilters(aggregation, filters));
   };
 }
 

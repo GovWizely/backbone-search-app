@@ -1,15 +1,7 @@
 import { forEach, pick, reduce } from 'lodash';
 import assign from 'object-assign';
 import Url from 'url';
-import { parseAsTree } from '../utils/aggregation-parser';
-
-function reduceArray(array) {
-  return reduce(
-    array,
-    (output, element) => assign({}, output, { [element.key]: {} }),
-    {}
-  );
-}
+import { parseAsArray, parseAsTree } from '../utils/aggregation-parser';
 
 export function formatAggregations(aggregations, formats) {
   if (!aggregations) return {};
@@ -19,7 +11,7 @@ export function formatAggregations(aggregations, formats) {
 
     switch (format.type) {
     case 'array':
-      return assign({}, output, { [key]: reduceArray(aggregation) });
+      return assign({}, output, { [key]: parseAsArray(aggregation) });
     case 'tree':
       return assign({}, output, { [key]: parseAsTree(aggregation) });
     default:

@@ -1,4 +1,4 @@
-import { map, reduce, set } from 'lodash';
+import { reduce, set } from 'lodash';
 
 export function parseAsTree(records) {
   return reduce(records, (output, record) => {
@@ -7,9 +7,10 @@ export function parseAsTree(records) {
   }, {});
 }
 
-export function parse(records) {
-  return map(records, (record) => {
-    const array = record.key.substring(1).split('/');
-    return { key: array[array.length - 1], doc_count: record.doc_count };
-  });
+export function parseAsArray(records) {
+  const output = {};
+  for (const { key } of records) {
+    output[key] = {};
+  }
+  return output;
 }

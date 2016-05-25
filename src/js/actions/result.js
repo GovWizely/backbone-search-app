@@ -1,3 +1,4 @@
+import assign from 'object-assign';
 import { at, compact, get, isEmpty, map } from 'lodash';
 import fetch from 'isomorphic-fetch';
 import invariant from 'invariant';
@@ -45,7 +46,7 @@ export function invalidateResults(uniqueId) {
 }
 
 function preprocess(api, query) {
-  let params = query || {};
+  let params = assign({}, query);
 
   params = formatParams(params);
   if (api.transformParams) {

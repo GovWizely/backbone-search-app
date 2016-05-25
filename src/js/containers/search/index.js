@@ -88,11 +88,10 @@ Index.propTypes = {
 };
 
 function mapStateToProps(state, { router }) {
-  const { filtersByAggregation, queryExpansions, resultsByAPI, selectedAPIs, window } = state;
+  const { filtersByAggregation, resultsByAPI, selectedAPIs, window } = state;
   return {
     filters: filtersByAggregation,
     findTemplate,
-    queryExpansions,
     results: resultsByAPI,
     router,
     selectedAPIs,
@@ -101,7 +100,7 @@ function mapStateToProps(state, { router }) {
 }
 
 function mapDispatchToProps(
-  dispatch, { enabledAPIs, onSubmit, params, query: currentQuery }
+  dispatch, { enabledAPIs, onSubmit, query: currentQuery }
 ) {
   return {
     onBucket: (apis) => {
@@ -150,7 +149,6 @@ function mapDispatchToProps(
     onRouted: (handle, location) => {
       if (location.action !== 'POP') return;
       const apiName = location.pathname.split('/')[2] || undefined;
-      console.log(apiName);
       handle({ apiName, query: location.query });
     },
     onSelect: (api, e) => {

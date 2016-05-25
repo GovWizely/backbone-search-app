@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import {
   includes, isEmpty, keys, map, pick, take
 } from 'lodash';

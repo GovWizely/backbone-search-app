@@ -1,6 +1,4 @@
-import {
-  includes, isEmpty, keys, map, pick, take
-} from 'lodash';
+import { difference, includes, isEmpty, keys, map, pick, take } from 'lodash';
 import React, { PropTypes } from 'react';
 
 const Checkbox = ({ checked, children, disabled, item }) => (
@@ -75,9 +73,13 @@ class CheckboxTree extends React.Component {
   }
 
   handleClick(e) {
-    if (e.target.type !== 'checkbox') return;
+    const { checked, type, value } = e.target;
+    if (type !== 'checkbox') return;
 
-    const values = map(e.currentTarget.querySelectorAll('input:checked'), 'value');
+    const values = difference(
+      map(e.currentTarget.querySelectorAll('input:checked'), 'value'),
+      checked ? [] : [value]
+    );
 
     this.setState({ values });
     this.props.onChange({ name: this.props.name, values });

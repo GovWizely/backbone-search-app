@@ -11,7 +11,7 @@ function displayablePages(innerWidth) {
 }
 
 const Result = ({ api, findTemplate, onPaging, query, result, window }) => {
-  if (result.isFetching || result.metadata.total === 0) return <noscript />;
+  if (result.invalidated || result.isFetching || result.metadata.total === 0) return null;
 
   const { ResultItem, getOptions } = findTemplate(api.uniqueId);
 

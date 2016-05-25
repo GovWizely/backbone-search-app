@@ -1,4 +1,3 @@
-import { omit } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -8,7 +7,7 @@ import { replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
 import { updateWindow } from '../actions/window';
 import { invalidateAllFilters } from '../actions/filter';
-import { enableAPIs } from '../apis';
+import { getEnabledAPIs } from '../selectors';
 import Notification from '../components/notification';
 
 class App extends React.Component {
@@ -23,28 +22,31 @@ class App extends React.Component {
     window.removeEventListener('resize', this.props.onResize);
   }
   render() {
-    const { notifications, onDismissNotification } = this.props;
+    const {
+      children, enabledAPIs, notifications, onDismissNotification, onSubmit
+    } = this.props;
 
     return (
       <div>
         <Notification notifications={ notifications } onDismiss={ onDismissNotification } />
-        { React.cloneElement(this.props.children, omit(this.props, ['children'])) }
+        { React.cloneElement(children, { enabledAPIs, onSubmit }) }
       </div>
     );
   }
 }
 App.propTypes = {
   children: PropTypes.object.isRequired,
+  enabledAPIs: PropTypes.array.isRequired,
   location: PropTypes.object.isRequired,
   notifications: PropTypes.array,
   onDismissNotification: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  onSubmit: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-  const { apis, notifications, query } = state;
-  const enabledAPIs = enableAPIs(apis);
+  const { notifications, query } = state;
+  const enabledAPIs = getEnabledAPIs(state);
   return {
     enabledAPIs,
     notifications,

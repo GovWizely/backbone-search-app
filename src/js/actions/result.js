@@ -2,6 +2,7 @@ import assign from 'object-assign';
 import { at, compact, get, isEmpty, map } from 'lodash';
 import fetch from 'isomorphic-fetch';
 import invariant from 'invariant';
+import { batchActions } from 'redux-batched-actions';
 
 import {
   formatAggregations, formatEndpoint, formatMetadata, formatParams, permitParams
@@ -125,8 +126,8 @@ export function invalidateAllResults() {
   return (dispatch, getState) => {
     const { resultsByAPI: results } = getState();
 
-    return Promise.all(
-      map(results, (result, uniqueId) => dispatch(invalidateResults(uniqueId)))
+    return dispatch(
+      batchActions(map(results, (result, uniqueId) => invalidateResults(uniqueId)))
     );
   };
 }

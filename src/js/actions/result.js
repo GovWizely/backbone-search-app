@@ -55,8 +55,6 @@ function preprocess(api, query) {
   }
   params = permitParams(params, api.permittedParams);
 
-  if (!params.q) params.q = '';
-
   return params;
 }
 
@@ -94,7 +92,8 @@ function shouldFetchResults(state, api) {
   const result = get(state.resultsByAPI, api.uniqueId);
   const { query } = state;
 
-  if (compact(at(query, api.requiredParams)).length === 0) return false;
+  if (api.requiredParams.length &&
+      compact(at(query, api.requiredParams)).length === 0) return false;
 
   if (!result || isEmpty(result)) {
     return true;

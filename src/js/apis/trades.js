@@ -80,30 +80,22 @@ module.exports = assign(
   defineTradeAPI('trade_leads', {
     shortName: 'Leads'
   }),
-  defineTradeAPI('consolidated_screening_list', {
-  }),
-  defineTradeAPI('market_research_library', {
-  }),
-  defineTradeAPI('tariff_rates', {
-  }),
-  defineTradeAPI('ita_office_locations', {
-  }),
-  defineTradeAPI('trade_articles', {
-  }),
-  defineTradeAPI('ita_zipcode_to_post', {
-  }),
-  defineTradeAPI('business_service_providers', {
-  }),
-  defineTradeAPI('ita_taxonomies', {
-  }),
+  defineTradeAPI('consolidated_screening_list'),
+  defineTradeAPI('market_research_library'),
+  defineTradeAPI('tariff_rates'),
+  defineTradeAPI('ita_office_locations'),
+  defineTradeAPI('trade_articles'),
+  defineTradeAPI('ita_zipcode_to_post'),
+  defineTradeAPI('business_service_providers'),
+  defineTradeAPI('ita_taxonomies'),
   defineTradeAPI('de_minimis', {
-    endpoint: endpoint('v1/de_minimis')
+    endpoint: endpoint('v1/de_minimis/search')
   }),
   defineTradeAPI('tpp_rates', {
     aggregations: {
       partners: { type: 'array' }
     },
-    endpoint: endpoint('v1/tpp_rates'),
+    endpoint: endpoint('v1/tpp_rates/search'),
     permittedParams: ['q', 'sources', 'start_date', 'end_date', 'size', 'offset'],
     transformParams: tppRatesTransformParams,
     transformResponse: tppRatesTransformResponse
@@ -116,5 +108,12 @@ module.exports = assign(
     endpoint: endpoint('ita_taxonomies/query_expansion'),
     permittedParams: ['q'],
     transformResponse: queryExpansionTransformResponse
+  }),
+  defineTradeAPI('i94_mpcty', {
+    endpoint: endpoint('v1/i94_mpcty/search'),
+    permittedParams: [], requiredParams: []
+  }),
+  defineTradeAPI('i94_mppoe', {
+    endpoint: endpoint('v1/i94_mppoe/search')
   })
 );

@@ -74,9 +74,6 @@ module.exports = assign(
     displayName: 'Frequently Asked Questions',
     shortName: 'FAQs'
   }),
-  defineTradeAPI('trade_events', {
-    shortName: 'Events'
-  }),
   defineTradeAPI('trade_leads', {
     shortName: 'Leads'
   }),

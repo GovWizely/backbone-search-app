@@ -57,5 +57,8 @@ module.exports = assign(
     displayName: 'Recommended',
     permittedParams: ['q', 'domains', 'offset', 'limit'],
     transformParams: webDocumentTransformParams
+  }),
+  defineArticleAPI('trade_events', {
+    shortName: 'Events'
   })
 );

@@ -107,10 +107,12 @@ module.exports = assign(
     transformResponse: queryExpansionTransformResponse
   }),
   defineTradeAPI('i94_mpcty', {
+    displayName: 'I-94 MPCTY',
     endpoint: endpoint('v1/i94_mpcty/search'),
     permittedParams: [], requiredParams: []
   }),
   defineTradeAPI('i94_mppoe', {
+    displayName: 'I-94 MPPOE',
     endpoint: endpoint('v1/i94_mppoe/search')
   })
 );

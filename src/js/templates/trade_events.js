@@ -6,8 +6,8 @@ export const trade_events = {
       <header>
         <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
       </header>
-      <p className="url"><a href={ url }>{ url }</a></p>
-      <p className="snippet">{ snippet }</p>
+      <p><a href={ url }>{ url }</a></p>
+      <p dangerouslySetInnerHTML={ { __html: snippet} }></p>
     </article>
   ),
   CardItem: ({ title, url, snippet }) => (

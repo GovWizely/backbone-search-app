@@ -113,6 +113,7 @@ module.exports = assign(
   }),
   defineTradeAPI('i94_mppoe', {
     displayName: 'I-94 MPPOE',
-    endpoint: endpoint('v1/i94_mppoe/search')
+    endpoint: endpoint('v1/i94_mppoe/search'),
+    permittedParams: ['q']
   })
 );

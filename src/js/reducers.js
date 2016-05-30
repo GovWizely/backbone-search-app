@@ -32,18 +32,11 @@ function apis(state = {}) {
 
 function filters(state = {
   invalidated: false,
-  isFetching: false,
   items: {}
 }, action) {
   switch (action.type) {
-  case REQUEST_FILTERS:
-    return assign({}, state, {
-      isFetching: true,
-      invalidated: false
-    });
   case RECEIVE_FILTERS:
     return assign({}, state, {
-      isFetching: false,
       invalidated: false,
       items: action.payload
     });

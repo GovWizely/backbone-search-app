@@ -28,7 +28,6 @@ describe('reducer', () => {
       }).filtersByAggregation).to.eql({
         countries: {
           invalidated: false,
-          isFetching: true,
           items: {}
         }
       });
@@ -42,7 +41,6 @@ describe('reducer', () => {
       }).filtersByAggregation).to.eql({
         countries: {
           invalidated: false,
-          isFetching: false,
           items: { a: {}, b: {}, c: {} }
         }
       });
@@ -55,7 +53,6 @@ describe('reducer', () => {
       }).filtersByAggregation).to.eql({
         countries: {
           invalidated: true,
-          isFetching: false,
           items: {}
         }
       });

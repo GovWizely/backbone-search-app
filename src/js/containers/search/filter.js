@@ -23,7 +23,7 @@ const Filter = ({ filters, onChange, onClear, query }) => {
     return (
       <CheckboxTree
         key={ key } name={ key } label={ startCase(key) }
-        items={ filter.items } disabled={ filter.isFetching || filter.invalidated }
+        items={ filter.items } disabled={ filter.invalidated }
         onChange={ onChange }
         defaultValues={ Array.isArray(values) ? values : [values] }
       />

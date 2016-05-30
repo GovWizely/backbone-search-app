@@ -108,12 +108,10 @@ describe('actions/filter', () => {
         filtersByAggregation: {
           countries: {
             invalidated: false,
-            isFetching: true,
             items: { a: {} }
           },
           industries: {
             invalidated: true,
-            isFetching: false,
             items: { z: {} }
           }
         }

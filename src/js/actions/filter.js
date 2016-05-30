@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { compact, isEmpty, keys, map, pickBy, reduce, uniq } from 'lodash';
+import { compact, keys, map, pickBy, reduce, uniq } from 'lodash';
 import { batchActions } from 'redux-batched-actions';
 
 export const REQUEST_FILTERS = 'REQUEST_FILTERS';
@@ -57,7 +57,6 @@ function selectedResults(state) {
 function computeFilters(aggregation) {
   return (dispatch, getState) => {
     const results = selectedResults(getState());
-    dispatch(requestFilters(aggregation));
     const filters = reduce(
       results,
       (output, result) => merge(output, result.aggregations[aggregation] || {}),
@@ -70,8 +69,6 @@ function shouldComputeFilters(state, aggregation) {
   const filters = state.filtersByAggregation[aggregation];
   if (!filters) {
     return true;
-  } else if (filters.isFetching) {
-    return false;
   }
   return filters.invalidated;
 }

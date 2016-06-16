@@ -136,6 +136,7 @@ module.exports = assign(
     displayName: 'I-94 Country 2015',
     endpoint: endpoint('v1/i94_cntry2015/search'),
     permittedParams: ['q', 'offset'], requiredParams: [],
-    transformResponse: responseTransformers.i94Cntry2015
+    transformResponse: responseTransformers.i94Cntry2015,
+    card: { enable: false }
   })
 );

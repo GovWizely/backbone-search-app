@@ -18,6 +18,7 @@ const Result = ({ api, findTemplate, onPaging, query, result, window }) => {
   let options = {}; if (getOptions) {
     options = getOptions({ api, findTemplate, onPaging, query, result, window });
   }
+
   return (
     <div className="mi-search__result">
       <div className="mi-search__search-message-container">

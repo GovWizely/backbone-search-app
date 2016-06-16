@@ -13,7 +13,7 @@ function displayablePages(innerWidth) {
 const Result = ({ api, findTemplate, onPaging, query, result, window }) => {
   if (result.invalidated || result.isFetching || result.metadata.total === 0) return null;
 
-  const { ResultItem, getOptions } = findTemplate(api.uniqueId);
+  const { View = ResultList, ResultItem, getOptions } = findTemplate(api.uniqueId);
 
   let options = {}; if (getOptions) {
     options = getOptions({ api, findTemplate, onPaging, query, result, window });
@@ -29,7 +29,7 @@ const Result = ({ api, findTemplate, onPaging, query, result, window }) => {
       </div>
 
       <div className="mi-search__result-list-container">
-        <ResultList items={ result.items } template={ ResultItem } options={ options } />
+        <View items={ result.items } template={ ResultItem } options={ options } />
       </div>
 
       <div className="mi-search__pagination-container">

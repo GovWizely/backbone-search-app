@@ -8,6 +8,7 @@ export const TEMPLATES = assign(
   require('./consolidated_screening_list'),
   require('./de_minimis'),
   require('./how_to_articles'),
+  require('./i94_cntry2015'),
   require('./i94_mpcty'),
   require('./i94_mppoe'),
   require('./ita_faqs'),

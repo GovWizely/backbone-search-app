@@ -8,7 +8,7 @@ export function updatePath() {
 
     let apiName = '';
     if (keys(selectedAPIs).length === 1) apiName = values(selectedAPIs)[0].uniqueId;
-
+    window.scrollTo(0, 0);
     return dispatch(push(`/search/${apiName}?${stringify(omitBy(query, isEmpty))}`));
   };
 }

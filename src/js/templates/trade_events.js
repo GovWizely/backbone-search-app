@@ -1,24 +1,21 @@
 import React from 'react';
-import { truncate } from './utils';
-
-const href = (id) => `https://success.export.gov/tradeevent?id=${id}`;
 
 export const trade_events = {
-  ResultItem: ({ id, event_name, event_type, start_date, end_date, start_time, end_time, description }) => (
+  ResultItem: ({ title, url, snippet }) => (
     <article className="mi-trade-events mi-result__item">
       <header>
-        <a href={ href(id) } dangerouslySetInnerHTML={ { __html: event_name } }></a>
+        <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
       </header>
-      <p className="url"><a href={ href(id) }>{ href(id) }</a></p>
-      <p className="snippet">{ truncate(description, 60) }</p>
+      <p><a href={ url }>{ url }</a></p>
+      <p dangerouslySetInnerHTML={ { __html: snippet} }></p>
     </article>
   ),
-  CardItem: ({ id, event_name, event_type, start_date, end_date, start_time, end_time, description }) => (
+  CardItem: ({ title, url, snippet }) => (
     <article className="mi-trade-events mi-card__item">
       <header>
-        <a href={ href(id) } dangerouslySetInnerHTML={ { __html: event_name } }></a>
+        <a href={ url } dangerouslySetInnerHTML={ { __html: title } }></a>
       </header>
-      <p dangerouslySetInnerHTML={ { __html: description } }></p>
+      <p dangerouslySetInnerHTML={ { __html: snippet } }></p>
     </article>
   )
 };

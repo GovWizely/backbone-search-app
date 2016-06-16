@@ -56,6 +56,10 @@
       margin: 0;
       overflow: hidden;
     }
+
+    pre {
+      font-family: $lato;
+    }
   }
 
   &__no-match {

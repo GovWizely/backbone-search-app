@@ -29,4 +29,10 @@ Index.propTypes = {
   onSubmit: PropTypes.func
 };
 
-export default connect()(Index);
+function mapStateToProps(state) {
+  return {
+    query: state.query
+  };
+}
+
+export default connect(mapStateToProps)(Index);

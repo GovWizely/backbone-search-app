@@ -70,7 +70,6 @@ Index.propTypes = {
   notifications: PropTypes.array,
   onBucket: PropTypes.func.isRequired,
   onClearFilter: PropTypes.func.isRequired,
-  onDismissNotification: PropTypes.func.isRequired,
   onExpand: PropTypes.func.isRequired,
   onFilter: PropTypes.func.isRequired,
   onLoaded: PropTypes.func.isRequired,
@@ -88,10 +87,11 @@ Index.propTypes = {
 };
 
 function mapStateToProps(state, { router }) {
-  const { filtersByAggregation, resultsByAPI, selectedAPIs, window } = state;
+  const { filtersByAggregation, query, resultsByAPI, selectedAPIs, window } = state;
   return {
     filters: filtersByAggregation,
     findTemplate,
+    query,
     results: resultsByAPI,
     router,
     selectedAPIs,

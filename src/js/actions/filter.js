@@ -1,10 +1,10 @@
 import merge from 'deepmerge';
-import { compact, isEmpty, keys, map, pickBy, reduce, uniq } from 'lodash';
+import { compact, keys, map, pickBy, reduce, uniq } from 'lodash';
+import { batchActions } from 'redux-batched-actions';
 
 export const REQUEST_FILTERS = 'REQUEST_FILTERS';
 export const RECEIVE_FILTERS = 'RECEIVE_FILTERS';
 export const INVALIDATE_FILTERS = 'INVALIDATE_FILTERS';
-export const INVALIDATE_ALL_FILTERS = 'INVALIDATE_ALL_FILTERS';
 
 export function requestFilters(aggregation) {
   return {
@@ -37,8 +37,13 @@ export function invalidateSiblingFilters(root) {
 }
 
 export function invalidateAllFilters() {
-  return (dispatch, getState) =>
-    map(getState().filtersByAggregation, (filters, key) => dispatch(invalidateFilters(key)));
+  return (dispatch, getState) => (
+    dispatch(
+      batchActions(
+        map(getState().filtersByAggregation, (filters, key) => invalidateFilters(key))
+      )
+    )
+  );
 }
 
 function selectedResults(state) {
@@ -52,7 +57,6 @@ function selectedResults(state) {
 function computeFilters(aggregation) {
   return (dispatch, getState) => {
     const results = selectedResults(getState());
-    dispatch(requestFilters(aggregation));
     const filters = reduce(
       results,
       (output, result) => merge(output, result.aggregations[aggregation] || {}),
@@ -63,10 +67,8 @@ function computeFilters(aggregation) {
 
 function shouldComputeFilters(state, aggregation) {
   const filters = state.filtersByAggregation[aggregation];
-  if (!filters || isEmpty(filters)) {
+  if (!filters) {
     return true;
-  } else if (filters.isFetching) {
-    return false;
   }
   return filters.invalidated;
 }
@@ -90,11 +92,9 @@ export function computeFiltersByAggregation() {
         []
       ));
 
-    return Promise.all(
-      map(
-        aggregations,
-        (aggregation) => dispatch(computeFiltersIfNeeded(aggregation))
-      )
+    map(
+      aggregations,
+      (aggregation) => dispatch(computeFiltersIfNeeded(aggregation))
     );
   };
 }

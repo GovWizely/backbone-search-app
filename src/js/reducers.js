@@ -1,8 +1,10 @@
-import { reject } from 'lodash';
+import { difference, reject } from 'lodash';
 import assign from 'object-assign';
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
+import { enableBatching } from 'redux-batched-actions';
+import { ignoreActions } from 'redux-ignore';
 
 import {
   REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS, INVALIDATE_RESULTS } from './actions/result';
@@ -12,24 +14,29 @@ import { UPDATE_QUERY, REPLACE_QUERY } from './actions/query';
 import { SELECT_APIS } from './actions/api';
 import { ADD_NOTIFICATION, DISMISS_NOTIFICATION } from './actions/notification';
 
+// work around this issue https://github.com/omnidan/redux-ignore/issues/4
+const CONSTANTS = [
+  REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS, INVALIDATE_RESULTS,
+  INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS,
+  UPDATE_WINDOW, UPDATE_QUERY, REPLACE_QUERY, SELECT_APIS,
+  ADD_NOTIFICATION, DISMISS_NOTIFICATION
+];
+
+function filterActions(action, constants = []) {
+  return ignoreActions(action, difference(CONSTANTS, constants));
+}
+
 function apis(state = {}) {
   return state;
 }
 
 function filters(state = {
   invalidated: false,
-  isFetching: false,
   items: {}
 }, action) {
   switch (action.type) {
-  case REQUEST_FILTERS:
-    return assign({}, state, {
-      isFetching: true,
-      invalidated: false
-    });
   case RECEIVE_FILTERS:
     return assign({}, state, {
-      isFetching: false,
       invalidated: false,
       items: action.payload
     });
@@ -141,15 +148,29 @@ function window(state = {}, action) {
 }
 
 const reducer = combineReducers({
-  apis,
-  filtersByAggregation,
-  form,
-  notifications,
-  query,
-  resultsByAPI,
-  routing: routerReducer,
-  selectedAPIs,
-  window
+  apis: filterActions(apis, []),
+
+  filtersByAggregation: filterActions(
+    filtersByAggregation,
+    [REQUEST_FILTERS, RECEIVE_FILTERS, INVALIDATE_FILTERS]
+  ),
+
+  form: filterActions(form, []),
+
+  notifications: filterActions(notifications, [ADD_NOTIFICATION, DISMISS_NOTIFICATION]),
+
+  query: filterActions(query, [UPDATE_QUERY, REPLACE_QUERY]),
+
+  resultsByAPI: filterActions(
+    resultsByAPI,
+    [REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS, INVALIDATE_RESULTS]
+  ),
+
+  routing: filterActions(routerReducer, []),
+
+  selectedAPIs: filterActions(selectedAPIs, [SELECT_APIS]),
+
+  window: filterActions(window, [UPDATE_WINDOW])
 });
 
-export default reducer;
+export default enableBatching(reducer);

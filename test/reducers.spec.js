@@ -8,20 +8,14 @@ describe('reducer', () => {
       apis: {},
       filtersByAggregation: {},
       form: {},
-      notifications: {},
+      notifications: [],
       query: { q: '' },
-      queryExpansions: {
-        invalidated: false,
-        isFetching: false,
-        items: {}
-      },
       resultsByAPI: {},
       routing: {
         changeId: 1,
         path: 'blank'
       },
       selectedAPIs: [],
-      ui: {},
       window: {}
     });
   });
@@ -68,18 +62,13 @@ describe('reducer', () => {
     });
   });
 
-  it('should handle FAILURE_RESULTS', () => {
+  it('should handle ADD_NOTIFICATION', () => {
     expect(reducer(undefined, {
-      type: actions.FAILURE_RESULTS,
-      meta: 'articles',
-      error: true,
-      payload: { error: 'error' }
-    }).notifications).to.eql({
-      articles: {
-        payload: { error: 'error' },
-        type: 'error'
-      }
-    });
+      type: actions.ADD_NOTIFICATION,
+      payload: { text: 'message', type: 'error' }
+    }).notifications).to.eql([
+      { text: 'message', type: 'error' }
+    ]);
   });
 
   const queryState = { q: '', countries: [1, 2, 3], industries: [1, 2, 3] };
@@ -95,37 +84,6 @@ describe('reducer', () => {
       type: actions.REPLACE_QUERY,
       payload: { q: 'test' }
     }).query).to.eql({ q: 'test' });
-  });
-
-  it('should handle INVALIDATE_QUERY_EXPANSIONS', () => {
-    expect(reducer(undefined, {
-      type: actions.INVALIDATE_QUERY_EXPANSIONS
-    }).queryExpansions).to.eql({
-      invalidated: true,
-      isFetching: false,
-      items: {}
-    });
-  });
-
-  it('should handle REQUEST_QUERY_EXPANSIONS', () => {
-    expect(reducer(undefined, {
-      type: actions.REQUEST_QUERY_EXPANSIONS
-    }).queryExpansions).to.eql({
-      invalidated: false,
-      isFetching: true,
-      items: {}
-    });
-  });
-
-  it('should handle RECEIVE_QUERY_EXPANSIONS', () => {
-    expect(reducer(undefined, {
-      type: actions.RECEIVE_QUERY_EXPANSIONS,
-      payload: { a: [], b: [], c: [] }
-    }).queryExpansions).to.eql({
-      invalidated: false,
-      isFetching: false,
-      items: { a: [], b: [], c: [] }
-    });
   });
 
   it('should handle REQUEST_RESULTS', () => {

@@ -1,5 +1,6 @@
 import assign from 'object-assign';
-import { defineAPI } from './utils.js';
+import { defineAPI } from './utils';
+import { articles } from './config';
 
 function transformParams(_params) {
   const params = assign({}, _params);
@@ -9,33 +10,52 @@ function transformParams(_params) {
   return params;
 }
 
+function webDocumentTransformParams(_params) {
+  return assign(transformParams(_params), { domains: 'success.export.gov' });
+}
+
 function endpoint(path) {
-  const { host } = process.env.apis.articles;
+  const { host } = articles;
   return `${host}/${path}/search`;
+}
+
+function defineArticleAPI(key, attributes = {}) {
+  const articleAPI = {
+    aggregations: {
+      countries: { type: 'array' },
+      industries: { type: 'tree' },
+      topics: { type: 'tree' }
+    },
+    endpoint: endpoint(key),
+    permittedParams: [
+      'q', 'countries', 'industries', 'topics',
+      'trade_regions', 'world_regions', 'offset', 'limit'
+    ],
+    transformParams
+  };
+  return defineAPI(key, assign({}, articleAPI, attributes));
 }
 
 module.exports = assign(
   {},
-  defineAPI('articles', {
-    aggregations: {
-      countries: { type: 'array' },
-      industries: { type: 'tree' }
-    },
+  defineArticleAPI('articles', {
     displayName: 'Market Intelligence',
-    endpoint: endpoint('market_intelligence_articles'),
-    permittedParams: ['q', 'countries', 'industries', 'topics', 'trade_regions', 'offset'],
-    transformParams
+    endpoint: endpoint('market_intelligence_articles')
   }),
-  defineAPI('how_to_articles', {
-    aggregations: {
-      countries: { type: 'array' },
-      industries: { type: 'tree' }
-    },
+  defineArticleAPI('how_to_articles', {
     displayName: 'How To Export',
-    endpoint: endpoint('how_to_export_articles'),
-    permittedParams: [
-      'q', 'countries', 'industries', 'topics', 'trade_regions', 'world_regions', 'offset'
-    ],
-    transformParams
+    endpoint: endpoint('how_to_export_articles')
+  }),
+  defineArticleAPI('web_documents', {
+    card: {
+      count: 3,
+      enable: true,
+      footer: 'See More',
+      header: 'Recommended',
+      mode: 'horizontal'
+    },
+    displayName: 'Recommended',
+    permittedParams: ['q', 'domains', 'offset', 'limit'],
+    transformParams: webDocumentTransformParams
   })
 );

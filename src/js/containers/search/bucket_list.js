@@ -35,6 +35,8 @@ const BucketList = ({ apis, onClick, selectedAPIs }) => {
   if (apis.length < 2) return null;
 
   let buckets = map(apis, (api) => {
+    if (!api.bucket.enable) return null;
+
     const isActive = selectedAPIs.length === 1 && selectedAPIs[0].uniqueId === api.uniqueId;
     return (
       <Bucket

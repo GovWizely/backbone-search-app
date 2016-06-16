@@ -1,5 +1,6 @@
 import assign from 'object-assign';
 import { forEach, isUndefined, snakeCase, startCase } from 'lodash';
+import invariant from 'invariant';
 
 function verbatim(value) {
   return value;
@@ -7,6 +8,24 @@ function verbatim(value) {
 
 function createAnyTypeChecker() {
   return () => true;
+}
+
+function createObjectTypeChecker(structure) {
+  /*
+   const structure = {
+     header: createTypeChecker('string'),
+     mode: createTypeChecker('string'),
+     footer: createTypeChecker('string')
+   }
+   */
+  return (key, attrName, object) => {
+    forEach(object, (value, objectKey) => {
+      invariant(
+        !isUndefined(structure[objectKey]),
+        `Unrecognized option \`${objectKey}\` for \`${attrName}\``);
+      structure[objectKey](key, `${attrName}.${objectKey}`, value);
+    });
+  };
 }
 
 function createTypeChecker(expectedType) {
@@ -36,9 +55,25 @@ const ATTRIBUTES = {
   aggregations: {
     type: AttributeTypes.object
   },
-  deckable: {
-    defaultValue: true,
+  async: {
+    defaultValue: false,
     type: AttributeTypes.bool
+  },
+  bucket: {
+    defaultValue: { enable: true },
+    type: createObjectTypeChecker({
+      enable: AttributeTypes.bool
+    })
+  },
+  card: {
+    defaultValue: { enable: true },
+    type: createObjectTypeChecker({
+      count: AttributeTypes.number,
+      enable: AttributeTypes.bool,
+      header: AttributeTypes.string,
+      footer: AttributeTypes.string,
+      mode: AttributeTypes.string
+    })
   },
   displayName: {
     derive: startCase,
@@ -53,6 +88,10 @@ const ATTRIBUTES = {
     type: AttributeTypes.string
   },
   permittedParams: {
+    defaultValue: ['q'],
+    type: AttributeTypes.array
+  },
+  requiredParams: {
     defaultValue: ['q'],
     type: AttributeTypes.array
   },

@@ -17,7 +17,8 @@ export const TEMPLATES = assign(
   require('./tpp_rates'),
   require('./trade_articles'),
   require('./trade_events'),
-  require('./trade_leads')
+  require('./trade_leads'),
+  require('./web_documents')
 );
 
 export function findTemplate(templateName) {

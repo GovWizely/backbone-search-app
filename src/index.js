@@ -3,16 +3,15 @@ require('es6-promise').polyfill();
 
 import React from 'react';
 import { render } from 'react-dom';
-import { createHashHistory as createHistory } from 'history';
-import { syncReduxAndRouter } from 'redux-simple-router';
+import { hashHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import configureStore from './js/store/configureStore';
 import Root from './js/containers/Root';
 
 function renderToElement(elementId, options) {
-  const history = createHistory({ });
-  const store = configureStore(options);
+  const store = configureStore(options, hashHistory);
+  const history = syncHistoryWithStore(hashHistory, store);
 
-  syncReduxAndRouter(history, store);
   render(
     <Root history={ history } store={ store } />,
     document.getElementById(elementId)

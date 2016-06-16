@@ -4,9 +4,9 @@ module.exports = assign(
   {},
   require('./api'),
   require('./filter'),
+  require('./notification'),
   require('./path'),
   require('./query'),
-  require('./query_expansion'),
   require('./result'),
   require('./window')
 );

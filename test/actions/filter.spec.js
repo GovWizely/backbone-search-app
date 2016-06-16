@@ -1,3 +1,4 @@
+import assign from 'object-assign';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
@@ -9,7 +10,30 @@ const state = {
   filtersByAggregation: {
     countries: {},
     industries: {}
-  }
+  },
+  resultsByAPI: {
+    a: {
+      aggregations: {
+        countries: { a: {}, b: {}, c: {} },
+        industries: { x: {}, y: {}, z: {} }
+      }
+    },
+    b: {
+      aggregations: {
+        countries: { b: {}, c: {}, d: {} },
+        industries: { w: {}, x: {}, y: {} }
+      }
+    },
+    c: {
+      aggregations: {
+        countries: { c: {}, d: {}, e: {} },
+        industries: { v: {}, w: {}, x: {} }
+      }
+    }
+  },
+  selectedAPIs: [
+    { uniqueId: 'a' }, { uniqueId: 'b' }, { uniqueId: 'c' }
+  ]
 };
 
 const aggregation = 'countries';
@@ -65,27 +89,6 @@ describe('actions/filter', () => {
   });
 
   describe('#computeFiltersByAggregation', () => {
-    const responses = [
-      {
-        aggregations: {
-          countries: { a: {}, b: {}, c: {} },
-          industries: { x: {}, y: {}, z: {} }
-        }
-      },
-      {
-        aggregations: {
-          countries: { b: {}, c: {}, d: {} },
-          industries: { w: {}, x: {}, y: {} }
-        }
-      },
-      {
-        aggregations: {
-          countries: { c: {}, d: {}, e: {} },
-          industries: { v: {}, w: {}, x: {} }
-        }
-      }
-    ];
-
     it('should create multiple RECEIVE_FILTERS', () => {
       const store = mockStore(state);
       const expectedActions = [
@@ -96,12 +99,12 @@ describe('actions/filter', () => {
         { type: actions.RECEIVE_FILTERS, meta: 'industries',
           payload: { v: {}, w: {}, x: {}, y: {}, z: {} } }
       ];
-      store.dispatch(actions.computeFiltersByAggregation(responses));
+      store.dispatch(actions.computeFiltersByAggregation());
       expect(store.getActions()).to.eql(expectedActions);
     });
 
     it('should not create REQUEST_FILTERS if not needed ', () => {
-      const store = mockStore({
+      const store = mockStore(assign({}, state, {
         filtersByAggregation: {
           countries: {
             invalidated: false,
@@ -114,13 +117,13 @@ describe('actions/filter', () => {
             items: { z: {} }
           }
         }
-      });
+      }));
       const expectedActions = [
         { type: actions.REQUEST_FILTERS, meta: 'industries' },
         { type: actions.RECEIVE_FILTERS, meta: 'industries',
-          payload: { v: {}, w: {}, x: {}, y: {}, z: {} } },
+          payload: { v: {}, w: {}, x: {}, y: {}, z: {} } }
       ];
-      store.dispatch(actions.computeFiltersByAggregation(responses));
+      store.dispatch(actions.computeFiltersByAggregation());
       expect(store.getActions()).to.eql(expectedActions);
     });
   });

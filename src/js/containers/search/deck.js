@@ -5,11 +5,12 @@ import Card from '../../components/card';
 
 const Deck = ({ apis, findTemplate, onClick, results }) => {
   const cards = compact(map(apis, (api) => {
-    const { displayName, uniqueId } = api;
-    if (!results[uniqueId]) return null;
+    const { card, displayName, uniqueId } = api;
 
-    const { isFetching, items } = results[uniqueId];
-    if (!isFetching && !items.length) return null;
+    if (!results[uniqueId] || card.enable === false) return null;
+
+    const { invalidated, isFetching, items } = results[uniqueId];
+    if (invalidated || !isFetching && !items.length) return null;
 
     const template = findTemplate(uniqueId).CardItem;
     const _onClick = onClick.bind(undefined, api);
@@ -22,6 +23,7 @@ const Deck = ({ apis, findTemplate, onClick, results }) => {
         label={ displayName }
         template={ template }
         onClick={ _onClick }
+        options={ card }
       />
     );
   }));

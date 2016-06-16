@@ -1,22 +1,26 @@
 import assign from 'object-assign';
-import { intersection, keys, omit, isEmpty } from 'lodash';
+import { intersection, isEmpty, keys, omit } from 'lodash';
 
 import { invalidateAllFilters, invalidateSiblingFilters } from './filter';
 
 export const UPDATE_QUERY = 'UPDATE_QUERY';
 export const REPLACE_QUERY = 'REPLACE_QUERY';
 
+function trimQ(_query) {
+  return assign({}, _query, _query.q ? { q: _query.q.trim() } : {});
+}
+
 export function updateQuery(query) {
   return {
     type: UPDATE_QUERY,
-    payload: query
+    payload: trimQ(query)
   };
 }
 
 export function replaceQuery(query) {
   return {
     type: REPLACE_QUERY,
-    payload: query
+    payload: trimQ(query)
   };
 }
 
@@ -38,8 +42,8 @@ export function updateFiltering(name, values) {
     } else {
       dispatch(updateQuery({ [name]: values, offset: 0 }));
     }
-
     const { filtersByAggregation, query } = getState();
+
     if (intersection(keys(filtersByAggregation), keys(query)).length === 0) {
       dispatch(invalidateAllFilters());
     } else {

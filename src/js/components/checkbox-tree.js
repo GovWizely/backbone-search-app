@@ -1,10 +1,7 @@
-import {
-  concat, difference, includes, isEmpty,
-  keys, map, pick, pull, pullAll, reduce, take, uniq
-} from 'lodash';
+import { difference, includes, isEmpty, keys, map, pick, take } from 'lodash';
 import React, { PropTypes } from 'react';
 
-const Checkbox = ({ checked, disabled, item, nestedList }) => (
+const Checkbox = ({ checked, children, disabled, item }) => (
   <li role="treeitem" className="mi-checkbox-tree__list__item" key={ item }>
     <label htmlFor={ item }>
       <input
@@ -14,23 +11,20 @@ const Checkbox = ({ checked, disabled, item, nestedList }) => (
       />
       <span>&nbsp; { item }</span>
     </label>
-    { nestedList }
+    { children }
   </li>
 );
 Checkbox.propTypes = {
   checked: PropTypes.bool,
+  children: PropTypes.object,
   disabled: PropTypes.bool,
-  item: PropTypes.string.isRequired,
-  nestedList: PropTypes.object
+  item: PropTypes.string.isRequired
 };
 
-const List = ({ items, disabled, values }) => {
-  if (isEmpty(items)) return <noscript />;
+const Tree = ({ items, disabled, values }) => {
+  if (isEmpty(items)) return null;
 
   const checkboxes = map(keys(items), (item) => {
-    const nestedList =
-      items[item] ?
-        <List items={ items[item] } disabled={ disabled } values={ values } /> : null;
     const checked = includes(values, item);
     return (
       <Checkbox
@@ -38,16 +32,18 @@ const List = ({ items, disabled, values }) => {
         item={ item }
         checked={ checked }
         disabled={ disabled }
-        nestedList={ nestedList }
-      />
+      >
+        <Tree disabled={ disabled } items={ items[item] } values={ values } />
+      </Checkbox>
     );
   });
   return (
     <ul role="tree" className="mi-checkbox-tree__list">{ checkboxes }</ul>
   );
 };
-List.propTypes = {
+Tree.propTypes = {
   disabled: PropTypes.bool,
+  inheritedChecked: PropTypes.bool,
   items: PropTypes.object.isRequired,
   values: PropTypes.array
 };
@@ -70,23 +66,6 @@ class CheckboxTree extends React.Component {
     this.onMount();
   }
 
-  componentWillReceiveProps(nextProps) {
-    const flattenTree = (tree, output = []) => (
-      reduce(tree, (_output, item, key) => {
-        const out = _output.concat(key);
-        if (!isEmpty(item)) return flattenTree(item, out);
-        return out;
-      }, output)
-    );
-
-    if (!this.state.flattenItems ||
-        JSON.stringify(this.props.items) !== JSON.stringify(nextProps.items)) {
-      this.setState({
-        flattenItems: flattenTree(nextProps.items)
-      });
-    }
-  }
-
   onMount() {
     this.setState({
       values: this.state.values.concat(this.props.defaultValues)
@@ -97,15 +76,12 @@ class CheckboxTree extends React.Component {
     const { checked, type, value } = e.target;
     if (type !== 'checkbox') return;
 
-    const values = checked ?
-      concat(this.state.values, value) :
-      pull(this.state.values, value);
+    const values = difference(
+      map(e.currentTarget.querySelectorAll('input:checked'), 'value'),
+      checked ? [] : [value]
+    );
 
-    this.setState({
-      values: uniq(
-        pullAll(values, difference(values, this.state.flattenItems))
-      )
-    });
+    this.setState({ values });
     this.props.onChange({ name: this.props.name, values });
   }
 
@@ -143,7 +119,7 @@ class CheckboxTree extends React.Component {
 
     const view = visible ? (
       <div>
-        <List disabled={ disabled } items={ visibleItems } values={ values } />
+        <Tree disabled={ disabled } items={ visibleItems } values={ values } />
         { this.showAllLink() }
       </div>
     ) : null;

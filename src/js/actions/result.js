@@ -1,49 +1,57 @@
-import { get, isEmpty, map, reject } from 'lodash';
+import assign from 'object-assign';
+import { at, compact, get, isEmpty, map } from 'lodash';
 import fetch from 'isomorphic-fetch';
+import invariant from 'invariant';
 
 import {
-  formatAggregations, formatEndpoint, formatMetadata, formatParams,
-  noAction, permitParams
+  formatAggregations, formatEndpoint, formatMetadata, formatParams, permitParams
 } from '../utils/action-helper';
 import { computeFiltersByAggregation } from './filter';
+import { notify } from './notification';
 
 export const REQUEST_RESULTS = 'REQUEST_RESULTS';
 export const RECEIVE_RESULTS = 'RECEIVE_RESULTS';
 export const FAILURE_RESULTS = 'FAILURE_RESULTS';
+export const INVALIDATE_RESULTS = 'INVALIDATE_RESULTS';
 
-export function requestResults(api) {
+export function requestResults(uniqueId) {
   return {
     type: REQUEST_RESULTS,
-    meta: api.uniqueId
+    meta: uniqueId
   };
 }
 
-export function receiveResults(api, response) {
+export function receiveResults(uniqueId, response) {
   return {
     type: RECEIVE_RESULTS,
-    meta: api.uniqueId,
+    meta: uniqueId,
     payload: response
   };
 }
 
-export function failureResults(api, e) {
+export function failureResults(uniqueId, e) {
   return {
     type: FAILURE_RESULTS,
     error: true,
-    meta: api.uniqueId,
+    meta: uniqueId,
     payload: e
   };
 }
 
+export function invalidateResults(uniqueId) {
+  return {
+    type: INVALIDATE_RESULTS,
+    meta: uniqueId
+  };
+}
+
 function preprocess(api, query) {
-  let params = query || {};
+  let params = assign({}, query);
 
   params = formatParams(params);
-
   if (api.transformParams) {
     params = api.transformParams(params);
   }
-
   params = permitParams(params, api.permittedParams);
 
   if (!params.q) params.q = '';
@@ -60,35 +68,65 @@ function postprocess(api, _json) {
   };
 }
 
-function createFetch(api, dispatch, getState) {
-  return (query) => {
-    if (get(getState().results, [api.uniqueId, 'isFetching'])) {
-      dispatch(noAction());
-      return null;
-    }
-    const params = preprocess(api, query);
-    dispatch(requestResults(api));
+function fetchResults(api) {
+  return (dispatch, getState) => {
+    dispatch(requestResults(api.uniqueId));
+    const params = preprocess(api, getState().query);
     return fetch(formatEndpoint(api.endpoint, params))
-      .then(response => response.json())
+      .then(response => {
+        invariant(response.status === 200, response.statusText);
+        return response.json();
+      })
       .then(json => {
         const data = postprocess(api, json);
-        dispatch(receiveResults(api, data));
+        dispatch(receiveResults(api.uniqueId, data));
         return data;
       })
-      .catch(e => dispatch(failureResults(api, e)));
+      .catch(e => {
+        dispatch(notify({ text: `${api.uniqueId}: ${e.message}`, status: 'error' }));
+        return dispatch(failureResults(api.uniqueId, e));
+      });
   };
 }
 
-export function fetchResults() {
-  return (dispatch, getState) => {
-    const { selectedAPIs, query } = getState();
-    const fetches = map(selectedAPIs, api => createFetch(api, dispatch, getState));
+function shouldFetchResults(state, api) {
+  const result = get(state.resultsByAPI, api.uniqueId);
+  const { query } = state;
 
-    return Promise.all(map(fetches, f => f(query)))
-      .then(responses => reject(responses, (response) => response.error))
-      .then(responses => {
-        if (!isEmpty(responses)) dispatch(computeFiltersByAggregation(responses));
-        return responses;
-      });
+  if (compact(at(query, api.requiredParams)).length === 0) return false;
+
+  if (!result || isEmpty(result)) {
+    return true;
+  } else if (result.isFetching) {
+    return false;
+  }
+  return result.invalidated;
+}
+
+function fetchResultsIfNeeded(api) {
+  return (dispatch, getState) => {
+    if (!shouldFetchResults(getState(), api)) return Promise.resolve();
+
+    return dispatch(fetchResults(api));
+  };
+}
+
+export function fetchResultsByAPI() {
+  return (dispatch, getState) => {
+    const { selectedAPIs } = getState();
+
+    return Promise.all(
+      map(selectedAPIs, (api) => dispatch(fetchResultsIfNeeded(api)))
+    ).then(() => dispatch(computeFiltersByAggregation()));
+  };
+}
+
+export function invalidateAllResults() {
+  return (dispatch, getState) => {
+    const { resultsByAPI: results } = getState();
+
+    return Promise.all(
+      map(results, (result, uniqueId) => dispatch(invalidateResults(uniqueId)))
+    );
   };
 }

@@ -11,6 +11,7 @@
   }
 
   &__deck-container {
+    @include clearfix;
     .mi-card {
       margin-bottom: 16px;
 
@@ -20,6 +21,19 @@
         min-width: 414px;
         max-width: 460px;
         width: 44%;
+      }
+
+      &--horizontal {
+        .mi-card {
+          &__item {
+            height: auto;
+          }
+        }
+
+        @include desktop {
+          max-width: 934px;
+          width: 100%;
+        }
       }
     }
   }
@@ -102,7 +116,7 @@
     }
   }
 
-  &__query-expansion-list-container {
+  &__form-hint-container {
     min-height: 40px;
     @include desktop {
       margin-left: 294px;

@@ -1,33 +1,43 @@
-import { filter, omit } from 'lodash';
+import { omit } from 'lodash';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  invalidateQueryExpansions, fetchQueryExpansionsIfNeeded } from '../actions/query_expansion';
-import { fetchResults } from '../actions/result';
+import { dismissNotification } from '../actions/notification';
+import { fetchResultsByAPI, invalidateAllResults } from '../actions/result';
 import { replaceQuery } from '../actions/query';
 import { updatePath } from '../actions/path';
 import { updateWindow } from '../actions/window';
 import { invalidateAllFilters } from '../actions/filter';
 import { enableAPIs } from '../apis';
+import Notification from '../components/notification';
 
 class App extends React.Component {
   componentWillMount() {
     this.props.onResize({ currentTarget: window });
   }
   componentDidMount() {
-    window.addEventListener('resize', this.props.onResize);
+    const { onResize } = this.props;
+    window.addEventListener('resize', onResize);
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.props.onResize);
   }
   render() {
-    return React.cloneElement(this.props.children, omit(this.props, ['children']));
+    const { notifications, onDismissNotification } = this.props;
+
+    return (
+      <div>
+        <Notification notifications={ notifications } onDismiss={ onDismissNotification } />
+        { React.cloneElement(this.props.children, omit(this.props, ['children'])) }
+      </div>
+    );
   }
 }
 App.propTypes = {
   children: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  notifications: PropTypes.array,
+  onDismissNotification: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired
 };
@@ -35,32 +45,30 @@ App.propTypes = {
 function mapStateToProps(state) {
   const { apis, notifications, query } = state;
   const enabledAPIs = enableAPIs(apis);
-  const selectedAPIs = filter(enabledAPIs, (api) => api.deckable);
   return {
     enabledAPIs,
-    defaultAPIs: selectedAPIs,
     notifications,
     query,
-    selectedAPIs,
+    selectedAPIs: enabledAPIs,
     window: {}
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    onDismissNotification: (e) => {
+      e.preventDefault();
+      dispatch(dismissNotification(e.target.dataset.id));
+    },
     onResize: (e) => {
       const { innerWidth, innerHeight } = e.currentTarget;
       dispatch(updateWindow({ innerWidth, innerHeight }));
     },
     onSubmit: (query) => {
       dispatch(replaceQuery(query));
-
+      dispatch(invalidateAllResults());
       dispatch(invalidateAllFilters());
-      dispatch(invalidateQueryExpansions());
-
-      dispatch(fetchResults());
-      dispatch(fetchQueryExpansionsIfNeeded(query));
-
+      dispatch(fetchResultsByAPI());
       dispatch(updatePath());
     }
   };

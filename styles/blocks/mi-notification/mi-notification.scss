@@ -1,0 +1,31 @@
+.mi-notification {
+  list-style-type: none;
+  position: absolute;
+  width: 350px;
+
+  &--top-right, &--bottom-right {
+    left: auto;
+    right: 10px;
+  }
+
+  &--top-center, &--top-left, &--top-right {
+    bottom: auto;
+    top: 10px;
+  }
+
+  &__item {
+    margin-top: 12px;
+    padding: 12px;
+    &--error {
+      border: 1px solid #F26565;
+      background-color: $background-red-color;
+      color: $red-color;
+    }
+
+    &--info {
+      border: 1px solid #BADBF2;
+      background-color: #d9edf7;
+      color: #63788E;
+    }
+  }
+}

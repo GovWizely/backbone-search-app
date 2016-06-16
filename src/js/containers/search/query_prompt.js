@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 
-const QueryPrompt = ({ q }) => {
-  if (q) return null;
+const QueryPrompt = ({ q, selectedAPIs }) => {
+  if (q ||
+      selectedAPIs.length === 1 && selectedAPIs[0].requiredParams.indexOf('q') === -1
+     ) return null;
 
   return (
     <div className="mi-query-prompt">
@@ -11,7 +13,8 @@ const QueryPrompt = ({ q }) => {
 };
 
 QueryPrompt.propTypes = {
-  q: PropTypes.string
+  q: PropTypes.string,
+  selectedAPIs: PropTypes.array
 };
 
 export default QueryPrompt;

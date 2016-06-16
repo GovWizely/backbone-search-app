@@ -9,6 +9,8 @@ import Spinner from '../../components/spinner';
 function contentType({ results, selectedAPIs }) {
   if (isEmpty(results)) return { type: 'blank' };
 
+  if (selectedAPIs.length === 1 && !results[selectedAPIs[0].uniqueId]) return { type: 'blank' };
+
   // wait for all the responses to be returned before showing any result.
   for (const { async, uniqueId } of selectedAPIs) {
     if (!results[uniqueId] || results[uniqueId].isFetching && !async) return { type: 'loading' };

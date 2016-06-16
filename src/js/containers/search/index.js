@@ -35,7 +35,7 @@ class Index extends React.Component {
           <Form onSubmit={ onSubmit } query={ query } />
           <div className="mi-search__form-hint-container">
             <QueryExpansionList onClick={ onExpand } queryExpansions={ results.query_expansion } />
-            <QueryPrompt q={ query.q } />
+            <QueryPrompt q={ query.q } selectedAPIs={ selectedAPIs } />
           </div>
         </div>
 

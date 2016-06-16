@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import { forEach, keys, map, pick } from 'lodash';
+import { forEach, map, pick } from 'lodash';
 import { createSelector } from 'reselect';
 import { enableAPIs } from '../apis';
 

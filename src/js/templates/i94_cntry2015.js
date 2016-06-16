@@ -1,69 +1,40 @@
-import { map } from 'lodash';
 import React from 'react';
+import numeral from 'numeral';
 
-const labels = {
-  sa_report_code: 'S&A Report Code',
-  i94_country_code: 'I-94 Country Code',
-  country_of_residence: `
-    Country of Residence
-    <br />
-    (country of citizenship if residence is missing)`,
-  jan: 'Jan.',
-  feb: 'Feb.',
-  mar: 'Mar.',
-  qt1: '1Q15',
-  apr: 'Apr.',
-  may: 'May',
-  jun: 'Jun.',
-  qt2: '2Q15',
-  jul: 'Jul.',
-  aug: 'Aug.',
-  sep: 'Sep.',
-  qt3: '3Q15',
-  oct: 'Oct.',
-  nov: 'Nov.',
-  dec: 'Dec.',
-  qt4: '4Q15',
-  total: 'Total'
-};
+import ResultTable from '../components/ResultTable';
 
-const THead = ({ headers }) => {
-  const ths = map(headers, (label, key) => (
-    <th key={ key } dangerouslySetInnerHTML={ { __html: label } }></th>
-  ));
+const format = (value) => numeral(value).format();
 
-  return (
-    <thead>
-      <tr>{ ths }</tr>
-    </thead>
-  );
-};
-
-const TBody = ({ columns, data }) => {
-  const rows = map(data, (item, index) => (
-    <Row key={ index } columns={ columns } rowData={ data[index] } />
-  ));
-
-  return (
-    <tbody>{ rows }</tbody>
-  );
-};
-
-const Row = ({ columns, rowData }) => {
-  const cells = map(columns, (_, key) => (
-    <td key={ key }>{ rowData[key] }</td>
-  ));
-
-  return (
-    <tr>{ cells }</tr>
-  );
+const columns = {
+  sa_report_code: { header: 'S&A Report Code' },
+  i94_country_code: { header: 'I-94 Country Code' },
+  country_of_residence: {
+    header: `
+      Country of Residence
+      <br />
+      (country of citizenship if residence is missing)`
+  },
+  jan: { header: 'Jan.', format },
+  feb: { header: 'Feb.', format },
+  mar: { header: 'Mar.', format },
+  qt1: { header: '1Q15', format },
+  apr: { header: 'Apr.', format },
+  may: { header: 'May', format },
+  jun: { header: 'Jun.', format },
+  qt2: { header: '2Q15', format },
+  jul: { header: 'Jul.', format },
+  aug: { header: 'Aug.', format },
+  sep: { header: 'Sep.', format },
+  qt3: { header: '3Q15', format },
+  oct: { header: 'Oct.', format },
+  nov: { header: 'Nov.', format },
+  dec: { header: 'Dec.', format },
+  qt4: { header: '4Q15', format },
+  total: { header: 'Total', format }
 };
 
 export const i94_cntry2015 = {
   View: ({ items }) => (
-    <table className="mi-result mi-i94-cntry2015">
-      <THead headers={ labels } />
-      <TBody columns={ labels } data={ items } />
-    </table>
+    <ResultTable css={ 'mi-i94-cntry2015' } columns={ columns } items={ items } />
   )
 };

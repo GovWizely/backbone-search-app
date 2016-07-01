@@ -1,0 +1,10 @@
+.mi-i94-cntry2015 {
+  &, th, td {
+    border: 1px solid $border-color;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 10px;
+  }
+}

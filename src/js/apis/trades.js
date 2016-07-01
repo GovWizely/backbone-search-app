@@ -48,6 +48,22 @@ function queryExpansionTransformResponse(response) {
   return { results: response.query_expansion.world_regions };
 }
 
+const responseTransformers = {
+  i94Cntry2015: (response) => {
+    const results = response.results.map((result) => {
+      const quarters = {
+        qt1: result.jan + result.feb + result.mar,
+        qt2: result.apr + result.may + result.jun,
+        qt3: result.jul + result.aug + result.sep,
+        qt4: result.oct + result.nov + result.dec
+      };
+      const total = quarters.qt1 + quarters.qt2 + quarters.qt3 + quarters.qt4;
+      return assign(result, quarters, { total });
+    });
+    return assign({}, response, { results });
+  }
+};
+
 function endpoint(path) {
   const { host, key } = trade;
   return `${host}/${path}?api_key=${key}`;
@@ -115,5 +131,12 @@ module.exports = assign(
     displayName: 'I-94 MPPOE',
     endpoint: endpoint('v1/i94_mppoe/search'),
     permittedParams: ['q']
+  }),
+  defineTradeAPI('i94_cntry2015', {
+    displayName: 'I-94 Country 2015',
+    endpoint: endpoint('v1/i94_cntry2015/search'),
+    permittedParams: ['q', 'offset'], requiredParams: [],
+    transformResponse: responseTransformers.i94Cntry2015,
+    card: { enable: false }
   })
 );

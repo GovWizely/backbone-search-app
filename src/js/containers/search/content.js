@@ -13,10 +13,11 @@ function contentType({ results, apis }) {
 
   // wait for all the responses to be returned before showing any result.
   for (const { async, uniqueId } of apis) {
-    if (!results[uniqueId] || results[uniqueId].isFetching && !async) return { type: 'loading' };
+    if (results[uniqueId] && results[uniqueId].isFetching && !async) return { type: 'loading' };
   }
 
   const matchedAPIs = reduce(apis, (output, selectedAPI) => {
+    if (!results[selectedAPI.uniqueId]) return output;
     const matched = !isEmpty(results[selectedAPI.uniqueId].items);
     return matched ? output.concat(selectedAPI) : output;
   }, []);

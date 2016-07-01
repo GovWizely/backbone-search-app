@@ -7,7 +7,7 @@ function transformParams(params) {
   if (!params.countries) return params;
 
   return assign({}, params, {
-    countries: taxonomy.countryToAbbr(params.countries)
+    countries: taxonomy.countryToAbbr(params.countries) || params.countries
   });
 }
 
@@ -78,6 +78,7 @@ function defineTradeAPI(key, attributes = {}) {
     endpoint: endpoint(`${key}/search`),
     metadata: ['total', 'offset', 'sources_used', 'search_performed_at'],
     permittedParams: ['q', 'countries', 'industries', 'start_date', 'end_date', 'size', 'offset'],
+    requiredParams: ['q'],
     transformParams,
     transformResponse
   };
@@ -91,7 +92,8 @@ module.exports = assign(
     shortName: 'FAQs'
   }),
   defineTradeAPI('trade_leads', {
-    shortName: 'Leads'
+    shortName: 'Leads',
+    requiredParams: ['countries', 'industries', 'q', 'trade_regions', 'world_regions']
   }),
   defineTradeAPI('consolidated_screening_list'),
   defineTradeAPI('market_research_library'),
@@ -126,17 +128,20 @@ module.exports = assign(
   defineTradeAPI('i94_mpcty', {
     displayName: 'I-94 MPCTY',
     endpoint: endpoint('v1/i94_mpcty/search'),
-    permittedParams: [], requiredParams: []
+    permittedParams: [],
+    requiredParams: []
   }),
   defineTradeAPI('i94_mppoe', {
     displayName: 'I-94 MPPOE',
     endpoint: endpoint('v1/i94_mppoe/search'),
-    permittedParams: ['q']
+    permittedParams: ['q'],
+    requiredParams: []
   }),
   defineTradeAPI('i94_cntry2015', {
     displayName: 'I-94 Country 2015',
     endpoint: endpoint('v1/i94_cntry2015/search'),
-    permittedParams: ['q', 'offset'], requiredParams: [],
+    permittedParams: ['q', 'offset'],
+    requiredParams: [],
     transformResponse: responseTransformers.i94Cntry2015,
     card: { enable: false }
   })

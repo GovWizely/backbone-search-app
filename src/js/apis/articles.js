@@ -40,11 +40,13 @@ module.exports = assign(
   {},
   defineArticleAPI('articles', {
     displayName: 'Market Intelligence',
-    endpoint: endpoint('market_intelligence_articles')
+    endpoint: endpoint('market_intelligence_articles'),
+    requiredParams: ['countries', 'industries', 'q', 'topics', 'trade_regions', 'world_regions']
   }),
   defineArticleAPI('how_to_articles', {
     displayName: 'How To Export',
-    endpoint: endpoint('how_to_export_articles')
+    endpoint: endpoint('how_to_export_articles'),
+    requiredParams: ['countries', 'industries', 'q', 'topics', 'trade_regions', 'world_regions']
   }),
   defineArticleAPI('web_documents', {
     card: {
@@ -59,6 +61,7 @@ module.exports = assign(
     transformParams: webDocumentTransformParams
   }),
   defineArticleAPI('trade_events', {
-    shortName: 'Events'
+    shortName: 'Events',
+    requiredParams: ['countries', 'industries', 'q', 'trade_regions', 'world_regions']
   })
 );

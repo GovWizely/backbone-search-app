@@ -1,5 +1,5 @@
 import assign from 'object-assign';
-import { forEach, isUndefined, snakeCase, startCase } from 'lodash';
+import { at, compact, forEach, isUndefined, snakeCase, startCase } from 'lodash';
 import invariant from 'invariant';
 
 function verbatim(value) {
@@ -98,7 +98,7 @@ const ATTRIBUTES = {
     })
   },
   requiredParams: {
-    defaultValue: ['q'],
+    defaultValue: [],
     type: AttributeTypes.array
   },
   shortName: {
@@ -149,6 +149,11 @@ export function defineAPI(uniqueId, attributes) {
 
     attr.type(uniqueId, attrName, config[attrName]);
   });
+
+  config.isValidQuery = query => (
+    !config.requiredParams.length ||
+      (compact(at(query, config.requiredParams)).length > 0)
+  );
 
   uniqueIds[uniqueId] = true;
   return { [uniqueId]: config };

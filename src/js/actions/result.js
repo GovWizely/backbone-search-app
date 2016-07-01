@@ -92,8 +92,7 @@ function shouldFetchResults(state, api) {
   const result = get(state.resultsByAPI, api.uniqueId);
   const { query } = state;
 
-  if (api.requiredParams.length &&
-      compact(at(query, api.requiredParams)).length === 0) return false;
+  if (!api.isValidQuery(query)) return false;
 
   if (!result || isEmpty(result)) {
     return true;

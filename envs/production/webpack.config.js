@@ -1,3 +1,3 @@
-var createWebpackConfig = require('./util.js').createWebpackConfig;
+var createWebpackConfig = require('../utils.js').createWebpackConfig;
 
-module.exports = createWebpackConfig('production');
+module.exports = createWebpackConfig({ env: 'production', site: 'production' });

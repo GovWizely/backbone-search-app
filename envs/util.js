@@ -13,7 +13,7 @@ function createWebpackConfig(env) {
       'babel-polyfill',
       './src/index'
     ],
-    index: path.join(dirname, 'index.html'),
+    index: path.join(dirname, 'index', env + '.html'),
     output: {
       path: path.join(dirname, 'dist', env),
       filename: 'bundle.js'
@@ -31,7 +31,7 @@ function createWebpackConfig(env) {
         }
       }),
       new ExtractTextPlugin('app.css'),
-      new HtmlWebpackPlugin({ template: path.join(dirname, 'index.html') })
+      new HtmlWebpackPlugin({ template: path.join(dirname, 'index', env + '.html') })
     ],
     module: {
       loaders: [{

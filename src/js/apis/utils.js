@@ -91,6 +91,12 @@ const ATTRIBUTES = {
     defaultValue: ['q'],
     type: AttributeTypes.array
   },
+  result: {
+    defaultValue: { enable: true },
+    type: createObjectTypeChecker({
+      enable: AttributeTypes.bool
+    })
+  },
   requiredParams: {
     defaultValue: ['q'],
     type: AttributeTypes.array

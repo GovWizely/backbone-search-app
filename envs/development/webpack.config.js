@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var bourbon = require('node-bourbon').includePaths;
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var root = path.resolve(__dirname, '..');
+var root = path.resolve(__dirname, '../..');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -11,7 +11,7 @@ module.exports = {
     'webpack-hot-middleware/client',
     './src/index'
   ],
-  index: path.join(root, 'index.html'),
+  index: path.join(__dirname, 'index.html'),
   output: {
     path: path.join(root, 'dist', 'development'),
     filename: 'bundle.js'
@@ -24,7 +24,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('development')
       }
     }),
-    new HtmlWebpackPlugin({ template: path.join(root, 'index.html') })
+    new HtmlWebpackPlugin({ template: path.join(__dirname, 'index.html') })
   ],
   module: {
     loaders: [{

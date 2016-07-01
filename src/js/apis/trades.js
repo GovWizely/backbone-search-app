@@ -120,6 +120,7 @@ module.exports = assign(
     card: { enable: false },
     endpoint: endpoint('ita_taxonomies/query_expansion'),
     permittedParams: ['q'],
+    result: { enable: false },
     transformResponse: queryExpansionTransformResponse
   }),
   defineTradeAPI('i94_mpcty', {

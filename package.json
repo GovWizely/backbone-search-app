@@ -1,8 +1,8 @@
 {
   "name": "market-intelligence-search-app",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "Search Market Intelligence",
-  "main": "main.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/GovWizely/market-intelligence-search-app.git"

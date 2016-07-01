@@ -4,8 +4,8 @@ var bourbon = require('node-bourbon').includePaths;
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-function createWebpackConfig(env, options) {
-  var dirname = __dirname;
+function createWebpackConfig(env) {
+  var dirname = path.resolve(__dirname, '..');
 
   return {
     devtool: 'source-map',
@@ -31,13 +31,13 @@ function createWebpackConfig(env, options) {
         }
       }),
       new ExtractTextPlugin('app.css'),
-      new HtmlWebpackPlugin({ template: path.join(__dirname, 'index.html') })
+      new HtmlWebpackPlugin({ template: path.join(dirname, 'index.html') })
     ],
     module: {
       loaders: [{
         test: /\.js$/,
         loader: 'babel',
-        include: path.join(__dirname, 'src')
+        include: path.join(dirname, 'src')
       }, {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file'

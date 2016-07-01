@@ -5,8 +5,12 @@ var gulp = require('gulp'),
     ghPages =  require('gulp-gh-pages'),
     rimraf = require('rimraf');
 
+function getConfig(stage) {
+  return require('./webpack/config.' + stage);
+}
+
 function build(stage) {
-  var config = require('./webpack.config.' + stage);
+  var config = getConfig(stage);
   const envs = env.set({
     NODE_ENV: stage
   });
@@ -19,7 +23,7 @@ function build(stage) {
 var stages = ['staging', 'production', 'tpp_rates'];
 stages.forEach(function(stage) {
   gulp.task('clean:' + stage, function(done) {
-    var config = require('./webpack.config.' + stage);
+    var config = getConfig(stage);
     rimraf(config.output.path, done);
   });
 
@@ -27,7 +31,14 @@ stages.forEach(function(stage) {
     return build(stage);
   });
 
-  gulp.task('deploy:' + stage, ['build:' + stage, 'github'], function(done) {
+  gulp.task('github:' + stage, function() {
+    gulp.src(path.join(__dirname, 'public', 'index.html'))
+      .pipe(gulp.dest(path.join(__dirname, 'dist')));
+    return gulp.src(path.join(__dirname, '.gitignore'), { dot: true })
+      .pipe(gulp.dest(path.join(__dirname, 'dist')));
+  });
+
+  gulp.task('deploy:' + stage, ['build:' + stage, 'github:' + stage], function(done) {
     return gulp.src(path.join(__dirname, 'dist', '**/*'), { dot: true })
       .pipe(ghPages());
   });
@@ -39,15 +50,8 @@ gulp.task('deploy', ['deploy:staging']);
 
 gulp.task('start', function() {
   var devServer = require('./task/server');
-  var config = require('./webpack.config.development');
+  var config = getConfig('development');
   devServer(config);
-});
-
-gulp.task('github', function() {
-  gulp.src(path.join(__dirname, 'public', 'index.html'))
-    .pipe(gulp.dest(path.join(__dirname, 'dist')));
-  return gulp.src(path.join(__dirname, '.gitignore'), { dot: true })
-    .pipe(gulp.dest(path.join(__dirname, 'dist')));
 });
 
 gulp.task('lint', function() {

@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var bourbon = require('node-bourbon').includePaths;
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var root = path.resolve(__dirname, '../..');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -12,7 +13,7 @@ module.exports = {
   ],
   index: path.join(__dirname, 'index.html'),
   output: {
-    path: path.join(__dirname, 'dist', 'development'),
+    path: path.join(root, 'dist', 'development'),
     filename: 'bundle.js'
   },
   plugins: [
@@ -29,7 +30,7 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loader: 'babel',
-      include: path.join(__dirname, 'src')
+      include: path.join(root, 'src')
     }, {
       test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: 'file'

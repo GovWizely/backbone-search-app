@@ -1,22 +1,9 @@
-import { isEmpty, map, reduce, some, startCase } from 'lodash';
+import { map, startCase } from 'lodash';
 import React, { PropTypes } from 'react';
 
 import CheckboxTree from '../../components/checkbox-tree';
 
-function noFilter(filters) {
-  const allInvalidated = !reduce(
-    filters,
-    (output, filter) => output || !filter.invalidated,
-    false);
-  if (allInvalidated) return true;
-  if (some(filters, (filter) => !isEmpty(filter.items))) return false;
-
-  return true;
-}
-
 const Filter = ({ filters, onChange, onClear, query }) => {
-  if (noFilter(filters)) return <noscript />;
-
   const checkboxTrees = map(filters, (filter, key) => {
     const values = query[key] || [];
 

@@ -1,4 +1,4 @@
-import { map } from 'lodash';
+import { filter, map } from 'lodash';
 import React, { PropTypes } from 'react';
 
 class Bucket extends React.Component {
@@ -32,9 +32,10 @@ Bucket.propTypes = {
 };
 
 const BucketList = ({ apis, onClick, selectedAPIs }) => {
-  if (apis.length < 2) return null;
+  const bucketAPIs = filter(apis, api => api.bucket.enable);
+  if (bucketAPIs.length < 2) return null;
 
-  let buckets = map(apis, (api) => {
+  const buckets = map(bucketAPIs, (api) => {
     if (!api.bucket.enable) return null;
 
     const isActive = selectedAPIs.length === 1 && selectedAPIs[0].uniqueId === api.uniqueId;

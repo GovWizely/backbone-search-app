@@ -1,8 +1,8 @@
 {
   "name": "market-intelligence-search-app",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "Search Market Intelligence",
-  "main": "main.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/GovWizely/market-intelligence-search-app.git"
@@ -104,12 +104,9 @@
     "webpack-stream": "^3.2.0"
   },
   "scripts": {
-    "build": "npm run clean:staging && npm run clean:production && npm run build:webpack",
-    "build:production": "NODE_ENV=production webpack --config webpack.config/production.js",
-    "build:staging": "NODE_ENV=staging webpack --config webpack.config/staging.js",
-    "clean:production": "rimraf dist/production",
-    "clean:staging": "rimraf dist/production",
-    "clean:development": "rimraf dist/production",
+    "build": "gulp build:staging && gulp build:production",
+    "build:production": "gulp build:production",
+    "build:staging": "gulp build:staging",
     "lint": "eslint src",
     "test": "NODE_ENV=test mocha --compilers js:test/babel.js --recursive --require ./test/test_helper.js",
     "test:watch": "npm test -- --watch",

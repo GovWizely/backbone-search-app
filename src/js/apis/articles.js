@@ -11,7 +11,7 @@ function transformParams(_params) {
 }
 
 function webDocumentTransformParams(_params) {
-  return assign(transformParams(_params), { domains: 'success.export.gov' });
+  return assign(transformParams(_params), { domains: 'www.export.gov' });
 }
 
 function endpoint(path) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { truncate } from './utils';
 
-const href = (id) => `http://www.export.gov/tradelead?id=${id}`;
+const href = (id) => `https://www.export.gov/tradelead?id=${id}`;
 
 export const trade_leads = {
   ResultItem: ({ id, title, description }) => (

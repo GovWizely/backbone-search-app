@@ -1,7 +1,5 @@
 import React from 'react';
 
-const href = (id) => `https://success.export.gov/faq?id=${id}`;
-
 export const ita_faqs = {
   ResultItem: ({ id, answer, question, url }) => (
     <article className="mi-ita-faqs mi-result__item">

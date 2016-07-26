@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 function createWebpackConfig({ env, site }) {
   const root = path.resolve(__dirname, '..');
   const dirname = path.resolve(__dirname);
+  const nodeEnv = env === 'staging' ? 'development' : env;
 
   return {
     devtool: 'source-map',
@@ -23,7 +24,7 @@ function createWebpackConfig({ env, site }) {
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify(env)
+          'NODE_ENV': JSON.stringify(nodeEnv)
         }
       }),
       new webpack.optimize.UglifyJsPlugin({

@@ -75,6 +75,13 @@ module.exports = assign(
       assign(transformParams(_params), { domains: 'stopfakesdemo.trade.gov' })
   }),
   defineArticleAPI('stop_fakes_articles', {
+    card: {
+      count: 3,
+      enable: true,
+      footer: 'See More',
+      header: 'Articles',
+      mode: 'horizontal'
+    },
     displayName: 'Articles',
     requiredParams: ['countries', 'industries', 'q', 'trade_regions', 'world_regions']
   }),

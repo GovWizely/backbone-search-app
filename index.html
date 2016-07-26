@@ -16,9 +16,16 @@
        width: 530px;
      }
      .wrapper {
-       margin: 0 auto;
+       margin: 20px auto;
        text-align: center;
-       width: 300px;
+       width: 500px;
+     }
+     table {
+       width: 100%;
+       text-align: left;
+     }
+     td {
+       padding: 10px 0;
      }
     </style>
   </head>
@@ -26,12 +33,6 @@
     <header>Market Intelligence Search</header>
     <div class="wrapper">
       <table>
-        <thead>
-          <tr>
-            <th>Site</th>
-            <th colspan="2">
-          </tr>
-        </thead>
         <tbody>
           <tr>
             <td>Market Intelligence</td>
@@ -40,20 +41,25 @@
           </tr>
           <tr>
             <td>TPP Rates</td>
-            <td colspan="2"><a class="production" href="tpp_rates/production">Production</a></td>
+            <td>Staging
+              <!--
+              <a class="production" href="tpp_rates/staging">Staging</a>
+              -->
+            </td>
+            <td><a class="production" href="tpp_rates/production">Production</a></td>
           </tr>
           <tr>
             <td>Stop Fakes</td>
-            <td colspan="2"><a class="staging" href="stop_fakes/staging">Staging</a></td>
-            <!--
-            <td><a class="production" href="market_intelligence/production">Production</a></td>
-            -->
+            <td><a class="staging" href="stop_fakes/staging">Staging</a></td>
+            <td>
+              Production
+              <!--
+              <a class="production" href="market_intelligence/production">Production</a>
+              -->
+            </td>
           </tr>
         </tbody>
       </table>
-      <div>
-        <label>Market Intelligence</label>
-      </div>
     </div>
   </body>
 </html>

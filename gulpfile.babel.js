@@ -6,7 +6,7 @@ import ghPages from 'gulp-gh-pages';
 import rimraf from 'rimraf';
 
 function getConfig(stage) {
-  return require(`./envs/${stage}/webpack.config`);
+  return require(`./sites/${stage}/webpack.config`);
 }
 
 function build(stage) {

@@ -5,12 +5,12 @@ import webpack from 'webpack-stream';
 import ghPages from 'gulp-gh-pages';
 import rimraf from 'rimraf';
 
-function getConfig(stage) {
-  return require(`./sites/${stage}/webpack.config`);
+function getConfig(site, stage) {
+  return require(`./sites/${site}/webpack.config.${stage}`);
 }
 
-function build(stage) {
-  const config = getConfig(stage);
+function build(site, stage) {
+  const config = getConfig(site, stage);
   const envs = env.set({
     NODE_ENV: stage
   });
@@ -20,37 +20,44 @@ function build(stage) {
     .pipe(gulp.dest(config.output.path));
 }
 
-const stages = ['staging', 'production', 'tpp_rates'];
-stages.forEach(stage => {
-  gulp.task(`clean:${stage}`, done => {
-    const config = getConfig(stage);
-    rimraf(config.output.path, done);
+const sites = ['market_intelligence', 'tpp_rates', 'stop_fakes'];
+const stages = ['staging', 'production'];
+sites.forEach(site => {
+  stages.forEach(stage => {
+    gulp.task(`clean:${site}:${stage}`, done => {
+      const config = getConfig(site, stage);
+      rimraf(config.output.path, done);
+    });
+
+    gulp.task(`build:${site}:${stage}`, [`clean:${site}:${stage}`], () => build(site, stage));
+
+    gulp.task(`github:${site}:${stage}`, () => {
+      gulp.src(path.join(__dirname, 'public', 'index.html'))
+        .pipe(gulp.dest(path.join(__dirname, 'dist')));
+      return gulp.src(path.join(__dirname, '.gitignore'), { dot: true })
+        .pipe(gulp.dest(path.join(__dirname, 'dist')));
+    });
+
+    gulp.task(
+      `deploy:${site}:${stage}`,
+      [`build:${site}:${stage}`, `github:${site}:${stage}`],
+      () => (
+        gulp.src(path.join(__dirname, 'dist', '**/*'), { dot: true })
+          .pipe(ghPages())
+      ));
   });
 
-  gulp.task(`build:${stage}`, [`clean:${stage}`], () => build(stage));
-
-  gulp.task(`github:${stage}`, () => {
-    gulp.src(path.join(__dirname, 'public', 'index.html'))
-      .pipe(gulp.dest(path.join(__dirname, 'dist')));
-    return gulp.src(path.join(__dirname, '.gitignore'), { dot: true })
-      .pipe(gulp.dest(path.join(__dirname, 'dist')));
+  gulp.task(`start:${site}`, () => {
+    const devServer = require('./task/server');
+    const config = getConfig(site, 'development');
+    devServer(config);
   });
-
-  gulp.task(`deploy:${stage}`, [`build:${stage}`, `github:${stage}`], () => (
-    gulp.src(path.join(__dirname, 'dist', '**/*'), { dot: true })
-      .pipe(ghPages())
-  ));
 });
 
-gulp.task('clean', ['clean:staging']);
-gulp.task('build', ['build:staging']);
-gulp.task('deploy', ['deploy:staging']);
-
-gulp.task('start', () => {
-  const devServer = require('./task/server');
-  const config = getConfig('development');
-  devServer(config);
-});
+gulp.task('clean', [`clean:${sites[0]}:staging`]);
+gulp.task('build', [`build:${sites[0]}:staging`]);
+gulp.task('deploy', [`deploy:${sites[0]}:staging`]);
+gulp.task('start', [`start:${sites[0]}`]);
 
 gulp.task('lint', () => {
   const eslint = require('gulp-eslint');

@@ -1,12 +1,12 @@
-var path = require('path');
-var webpack = require('webpack');
-var bourbon = require('node-bourbon').includePaths;
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const bourbon = require('node-bourbon').includePaths;
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function createWebpackConfig({ env, site }) {
-  var root = path.resolve(__dirname, '..');
-  var dirname = path.resolve(__dirname);
+  const root = path.resolve(__dirname, '..');
+  const dirname = path.resolve(__dirname);
 
   return {
     devtool: 'source-map',
@@ -16,7 +16,7 @@ function createWebpackConfig({ env, site }) {
     ],
     index: path.join(dirname, site, 'index.html'),
     output: {
-      path: path.join(root, 'dist', site),
+      path: path.join(root, 'dist', site, env),
       filename: 'bundle.js'
     },
     plugins: [
@@ -53,6 +53,52 @@ function createWebpackConfig({ env, site }) {
   };
 }
 
+function createWebpackDevelopmentConfig({ site }) {
+  const root = path.resolve(__dirname, '..');
+  const dirname = path.resolve(__dirname);
+
+  return {
+    devtool: 'cheap-module-eval-source-map',
+    entry: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client',
+      './src/index'
+    ],
+    index: path.join(dirname, site, 'index.html'),
+    output: {
+      path: path.join(root, 'dist', site, 'development'),
+      filename: 'bundle.js'
+    },
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('development')
+        }
+      }),
+      new HtmlWebpackPlugin({ template: path.join(dirname, site, 'index.html') })
+    ],
+    module: {
+      loaders: [{
+        test: /\.js$/,
+        loader: 'babel',
+        include: path.join(root, 'src')
+      }, {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file'
+      }, {
+        test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url?limit=10000&minetype=application/font-woff'
+      }, {
+        test: /\.scss$/i,
+        loader: `style!css!sass?includePaths[]=${bourbon}`
+      }]
+    }
+  };
+}
+
 module.exports = {
-  createWebpackConfig: createWebpackConfig
+  createWebpackConfig,
+  createWebpackDevelopmentConfig
 };

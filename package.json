@@ -110,6 +110,6 @@
     "lint": "eslint src",
     "test": "NODE_ENV=test mocha --compilers js:test/babel.js --recursive --require ./test/test_helper.js",
     "test:watch": "npm test -- --watch",
-    "start": "node dev.js"
+    "start": "gulp start"
   }
 }

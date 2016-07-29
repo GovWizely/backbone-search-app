@@ -60,6 +60,31 @@ module.exports = assign(
     permittedParams: ['q', 'domains', 'offset', 'limit'],
     transformParams: webDocumentTransformParams
   }),
+  defineArticleAPI('starting_points', {
+    card: {
+      count: 3,
+      enable: true,
+      footer: 'See More',
+      header: 'Starting Points',
+      mode: 'horizontal'
+    },
+    displayName: 'Starting Points',
+    endpoint: endpoint('web_documents'),
+    permittedParams: ['q', 'domains', 'offset', 'limit'],
+    transformParams: (_params) =>
+      assign(transformParams(_params), { domains: 'stopfakesdemo.trade.gov' })
+  }),
+  defineArticleAPI('stop_fakes_articles', {
+    card: {
+      count: 3,
+      enable: true,
+      footer: 'See More',
+      header: 'Articles',
+      mode: 'horizontal'
+    },
+    displayName: 'Articles',
+    requiredParams: ['countries', 'industries', 'q', 'trade_regions', 'world_regions']
+  }),
   defineArticleAPI('trade_events', {
     shortName: 'Events',
     requiredParams: ['countries', 'industries', 'q', 'trade_regions', 'world_regions']

@@ -16,49 +16,50 @@
        width: 530px;
      }
      .wrapper {
-       margin: 0 auto;
+       margin: 20px auto;
        text-align: center;
-       width: 300px;
+       width: 500px;
      }
-     a {
-       display: block;
-       margin: 40px;
-       padding: 20px;
-       text-decoration: none;
+     table {
+       width: 100%;
+       text-align: left;
      }
-
-     a.staging {
-       background-color: #EAB88F;
-       color: #333;
-     }
-
-     a.staging:hover{
-       background-color: #B37D51;
-       color: #333;
-     }
-
-     a.production {
-       background-color: #C2E087;
-       color: #444;
-     }
-
-     a.production:hover {
-       background-color: #75923C;
-       color: #444;
-     }
-
-     a.tpp_rates {
-       background-color: #DDD;
-       color: #444;
+     td {
+       padding: 10px 0;
      }
     </style>
   </head>
   <body>
     <header>Market Intelligence Search</header>
     <div class="wrapper">
-      <a class="tpp_rates" href="tpp_rates/">TPP Rates Only</a>
-      <a class="staging" href="staging/">Staging</a>
-      <a class="production" href="production/">Production</a>
+      <table>
+        <tbody>
+          <tr>
+            <td>Market Intelligence</td>
+            <td><a class="staging" href="market_intelligence/staging">Staging</a></td>
+            <td><a class="production" href="market_intelligence/production">Production</a></td>
+          </tr>
+          <tr>
+            <td>TPP Rates</td>
+            <td>Staging
+              <!--
+              <a class="production" href="tpp_rates/staging">Staging</a>
+              -->
+            </td>
+            <td><a class="production" href="tpp_rates/production">Production</a></td>
+          </tr>
+          <tr>
+            <td>Stop Fakes</td>
+            <td><a class="staging" href="stop_fakes/staging">Staging</a></td>
+            <td>
+              Production
+              <!--
+              <a class="production" href="market_intelligence/production">Production</a>
+              -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

@@ -16,6 +16,7 @@ export const TEMPLATES = assign(
   require('./ita_taxonomies'),
   require('./ita_zipcode_to_post'),
   require('./market_research_library'),
+  require('./privacy_shield_articles'),
   require('./starting_points'),
   require('./stop_fakes_articles'),
   require('./tariff_rates'),

@@ -48,6 +48,10 @@ module.exports = assign(
     endpoint: endpoint('how_to_export_articles'),
     requiredParams: ['countries', 'industries', 'q', 'topics', 'trade_regions', 'world_regions']
   }),
+  defineArticleAPI('privacy_shield_articles', {
+    displayName: 'Articles',
+    requiredParams: ['countries', 'industries', 'q', 'topics', 'trade_regions', 'world_regions']
+  }),
   defineArticleAPI('web_documents', {
     card: {
       count: 3,

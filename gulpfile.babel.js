@@ -1,3 +1,4 @@
+import fs, { lstat } from 'fs';
 import gulp from 'gulp';
 import env from 'gulp-env';
 import path from 'path';
@@ -20,8 +21,11 @@ function build(site, stage) {
     .pipe(gulp.dest(config.output.path));
 }
 
-const sites = ['market_intelligence', 'tpp_rates', 'stop_fakes'];
+const sitesPath = path.join(__dirname, 'sites');
+const sites = fs.readdirSync(sitesPath).filter(
+  node => fs.statSync(path.join(sitesPath, node)).isDirectory());
 const stages = ['staging', 'production'];
+
 sites.forEach(site => {
   stages.forEach(stage => {
     gulp.task(`clean:${site}:${stage}`, done => {

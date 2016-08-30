@@ -88,5 +88,9 @@ module.exports = assign(
   defineArticleAPI('trade_events', {
     shortName: 'Events',
     requiredParams: ['countries', 'industries', 'q', 'trade_regions', 'world_regions']
+  }),
+  defineArticleAPI('trade_leads', {
+    shortName: 'Leads',
+    requiredParams: ['countries', 'industries', 'q']
   })
 );

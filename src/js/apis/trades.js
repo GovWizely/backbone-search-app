@@ -91,10 +91,6 @@ module.exports = assign(
     displayName: 'Frequently Asked Questions',
     shortName: 'FAQs'
   }),
-  defineTradeAPI('trade_leads', {
-    shortName: 'Leads',
-    requiredParams: ['countries', 'industries', 'q', 'trade_regions', 'world_regions']
-  }),
   defineTradeAPI('consolidated_screening_list'),
   defineTradeAPI('market_research_library'),
   defineTradeAPI('tariff_rates'),

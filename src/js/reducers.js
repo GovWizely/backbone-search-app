@@ -87,7 +87,8 @@ function results(state = {
   aggregations: {},
   invalidated: false,
   isFetching: false,
-  items: [], metadata: {}
+  items: [],
+  metadata: {}
 }, action) {
   switch (action.type) {
   case REQUEST_RESULTS:

@@ -29,10 +29,6 @@ Form.defaultProps = {
   focused: false
 };
 
-export {
-  Form
-};
-
 export default reduxForm({
   form: 'form',
   fields: ['q']

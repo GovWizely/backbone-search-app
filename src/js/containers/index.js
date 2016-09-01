@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Form from '../components/form';
+import Form from '../components/Form';
 import Header from '../components/header';
 import { selectAPIs } from '../actions/api';
 

@@ -103,7 +103,7 @@ class CheckboxTree extends React.Component {
     if (keys(items).length <= itemLimit) return null;
 
     return (
-      <a href="#" onClick={ this.toggleShowAll } className="mi-checkbox-tree__expand">
+      <a onClick={ this.toggleShowAll } className="mi-checkbox-tree__expand">
         + See { showAllText }
       </a>
     );
@@ -133,8 +133,8 @@ class CheckboxTree extends React.Component {
       >
         <fieldset className="mi-checkbox-tree__fieldset">
           <legend className="mi-checkbox-tree__header">
-            <a role="button" onClick={ this.toggleCollapse } href="#">
-              <i className={ hrefCSS }></i>&nbsp; { label }
+            <a role="button" onClick={ this.toggleCollapse }>
+              <i className={ hrefCSS } />&nbsp; { label }
             </a>
           </legend>
           { view }

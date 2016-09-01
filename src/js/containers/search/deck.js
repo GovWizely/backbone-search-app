@@ -10,7 +10,7 @@ const Deck = ({ apis, findTemplate, onClick, results }) => {
     if (!results[uniqueId] || card.enable === false) return null;
 
     const { invalidated, isFetching, items } = results[uniqueId];
-    if (invalidated || !isFetching && !items.length) return null;
+    if (invalidated || (!isFetching && !items.length)) return null;
 
     const template = findTemplate(uniqueId).CardItem;
     const _onClick = onClick.bind(undefined, api);

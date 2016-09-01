@@ -1,4 +1,5 @@
 import { findKey, reduce } from 'lodash';
+
 const definitions = {
   'Afghanistan': 'AF',
   'Aland Islands': 'AX',

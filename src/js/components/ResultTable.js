@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 
 const THead = ({ headers }) => {
   const theads = map(headers, (header, index) => (
-    <th key={ index } dangerouslySetInnerHTML={ { __html: header } }></th>
+    <th key={ index } dangerouslySetInnerHTML={ { __html: header } } />
   ));
 
   return (

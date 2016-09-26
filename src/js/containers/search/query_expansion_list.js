@@ -32,7 +32,7 @@ const QueryExpansion = ({ onClick, queryExpansions }) => {
   const { invalidated, isFetching, items } = queryExpansions;
   if (invalidated || isFetching || !items) return null;
 
-  let terms = map(items, (region) => {
+  const terms = map(items, (region) => {
     const key = keys(region)[0];
     const value = region[key];
     return <QueryExpansionTerm key={ key } label={ key } onClick={ onClick } value={ value } />;

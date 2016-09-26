@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import ComponentForm from '../../components/form';
+import ComponentForm from '../../components/Form';
 
 const Form = ({ onSubmit, query }) => (
   <div className="mi-search__form">

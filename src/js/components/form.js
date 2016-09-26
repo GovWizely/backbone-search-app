@@ -9,11 +9,11 @@ const Form = ({ fields, focused, handleSubmit }) => (
       type="text"
       placeholder="Keyword"
       aria-label="Enter keyword"
-      {...fields.q }
+      { ...fields.q }
     />
     <span className="mi-form__submit">
       <button className="uk-button mi-form__submit__button" onClick={ handleSubmit } title="Search">
-        <i className="mi-icon mi-icon-search" aria-label="Search"></i>
+        <i className="mi-icon mi-icon-search" aria-label="Search" />
       </button>
     </span>
   </form>
@@ -27,10 +27,6 @@ Form.propTypes = {
 
 Form.defaultProps = {
   focused: false
-};
-
-export {
-  Form
 };
 
 export default reduxForm({

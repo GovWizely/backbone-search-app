@@ -1,5 +1,5 @@
 import assign from 'object-assign';
-import { at, compact, get, isEmpty, map } from 'lodash';
+import { get, isEmpty, map } from 'lodash';
 import fetch from 'isomorphic-fetch';
 import invariant from 'invariant';
 import { batchActions } from 'redux-batched-actions';

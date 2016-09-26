@@ -13,7 +13,7 @@ onSubmit    |function| Required. A function that takes an object as argument.
 ## Using Form
 
 ```js
-import Form from 'src/js/components/form';
+import Form from 'src/js/components/Form';
 
 const aggregations = {
     countries: ["Country #1", "Country #2", "Country #3"],

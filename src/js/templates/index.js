@@ -3,6 +3,7 @@ import assign from 'object-assign';
 export const TEMPLATES = assign(
   {},
   require('./defaults'),
+  require('./adcvd_orders'),
   require('./articles'),
   require('./business_service_providers'),
   require('./consolidated_screening_list'),

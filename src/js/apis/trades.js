@@ -61,6 +61,10 @@ const responseTransformers = {
       return assign(result, quarters, { total });
     });
     return assign({}, response, { results });
+  },
+
+  adcvdOrder: (response) => {
+    return response;
   }
 };
 
@@ -140,5 +144,15 @@ module.exports = assign(
     requiredParams: [],
     transformResponse: responseTransformers.i94Cntry2015,
     card: { enable: false }
+  }),
+  defineTradeAPI('adcvd_orders', {
+    aggregations: {
+      countries: { type: 'array' }
+    },
+    displayName: 'ADCVD Orders',
+    endpoint: endpoint('v1/adcvd_orders/search'),
+    permittedParams: ['q', 'countries'],
+    transformResponse: responseTransformers.adcvdOrder,
+
   })
 );

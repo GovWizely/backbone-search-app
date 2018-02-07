@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
       key: 'hSLqwdFz1U25N3ZrWpLB-Ld4'
     }
   };
-} else {
+} else if (process.env.NODE_ENV === 'staging') {
   module.exports = {
     articles: {
       host: 'https://intrasearch.govwizely.com/v1'
@@ -16,6 +16,16 @@ if (process.env.NODE_ENV === 'production') {
     trade: {
       host: 'https://api.govwizely.com',
       key: 'Z48wSr3E3nNN4itDUvE4Clje'
+    }
+  };
+} else {
+  module.exports = {
+    articles: {
+      host: 'https://intrasearch.govwizely.com/v1'
+    },
+    trade: {
+      host: 'http://localhost:3000',
+      key: 'devkey'
     }
   };
 }

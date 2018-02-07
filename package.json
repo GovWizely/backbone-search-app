@@ -21,6 +21,7 @@
     "invariant": "^2.2.1",
     "isomorphic-fetch": "^2.2.0",
     "lodash": "^4.15.0",
+    "moment": "2.20.1",
     "numeral": "^1.5.3",
     "object-assign": "^4.1.0",
     "pluralize": "^3.0.0",

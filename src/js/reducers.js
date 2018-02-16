@@ -32,6 +32,7 @@ function apis(state = {}) {
 
 function filters(state = {
   invalidated: false,
+  displayName: '',
   items: {}
 }, action) {
   switch (action.type) {

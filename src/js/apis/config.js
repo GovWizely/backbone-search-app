@@ -24,8 +24,8 @@ if (process.env.NODE_ENV === 'production') {
       host: 'https://intrasearch.govwizely.com/v1'
     },
     trade: {
-      host: 'http://localhost:3000',
-      key: 'devkey'
+      host: 'https://api.govwizely.com',
+      key: 'Z48wSr3E3nNN4itDUvE4Clje'
     }
   };
 }

@@ -56,20 +56,17 @@ class ADCVDOrder extends React.Component {
 
   render() {
     const {
-      product_short_name, country, case_number, segments
+      product_short_name, country, case_number, segments, url
     } = this.props;
     const { showSegments } = this.state;
     const expanderText = showSegments ? 'Collapse' : 'Expand';
     return (
       <article className="mi-tpp-rates mi-result__item">
         <header className="mi-tpp-rates__header">
-          { country + ":  " + product_short_name }
+          <a href={url}>{ country + ", " + product_short_name }</a>
         </header>
-        <p>Country: { country }</p>
-        <p>Product Short Name: { product_short_name }</p>
-        <p>Case Number: { case_number }</p>
-
-        <Segments segments={ segments } showSegments={ showSegments } case_number={ case_number } />
+        <a href={url}>{url}</a>
+        <p>{ case_number }</p>
       </article>
     );
   }

@@ -68,6 +68,14 @@ const responseTransformers = {
   }
 };
 
+function transformAdcvdParams(params) {
+  if (params.products) {
+    params.product_short_names = params.products;
+    delete params.products;
+  }
+  return params;
+}
+
 function endpoint(path) {
   const { host, key } = trade;
   return `${host}/${path}?api_key=${key}`;
@@ -147,12 +155,13 @@ module.exports = assign(
   }),
   defineTradeAPI('adcvd_orders', {
     aggregations: {
-      countries: { type: 'array' }
+      countries: { type: 'array', displayName: 'Countries' },
+      products: { type: 'array', displayName: 'Products' }
     },
-    displayName: 'ADCVD Orders',
+    displayName: 'ADCVD Cases',
     endpoint: endpoint('v1/adcvd_orders/search'),
-    permittedParams: ['q', 'countries'],
+    permittedParams: ['q', 'countries', 'product_short_names'],
     transformResponse: responseTransformers.adcvdOrder,
-
+    transformParams: transformAdcvdParams
   })
 );

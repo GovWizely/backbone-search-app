@@ -160,7 +160,7 @@ module.exports = assign(
     },
     displayName: 'ADCVD Cases',
     endpoint: endpoint('v1/adcvd_orders/search'),
-    permittedParams: ['q', 'countries', 'product_short_names'],
+    permittedParams: ['q', 'countries', 'product_short_names', 'offset'],
     transformResponse: responseTransformers.adcvdOrder,
     transformParams: transformAdcvdParams
   })

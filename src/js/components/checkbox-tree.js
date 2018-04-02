@@ -111,10 +111,9 @@ class CheckboxTree extends React.Component {
 
   render() {
     if (isEmpty(this.props.items)) return null;
-
     const { showAll, values, visible } = this.state;
     const { disabled, itemLimit, items, label, name } = this.props;
-    const visibleItems = showAll ? items : pick(items, take(keys(items), itemLimit));
+    const visibleItems = showAll ? items : pick(items, take(keys(items).sort(), itemLimit));
     const hrefCSS = visible ? 'mi-icon mi-icon-angle-down' : 'mi-icon mi-icon-angle-right';
 
     const view = visible ? (

@@ -9,6 +9,7 @@ import { invalidateAllFilters } from '../../actions/filter';
 import { selectAPIs } from '../../actions/api';
 import { updatePath } from '../../actions/path';
 import { clearFiltering, updateFiltering, updateQuery, replaceQuery } from '../../actions/query';
+import { fetchTypeaheadsByAPI, invalidateAllTypeaheads } from '../../actions/typeaheads';
 
 import BucketList from './bucket_list';
 import Content from './content';
@@ -26,13 +27,13 @@ class Index extends React.Component {
   render() {
     const {
       enabledAPIs, filters, onBucket, onClearFilter, onExpand, onFilter,
-      onPaging, onSelect, onSubmit, query, results, selectedAPIs
+      onPaging, onSelect, onSubmit, query, results, selectedAPIs, typeaheads
     } = this.props;
 
     return (
       <div id="search" className="mi-search">
         <div className="mi-search__form-container">
-          <Form onSubmit={ onSubmit } query={ query } />
+          <Form onSubmit={ onSubmit } query={ query } typeaheads={ typeaheads } selectedAPIs={ selectedAPIs }/>
           <div className="mi-search__form-hint-container">
             <QueryExpansionList onClick={ onExpand } queryExpansions={ results.query_expansion } />
             <QueryPrompt query={ query } selectedAPIs={ selectedAPIs } />
@@ -87,7 +88,7 @@ Index.propTypes = {
 };
 
 function mapStateToProps(state, { router }) {
-  const { filtersByAggregation, query, resultsByAPI, selectedAPIs, window } = state;
+  const { filtersByAggregation, query, resultsByAPI, selectedAPIs, window, typeaheadsByAPI } = state;
   return {
     filters: filtersByAggregation,
     findTemplate,
@@ -95,7 +96,8 @@ function mapStateToProps(state, { router }) {
     results: resultsByAPI,
     router,
     selectedAPIs,
-    window
+    window,
+    typeaheads: typeaheadsByAPI
   };
 }
 
@@ -137,7 +139,9 @@ function mapDispatchToProps(
       dispatch(selectAPIs(apis));
       dispatch(invalidateAllFilters());
       dispatch(invalidateAllResults());
+      dispatch(invalidateAllTypeaheads());
       dispatch(fetchResultsByAPI());
+      dispatch(fetchTypeaheadsByAPI());
     },
     onPaging: (e) => {
       e.preventDefault();

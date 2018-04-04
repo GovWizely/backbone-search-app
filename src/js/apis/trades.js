@@ -158,10 +158,12 @@ module.exports = assign(
       countries: { type: 'array', displayName: 'Countries' },
       products: { type: 'array', displayName: 'Products' }
     },
+    typeaheads: ['countries', 'products', 'case_numbers'],
     displayName: 'ADCVD Cases',
     endpoint: endpoint('v1/adcvd_orders/search'),
     permittedParams: ['q', 'countries', 'product_short_names', 'offset'],
     transformResponse: responseTransformers.adcvdOrder,
-    transformParams: transformAdcvdParams
+    transformParams: transformAdcvdParams,
+    formLabel: 'Search by Country, Product, or Case Number.'
   })
 );

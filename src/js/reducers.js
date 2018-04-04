@@ -13,13 +13,15 @@ import { UPDATE_WINDOW } from './actions/window';
 import { UPDATE_QUERY, REPLACE_QUERY } from './actions/query';
 import { SELECT_APIS } from './actions/api';
 import { ADD_NOTIFICATION, DISMISS_NOTIFICATION } from './actions/notification';
+import { REQUEST_TYPEAHEADS, RECEIVE_TYPEAHEADS, FAILURE_TYPEAHEADS, INVALIDATE_TYPEAHEADS } from './actions/typeaheads';
 
 // work around this issue https://github.com/omnidan/redux-ignore/issues/4
 const CONSTANTS = [
   REQUEST_RESULTS, RECEIVE_RESULTS, FAILURE_RESULTS, INVALIDATE_RESULTS,
   INVALIDATE_FILTERS, REQUEST_FILTERS, RECEIVE_FILTERS,
   UPDATE_WINDOW, UPDATE_QUERY, REPLACE_QUERY, SELECT_APIS,
-  ADD_NOTIFICATION, DISMISS_NOTIFICATION
+  ADD_NOTIFICATION, DISMISS_NOTIFICATION,
+  REQUEST_TYPEAHEADS, RECEIVE_TYPEAHEADS, FAILURE_TYPEAHEADS, INVALIDATE_TYPEAHEADS
 ];
 
 function filterActions(action, constants = []) {
@@ -149,6 +151,46 @@ function window(state = {}, action) {
   }
 }
 
+function typeaheads(state = {
+  invalidated: false,
+  isFetching: false,
+  typeaheads: [],
+}, action) {
+  switch (action.type) {
+  case REQUEST_TYPEAHEADS:
+    return assign({}, state, {
+      isFetching: true
+    });
+  case RECEIVE_TYPEAHEADS:
+    return assign({}, state, {
+      isFetching: false,
+      typeaheads: action.payload,
+    });
+  case FAILURE_TYPEAHEADS:
+    return assign({}, state, {
+      isFetching: false
+    });
+  case INVALIDATE_TYPEAHEADS:
+    return assign({}, state, {
+      invalidated: true
+    });
+  default:
+    return state;
+  }
+}
+
+function typeaheadsByAPI(state = {}, action) {
+  switch (action.type) {
+  case REQUEST_TYPEAHEADS:
+  case RECEIVE_TYPEAHEADS:
+  case FAILURE_TYPEAHEADS:
+  case INVALIDATE_TYPEAHEADS:
+    return assign({}, state, { [action.meta]: typeaheads(state[action.meta], action) });
+  default:
+    return state;
+  }
+}
+
 const reducer = combineReducers({
   apis: filterActions(apis, []),
 
@@ -172,7 +214,9 @@ const reducer = combineReducers({
 
   selectedAPIs: filterActions(selectedAPIs, [SELECT_APIS]),
 
-  window: filterActions(window, [UPDATE_WINDOW])
+  window: filterActions(window, [UPDATE_WINDOW]),
+
+  typeaheadsByAPI: filterActions(typeaheadsByAPI, [REQUEST_TYPEAHEADS, RECEIVE_TYPEAHEADS, FAILURE_TYPEAHEADS])
 });
 
 export default enableBatching(reducer);

@@ -24,7 +24,7 @@ Checkbox.propTypes = {
 const Tree = ({ items, disabled, values }) => {
   if (isEmpty(items)) return null;
 
-  const checkboxes = map(keys(items), (item) => {
+  const checkboxes = map(keys(items).sort(), (item) => {
     const checked = includes(values, item);
     return (
       <Checkbox

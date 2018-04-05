@@ -16,41 +16,45 @@ const renderSuggestion = suggestion => (
   </div>
 );
 
+const renderSuggestionsContainer = ({ containerProps , children, query }) => {
+  return(
+    <div {...containerProps} className="mi-form__suggestions-container">
+      {children}
+    </div>
+  )
+}
 
 class Form extends React.Component{
   constructor(props){
     super(props);
     this.state = { 
-      suggestions: [] 
+      suggestions: [],
+      typeaheads: [],
+      form_label: "" 
     }
-    this.onInputChange = this.onInputChange.bind(this);
   }
 
   componentDidUpdate(){
-    const apis = filter(this.props.selectedAPIs, api => api.result.enable);
-    const api = apis[0];
-    const typeaheads = this.props.typeaheads[api.pathname].typeaheads;
-  }
+    if(!isEmpty(this.props.selectedAPIs)){
+      const apis = filter(this.props.selectedAPIs, api => api.result.enable);
+      const api = apis[0];
+      const typeaheads = this.props.typeaheads[api.pathname].typeaheads;
 
-  onInputChange(e){
-    console.log(e.target.value)
+      if (isEmpty(this.state.typeaheads) && !isEmpty(typeaheads))
+        this.setState({ typeaheads: typeaheads });
+      if (this.state.form_label === "")
+        this.setState({ form_label: api.formLabel });
+    }
   }
 
   getSuggestions = value => {
-    const apis = filter(this.props.selectedAPIs, api => api.result.enable);
-    const api = apis[0];
-    const typeaheads = this.props.typeaheads[api.pathname].typeaheads;
-
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    const return_array = inputLength < 2 ? [] : typeaheads.filter(val => {
-        //console.log(val)
-        //console.log(inputValue)
+    const return_array = inputLength < 2 ? [] : this.state.typeaheads.filter(val => {
         let new_val = val.trim().toLowerCase()
         return new_val.includes(inputValue);
       }
     );
-    console.log(return_array)
     return return_array;
   };
 
@@ -70,9 +74,7 @@ class Form extends React.Component{
   };
 
   onSuggestionSelected = (event, { suggestion }) => {
-    console.log(event)
-    console.log(suggestion)
-    this.props.fields.q.onChange(suggestion)
+    this.props.fields.q.onChange(suggestion);
   }
 
   render(){
@@ -87,6 +89,8 @@ class Form extends React.Component{
     };
     return(
       <form className="mi-form" onSubmit={ handleSubmit }>
+        <label className="mi-form__search-label" htmlFor="q">{this.state.form_label}</label>
+        <div className="mi-form__search-row">
         <Autosuggest
           suggestions={this.state.suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -95,6 +99,7 @@ class Form extends React.Component{
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
           onSuggestionSelected={this.onSuggestionSelected}
+          renderSuggestionsContainer={renderSuggestionsContainer}
         />
 
         <span className="mi-form__submit">
@@ -102,6 +107,7 @@ class Form extends React.Component{
             <i className="mi-icon mi-icon-search" aria-label="Search" />
           </button>
         </span>
+        </div>
       </form>
     );
   }

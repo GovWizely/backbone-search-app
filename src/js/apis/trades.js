@@ -164,6 +164,6 @@ module.exports = assign(
     permittedParams: ['q', 'countries', 'product_short_names', 'offset'],
     transformResponse: responseTransformers.adcvdOrder,
     transformParams: transformAdcvdParams,
-    formLabel: 'Search by Country, Product, or Case Number.'
+    formLabel: 'Search by Country, Product, or Case Number:'
   })
 );
